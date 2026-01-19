@@ -1,0 +1,84 @@
+/* Layout logic matching SplashScreen 390px */
+.web-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.interests-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Frame ke bahar kuch nahi jana chahiye */
+}
+
+@media (min-width: 640px) {
+  .interests-screen {
+    width: 390px;
+    height: 100vh;
+    border-left: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+  }
+}
+
+/* Scrollable Content Area - Sirf yahan scroll hoga */
+.scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 20px 120px 20px; /* Space for bottom button */
+  scrollbar-width: none; /* Firefox hide */
+}
+
+.scrollable-content::-webkit-scrollbar {
+  display: none; /* Chrome/Safari hide */
+}
+
+/* UI Elements */
+.back-btn { font-size: 28px; cursor: pointer; margin-bottom: 15px; }
+.title-text { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 10px; color: #000; }
+.sub-text { font-size: 15px; color: #777; margin-bottom: 25px; }
+
+/* Pills styling */
+.interests-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.interest-item {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid #e0e0e0;
+  font-size: 14px;
+  cursor: pointer;
+}
+.interest-item.selected { background: #5d3d63; color: white; border-color: #5d3d63; }
+
+/* Fixed Bottom Navigation (Above the scrollable area) */
+.bottom-nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to top, white 70%, transparent);
+  z-index: 20;
+}
+
+.next-circle-btn {
+  width: 60px; height: 60px;
+  border: 1.5px solid #5d3d63;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; background: white;
+}
+.inner-circle {
+  width: 48px; height: 48px;
+  background: #5d3d63; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+}
