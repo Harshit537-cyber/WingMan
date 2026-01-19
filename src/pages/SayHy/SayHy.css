@@ -1,0 +1,123 @@
+.say-hy-container {
+  max-width: 430px;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: #5a3c6d;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  color: white;
+  text-align: center;
+}
+
+/* Text Centering Logic */
+.centered-content {
+  flex: 1; /* Ye bachi hui sari space le lega */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically Center */
+  align-items: center;    /* Horizontally Center */
+  z-index: 5;
+  padding: 0 30px;
+}
+
+.hy-title {
+  font-size: 34px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.hy-subtitle {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.hy-tagline {
+  font-size: 18px;
+  opacity: 0.9;
+  font-style: italic;
+}
+
+/* Character Styling */
+.illustration-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.wingman-img {
+  width: 85%;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+/* Confetti Falling Animation */
+.confetti-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 40px; /* Size adjust karein */
+  top: -50px;
+  opacity: 0;
+  animation: fall 4s linear infinite;
+}
+
+/* Alag-alag positions aur delays for natural look */
+.p0 { left: 5%;  animation-delay: 0s; width: 30px; }
+.p1 { left: 15%; animation-delay: 2s; width: 45px; }
+.p2 { left: 25%; animation-delay: 1s; }
+.p3 { left: 40%; animation-delay: 3s; width: 25px; }
+.p4 { left: 55%; animation-delay: 0.5s; }
+.p5 { left: 70%; animation-delay: 2.5s; width: 50px; }
+.p6 { left: 85%; animation-delay: 1.5s; }
+.p7 { left: 33%; animation-delay: 4s; }
+.p8 { left: 60%; animation-delay: 1.2s; }
+.p9 { left: 10%; animation-delay: 3.5s; }
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Fade-in Animations for Text */
+.fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+.fade-in-up-delay { animation: fadeInUp 0.8s ease-out 0.4s both; }
+.fade-in-slow { animation: fadeIn 1.2s ease-out 0.8s both; }
+.slide-up-char { animation: slideUp 1s ease-out 0.5s both; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
