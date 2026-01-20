@@ -6,6 +6,8 @@ import AskName from '../pages/AskName/AskName';
 import SayHy from '../pages/SayHy/SayHy';
 import Birthday from '../pages/Birthday/Birthday';
 import AskHight from '../pages/AskHight/AskHight';
+import Intrest from '../pages/Intrest/Intrest';
+import AccessLocation from '../pages/AccessLocation/AccessLocation';
 
 const AppRoutes = () => {
   return (
@@ -18,6 +20,8 @@ const AppRoutes = () => {
         <Route path="/hy" element={<SayHy />} />
         <Route path="/birthday" element={<Birthday />} />
         <Route path="/hight" element={<AskHight />} />
+        <Route path="/intrest" element={<Intrest />} />
+        <Route path="/Acesslocation" element={<AccessLocation />} />
       </Routes>
     </Router>
   );

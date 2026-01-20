@@ -17,11 +17,11 @@ const Birthday = () => {
   const [selectedYear, setSelectedYear] = useState('2005');
 
   const handleNext = () => {
-    const birthdayData = `${selectedDay}-${selectedMonth}-${selectedYear}`;
-    navigate('/hight', { 
-      state: { ...location.state, birthday: birthdayData } 
-    });
-  };
+  const birthdayData = `${selectedDay}-${selectedMonth}-${selectedYear}`;
+  navigate('/hight', { 
+    state: { ...location.state, birthday: birthdayData } 
+  });
+};
 
   const handleScroll = (e, type, data) => {
     const scrollTop = e.target.scrollTop;
@@ -42,7 +42,7 @@ const Birthday = () => {
           <button className="back-btn" onClick={() => navigate(-1)}>
             <ChevronLeft size={28} />
           </button>
-          <button className="skip-btn">Skip</button>
+          
         </div>
 
         <div className="scrollable-content">
@@ -53,13 +53,7 @@ const Birthday = () => {
 
           {/* Cake Illustration - Size Increased to 150x120 */}
           <div className="cake-box scale-up">
-            <svg width="150" height="120" viewBox="0 0 160 120" fill="none">
-              <path d="M40 100 H120 V65 C120 55 110 55 106 60 C102 55 90 55 86 60 C82 55 70 55 66 60 C62 55 50 55 46 60 V100" stroke="#5a3c6d" strokeWidth="2.5" />
-              <line x1="60" y1="55" x2="60" y2="35" stroke="#5a3c6d" strokeWidth="2.5" />
-              <line x1="80" y1="55" x2="80" y2="35" stroke="#5a3c6d" strokeWidth="2.5" />
-              <line x1="100" y1="55" x2="100" y2="35" stroke="#5a3c6d" strokeWidth="2.5" />
-              <line x1="30" y1="105" x2="130" y2="105" stroke="#5a3c6d" strokeWidth="2.5" />
-            </svg>
+            <img src='src/assets/cake.png'/>
           </div>
 
           <div className="display-row">

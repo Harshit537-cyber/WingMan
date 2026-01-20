@@ -1,0 +1,129 @@
+.interest-container {
+  max-width: 430px;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow: hidden;
+  font-family: -apple-system, sans-serif;
+}
+
+.header {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000;
+  padding: 5px;
+  transition: transform 0.2s;
+}
+
+.back-btn:active { transform: scale(0.9); }
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 50px;
+  line-height: 1.4;
+  padding: 0 20px;
+}
+
+/* Chips Grid Styling */
+.interests-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 10px;
+}
+
+.interest-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 50px;
+  border: 1.5px solid #e2d8e8;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: white;
+  user-select: none;
+}
+
+.interest-chip:active {
+  transform: scale(0.92);
+}
+
+.chip-icon {
+  color: #5a3c6d;
+  display: flex;
+  align-items: center;
+}
+
+.chip-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Selected State */
+.interest-chip.selected {
+  background-color: #5a3c6d;
+  border-color: #5a3c6d;
+  box-shadow: 0 8px 15px rgba(90, 60, 109, 0.2);
+}
+
+.interest-chip.selected .chip-label,
+.interest-chip.selected .chip-icon {
+  color: #fff;
+}
+
+/* Animations */
+.slide-in-top {
+  animation: slideInTop 0.6s ease-out both;
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-out 0.2s both;
+}
+
+.pop-in {
+  opacity: 0;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes slideInTop {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { 
+    opacity: 0; 
+    transform: scale(0.5) translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1) translateY(0); 
+  }
+}

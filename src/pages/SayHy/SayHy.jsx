@@ -16,10 +16,11 @@ const SayHy = () => {
 
   useEffect(() => {
   const timer = setTimeout(() => {
+    navigate('/birthday', { state: { ...location.state } }); 
     navigate('/birthday'); // 3 second baad Birthday page pe jayega
   }, 3000);
   return () => clearTimeout(timer);
-}, [navigate]);
+}, [navigate, location.state]);
 
   return (
     <div className="say-hy-container">

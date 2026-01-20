@@ -1,25 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
+
 .height-container {
   max-width: 430px;
-  height: 100vh;
+  height: 100dvh;
   margin: 0 auto;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
   padding: 20px;
   overflow: hidden;
-  font-family: -apple-system, sans-serif;
+  font-family: 'Outfit', sans-serif;
 }
 
 .header {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .title {
   font-size: 32px;
-  font-weight: 700;
+  font-weight: 800;
   color: #1a1a1a;
+  margin-top: 20px;
   margin-bottom: 10px;
-  line-height: 1.2;
 }
 
 .subtitle {
@@ -31,42 +33,44 @@
 .selector-main-area {
   position: relative;
   display: flex;
-  height: 450px;
+  height: 400px;
   align-items: center;
 }
 
-/* Illustration Styling */
-.illustration-box {
+/* --- CHARACTER & BG BOX STYLING --- */
+.illustration-wrapper {
   position: relative;
   width: 140px;
-  height: 380px;
-  margin-right: 20px;
+  height: 350px;
+  display: flex;
+  align-items: flex-end;
 }
 
-.purple-bg {
+.character-bg-box {
   position: absolute;
   bottom: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #ffffff; /* Purple shade from image */
-  border-radius: 30px;
+  width: 60%;
+  height: 90%; /* Purple box ki height */
+  background-color: #9279a6; /* Purple color from image */
+  border-radius: 35px;
   z-index: 1;
 }
 
 .character-img {
   position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 110%; /* Image slightly taller than box */
+  bottom: 0px; /* Feet box se thoda upar ya exact adjust karein */
+  left: 90%;
+  height: 100%; /* Base height */
   z-index: 2;
   object-fit: contain;
+  transition: transform 0.2s ease-out; /* Smooth height change */
 }
 
-/* Ruler Styling */
+/* --- RULER STYLING --- */
 .ruler-wrapper {
   flex: 1;
   height: 300px;
+  margin-left: 20px;
   position: relative;
 }
 
@@ -74,25 +78,22 @@
   height: 100%;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
 }
 
-.ruler-scroll::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+.ruler-scroll::-webkit-scrollbar { display: none; }
 
-.ruler-spacer {
-  height: 130px; /* To center the ruler items */
-}
+.ruler-spacer { height: 130px; }
 
 .ruler-item {
   height: 40px;
   display: flex;
   align-items: center;
   scroll-snap-align: center;
-  transition: all 0.3s ease;
 }
 
 .ruler-item .line {
-  width: 40px;
+  width: 35px;
   height: 2px;
   background-color: #e2d8e8;
   margin-right: 15px;
@@ -104,7 +105,7 @@
 }
 
 .ruler-item.active .line {
-  width: 60px;
+  width: 55px;
   background-color: #5a3c6d;
   height: 3px;
 }
@@ -115,59 +116,36 @@
   font-size: 18px;
 }
 
-/* Inch Value Card */
+/* --- INCH DISPLAY BOX --- */
 .height-display-box {
   position: absolute;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  text-align: center;
 }
 
 .unit-label {
+  display: block;
   font-size: 14px;
   color: #666;
+  margin-bottom: 8px;
 }
 
 .value-card {
-  width: 85px;
-  height: 85px;
-  border: 1.5px solid #5a3c6d;
+  width: 80px;
+  height: 80px;
+  border: 2px solid #5a3c6d;
   border-radius: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 800;
   background: white;
   box-shadow: 0 4px 15px rgba(90, 60, 109, 0.1);
 }
 
 /* Animations */
+@keyframes slideInTop { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
 .slide-in-top { animation: slideInTop 0.6s ease-out; }
-.slide-in-left { animation: slideInLeft 0.8s ease-out 0.2s both; }
-.fade-in-right { animation: fadeInRight 0.8s ease-out 0.4s both; }
-.bounce-in { animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s both; }
-
-@keyframes slideInTop {
-  from { opacity: 0; transform: translateY(-30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideInLeft {
-  from { opacity: 0; transform: translateX(-50px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(30px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes bounceIn {
-  from { opacity: 0; transform: translateY(-50%) scale(0.5); }
-  to { opacity: 1; transform: translateY(-50%) scale(1); }
-}

@@ -5,8 +5,8 @@ import StepProgressButton from '../../components/StepProgressButton/StepProgress
 import './AskHight.css';
 
 // Images Import
-import maleImg from '../../assets/male-height.png';
-import femaleImg from '../../assets/female-height.png';
+import maleImg from '../../assets/male-hight.png';
+import femaleImg from '../../assets/female-hight.png';
 
 const AskHight = () => {
   const location = useLocation();
@@ -14,7 +14,7 @@ const AskHight = () => {
   
   const gender = location.state?.gender || 'male'; 
   
-  // FIXED: Array generated from 7.0 down to 4.0 (Descending Order)
+  // Height range: 7.0 down to 4.0
   const heights = Array.from({ length: 31 }, (_, i) => (7.0 - i * 0.1).toFixed(1));
   
   const [selectedHeight, setSelectedHeight] = useState('5.3');
@@ -32,12 +32,21 @@ const AskHight = () => {
   };
 
   useEffect(() => {
-    // Scroll automatically to 5.3 position on load
     const initialIndex = heights.indexOf('5.3');
     if (scrollRef.current && initialIndex !== -1) {
       scrollRef.current.scrollTop = initialIndex * 40;
     }
   }, []);
+
+  // --- HEIGHT ANIMATION LOGIC ---
+  // Ye function height ke hisaab se scale calculate karega
+  // 4.0 height par scale chota hoga (0.8), 7.0 par bada (1.2)
+  const calculateScale = (height) => {
+    const val = parseFloat(height);
+    const baseScale = 0.8; 
+    const factor = (val - 4.0) / 3; // 4.0 se 7.0 ke beech ka percentage
+    return baseScale + (factor * 0.4); 
+  };
 
   return (
     <div className="height-container">
@@ -52,13 +61,19 @@ const AskHight = () => {
         <p className="subtitle fade-in">Just getting the full picture of you.</p>
 
         <div className="selector-main-area">
-          <div className="illustration-box slide-in-left">
-            <div className="purple-bg"></div>
-            <img 
-              src={gender === 'male' ? maleImg : femaleImg} 
-              alt="Character" 
-              className="character-img" 
-            />
+          {/* Illustration Section with BG BOX and DYNAMIC HEIGHT */}
+          <div className="illustration-wrapper slide-in-left">
+            <div className="character-bg-box">
+              <img 
+                src={gender === 'male' ? femaleImg : maleImg} 
+                alt="Character" 
+                className="character-img" 
+                style={{ 
+                  transform: `translateX(-50%) scale(${calculateScale(selectedHeight)})`,
+                  transformOrigin: 'bottom center' // Niche se height badhegi
+                }}
+              />
+            </div>
           </div>
 
           <div className="ruler-wrapper fade-in-right">
@@ -86,7 +101,7 @@ const AskHight = () => {
       <StepProgressButton 
         currentStep={4} 
         totalSteps={20} 
-        onClick={() => navigate('/next-step', { state: { ...location.state, height: selectedHeight } })} 
+        onClick={() => navigate('/intrest', { state: { ...location.state, height: selectedHeight } })} 
       />
     </div>
   );
