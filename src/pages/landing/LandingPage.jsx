@@ -9,7 +9,7 @@ const LandingPage = () => {
   const handleLogin = () => {
     // Yaha aap logic add kar sakte hain (jaise Google Auth) 
     // Uske baad niche wali line se navigate hoga
-    navigate('/native'); 
+    navigate('/gender'); 
   };
 
   return (
