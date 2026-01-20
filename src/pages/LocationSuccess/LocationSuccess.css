@@ -1,0 +1,118 @@
+.loc-success-container {
+  width: 100%;
+  height: 100%;
+  background-color: #5a3c6d; /* Dark Purple Theme */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  color: white;
+  text-align: center;
+}
+
+/* Confetti Logic */
+.confetti-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 35px;
+  top: -50px;
+  opacity: 0;
+  animation: fall 4s linear infinite;
+}
+
+/* Staggered positions for confetti */
+.p0 { left: 10%; animation-delay: 0s; }
+.p1 { left: 30%; animation-delay: 1.5s; }
+.p2 { left: 50%; animation-delay: 0.8s; }
+.p3 { left: 70%; animation-delay: 2.2s; }
+.p4 { left: 90%; animation-delay: 0.3s; }
+.p5 { left: 20%; animation-delay: 2.8s; }
+
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+/* Text Section */
+.success-text-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  padding-bottom: 50px; /* Offset for image */
+}
+
+.city-name {
+  font-family: 'Playfair Display', serif; /* Serif font for elegant look */
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.tagline-container {
+  position: relative;
+}
+
+.tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  line-height: 1.3;
+  font-weight: 500;
+  margin: 0;
+}
+
+.text-curve {
+  width: 60px;
+  margin-top: 5px;
+}
+
+/* Bottom Image */
+.working-illustration {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 2;
+}
+
+.char-img {
+  width: 95%;
+  max-height: 320px;
+  object-fit: contain;
+}
+
+/* Animations */
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.fade-in-up-delay {
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.slide-up-char {
+  animation: slideUpChar 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUpChar {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}

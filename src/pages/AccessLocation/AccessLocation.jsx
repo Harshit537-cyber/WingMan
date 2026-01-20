@@ -54,7 +54,7 @@ const AccessLocation = () => {
         <button className="allow-btn" onClick={handleAllowAccess}>
           Allow Location Access
         </button>
-        <button className="manual-btn">
+        <button className="manual-btn" onClick={() => navigate('/ManualLocation', { state: { ...location.state } })}>
           Enter Location Manually
         </button>
       </div>
@@ -68,13 +68,7 @@ const AccessLocation = () => {
           </svg>
         </div>
 
-        {/* Step 6 of 20 */}
-        <StepProgressButton 
-          currentStep={6} 
-          totalSteps={20} 
-          onClick={handleAllowAccess}
-          disabled={false}
-        />
+        
       </div>
     </div>
   );

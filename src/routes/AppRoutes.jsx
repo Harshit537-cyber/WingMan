@@ -8,6 +8,8 @@ import Birthday from '../pages/Birthday/Birthday';
 import AskHight from '../pages/AskHight/AskHight';
 import Intrest from '../pages/Intrest/Intrest';
 import AccessLocation from '../pages/AccessLocation/AccessLocation';
+import ManualLocation from '../pages/ManualLocation/ManualLocation';
+import LocationSuccess from '../pages/LocationSuccess/LocationSuccess';
 
 const AppRoutes = () => {
   return (
@@ -22,6 +24,8 @@ const AppRoutes = () => {
         <Route path="/hight" element={<AskHight />} />
         <Route path="/intrest" element={<Intrest />} />
         <Route path="/Acesslocation" element={<AccessLocation />} />
+        <Route path="/ManualLocation" element={<ManualLocation />} />
+        <Route path="/LocationSuccess" element={<LocationSuccess />} />
       </Routes>
     </Router>
   );

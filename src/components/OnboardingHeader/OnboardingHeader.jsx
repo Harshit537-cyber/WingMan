@@ -3,15 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import './OnboardingHeader.css';
 
-const OnboardingHeader = ({ title, subtitle, showSkip = false, onSkip }) => {
+const OnboardingHeader = ({ title, description, showSkip = false, onSkip }) => {
   const navigate = useNavigate();
 
   return (
     <div className="onboarding-header-container">
-      {/* Top Row: Back and Optional Skip */}
-      <div className="header-actions">
+      {/* Top Navigation Row */}
+      <div className="header-nav">
         <button className="back-icon-btn" onClick={() => navigate(-1)}>
-          <ChevronLeft size={28} />
+          <ChevronLeft size={30} strokeWidth={2.5} />
         </button>
         
         {showSkip && (
@@ -21,11 +21,13 @@ const OnboardingHeader = ({ title, subtitle, showSkip = false, onSkip }) => {
         )}
       </div>
 
-      {/* Text Section */}
-      <div className="header-text-wrapper">
-        <h1 className="header-main-title slide-in-left">{title}</h1>
-        {subtitle && (
-          <p className="header-sub-text fade-in-delayed">{subtitle}</p>
+      {/* Text Content */}
+      <div className="header-text-group">
+        <h1 className="header-title slide-in-top">{title}</h1>
+        {description && (
+          <p className="header-description fade-in-delay">
+            {description}
+          </p>
         )}
       </div>
     </div>

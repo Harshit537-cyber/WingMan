@@ -18,7 +18,17 @@
   flex-direction: column;
   /* box-shadow: 0 0 40px rgba(0, 0, 0, 0.05); Desktop par halki shadow premium look degi */
 }
-
+.mobile-container-main {
+  width: 100%;
+  height: 100dvh; /* Force dynamic viewport height */
+  max-width: 390px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column; /* Isse top, middle aur bottom stack honge */
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
 /* Mobile Devices ke liye shadow hata do aur full width kar do */
 @media (max-width: 640px) {
   .app-viewport-wrapper {
