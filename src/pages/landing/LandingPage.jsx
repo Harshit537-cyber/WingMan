@@ -1,8 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate
 import './LandingPage.css';
 import datingImg from '../../assets/image.png'; 
 
 const LandingPage = () => {
+  const navigate = useNavigate(); // 2. Hook ko initialize karein
+
+  const handleLogin = () => {
+    // Yaha aap logic add kar sakte hain (jaise Google Auth) 
+    // Uske baad niche wali line se navigate hoga
+    navigate('/native'); 
+  };
+
   return (
     <div className="landing-container">
       {/* Illustration Section */}
@@ -25,7 +34,8 @@ const LandingPage = () => {
 
       {/* Button Section */}
       <div className="button-box fade-in-up-delay">
-        <button className="google-login-btn">
+        {/* 3. Button pe onClick handler lagayein */}
+        <button className="google-login-btn" onClick={handleLogin}>
           Connect to Google
         </button>
       </div>
