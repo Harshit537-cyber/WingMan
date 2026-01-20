@@ -8,6 +8,13 @@ import Birthday from '../pages/Birthday/Birthday';
 import AskHight from '../pages/AskHight/AskHight';
 import Intrest from '../pages/Intrest/Intrest';
 import AccessLocation from '../pages/AccessLocation/AccessLocation';
+import Native from '../pages/Place/Native';
+import Story from '../pages/Story/Story';
+import Working from '../pages/Working/Working';
+import Study from '../pages/Study/Study';
+import Work from '../pages/Work/Work';
+import Education from '../pages/Education/Education';
+import Religion from '../pages/Religion/Religion';
 
 const AppRoutes = () => {
   return (
@@ -22,6 +29,13 @@ const AppRoutes = () => {
         <Route path="/hight" element={<AskHight />} />
         <Route path="/intrest" element={<Intrest />} />
         <Route path="/Acesslocation" element={<AccessLocation />} />
+        <Route path="/Native" element={<Native/>} />
+        <Route path="/Story" element={<Story/>} />
+        <Route path="/Working" element={<Working/>} />
+        <Route path="/Study" element={<Study/>} />
+        <Route path="/Work" element={<Work/>} />
+        <Route path="/Education" element={<Education/>} />
+        <Route path="/Religion" element={<Religion/>} />
       </Routes>
     </Router>
   );
