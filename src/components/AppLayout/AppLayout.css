@@ -1,0 +1,31 @@
+.app-viewport-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center; /* Desktop par beech mein laane ke liye */
+  align-items: center;
+  background-color: #FFF8FB; /* Desktop ka bahar ka background thoda gray */
+}
+
+.mobile-container-main {
+  width: 100%;
+  height: 100vh;
+  max-width: 390px; /* Splash screen wala exact size */
+  background-color: #FFF8FB; /* App ka background white */
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* box-shadow: 0 0 40px rgba(0, 0, 0, 0.05); Desktop par halki shadow premium look degi */
+}
+
+/* Mobile Devices ke liye shadow hata do aur full width kar do */
+@media (max-width: 640px) {
+  .app-viewport-wrapper {
+    background-color: #FFF8FB;
+  }
+  .mobile-container-main {
+    max-width: 100%;
+    box-shadow: none;
+  }
+}

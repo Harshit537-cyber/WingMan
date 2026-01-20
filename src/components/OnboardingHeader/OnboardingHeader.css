@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
+
+.onboarding-header-container {
+  width: 100%;
+  padding-top: 20px;
+  margin-bottom: 30px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  margin-bottom: 25px;
+}
+
+.back-icon-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #c9a66b; /* Golden/Tan color from your UI */
+  transition: transform 0.2s;
+}
+
+.back-icon-btn:active {
+  transform: scale(0.9);
+}
+
+.skip-text-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #888;
+  cursor: pointer;
+}
+
+.header-text-wrapper {
+  text-align: left;
+}
+
+.header-main-title {
+  font-size: 30px;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.header-sub-text {
+  font-size: 16px;
+  color: #666;
+  margin-top: 10px;
+  line-height: 1.4;
+}
+
+/* Animations */
+.slide-in-left {
+  animation: slideInLeft 0.6s ease-out forwards;
+}
+
+.fade-in-delayed {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out 0.3s forwards;
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
