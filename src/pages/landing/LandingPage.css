@@ -8,7 +8,7 @@
     justify-content: space-between; /* Pehle space-evenly tha, isse image ko zyada jagah milegi */
     height: 100dvh; 
     width: 100%;
-    background-color: #ffffff;
+    background-color: #FFF8FB;
     padding: 20px 10px; /* Side padding thodi kam ki hai */
     text-align: center;
     font-family: 'Outfit', sans-serif;
@@ -103,7 +103,7 @@
     .landing-container {
         max-width: 450px;
         margin: 0 auto;
-        border: 1px solid #eee;
+        /* border: 1px solid #eee; */
         border-radius: 40px;
         height: 90vh;
         margin-top: 5vh;

@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate
 import './LandingPage.css';
 import datingImg from '../../assets/image.png'; 
+import AppLayout from '../../components/AppLayout/AppLayout';
 
 const LandingPage = () => {
   const navigate = useNavigate(); // 2. Hook ko initialize karein
@@ -13,6 +14,7 @@ const LandingPage = () => {
   };
 
   return (
+    <AppLayout> 
     <div className="landing-container">
       {/* Illustration Section */}
       <div className="illustration-box fade-in-down">
@@ -40,6 +42,7 @@ const LandingPage = () => {
         </button>
       </div>
     </div>
+    </AppLayout>
   );
 };
 
