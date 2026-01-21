@@ -1,41 +1,43 @@
+/* ===== Root Wrapper ===== */
 .app-viewport-wrapper {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100svh; /* safer than vh */
   display: flex;
-  justify-content: center; /* Desktop par beech mein laane ke liye */
+  justify-content: center;
   align-items: center;
-  background-color: #FFF8FB; /* Desktop ka bahar ka background thoda gray */
+  background-color: #FFF8FB;
 }
 
+/* ===== Main App Container ===== */
 .mobile-container-main {
   width: 100%;
-  height: 100vh;
-  max-width: 390px; /* Splash screen wala exact size */
-  background-color: #FFF8FB; /* App ka background white */
-  position: relative;
-  overflow: hidden;
+  max-width: 420px; /* supports larger mobiles */
+  min-height: 100svh;
+
+  background-color: #FFF8FB;
   display: flex;
   flex-direction: column;
-  /* box-shadow: 0 0 40px rgba(0, 0, 0, 0.05); Desktop par halki shadow premium look degi */
-}
-.mobile-container-main {
-  width: 100%;
-  height: 100dvh; /* Force dynamic viewport height */
-  max-width: 390px;
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: column; /* Isse top, middle aur bottom stack honge */
   position: relative;
-  overflow: hidden;
-  margin: 0 auto;
+  overflow-x: hidden;
+
+  /* Desktop look */
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+
+  /* iOS safe area */
+  padding-bottom: env(safe-area-inset-bottom);
 }
-/* Mobile Devices ke liye shadow hata do aur full width kar do */
-@media (max-width: 640px) {
+
+/* ===== Mobile Devices ===== */
+@media (max-width: 768px) {
   .app-viewport-wrapper {
-    background-color: #FFF8FB;
+    align-items: stretch;
   }
+
   .mobile-container-main {
     max-width: 100%;
+    min-height: 100dvh; /* dynamic viewport */
+    border-radius: 0;
     box-shadow: none;
   }
 }
