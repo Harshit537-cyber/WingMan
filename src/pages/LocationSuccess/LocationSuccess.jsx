@@ -14,7 +14,7 @@ const LocationSuccess = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/next-step', { state: { ...location.state } });
+      navigate('/home', { state: { ...location.state } });
     }, 3500); // 3.5 seconds pause
     return () => clearTimeout(timer);
   }, [navigate, location.state]);
