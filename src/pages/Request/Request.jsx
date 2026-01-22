@@ -14,8 +14,7 @@ const Request = () => {
     <div className="requests-page-container">
       {/* 1. Status Bar */}
       <div className="ios-status-bar">
-        <span className="time-text">4:20</span>
-        <div className="status-right-icons">📶 📶 🔋</div>
+    
       </div>
 
       {/* 2. Top Navigation */}
