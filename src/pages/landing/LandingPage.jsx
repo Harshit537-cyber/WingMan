@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate
 import './LandingPage.css';
-import datingImg from '../../assets/image.png'; 
+import datingImg from '../../assets/image.svg'; 
 import AppLayout from '../../components/AppLayout/AppLayout';
 
 const LandingPage = () => {

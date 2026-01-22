@@ -43,6 +43,8 @@ import EditProfile from '../pages/Profile/EditProfile/EditProfile';
 import Matches from '../pages/Matches/Matches/Matches';
 import ProfileDetail from '../pages/Matches/ProfileDetail/ProfileDetail.jsx';
 import Gallery from '../pages/Matches/Gallery/Gallery.jsx';
+
+
 const AppRoutes = () => {
   return (
     <Router>
@@ -91,6 +93,9 @@ const AppRoutes = () => {
         <Route path="/matches" element={<Matches />} />
         <Route path="/matches/profile-details" element={<ProfileDetail />} />
         <Route path="gallery-preview" element={<Gallery />} />
+        <Route path="/match" element={<Matches />} />
+    
+      
       </Routes>
     </Router>
   );

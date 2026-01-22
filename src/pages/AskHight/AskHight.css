@@ -1,43 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap');
 
-.height-container {
-  max-width: 430px;
-  height: 100dvh;
-  margin: 0 auto;
-  background-color: #ffffff;
+.onboarding-screen-container {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  overflow: hidden;
+  background-color: #ffffff; /* Consistent white bg */
   font-family: 'Outfit', sans-serif;
+  overflow: hidden; /* No background scroll */
+  position: relative;
 }
 
-.header {
-  margin-top: 20px;
+/* Header Wrap */
+.onboarding-header-wrap {
+  padding: 40px 25px 5px 25px;
 }
 
-.title {
-  font-size: 32px;
-  font-weight: 800;
-  color: #1a1a1a;
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-.subtitle {
-  font-size: 18px;
-  color: #666;
-  margin-bottom: 40px;
+/* Vertical Center Body */
+.onboarding-body-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
 }
 
 .selector-main-area {
   position: relative;
   display: flex;
+  width: 100%;
   height: 400px;
   align-items: center;
 }
 
-/* --- CHARACTER & BG BOX STYLING --- */
+/* CHARACTER & BG BOX (UI preserved) */
 .illustration-wrapper {
   position: relative;
   width: 140px;
@@ -50,23 +46,23 @@
   position: absolute;
   bottom: 0;
   width: 60%;
-  height: 90%; /* Purple box ki height */
-  background-color: #9279a6; /* Purple color from image */
+  height: 90%;
+  background-color: #9279a6;
   border-radius: 35px;
   z-index: 1;
 }
 
 .character-img {
   position: absolute;
-  bottom: 0px; /* Feet box se thoda upar ya exact adjust karein */
-  left: 90%;
-  height: 100%; /* Base height */
+  bottom: 0px;
+  left: 50%; /* Adjusted for center scaling */
+  height: 100%;
   z-index: 2;
   object-fit: contain;
-  transition: transform 0.2s ease-out; /* Smooth height change */
+  transition: transform 0.2s ease-out;
 }
 
-/* --- RULER STYLING --- */
+/* RULER STYLING (UI preserved) */
 .ruler-wrapper {
   flex: 1;
   height: 300px;
@@ -80,7 +76,6 @@
   scroll-snap-type: y mandatory;
   scrollbar-width: none;
 }
-
 .ruler-scroll::-webkit-scrollbar { display: none; }
 
 .ruler-spacer { height: 130px; }
@@ -93,7 +88,7 @@
 }
 
 .ruler-item .line {
-  width: 35px;
+  width: 30px;
   height: 2px;
   background-color: #e2d8e8;
   margin-right: 15px;
@@ -105,7 +100,7 @@
 }
 
 .ruler-item.active .line {
-  width: 55px;
+  width: 50px;
   background-color: #5a3c6d;
   height: 3px;
 }
@@ -116,7 +111,7 @@
   font-size: 18px;
 }
 
-/* --- INCH DISPLAY BOX --- */
+/* DISPLAY BOX (UI preserved) */
 .height-display-box {
   position: absolute;
   right: 0;
@@ -128,50 +123,11 @@
 .unit-label {
   display: block;
   font-size: 14px;
-  color: #666;
+  color: #b0b0b0;
   margin-bottom: 8px;
+  font-weight: 700;
 }
 
-/* Page wrapper ko poori height lene do */
-.page-content-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 0 25px;
-}
-
-/* Middle content area jitni jagah bachi hai wo le lega */
-.main-content-area {
-  flex: 1; 
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Content ko beech mein rakhega */
-}
-
-/* Footer hamesha bottom par rahega */
-.fixed-footer-action {
-  margin-top: auto; /* Sabse niche push karega */
-  padding-bottom: 40px; /* Bottom se hamesha 40px ka gap rahega */
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  z-index: 10;
-}
-
-/* Wavy line jo aapne mangi thi, wo bhi yahi fixed rahegi */
-.fixed-footer-action::before {
-  content: "";
-  position: absolute;
-  top: -40px;
-  width: 150%;
-  left: -25%;
-  height: 80px;
-  background-image: url("data:image/svg+xml,%3Csvg width='400' height='80' viewBox='0 0 400 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60 Q100 20 200 60 T400 60' stroke='%23E2D8E8' stroke-width='2' stroke-dasharray='8 8'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-size: cover;
-  pointer-events: none;
-}
 .value-card {
   width: 80px;
   height: 80px;
@@ -186,6 +142,41 @@
   box-shadow: 0 4px 15px rgba(90, 60, 109, 0.1);
 }
 
-/* Animations */
-@keyframes slideInTop { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-.slide-in-top { animation: slideInTop 0.6s ease-out; }
+/* FOOTER SECTION (Sync with Gender/Name/Birthday) */
+.onboarding-footer-action {
+  padding-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+.footer-wavy-decoration {
+  position: absolute;
+  top: -40px;
+  width: 100%;
+  height: 80px;
+  background-image: url("data:image/svg+xml,%3Csvg width='400' height='80' viewBox='0 0 400 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60 Q100 20 200 60 T400 60' stroke='%23E2D8E8' stroke-width='2' stroke-dasharray='8 8'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Standard Animations */
+@keyframes slideInL { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+.slide-in-left { animation: slideInL 0.6s ease-out; }
+
+.fade-in-right { animation: slideInL 0.6s ease-out reverse; animation-direction: reverse; }
+
+@keyframes bounceIn { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.bounce-in { animation: bounceIn 0.6s cubic-bezier(0.17, 0.8, 0.3, 1.2) both; }
+
+/* Mobile Adjustments */
+@media (max-height: 700px) {
+    .selector-main-area { height: 320px; }
+    .illustration-wrapper { height: 280px; }
+    .character-img { height: 250px; }
+    .ruler-wrapper { height: 240px; }
+}

@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
 import AppLayout from '../../components/AppLayout/AppLayout';
 import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
 import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
@@ -40,72 +39,81 @@ const AskHight = () => {
     }
   }, []);
 
-  // --- HEIGHT ANIMATION LOGIC ---
-  // Ye function height ke hisaab se scale calculate karega
-  // 4.0 height par scale chota hoga (0.8), 7.0 par bada (1.2)
+  // Scale calculation logic preserved
   const calculateScale = (height) => {
     const val = parseFloat(height);
     const baseScale = 0.8; 
-    const factor = (val - 4.0) / 3; // 4.0 se 7.0 ke beech ka percentage
+    const factor = (val - 4.0) / 3; 
     return baseScale + (factor * 0.4); 
   };
 
   return (
     <AppLayout> 
-    <div className="height-container">
-      
-
-      <div className="content-wrapper">
-        <OnboardingHeader 
-          title="Now tell me, how tall are you?" 
-          description="Just getting the full picture of you."
+      <div className="onboarding-screen-container">
+        
+        {/* TOP SECTION */}
+        <div className="onboarding-header-wrap">
+          <OnboardingHeader 
+            title="Now tell me, how tall are you?" 
+            description="Just getting the full picture of you."
           />
+        </div>
 
-        <div className="selector-main-area">
-          {/* Illustration Section with BG BOX and DYNAMIC HEIGHT */}
-          <div className="illustration-wrapper slide-in-left">
-            <div className="character-bg-box">
-              <img 
-                src={gender === 'male' ? femaleImg : maleImg} 
-                alt="Character" 
-                className="character-img" 
-                style={{ 
-                  transform: `translateX(-50%) scale(${calculateScale(selectedHeight)})`,
-                  transformOrigin: 'bottom center' // Niche se height badhegi
-                }}
-              />
+        {/* MIDDLE SECTION: Vertical Centered Content */}
+        <div className="onboarding-body-content">
+          <div className="selector-main-area">
+            
+            {/* Illustration Section */}
+            <div className="illustration-wrapper slide-in-left">
+              <div className="character-bg-box">
+                <img 
+                  src={gender === 'male' ? maleImg : femaleImg} 
+                  alt="Character" 
+                  className="character-img" 
+                  style={{ 
+                    transform: `translateX(-50%) scale(${calculateScale(selectedHeight)})`,
+                    transformOrigin: 'bottom center' 
+                  }}
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="ruler-wrapper fade-in-right">
-            <div className="ruler-scroll" ref={scrollRef} onScroll={onScroll}>
-              <div className="ruler-spacer"></div>
-              {heights.map((h) => (
-                <div key={h} className={`ruler-item ${selectedHeight === h ? 'active' : ''}`}>
-                  <div className="line"></div>
-                  <span className="label">{h}</span>
-                </div>
-              ))}
-              <div className="ruler-spacer"></div>
+            {/* Ruler Section */}
+            <div className="ruler-wrapper fade-in-right">
+              <div className="ruler-scroll" ref={scrollRef} onScroll={onScroll}>
+                <div className="ruler-spacer"></div>
+                {heights.map((h) => (
+                  <div key={h} className={`ruler-item ${selectedHeight === h ? 'active' : ''}`}>
+                    <div className="line"></div>
+                    <span className="label">{h}</span>
+                  </div>
+                ))}
+                <div className="ruler-spacer"></div>
+              </div>
             </div>
-          </div>
 
-          <div className="height-display-box bounce-in">
-            <span className="unit-label">Inch</span>
-            <div className="value-card">
-              {selectedHeight}
+            {/* Display Box */}
+            <div className="height-display-box bounce-in">
+              <span className="unit-label">Inch</span>
+              <div className="value-card">
+                {selectedHeight}
+              </div>
             </div>
+
           </div>
         </div>
+
+        {/* BOTTOM SECTION: Fixed Footer */}
+        <div className="onboarding-footer-action">
+          <div className="footer-wavy-decoration"></div>
+          <StepProgressButton 
+            currentStep={4} 
+            totalSteps={20} 
+            onClick={() => navigate('/Acesslocation', { state: { ...location.state, height: selectedHeight } })} 
+          />
+        </div>
+
       </div>
-      <div className="fixed-footer-action"> 
-      <StepProgressButton 
-        currentStep={4} 
-        totalSteps={20} 
-        onClick={() => navigate('/Acesslocation', { state: { ...location.state, height: selectedHeight } })} 
-      />
-      </div>
-    </div>
     </AppLayout>
   );
 };

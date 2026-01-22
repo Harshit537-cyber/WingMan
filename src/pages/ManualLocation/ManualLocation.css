@@ -1,6 +1,7 @@
 .manual-loc-wrapper {
   display: flex;
   flex-direction: column;
+  background-color: FFF8FB;
   height: 100%;
   width: 100%;
   position: relative;

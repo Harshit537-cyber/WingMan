@@ -11,23 +11,17 @@
   position: relative;
 }
 
-/* Header Consistency */
+/* Header & Input Wrapper (Starts from top) */
 .onboarding-header-wrap {
   padding: 40px 25px 10px 25px;
-}
-
-/* Body Content - Vertical Center */
-.onboarding-body-content {
-  flex: 1;
   display: flex;
-  /* align-items: center;
-  justify-content: center; */
-  padding: 0 25px;
+  flex-direction: column;
 }
 
+/* Input Box - Positioned below text */
 .name-input-box {
   width: 100%;
-  max-width: 380px;
+  margin-top: 30px; /* Space from description text */
 }
 
 .custom-name-field {
@@ -56,6 +50,11 @@
   font-weight: 400;
 }
 
+/* Spacer to maintain layout structure */
+.onboarding-body-spacer {
+  flex: 1;
+}
+
 /* Footer & Progress Button */
 .onboarding-footer-action {
   padding-bottom: 50px;
@@ -78,7 +77,7 @@
   pointer-events: none;
 }
 
-/* Animations */
+/* Animation */
 .slide-up {
   animation: nameSlideUp 0.6s ease-out both;
 }
@@ -86,7 +85,7 @@
 @keyframes nameSlideUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -94,10 +93,13 @@
   }
 }
 
-/* Handling short screens */
+/* Mobile responsive height adjustment */
 @media (max-height: 700px) {
   .custom-name-field {
     height: 60px;
     font-size: 18px;
+  }
+  .onboarding-header-wrap {
+    padding-top: 30px;
   }
 }
