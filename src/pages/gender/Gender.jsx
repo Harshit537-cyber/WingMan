@@ -11,52 +11,55 @@ const Gender = () => {
 
   const handleNext = () => {
     if (selectedGender) {
-      // Data aage pass kar rahe hain
       navigate('/askName', { state: { gender: selectedGender } });
     }
   };
 
   return (
     <AppLayout> 
-    <div className="gender-page-layout">
-      {/* Ye container hamesha 430px max rahega aur center rahega */}
-      <div className="gender-main-column">
+      <div className="gender-screen-container">
         
-        <OnboardingHeader title="Let’s start by choosing your gender!" />
+        {/* TOP SECTION: Header & Progress */}
+        <div className="gender-header-wrap">
+          <OnboardingHeader title="Let’s start by choosing your gender!" />
+        </div>
 
-        <div className="gender-body">
-          <div className="gender-options">
-            {/* MALE */}
+        {/* MIDDLE SECTION: Chips (Centered) */}
+        <div className="gender-selection-body">
+          <div className="gender-chips-stack">
+            {/* MALE CHIP */}
             <div 
-              className={`gender-chip slide-up-1 ${selectedGender === 'male' ? 'selected' : ''}`}
+              className={`gender-select-card slide-up-1 ${selectedGender === 'male' ? 'is-selected' : ''}`}
               onClick={() => setSelectedGender('male')}
             >
-              <div className="gender-icon-box">
+              <div className="gender-icon-svg">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <circle cx="9" cy="15" r="5" />
                   <path d="M14 10l7-7M16 3h5v5" />
                 </svg>
               </div>
-              <span className="label">Male</span>
+              <span className="gender-label-text">Male</span>
             </div>
 
-            {/* FEMALE */}
+            {/* FEMALE CHIP */}
             <div 
-              className={`gender-chip slide-up-2 ${selectedGender === 'female' ? 'selected' : ''}`}
+              className={`gender-select-card slide-up-2 ${selectedGender === 'female' ? 'is-selected' : ''}`}
               onClick={() => setSelectedGender('female')}
             >
-              <div className="gender-icon-box">
+              <div className="gender-icon-svg">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <circle cx="12" cy="8" r="6" />
                   <path d="M12 14v7M9 19h6" />
                 </svg>
               </div>
-              <span className="label">Female</span>
+              <span className="gender-label-text">Female</span>
             </div>
           </div>
         </div>
 
-        <div className="gender-footer">
+        {/* BOTTOM SECTION: Progress Button */}
+        <div className="gender-footer-action">
+          <div className="wavy-bg-decoration"></div>
           <StepProgressButton 
             currentStep={1} 
             totalSteps={20} 
@@ -64,8 +67,8 @@ const Gender = () => {
             onClick={handleNext} 
           />
         </div>
+
       </div>
-    </div>
     </AppLayout>
   );
 };

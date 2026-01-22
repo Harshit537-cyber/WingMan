@@ -1,45 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
 
-.gender-page-layout {
+.gender-screen-container {
   width: 100%;
-  min-height: 100dvh;
-  background-color: #FFF8FB; /* Poora background white rahega */
+  height: 100%;
   display: flex;
-  justify-content: center; /* Content ko horizontal center karega */
+  flex-direction: column;
+  background-color: #ffffff;
   font-family: 'Outfit', sans-serif;
-}
-
-.gender-main-column {
-  width: 100%;
-  max-width: 430px; /* Mobile width constraint */
-  display: flex;
-  flex-direction: column;
-  padding: 0 25px;
-  height: 100dvh;
+  overflow: hidden; /* No scrolling */
   position: relative;
-  flex: 1;
-  margin-top: 40px;
-  z-index: 2;
 }
 
-.gender-body {
+/* Header Wrap */
+.gender-header-wrap {
+  padding: 40px 25px 10px 25px;
+}
+
+/* Middle Selection Body */
+.gender-selection-body {
   flex: 1;
   display: flex;
-  flex-direction: column;
+  align-items: center; /* Vertical Center */
   justify-content: center;
-  padding-bottom: 50px;
+  padding: 0 25px;
 }
 
-.gender-options {
+.gender-chips-stack {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
   align-items: center;
 }
 
-.gender-chip {
+.gender-select-card {
   width: 160px;
-  height: 180px;
+  height: 170px;
   background: #ffffff;
   border: 1.5px solid #e2d8e8;
   border-radius: 35px;
@@ -52,56 +48,67 @@
   color: #7a6691;
 }
 
-.gender-chip.selected {
-  background-color: #7a6691;
-  border-color: #7a6691;
+.gender-select-card.is-selected {
+  background-color: #5a3c6d; /* Primary Theme Purple */
+  border-color: #5a3c6d;
   color: #ffffff;
   transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(122, 102, 145, 0.2);
+  box-shadow: 0 10px 25px rgba(90, 60, 109, 0.2);
 }
 
-.gender-icon-box {
+.gender-icon-svg {
   margin-bottom: 12px;
 }
 
-.gender-icon-box svg {
-  width: 60px;
-  height: 60px;
+.gender-icon-svg svg {
+  width: 55px;
+  height: 55px;
 }
 
-.label {
+.gender-label-text {
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
-.gender-footer {
-  padding-bottom: 40px;
+/* Footer Section */
+.gender-footer-action {
+  padding-bottom: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
+  z-index: 5;
 }
 
-/* Wavy line behind button */
-.gender-footer::before {
-  content: "";
+.wavy-bg-decoration {
   position: absolute;
-  top: -30px;
-  width: 150%;
-  left: -25%;
+  top: -40px;
+  width: 100%;
   height: 80px;
   background-image: url("data:image/svg+xml,%3Csvg width='400' height='80' viewBox='0 0 400 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60 Q100 20 200 60 T400 60' stroke='%23E2D8E8' stroke-width='2' stroke-dasharray='8 8'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-size: cover;
-  opacity: 0.7;
+  opacity: 0.6;
   pointer-events: none;
 }
 
-/* Simple Staggered Slide Animations */
-.slide-up-1 { animation: slideUp 0.6s ease-out 0.1s both; }
-.slide-up-2 { animation: slideUp 0.6s ease-out 0.2s both; }
+/* Staggered Animations */
+.slide-up-1 { animation: genderSlideUp 0.6s ease-out 0.1s both; }
+.slide-up-2 { animation: genderSlideUp 0.6s ease-out 0.2s both; }
 
-@keyframes slideUp {
+@keyframes genderSlideUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile specific height fix */
+@media (max-height: 700px) {
+    .gender-select-card {
+        height: 150px;
+        width: 140px;
+    }
+    .gender-icon-svg svg {
+        width: 45px;
+        height: 45px;
+    }
 }

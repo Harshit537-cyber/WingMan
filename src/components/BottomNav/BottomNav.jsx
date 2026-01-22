@@ -2,10 +2,10 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './BottomNav.css';
 
-// Assets Icons Import (Make sure names match your files in assets folder)
+// Assets Icons Import
 import homeIcon from '../../assets/home.png';
 import datesIcon from '../../assets/dates.png';
-import heartActionIcon from '../../assets/center-heart.png'; // Center icon with two hearts
+import heartActionIcon from '../../assets/center-heart.png'; 
 import requestsIcon from '../../assets/requests.png';
 import profileIcon from '../../assets/profile.png';
 
@@ -41,7 +41,7 @@ const BottomNav = () => {
         <div className="center-btn-container">
           <div 
             className="raised-gradient-btn" 
-            onClick={() => navigate('/match')}
+            onClick={() => navigate('/matches')}
           >
             <img src={heartActionIcon} alt="Action" className="center-heart-img" />
           </div>
@@ -49,7 +49,7 @@ const BottomNav = () => {
 
         {/* Requests */}
         <div 
-          className={`nav-item ${isActive('/requests') ? 'active' : ''}`} 
+          className={`nav-item ${isActive('/request') || isActive('/requests') ? 'active' : ''}`} 
           onClick={() => navigate('/request')}
         >
           <img src={requestsIcon} alt="Requests" className="nav-icon" />

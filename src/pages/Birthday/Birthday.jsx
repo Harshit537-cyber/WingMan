@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
 import AppLayout from '../../components/AppLayout/AppLayout';
 import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
 import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
+import cakeImg from '../../assets/cake.png'; 
 import './Birthday.css';
 
 const Birthday = () => {
@@ -19,11 +19,11 @@ const Birthday = () => {
   const [selectedYear, setSelectedYear] = useState('2005');
 
   const handleNext = () => {
-  const birthdayData = `${selectedDay}-${selectedMonth}-${selectedYear}`;
-  navigate('/hight', { 
-    state: { ...location.state, birthday: birthdayData } 
-  });
-};
+    const birthdayData = `${selectedDay}-${selectedMonth}-${selectedYear}`;
+    navigate('/hight', { 
+      state: { ...location.state, birthday: birthdayData } 
+    });
+  };
 
   const handleScroll = (e, type, data) => {
     const scrollTop = e.target.scrollTop;
@@ -39,67 +39,77 @@ const Birthday = () => {
 
   return (
     <AppLayout> 
-    <div className="birthday-page-wrapper">
-      <div className="birthday-container">
+      <div className="birthday-screen-container">
         
-
-        <div className="scrollable-content">
+        {/* TOP SECTION */}
+        <div className="birthday-header-wrap">
           <OnboardingHeader 
-          title="When’s your birthday?" 
-          description="I like sending good vibes to people on their special day"
+            title="When’s your birthday?" 
+            description="I like sending good vibes to people on their special day"
           />
+        </div>
 
-          {/* Cake Illustration - Size Increased to 150x120 */}
-          <div className="cake-box scale-up">
-            <img src='src/assets/cake.png'/>
+        {/* MIDDLE SECTION: Content area */}
+        <div className="birthday-body-content scroll-prevent">
+          
+          {/* Cake Illustration */}
+          <div className="cake-illustration-box scale-up">
+            <img src={cakeImg} alt="Birthday Cake" />
           </div>
 
-          <div className="display-row">
-            <div className="input-field">
-              <span>Day</span>
-              <div className="val-box">{selectedDay}</div>
+          {/* Selected Value Boxes */}
+          <div className="date-display-row fade-in">
+            <div className="display-unit">
+              <span className="unit-label">Day</span>
+              <div className="unit-box">{selectedDay}</div>
             </div>
-            <div className="input-field">
-              <span>Month</span>
-              <div className="val-box">{selectedMonth.substring(0, 3)}</div>
+            <div className="display-unit">
+              <span className="unit-label">Month</span>
+              <div className="unit-box">{selectedMonth.substring(0, 3)}</div>
             </div>
-            <div className="input-field">
-              <span>Year</span>
-              <div className="val-box year-width">{selectedYear}</div>
+            <div className="display-unit">
+              <span className="unit-label">Year</span>
+              <div className="unit-box year-large">{selectedYear}</div>
             </div>
           </div>
 
-          {/* Increased margin here to push it down */}
-          <div className="action-label bounce-in">Please select date</div>
+          <div className="selection-prompt-banner bounce-in">Please select date</div>
 
-          <div className="wheel-picker-section">
-            <div className="picker-highlight"></div>
-            <div className="picker-col" onScroll={(e) => handleScroll(e, 'day', days)}>
-              <div className="spacer"></div>
-              {days.map(d => <div key={d} className={`picker-item ${selectedDay === d ? 'active' : ''}`}>{d}</div>)}
-              <div className="spacer"></div>
+          {/* Wheel Picker Section */}
+          <div className="wheel-picker-wrapper">
+            <div className="picker-selection-bar"></div>
+            
+            <div className="picker-column" onScroll={(e) => handleScroll(e, 'day', days)}>
+              <div className="picker-spacer"></div>
+              {days.map(d => <div key={d} className={`picker-item-val ${selectedDay === d ? 'is-active' : ''}`}>{d}</div>)}
+              <div className="picker-spacer"></div>
             </div>
-            <div className="picker-col" onScroll={(e) => handleScroll(e, 'month', months)}>
-              <div className="spacer"></div>
-              {months.map(m => <div key={m} className={`picker-item ${selectedMonth === m ? 'active' : ''}`}>{m}</div>)}
-              <div className="spacer"></div>
+
+            <div className="picker-column" onScroll={(e) => handleScroll(e, 'month', months)}>
+              <div className="picker-spacer"></div>
+              {months.map(m => <div key={m} className={`picker-item-val ${selectedMonth === m ? 'is-active' : ''}`}>{m}</div>)}
+              <div className="picker-spacer"></div>
             </div>
-            <div className="picker-col" onScroll={(e) => handleScroll(e, 'year', years)}>
-              <div className="spacer"></div>
-              {years.map(y => <div key={y} className={`picker-item ${selectedYear === y ? 'active' : ''}`}>{y}</div>)}
-              <div className="spacer"></div>
+
+            <div className="picker-column" onScroll={(e) => handleScroll(e, 'year', years)}>
+              <div className="picker-spacer"></div>
+              {years.map(y => <div key={y} className={`picker-item-val ${selectedYear === y ? 'is-active' : ''}`}>{y}</div>)}
+              <div className="picker-spacer"></div>
             </div>
           </div>
         </div>
-        <div className="fixed-footer-action"> 
-        <StepProgressButton 
-          currentStep={3} 
-          totalSteps={20} 
-          onClick={handleNext} 
-        />
+
+        {/* BOTTOM SECTION: Fixed Footer */}
+        <div className="birthday-footer-action">
+          <div className="footer-wavy-line"></div>
+          <StepProgressButton 
+            currentStep={3} 
+            totalSteps={20} 
+            onClick={handleNext} 
+          />
         </div>
+
       </div>
-    </div>
     </AppLayout> 
   );
 };
