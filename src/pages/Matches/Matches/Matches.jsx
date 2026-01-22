@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   ChevronLeft, Bell, AlignRight, Heart, 
@@ -25,8 +25,8 @@ const Matches = () => {
   const handleScroll = () => {
     if (scrollRef.current) {
       const scrollLeft = scrollRef.current.scrollLeft;
-      const cardWidth = scrollRef.current.offsetWidth * 0.75; // Card width reference
-      const index = Math.round(scrollLeft / cardWidth);
+      const cardFullWidth = 315; // card width + gap
+      const index = Math.round(scrollLeft / cardFullWidth);
       if (index !== activeIndex) setActiveIndex(index);
     }
   };
@@ -35,80 +35,89 @@ const Matches = () => {
     <AppLayout>
       <div className="matches-main-container">
         
-        {/* DOTS PAGINATION - Exact Image Match */}
-        <div className="custom-pagination">
+        {/* DOTS PAGINATION - Image Asset Style */}
+        <div className="pagination-dots-wrap">
           {profiles.map((_, idx) => (
             <span 
               key={idx} 
-              className={`pg-dot ${activeIndex === idx ? 'pg-active' : ''}`}
+              className={`dot-item ${activeIndex === idx ? 'dot-active' : ''}`}
             ></span>
           ))}
         </div>
 
         {/* HEADER */}
-        <header className="matches-nav-header">
-          <button className="nav-back" onClick={() => navigate(-1)}>
+        <header className="matches-header-nav">
+          <button className="back-btn-match" onClick={() => navigate(-1)}>
             <ChevronLeft size={28} color="#5a3c6d" />
           </button>
-          <div className="nav-center-text">
-             <h1 className="nav-title-main">Matches</h1>
-             <p className="nav-subtitle-main">Request a call and see where things go</p>
+          <div className="title-stack">
+             <h1 className="main-match-title">Matches</h1>
+             <p className="sub-match-title">Request a call and see where things go</p>
           </div>
-          <div className="nav-icons-right">
+          <div className="action-icons-right">
              <Bell size={26} color="#5a3c6d" />
              <AlignRight size={26} color="#5a3c6d" />
           </div>
         </header>
 
-        <div className="matches-content-body slide-up">
+        <div className="matches-body-content slide-up">
           
-          <div className="section-title-area">
-            <h2 className="title-bold">Your profiles for the day</h2>
-            <div className="instruction-row">
+          <div className="heading-group">
+            <h2 className="title-day">Your profiles for the day</h2>
+            <div className="note-row">
                <Target size={16} color="#1a1a1a" />
                <p>Favourites will stay while new matches roll in</p>
             </div>
           </div>
 
-          {/* 3D TILTED SLIDER */}
+          {/* PERFECTED SLIDER */}
           <div 
-            className="perspective-slider-container" 
+            className="cards-carousel-container" 
             ref={scrollRef} 
             onScroll={handleScroll}
           >
             {profiles.map((profile, index) => {
-              // Calculate rotation based on index
-              let rotationClass = "";
-              if (index < activeIndex) rotationClass = "tilt-left";
-              else if (index > activeIndex) rotationClass = "tilt-right";
-              else rotationClass = "active-center";
+              // Rotation Logic: Side cards at -6.75 or 6.75, Center at 0
+              let rotateValue = 0;
+              let scaleValue = 1;
+              if (index < activeIndex) {
+                 rotateValue = 6.75; // Left card
+                 scaleValue = 0.9;
+              } else if (index > activeIndex) {
+                 rotateValue = -6.75; // Right card
+                 scaleValue = 0.9;
+              }
 
               return (
                 <div 
                   key={profile.id} 
-                  className={`match-card-wrapper ${rotationClass}`}
-                  onClick={() => navigate('*')}
+                  className="card-anchor"
+                  onClick={() => navigate('profile-details')}
+                  style={{
+                    transform: `rotate(${rotateValue}deg) scale(${scaleValue})`,
+                    zIndex: activeIndex === index ? 10 : 1
+                  }}
                 >
-                  <div className="profile-card-inner">
-                      <img src={matchImg} alt={profile.name} className="card-image" />
+                  <div className="actual-match-card">
+                      <img src={matchImg} alt={profile.name} className="match-img-bg" />
                       
-                      <div className="badge-heart-row">
-                         <div className="compat-badge">{profile.compat} Compatible</div>
-                         <button className="heart-btn" onClick={(e) => e.stopPropagation()}>
+                      <div className="card-top-ui">
+                         <div className="match-badge">{profile.compat} Compatible</div>
+                         <button className="heart-icon-btn" onClick={(e) => e.stopPropagation()}>
                             <Heart size={24} color="#fff" strokeWidth={2.5} />
                          </button>
                       </div>
 
-                      <div className="profile-info-overlay">
-                         <div className="text-info">
-                            <h3 className="name-age">{profile.name}, {profile.age}</h3>
-                            <div className="loc-info">
+                      <div className="card-bottom-ui">
+                         <div className="info-wrap">
+                            <h3 className="name-label">{profile.name}, {profile.age}</h3>
+                            <div className="loc-wrap">
                                <MapPin size={16} fill="#fff" color="#fff" />
                                <span>{profile.city}</span>
                             </div>
                          </div>
                          
-                         <button className="call-btn-square" onClick={(e) => e.stopPropagation()}>
+                         <button className="call-btn-fixed" onClick={(e) => e.stopPropagation()}>
                             <Phone size={22} fill="#5a3c6d" color="#5a3c6d" />
                          </button>
                       </div>
@@ -116,7 +125,8 @@ const Matches = () => {
                 </div>
               );
             })}
-            <div className="scroll-end-spacer"></div>
+            {/* Spacer for ending scroll */}
+            <div className="carousel-end-spacer"></div>
           </div>
 
         </div>
