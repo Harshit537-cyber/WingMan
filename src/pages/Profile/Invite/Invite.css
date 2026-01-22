@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
+.invite-main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header Styles */
+.invite-top-nav {
+  padding: 45px 20px 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-back-circle { background: none; border: none; cursor: pointer; padding: 0; }
+.invite-nav-title { font-size: 22px; font-weight: 700; color: #1a1a1a; margin: 0; }
+
+.nav-right-group { display: flex; gap: 15px; align-items: center; }
+.bell-container { position: relative; display: flex; align-items: center; }
+.notification-dot {
+    position: absolute;
+    top: 2px; right: 2px;
+    width: 8px; height: 8px;
+    background-color: #ff4d4d;
+    border-radius: 50%;
+    border: 1.5px solid white;
+}
+
+/* Scroll Content */
+.invite-scroll-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 25px;
+  scrollbar-width: none;
+}
+.invite-scroll-content::-webkit-scrollbar { display: none; }
+
+/* Text Section */
+.invite-text-section { margin-top: 10px; margin-bottom: 35px; }
+.invite-heading { font-size: 32px; font-weight: 800; color: #1a1a1a; margin-bottom: 15px; line-height: 1.2; }
+.invite-subtext { font-size: 18px; color: #666666; font-weight: 500; line-height: 1.5; }
+
+/* Form Fields */
+.invite-form-container { display: flex; flex-direction: column; gap: 20px; }
+.invite-custom-input, .invite-custom-textarea {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #f2f2f2;
+  border-radius: 20px;
+  padding: 22px 25px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  outline: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.invite-custom-textarea { resize: none; border-radius: 30px; cursor: text; }
+
+/* Invite Button */
+.invite-action-container { margin-top: 40px; }
+.invite-primary-btn {
+  width: 100%;
+  background-color: #5a3c6d;
+  color: #ffffff;
+  border: none;
+  padding: 18px;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.footer-spacer { height: 100px; }
+
+/* --- CONTACT MODAL STYLES --- */
+.modal-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    width: 88%;
+    max-width: 340px;
+    background-color: #FFF3F8;
+    border-radius: 35px;
+    padding: 45px 25px 35px 25px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.modal-close-x {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: none; border: none; cursor: pointer;
+}
+
+.modal-inner { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+
+.contact-icon-wrapper {
+    background-color: transparent;
+    border: 2px solid #5a3c6d;
+    border-radius: 18px;
+    padding: 15px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-title { font-size: 24px; font-weight: 800; color: #000; margin: 0; }
+.modal-subtitle { font-size: 15px; color: #333; font-weight: 500; line-height: 1.4; }
+
+.modal-primary-btn {
+    width: 100%;
+    background-color: #5a3c6d;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.blur-bg { filter: blur(4px); pointer-events: none; transition: filter 0.3s ease; }
+
+/* Animations */
+.slide-up { animation: slideUp 0.6s ease-out; }
+.slide-up-modal { animation: slideUp 0.3s ease-out; }
+@keyframes slideUp { 
+    from { opacity: 0; transform: translateY(20px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}

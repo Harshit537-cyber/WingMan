@@ -32,6 +32,12 @@ import DosAndDonts from '../pages/Date/DosAndDonts/DosAndDonts';
 import CancelDate from '../pages/Date/CancelDate/CancelDate';
 import ProposedDates from '../pages/Date/ProposedDates/ProposedDates';
 import Profile from '../pages/Profile/Profile/Profile';
+import AccountSetting from '../pages/Profile/AccountSetting/AccountSetting';
+import Invite from '../pages/Profile/Invite/Invite';
+import ChangePassword from '../pages/Profile/ChangePassword/ChangePassword';
+import Feedback from '../pages/Profile/Feedback/Feedback';
+import EditProfile from '../pages/Profile/EditProfile/EditProfile';
+import Matches from '../pages/Matches/Matches/Matches';
 const AppRoutes = () => {
   return (
     <Router>
@@ -69,6 +75,12 @@ const AppRoutes = () => {
         <Route path="/cancel-date" element={<CancelDate />} />
         <Route path="/proposed-dates" element={<ProposedDates />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<AccountSetting />} />
+        <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="/invite" element={<Invite />} />
+        <Route path="/feedback" element={<Feedback />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/match" element={<Matches />} />
       </Routes>
     </Router>
   );
