@@ -1,0 +1,213 @@
+.web-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  overflow: hidden; /* Prevent body scroll */
+}
+
+.upload-screen {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 100vh;
+  max-height: 850px;
+  background-color: #FFF9FB;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  border-radius: 20px; /* Optional: for better look on web */
+}
+
+/* Header Adjustments */
+.top-nav-bar {
+  display: flex;
+  justify-content: center;
+  padding: 15px 0 5px 0;
+}
+
+.header-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #888;
+  letter-spacing: 0.5px;
+}
+
+/* Content Area - Scrollbar Hidden */
+.content-area {
+  flex: 1;
+  padding: 0 24px;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.content-area::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.upload-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #1A1A1A;
+  margin-top: 10px;
+  line-height: 1.2;
+}
+
+.fields-container {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* Consistent spacing instead of large mt */
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.field-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+}
+
+.value-display {
+  font-size: 14px;
+  color: #5D326F;
+  font-weight: 600;
+}
+
+/* --- Functional Slider Styling --- */
+.custom-slider-container {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.slider-track {
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  background: #E8E8E8;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.slider-progress {
+  position: absolute;
+  height: 100%;
+  background: #5D326F;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+/* The actual hidden input that handles clicks */
+.real-slider {
+  position: absolute;
+  width: 100%;
+  height: 10px;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.slider-thumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 36px;
+  height: 36px;
+  background: #5D326F;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 13px;
+  border: 3px solid white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 4;
+  pointer-events: none; /* Input handle clicks */
+  transition: left 0.1s ease-out;
+}
+
+/* Select/Dropdown Styling */
+.dropdown-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.select-wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.select-wrapper select {
+  width: 100%;
+  padding: 15px 20px;
+  background: #FFFFFF;
+  border: 1px solid #F0F0F0;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #444;
+  appearance: none;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.arrow-icon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Footer Button */
+.footer-button {
+  padding: 20px 24px 30px 24px;
+  background: #FFF9FB;
+}
+
+.continue-btn-purple {
+  width: 100%;
+  background: #5D326F;
+  color: #fff;
+  padding: 16px;
+  border-radius: 16px;
+  border: none;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.continue-btn-purple:active {
+  transform: scale(0.97);
+  background: #4a2859;
+}
+
+/* Small Screen Adjustments */
+@media (max-height: 700px) {
+  .fields-container { gap: 15px; }
+  .upload-title { font-size: 22px; }
+  .select-wrapper select { padding: 12px 15px; }
+}
+
+@media (max-width: 640px) {
+  .upload-screen {
+    max-width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+}

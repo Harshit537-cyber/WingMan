@@ -1,0 +1,135 @@
+.pick-card-web-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+.pick-card-screen {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 100vh;
+  max-height: 850px;
+  background-color: #FFF9FB;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  border-radius: 0px;
+  overflow: hidden;
+  padding-bottom: 15px;
+}
+
+.pick-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 20px 10px 20px;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1A1A1A;
+}
+
+.back-btn { background: none; border: none; cursor: pointer; }
+
+/* Carousel Styles */
+.card-carousel-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.card-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0 40px;
+  gap: 20px;
+  width: 100%;
+  cursor: grab; /* Mouse indicator */
+  user-select: none;
+}
+
+.card-carousel.active {
+  cursor: grabbing; /* Jab pakad ke slide karein */
+  scroll-snap-type: none; /* Dragging ke waqt snap off taaki smooth rahe */
+}
+
+.card-carousel::-webkit-scrollbar { display: none; }
+
+.card-item {
+  scroll-snap-align: center;
+  flex: 0 0 85%; /* Thoda size chota kiya taaki side cards dikhein */
+  height: 550px;
+  background-color: #EBD9F3;
+  border-radius: 35px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.card-content {
+  padding: 40px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1A1A1A;
+  margin-bottom: 10px;
+}
+
+.card-subtitle {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.card-illustration {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.card-illustration img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  pointer-events: none; /* Important: image drag ko prevent karne ke liye */
+}
+
+/* Footer */
+.pick-card-footer {  padding: 5px 24px 10px 24px; }
+
+.continue-btn {
+  width: 100%;
+  background: #5D326F;
+  color: #fff;
+  padding: 18px;
+  border-radius: 18px;
+  border: none;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .pick-card-screen { max-width: 100%; max-height: 100vh; border-radius: 0; }
+  .card-item { flex: 0 0 85%; }
+  .card-carousel { padding: 0 30px; }
+}

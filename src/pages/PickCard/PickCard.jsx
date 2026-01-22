@@ -1,0 +1,85 @@
+import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './PickCard.css';
+import cardImg from '../../assets/Group 163041.png';
+
+const PickCard = () => {
+  const navigate = useNavigate();
+  const scrollRef = useRef(null);
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const cards = [
+    { id: 1, title: "Lifestyle & Value", subtitle: "Consistency, priorities, family-career balance", image: cardImg },
+    { id: 2, title: "Health & Fitness", subtitle: "Daily routines, diet, and mental well-being", image: cardImg },
+    { id: 3, title: "Travel & Hobbies", subtitle: "Adventure, exploring, and creative passions", image: cardImg }
+  ];
+
+  // Mouse Drag Logic
+  const handleMouseDown = (e) => {
+    setIsDown(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => setIsDown(false);
+  const handleMouseUp = () => setIsDown(false);
+
+  const handleMouseMove = (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  return (
+    <div className="pick-card-web-container">
+      <div className="pick-card-screen">
+        
+        <div className="pick-card-header">
+          <button className="back-btn" onClick={() => navigate(-1)}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5D326F" strokeWidth="2.5">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <h2 className="header-title">Pick A Card</h2>
+          <div style={{ width: 24 }}></div>
+        </div>
+
+        <div className="card-carousel-wrapper">
+          <div 
+            className={`card-carousel ${isDown ? 'active' : ''}`}
+            ref={scrollRef}
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+          >
+            {cards.map((card) => (
+              <div className="card-item" key={card.id}>
+                <div className="card-content">
+                  <h3 className="card-title">{card.title}</h3>
+                  <p className="card-subtitle">{card.subtitle}</p>
+                  <div className="card-illustration">
+                    <img src={card.image} alt={card.title} draggable="false" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="pick-card-footer">
+          <button className="continue-btn" onClick={() => navigate('/next')}>
+            Continue
+          </button>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+export default PickCard;
