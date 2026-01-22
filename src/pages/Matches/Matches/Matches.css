@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
+.matches-main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  overflow: hidden;
+}
+
+/* --- DOTS PAGINATION (Exact Match to your asset) --- */
+.custom-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 15px 0 5px 0;
+}
+
+.pg-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #E8D9F1; /* Light lavender square-ish dot */
+  border-radius: 4px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.pg-active {
+  width: 38px; /* Elongated bar */
+  height: 12px;
+  background-color: #5A3C6D; /* Deep purple */
+  border-radius: 8px;
+}
+
+/* Header */
+.matches-nav-header {
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.nav-back { background: none; border: none; cursor: pointer; padding-top: 5px; }
+.nav-center-text { flex: 1; margin-left: 10px; }
+.nav-title-main { font-size: 28px; font-weight: 800; color: #1a1a1a; margin: 0; }
+.nav-subtitle-main { font-size: 15px; color: #b0b0b0; font-weight: 500; margin-top: 2px; }
+.nav-icons-right { display: flex; gap: 15px; padding-top: 5px; }
+
+/* Content Area */
+.matches-content-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.section-title-area { padding: 15px 25px; }
+.title-bold { font-size: 26px; font-weight: 800; color: #1a1a1a; margin-bottom: 5px; }
+.instruction-row { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; }
+
+/* --- 3D TILTED SLIDER CSS --- */
+.perspective-slider-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 20px 40px 50px 40px; /* Space for tilted cards */
+  gap: 5px; /* Cards overlap slightly like image */
+  perspective: 1000px; /* Crucial for 3D depth */
+  flex: 1;
+}
+.perspective-slider-container::-webkit-scrollbar { display: none; }
+
+.match-card-wrapper {
+  min-width: 75%;
+  height: 480px;
+  scroll-snap-align: center;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.profile-card-inner {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  border-radius: 35px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+/* Tilt Logic */
+.tilt-left {
+  transform: rotateY(25deg) rotateZ(-5deg) scale(0.85);
+  opacity: 0.7;
+}
+
+.tilt-right {
+  transform: rotateY(-25deg) rotateZ(5deg) scale(0.85);
+  opacity: 0.7;
+}
+
+.active-center {
+  transform: rotateY(0deg) rotateZ(0deg) scale(1);
+  z-index: 10;
+  opacity: 1;
+}
+
+.card-image { width: 100%; height: 100%; object-fit: cover; }
+
+/* Card Content Overlay */
+.badge-heart-row {
+  position: absolute;
+  top: 20px; left: 20px; right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.compat-badge {
+  background: white;
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.profile-info-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 30px 20px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.name-age { color: white; font-size: 24px; font-weight: 700; margin: 0; }
+.loc-info { display: flex; align-items: center; gap: 4px; color: white; margin-top: 4px; font-size: 14px; }
+
+/* Phone Button Exact Match */
+.call-btn-square {
+  width: 55px;
+  height: 45px;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 15px; /* Square with rounded corners as image */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.scroll-end-spacer { min-width: 30px; }
+
+/* Animations */
+.slide-up { animation: slideUp 0.6s ease-out; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
