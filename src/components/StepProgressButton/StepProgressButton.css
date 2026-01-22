@@ -1,0 +1,64 @@
+.step-footer-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding-bottom: 40px;
+}
+
+.curved-line {
+  width: 120%; /* Thoda bahar tak jaye */
+  position: absolute;
+  top: 15px;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.step-btn-wrapper {
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.step-btn-wrapper.disabled {
+  opacity: 0.5;
+  filter: grayscale(0.5);
+  cursor: not-allowed;
+}
+
+.main-action-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-ring {
+  transform: rotate(-90deg); /* Progress top se start ho */
+}
+
+.progress-ring-fill {
+  transition: stroke-dashoffset 0.4s ease-out;
+}
+
+.inner-purple-circle {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-color: #5a3c6d;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(90, 60, 109, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.step-btn-wrapper.active .inner-purple-circle:active {
+  transform: scale(0.92);
+}

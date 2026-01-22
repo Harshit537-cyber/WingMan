@@ -1,0 +1,173 @@
+.height-container {
+  max-width: 430px;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow: hidden;
+  font-family: -apple-system, sans-serif;
+}
+
+.header {
+  margin-top: 40px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.selector-main-area {
+  position: relative;
+  display: flex;
+  height: 450px;
+  align-items: center;
+}
+
+/* Illustration Styling */
+.illustration-box {
+  position: relative;
+  width: 140px;
+  height: 380px;
+  margin-right: 20px;
+}
+
+.purple-bg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff; /* Purple shade from image */
+  border-radius: 30px;
+  z-index: 1;
+}
+
+.character-img {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 110%; /* Image slightly taller than box */
+  z-index: 2;
+  object-fit: contain;
+}
+
+/* Ruler Styling */
+.ruler-wrapper {
+  flex: 1;
+  height: 300px;
+  position: relative;
+}
+
+.ruler-scroll {
+  height: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none; /* Firefox */
+}
+
+.ruler-scroll::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+.ruler-spacer {
+  height: 130px; /* To center the ruler items */
+}
+
+.ruler-item {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  scroll-snap-align: center;
+  transition: all 0.3s ease;
+}
+
+.ruler-item .line {
+  width: 40px;
+  height: 2px;
+  background-color: #e2d8e8;
+  margin-right: 15px;
+}
+
+.ruler-item .label {
+  font-size: 16px;
+  color: #999;
+}
+
+.ruler-item.active .line {
+  width: 60px;
+  background-color: #5a3c6d;
+  height: 3px;
+}
+
+.ruler-item.active .label {
+  color: #000;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* Inch Value Card */
+.height-display-box {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.unit-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.value-card {
+  width: 85px;
+  height: 85px;
+  border: 1.5px solid #5a3c6d;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+  background: white;
+  box-shadow: 0 4px 15px rgba(90, 60, 109, 0.1);
+}
+
+/* Animations */
+.slide-in-top { animation: slideInTop 0.6s ease-out; }
+.slide-in-left { animation: slideInLeft 0.8s ease-out 0.2s both; }
+.fade-in-right { animation: fadeInRight 0.8s ease-out 0.4s both; }
+.bounce-in { animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s both; }
+
+@keyframes slideInTop {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes bounceIn {
+  from { opacity: 0; transform: translateY(-50%) scale(0.5); }
+  to { opacity: 1; transform: translateY(-50%) scale(1); }
+}
