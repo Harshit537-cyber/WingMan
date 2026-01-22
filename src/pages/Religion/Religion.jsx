@@ -11,6 +11,7 @@ const Religion = () => {
     "Sikhism",
     "Jainism",
     "Buddhism",
+    "Not Belive",
   ];
 
   return (

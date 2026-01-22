@@ -15,6 +15,9 @@ import Study from '../pages/Study/Study';
 import Work from '../pages/Work/Work';
 import Education from '../pages/Education/Education';
 import Religion from '../pages/Religion/Religion';
+import Habit from '../pages/Habit/Habit';
+import Interest from '../pages/Interest/Interest';
+import About from '../pages/About/About';
 
 const AppRoutes = () => {
   return (
@@ -36,6 +39,9 @@ const AppRoutes = () => {
         <Route path="/Work" element={<Work/>} />
         <Route path="/Education" element={<Education/>} />
         <Route path="/Religion" element={<Religion/>} />
+        <Route path="/Habit" element={<Habit/>} />
+        <Route path="/Interest" element={<Interest/>} />
+        <Route path="/About" element={<About/>} />
       </Routes>
     </Router>
   );
