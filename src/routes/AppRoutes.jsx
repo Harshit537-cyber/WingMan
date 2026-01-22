@@ -20,6 +20,18 @@ import LocationSuccess from '../pages/LocationSuccess/LocationSuccess';
 import Home from '../pages/HomePages/Home/Home';
 import VerifyProfile from '../pages/HomePages/VerifyProfile/VerifyProfile';
 import Schedule from '../pages/HomePages/Schedule/Schedule';
+import ScheduleVideoCall from '../pages/HomePages/ScheduleVideoCall/ScheduleVideoCall';
+import ScheduleConfirmed from '../pages/HomePages/ScheduleConfirmed/ScheduleConfirmed';
+import ProfileVerified from '../pages/HomePages/ProfileVerified/ProfileVerified';
+import Dates from '../pages/Date/Dates/Dates';
+import AskedOutList from '../pages/Date/AskedOutList/AskedOutList';
+import PlanedDates from '../pages/Date/PlanedDates/PlanedDates';
+import PlanDetails from '../pages/Date/PlanDetails/PlanDetails';
+import DatePlanned from '../pages/Date/DatePlanned/DatePlanned';
+import DosAndDonts from '../pages/Date/DosAndDonts/DosAndDonts';
+import CancelDate from '../pages/Date/CancelDate/CancelDate';
+import ProposedDates from '../pages/Date/ProposedDates/ProposedDates';
+import Profile from '../pages/Profile/Profile/Profile';
 const AppRoutes = () => {
   return (
     <Router>
@@ -45,6 +57,18 @@ const AppRoutes = () => {
         <Route path="/home" element={<Home/>} />
         <Route path="/home/*" element={<VerifyProfile/>} />
         <Route path="/schedule" element={<Schedule/>} />
+        <Route path="/schedule-video-call" element={<ScheduleVideoCall />} />
+        <Route path="/schedule-confirmed" element={<ScheduleConfirmed />} />
+        <Route path="/verified" element={<ProfileVerified />} />
+        <Route path="/dates" element={<Dates />} />
+        <Route path="/asked-out" element={<AskedOutList />} />
+        <Route path="/planned-dates" element={<PlanedDates />} />
+        <Route path="/plan-details" element={<PlanDetails />} />
+        <Route path="/date-planned" element={<DatePlanned />} />
+        <Route path="/dos-donts" element={<DosAndDonts />} />
+        <Route path="/cancel-date" element={<CancelDate />} />
+        <Route path="/proposed-dates" element={<ProposedDates />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );

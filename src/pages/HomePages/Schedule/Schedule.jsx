@@ -94,10 +94,23 @@ const Schedule = () => {
 
         {/* Action Button */}
         <div className="confirm-btn-wrapper fade-in-up">
-           <button className="confirm-schedule-btn" onClick={() => console.log('Confirmed:', selectedDate, selectedTime)}>
-              Confirm Schedule
-           </button>
-        </div>
+  <button 
+    className="confirm-schedule-btn" 
+    onClick={() => {
+      // Data pass karte hue navigate karein
+      navigate('/schedule-video-call', { 
+        state: { 
+          date: selectedDate, 
+          month: 'January', // Aap isse dynamic bhi bana sakte hain
+          year: '2025', 
+          time: selectedTime 
+        } 
+      });
+    }}
+  >
+    Confirm Schedule
+  </button>
+</div>
 
         <BottomNav />
       </div>

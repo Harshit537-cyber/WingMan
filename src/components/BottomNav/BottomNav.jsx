@@ -1,65 +1,72 @@
-import React, { useState } from 'react';
-import { Home, Calendar, MessageCircleHeart, User } from 'lucide-react';
+import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './BottomNav.css';
 
+// Assets Icons Import (Make sure names match your files in assets folder)
+import homeIcon from '../../assets/home.png';
+import datesIcon from '../../assets/dates.png';
+import heartActionIcon from '../../assets/center-heart.png'; // Center icon with two hearts
+import requestsIcon from '../../assets/requests.png';
+import profileIcon from '../../assets/profile.png';
+
 const BottomNav = () => {
-  const [activeTab, setActiveTab] = useState('home');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="bottom-nav">
-      <div className="nav-content">
+    <div className="nav-wrapper">
+      <nav className="bottom-nav-bar">
         
         {/* Home */}
         <div 
-          className={`nav-item ${activeTab === 'home' ? 'active' : ''}`} 
-          onClick={() => setActiveTab('home')}
+          className={`nav-item ${isActive('/home') ? 'active' : ''}`} 
+          onClick={() => navigate('/home')}
         >
-          <Home size={24} />
+          <img src={homeIcon} alt="Home" className="nav-icon" />
           <span>Home</span>
         </div>
 
         {/* Dates */}
         <div 
-          className={`nav-item ${activeTab === 'dates' ? 'active' : ''}`} 
-          onClick={() => setActiveTab('dates')}
+          className={`nav-item ${isActive('/dates') ? 'active' : ''}`} 
+          onClick={() => navigate('/dates')}
         >
-          <Calendar size={24} />
+          <img src={datesIcon} alt="Dates" className="nav-icon" />
           <span>Dates</span>
         </div>
 
-        {/* Central Floating Button */}
-        <div className="nav-center-container">
-          <div className="center-raised-btn" onClick={() => setActiveTab('match')}>
-             <div className="heart-icons">
-                <div className="heart-large"></div>
-                <div className="heart-small"></div>
-             </div>
+        {/* Central Floating Action Button */}
+        <div className="center-btn-container">
+          <div 
+            className="raised-gradient-btn" 
+            onClick={() => navigate('/match')}
+          >
+            <img src={heartActionIcon} alt="Action" className="center-heart-img" />
           </div>
         </div>
 
         {/* Requests */}
         <div 
-          className={`nav-item ${activeTab === 'requests' ? 'active' : ''}`} 
-          onClick={() => setActiveTab('requests')}
+          className={`nav-item ${isActive('/requests') ? 'active' : ''}`} 
+          onClick={() => navigate('/requests')}
         >
-          <div className="icon-badge-wrapper">
-            <MessageCircleHeart size={24} />
-            <span className="badge-dot"></span>
-          </div>
+          <img src={requestsIcon} alt="Requests" className="nav-icon" />
           <span>Requests</span>
         </div>
 
         {/* Profile */}
         <div 
-          className={`nav-item ${activeTab === 'profile' ? 'active' : ''}`} 
-          onClick={() => setActiveTab('profile')}
+          className={`nav-item ${isActive('/profile') ? 'active' : ''}`} 
+          onClick={() => navigate('/profile')}
         >
-          <User size={24} />
+          <img src={profileIcon} alt="Profile" className="nav-icon" />
           <span>Profile</span>
         </div>
 
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 };
 

@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
+.verified-page-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 25px;
+  background-color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.verified-header-text {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin-top: 60px;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+.verified-card-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 2;
+}
+
+/* Lavender Success Card */
+.verified-card {
+  width: 100%;
+  background-color: #f9f4ff; /* Light lavender bg as per image */
+  border-radius: 40px;
+  padding: 50px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+
+/* Checkmark Icon Design */
+.checkmark-outer-circle {
+  width: 130px;
+  height: 130px;
+  background-color: #5a3c6d; /* Dark purple outer */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.checkmark-inner-circle {
+  width: 65px;
+  height: 65px;
+  background-color: #22c55e; /* Vibrant green for success */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.verified-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 25px;
+}
+
+.verified-message {
+  font-size: 20px;
+  color: #1a1a1a;
+  line-height: 1.3;
+  font-weight: 500;
+  margin-bottom: 45px;
+}
+
+/* Take me home button */
+.home-back-btn {
+  width: 100%;
+  background-color: #5a3c6d;
+  color: white;
+  padding: 18px;
+  border-radius: 18px;
+  font-size: 18px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  box-shadow: 0 8px 20px rgba(90, 60, 109, 0.2);
+}
+
+.home-back-btn:active {
+  transform: scale(0.97);
+}
+
+.verified-bottom-wave {
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  width: 120%;
+  opacity: 0.5;
+}
+
+/* --- Animations --- */
+
+.fade-in { animation: fadeIn 0.8s ease-out; }
+
+.slide-up { 
+  animation: slideUp 0.8s cubic-bezier(0.17, 0.88, 0.32, 1.28) forwards; 
+}
+
+.pop-in { 
+  animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both; 
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.5); }
+  70% { transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
