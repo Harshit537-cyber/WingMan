@@ -41,6 +41,8 @@ import ChangePassword from '../pages/Profile/ChangePassword/ChangePassword';
 import Feedback from '../pages/Profile/Feedback/Feedback';
 import EditProfile from '../pages/Profile/EditProfile/EditProfile';
 import Matches from '../pages/Matches/Matches/Matches';
+
+
 const AppRoutes = () => {
   return (
     <Router>
@@ -87,6 +89,8 @@ const AppRoutes = () => {
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/match" element={<Matches />} />
+    
+      
       </Routes>
     </Router>
   );
