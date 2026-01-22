@@ -11,19 +11,6 @@ const StepProgressButton = ({ currentStep, totalSteps = 20, onClick, disabled })
 
   return (
     <div className="step-footer-container">
-      {/* Curved dashed line background (jo image mein niche hai) */}
-      <div className="curved-line">
-        <svg width="100%" height="40" viewBox="0 0 400 40" preserveAspectRatio="none">
-          <path 
-            d="M0,30 Q100,10 200,30 T400,30" 
-            fill="none" 
-            stroke="#E2D8E8" 
-            strokeWidth="2" 
-            strokeDasharray="8,8" 
-          />
-        </svg>
-      </div>
-
       {/* The Button with Progress Ring */}
       <div className={`step-btn-wrapper ${disabled ? 'disabled' : 'active'}`}>
         <button 

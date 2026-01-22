@@ -59,7 +59,7 @@ const LocationAccess = () => {
           <button className="allow-btn" onClick={handleAllowAccess}>
             Allow Location Access
           </button>
-          <button className="manual-btn">
+          <button className="manual-btn" onClick={() => navigate('/ManualLocation', { state: { ...location.state } })}>
             Enter Location Manually
           </button>
         </div>

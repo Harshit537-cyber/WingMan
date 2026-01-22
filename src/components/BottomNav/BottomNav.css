@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap');
+
+.nav-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 390px; /* Layout consistency */
+  z-index: 1000;
+  background-color: transparent;
+}
+
+.bottom-nav-bar {
+  width: 100%;
+  height: 85px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* Soft shadow for the bar */
+  box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.04);
+  position: relative;
+  padding-bottom: env(safe-area-inset-bottom);
+  font-family: 'Outfit', sans-serif;
+  border-top: 1px solid #f2f2f2;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  /* Inactive Color */
+  color: #7a6691;
+  opacity: 0.8;
+}
+
+.nav-item span {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.nav-item.active {
+  color: #5a3c6d;
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.nav-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+/* Center Button Container */
+.center-btn-container {
+  flex: 1.2;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+/* Central raised button with gradient */
+.raised-gradient-btn {
+  width: 70px;
+  height: 70px;
+  /* Gradient as seen in image */
+  background: linear-gradient(145deg, #7a5c8d 0%, #5a3c6d 100%);
+  border-radius: 50%;
+  position: absolute;
+  top: -50px; /* Makes it "Raised" */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* White border cutout effect */
+  border: 4px solid #ffffff;
+  box-shadow: 0 10px 25px rgba(90, 60, 109, 0.4);
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.center-heart-img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+/* Click Animation */
+.raised-gradient-btn:active {
+  transform: scale(0.92) translateY(-45px);
+}
+
+.nav-item:active {
+  transform: scale(0.9);
+}

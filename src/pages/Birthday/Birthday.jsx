@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
+import AppLayout from '../../components/AppLayout/AppLayout';
+import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
 import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
 import './Birthday.css';
 
@@ -36,20 +38,16 @@ const Birthday = () => {
   };
 
   return (
+    <AppLayout> 
     <div className="birthday-page-wrapper">
       <div className="birthday-container">
-        <div className="header">
-          <button className="back-btn" onClick={() => navigate(-1)}>
-            <ChevronLeft size={28} />
-          </button>
-          
-        </div>
+        
 
         <div className="scrollable-content">
-          <div className="text-section">
-            <h1 className="title slide-in">When’s your birthday?</h1>
-            <p className="subtitle fade-in">I like sending good vibes to people on their special day</p>
-          </div>
+          <OnboardingHeader 
+          title="When’s your birthday?" 
+          description="I like sending good vibes to people on their special day"
+          />
 
           {/* Cake Illustration - Size Increased to 150x120 */}
           <div className="cake-box scale-up">
@@ -93,14 +91,16 @@ const Birthday = () => {
             </div>
           </div>
         </div>
-
+        <div className="fixed-footer-action"> 
         <StepProgressButton 
           currentStep={3} 
           totalSteps={20} 
           onClick={handleNext} 
         />
+        </div>
       </div>
     </div>
+    </AppLayout> 
   );
 };
 

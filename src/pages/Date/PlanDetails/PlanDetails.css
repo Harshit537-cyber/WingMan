@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
+.plan-page-container {
+  width: 100%;
+  height: 100%;
+  background-color: #fcfaff;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Header */
+.plan-header {
+  padding: 40px 20px 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fcfaff;
+}
+
+.back-btn, .menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.header-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Content */
+.plan-scroll-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 20px;
+  scrollbar-width: none;
+}
+.plan-scroll-content::-webkit-scrollbar { display: none; }
+
+.request-msg {
+  color: #5a3c6d;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  margin: 15px 0 25px 0;
+}
+
+/* Card General Styling */
+.plan-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(90, 60, 109, 0.04);
+  border: 1px solid #f3eef7;
+}
+
+.card-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.card-heading span {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Date Section */
+.date-banner {
+  background-color: #f3ecf6;
+  color: #5a3c6d;
+  text-align: center;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.time-slots-row {
+  display: flex;
+  gap: 10px;
+}
+
+.time-chip {
+  flex: 1;
+  padding: 12px 5px;
+  border-radius: 12px;
+  background-color: #5a3c6d;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.2s;
+}
+
+.time-chip.active {
+  opacity: 1;
+  box-shadow: 0 4px 10px rgba(90, 60, 109, 0.3);
+}
+
+.helper-text {
+  font-size: 12px;
+  color: #888;
+  font-style: italic;
+  margin-top: 12px;
+}
+
+/* Food Mood & Chips */
+.info-row {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.info-row .value {
+  color: #1a1a1a;
+  margin-left: 8px;
+}
+
+.info-row .value.bold {
+  font-weight: 700;
+}
+
+.chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.item-chip {
+  background-color: #f2f2f2;
+  color: #444;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Budget Styling */
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mt-15 { margin-top: 15px; }
+
+.pay-chip {
+  background-color: #5a3c6d;
+  color: #fff;
+  padding: 6px 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Footer Buttons */
+.action-buttons-row {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.btn-decline {
+  flex: 0.8;
+  background: #fff;
+  border: 1.5px solid #5a3c6d;
+  color: #5a3c6d;
+  padding: 16px;
+  border-radius: 15px;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.btn-accept {
+  flex: 1.2;
+  background: #5a3c6d;
+  border: none;
+  color: #fff;
+  padding: 16px;
+  border-radius: 15px;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(90, 60, 109, 0.2);
+}
+
+.btn-decline:active, .btn-accept:active {
+  transform: scale(0.97);
+}
+
+.bottom-padding {
+  height: 100px;
+}
+
+/* Animations */
+.fade-in { animation: fadeIn 0.8s ease-out; }
+.slide-up { animation: slideUp 0.6s ease-out both; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }

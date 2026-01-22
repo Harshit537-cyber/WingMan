@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
+import AppLayout from '../../components/AppLayout/AppLayout';
+import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
 import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
 import './AskHight.css';
 
@@ -49,16 +51,15 @@ const AskHight = () => {
   };
 
   return (
+    <AppLayout> 
     <div className="height-container">
-      <div className="header">
-        <button className="back-btn" onClick={() => navigate(-1)}>
-          <ChevronLeft size={28} />
-        </button>
-      </div>
+      
 
       <div className="content-wrapper">
-        <h1 className="title slide-in-top">Now tell me, how tall are you?</h1>
-        <p className="subtitle fade-in">Just getting the full picture of you.</p>
+        <OnboardingHeader 
+          title="Now tell me, how tall are you?" 
+          description="Just getting the full picture of you."
+          />
 
         <div className="selector-main-area">
           {/* Illustration Section with BG BOX and DYNAMIC HEIGHT */}
@@ -97,13 +98,15 @@ const AskHight = () => {
           </div>
         </div>
       </div>
-
+      <div className="fixed-footer-action"> 
       <StepProgressButton 
         currentStep={4} 
         totalSteps={20} 
-        onClick={() => navigate('/intrest', { state: { ...location.state, height: selectedHeight } })} 
+        onClick={() => navigate('/Acesslocation', { state: { ...location.state, height: selectedHeight } })} 
       />
+      </div>
     </div>
+    </AppLayout>
   );
 };
 

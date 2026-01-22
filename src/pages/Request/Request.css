@@ -1,0 +1,171 @@
+:root {
+  --bg-soft-pink: #fef7ff;
+  --primary-purple: #5a3c6d;
+  --card-white: #ffffff;
+  --text-grey: #6e6e6e;
+}
+
+.requests-page-container {
+  background-color: var(--bg-soft-pink);
+  min-height: 100vh;
+  width: 100%;
+  max-width: 414px; /* Mobile View Width */
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 90px; /* Space for BottomNav */
+  font-family: 'Outfit', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Status Bar Styles */
+.ios-status-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 25px 5px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Header Styles */
+.top-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+}
+
+.right-nav-group {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-icon-trigger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+}
+
+/* Tab Switcher Styles */
+.tab-control-section {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0 20px;
+}
+
+.segmented-control {
+  background-color: #f2f2f2;
+  border-radius: 50px;
+  padding: 4px;
+  display: flex;
+  width: 85%;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.control-btn {
+  flex: 1;
+  border: none;
+  padding: 10px 0;
+  border-radius: 50px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  background: transparent;
+  color: #888;
+  transition: all 0.25s ease;
+}
+
+.control-btn.is-active {
+  background-color: var(--primary-purple);
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(90, 60, 109, 0.25);
+}
+
+/* Request Cards Styling */
+.requests-scroll-list {
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.ui-request-card {
+  background: var(--card-white);
+  border-radius: 20px;
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.card-left-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar-wrapper {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.request-type-text {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--text-grey);
+}
+
+/* Action Area */
+.card-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.confirm-action-btn {
+  background-color: var(--primary-purple);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 25px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(90, 60, 109, 0.3);
+}
+
+.cancel-icon-btn {
+  background: none;
+  border: none;
+  color: var(--primary-purple);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+/* Active touch feedback */
+.confirm-action-btn:active, .nav-icon-trigger:active {
+  transform: scale(0.95);
+}

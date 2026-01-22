@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
+.dates-screen-container {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Header */
+.dates-header {
+  padding: 40px 20px 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.header-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #000;
+}
+
+.header-right-icons {
+  display: flex;
+  gap: 15px;
+}
+
+/* Content Area */
+.dates-content-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 20px;
+  scrollbar-width: none;
+}
+.dates-content-scroll::-webkit-scrollbar { display: none; }
+
+/* Horizontal Card (Asked out / Completed) */
+.horizontal-date-card {
+  background-color: #fdf9ff;
+  border-radius: 25px;
+  padding: 25px 20px;
+  border: 1px solid #f3eef7;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(90, 60, 109, 0.03);
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title-with-heart {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.count-badge {
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+}
+
+.avatar-row {
+  display: flex;
+  gap: 12px;
+}
+
+.avatar-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #5a3c6d;
+  overflow: hidden;
+  padding: 2px;
+}
+
+.avatar-circle img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Grid Section (Side-by-side cards) */
+.grid-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.vertical-date-card {
+  background-color: #fdf9ff;
+  border-radius: 25px;
+  padding: 25px 15px;
+  border: 1px solid #f3eef7;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vertical-date-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 25px;
+  color: #1a1a1a;
+}
+
+.large-avatar {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  border: 3px solid #5a3c6d;
+  overflow: hidden;
+  padding: 3px;
+}
+
+.large-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.bottom-spacing {
+  height: 100px;
+}
+
+/* --- Animations --- */
+.fade-in { animation: fadeIn 0.8s ease-out; }
+.slide-up { animation: slideUp 0.7s ease-out both; }
+.delay-1 { animation-delay: 0.2s; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ... baki puraana CSS same rahega ... */
+
+.horizontal-date-card, .vertical-date-card {
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+  user-select: none;
+}
+
+/* Hover Effect: Halka sa glow aur lift */
+.horizontal-date-card:hover, .vertical-date-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(90, 60, 109, 0.08);
+  border-color: #5a3c6d44;
+}
+
+/* Active Effect: Click karne par dabne ka effect */
+.horizontal-date-card:active, .vertical-date-card:active {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+/* Counts and Icons should also look interactive */
+.count-badge, .header-right-icons svg {
+    transition: opacity 0.2s;
+}
+
+.header-right-icons svg:active {
+    opacity: 0.5;
+}
+
+/* Ensure avatars don't shrink during card scale */
+.avatar-circle, .large-avatar {
+    flex-shrink: 0;
+}
