@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
+.confirmed-page-container {
+  width: 100%;
+  height: 100%;
+  padding: 0 25px;
+  background-color: #FFF8F7;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Outfit', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.confirmed-header {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.confirmed-illustration {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.main-illustration {
+  width: 90%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* --- THE EXACT CARD UI --- */
+.status-card-container {
+  width: 100%;
+  background-color: #f9f4ff; /* Light lavender-pink background */
+  border-radius: 25px;
+  padding: 22px 25px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
+  z-index: 2;
+}
+
+.status-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Left Side Styles */
+.status-left-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.mini-calendar-icon {
+  width: 70px;
+  height: 65px;
+  background-color: #5a3c6d; /* Dark purple matching icon */
+  border-radius: 12px;
+  position: relative;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.mini-calendar-top-hooks {
+    position: absolute;
+    top: -5px;
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.mini-calendar-top-hooks span {
+    width: 5px;
+    height: 10px;
+    background-color: #5a3c6d;
+    border-radius: 10px;
+}
+
+.mini-calendar-inner-box {
+  width: 100%;
+  height: 45px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-date-text {
+  color: #5a3c6d;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.reschedule-action-text {
+  background: none;
+  border: none;
+  color: #ff3b30; /* Specific red for reschedule */
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Right Side Styles */
+.status-right-section {
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.today-label {
+  font-size: 32px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.scheduled-time-text {
+  font-size: 30px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+}
+
+/* Meet Info */
+.google-meet-info {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+.bottom-action-area {
+  margin-top: auto;
+  padding-bottom: 40px;
+}
+
+.status-scheduled-btn {
+  width: 100%;
+  background-color: #5a3c6d;
+  color: white;
+  padding: 18px;
+  border-radius: 18px;
+  font-size: 18px;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 8px 20px rgba(90, 60, 109, 0.2);
+}
+
+.footer-wave-bg {
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  width: 120%;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Animations */
+.slide-up { animation: slideUp 0.8s ease-out forwards; }
+.slide-up-delay { animation: slideUp 0.8s ease-out 0.2s both; }
+.fade-in-slow { animation: fadeIn 1.2s ease-out 0.5s both; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}

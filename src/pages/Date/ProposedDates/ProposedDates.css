@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
+.proposed-dates-container {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Outfit', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header Alignment */
+.proposed-header {
+  padding: 45px 20px 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.back-btn-circle, .menu-filter-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.proposed-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+/* Scrollable Content Styles */
+.proposed-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 20px;
+  scrollbar-width: none;
+}
+.proposed-scroll-area::-webkit-scrollbar { display: none; }
+
+.list-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* --- THE CARD UI --- */
+.proposed-card {
+  background-color: #ffffff;
+  border-radius: 30px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #f4eff8;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease;
+}
+
+.proposed-card:active {
+  transform: scale(0.97);
+}
+
+/* Avatar & Heart Badge Logic */
+.avatar-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar-ring-purple {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  border: 3px solid #5a3c6d;
+  padding: 4px;
+  overflow: hidden;
+}
+
+.avatar-ring-purple img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar-heart-badge {
+  position: absolute;
+  bottom: 2px;
+  right: -2px;
+  background-color: #ffffff;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid #f0f0f0;
+}
+
+/* User Info Section */
+.user-info {
+  flex: 1;
+  margin-left: 15px;
+}
+
+.name-val {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.dist-val {
+  font-size: 15px;
+  color: #888;
+  margin-top: 2px;
+}
+
+/* Action Button */
+.view-plan-btn {
+  background-color: #5a3c6d;
+  color: #ffffff;
+  padding: 10px 22px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 5px 12px rgba(90, 60, 109, 0.25);
+}
+
+.nav-spacer {
+  height: 100px;
+}
+
+/* --- ANIMATION --- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.staggered-fade-in {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out forwards;
+}

@@ -1,65 +1,63 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
+import AppLayout from '../../components/AppLayout/AppLayout';
+import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
 import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
 import './AskName.css';
 
 const AskName = () => {
   const location = useLocation();
-  const gender = location.state?.gender; // Pichle page se gender liya
-  const [name, setName] = useState('');
   const navigate = useNavigate();
+  
+  const gender = location.state?.gender; 
+  const [name, setName] = useState('');
 
   const handleNext = () => {
     if (name.trim()) {
-      navigate('/hy', { state: { gender, name } }); // Gender aur Name dono pass kiye
+      navigate('/hy', { state: { gender, name } }); 
     }
   };
 
   return (
-    <div className="name-container">
-      {/* Background Animated Line */}
-      {/* <div className="bg-animation-wrapper">
-        <svg viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg" className="animated-path">
-          <path 
-            d="M-50,550 C100,500 350,500 350,350 C350,200 100,200 100,350 C100,450 250,500 450,450" 
-            stroke="#E2D8E8" 
-            strokeWidth="2" 
-            strokeDasharray="8 8" 
+    <AppLayout> 
+      <div className="onboarding-screen-container">
+        
+        {/* TOP SECTION: Header & Input (Flowing from top) */}
+        <div className="onboarding-header-wrap">
+          <OnboardingHeader 
+            title="Cool, what's your name?" 
+            description="I'll save it as your display name."
           />
-        </svg>
-      </div> */}
+          
+          {/* Input Field: Directly below header text */}
+          <div className="name-input-box slide-up">
+            <input 
+              type="text" 
+              className="custom-name-field" 
+              placeholder="Name" 
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              autoFocus
+            />
+          </div>
+        </div>
 
-      <div className="header">
-        <button className="back-btn" onClick={() => navigate(-1)}>
-          <ChevronLeft size={28} />
-        </button>
-      </div>
+        {/* MIDDLE SECTION: Empty flex to push footer down */}
+        <div className="onboarding-body-spacer"></div>
 
-      <div className="content-wrapper">
-        <h1 className="title slide-in-left">Cool, what's your name?</h1>
-        <p className="subtitle fade-in-delay">I'll save it as your display name.</p>
-
-        <div className="input-group slide-up-delay">
-          <input 
-            type="text" 
-            className="name-input" 
-            placeholder="Name" 
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            autoFocus
+        {/* BOTTOM SECTION: Progress Button */}
+        <div className="onboarding-footer-action">
+          <div className="footer-wavy-decoration"></div>
+          <StepProgressButton 
+            currentStep={2} 
+            totalSteps={20} 
+            disabled={!name.trim()} 
+            onClick={handleNext} 
           />
         </div>
-      </div>
 
-      {/* Step 2 of 20 */}
-      <StepProgressButton 
-        currentStep={2} 
-        totalSteps={20} 
-        disabled={!name.trim()} 
-        onClick={handleNext} 
-      />
-    </div>
+      </div>
+    </AppLayout> 
   );
 };
 

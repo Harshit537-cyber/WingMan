@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+/* Main Wrapper for Web Responsiveness */
+.lifestyle-screen-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F8F9FA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+}
+
+.lifestyle-container {
+    width: 100%;
+    max-width: 430px; /* Mobile width fixed */
+    height: 100vh;
+    max-height: 900px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 24px;
+    box-sizing: border-box;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+}
+
+/* Header Styling */
+.lifestyle-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.lifestyle-back-btn {
+    position: absolute;
+    left: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.lifestyle-category-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+/* Question Area */
+.lifestyle-main-content {
+    flex: 1;
+}
+
+.lifestyle-question-text {
+    font-size: 23px;
+    line-height: 1.35;
+    font-weight: 800;
+    color: #000000;
+    margin-bottom: 30px;
+    letter-spacing: -0.5px;
+}
+
+/* 2x2 Grid Layout */
+.lifestyle-options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.lifestyle-card {
+    border: 2px solid #725188; /* Exact purple from UI */
+    border-radius: 24px;
+    height: 220px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: #fff;
+}
+
+.lifestyle-card.is-selected {
+    border-color: #432C51;
+    border-width: 3px;
+    background-color: #F9F4FA;
+    transform: translateY(-2px);
+}
+
+.lifestyle-card-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.lifestyle-image-holder {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 110px;
+}
+
+.lifestyle-illustration {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Footer Section */
+.lifestyle-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+}
+
+.lifestyle-fab-container {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lifestyle-ring-svg {
+    position: absolute;
+    transform: rotate(-90deg);
+}
+
+.lifestyle-ring-track {
+    fill: none;
+    stroke: #F2EEF4;
+    stroke-width: 4;
+}
+
+.lifestyle-ring-fill {
+    fill: none;
+    stroke: #432C51;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 239; /* 2 * PI * 38 */
+    transition: stroke-dashoffset 0.6s ease;
+}
+
+.lifestyle-next-btn {
+    width: 65px;
+    height: 65px;
+    background-color: #432C51;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 2;
+    opacity: 0.4;
+    transition: 0.3s ease;
+}
+
+.lifestyle-next-btn.is-ready {
+    opacity: 1;
+    box-shadow: 0 10px 25px rgba(67, 44, 81, 0.3);
+}
+
+/* Responsiveness for small mobiles */
+@media (max-height: 700px) {
+    .lifestyle-card { height: 180px; padding: 12px; }
+    .lifestyle-image-holder { height: 80px; }
+    .lifestyle-question-text { font-size: 19px; }
+}

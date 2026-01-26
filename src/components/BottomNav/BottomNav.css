@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap');
+
+.nav-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  /* Width must match AppLayout's mobile-container-main */
+  width: 100%;
+  max-width: 420px; 
+  z-index: 1000;
+  background-color: transparent;
+}
+
+.bottom-nav-bar {
+  width: 100%;
+  height: 85px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* Premium soft shadow */
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
+  position: relative;
+  /* Safe area for iPhone notch */
+  padding-bottom: env(safe-area-inset-bottom);
+  font-family: 'Outfit', sans-serif;
+  border-top: 1px solid #f2f2f2;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #7a6691;
+  opacity: 0.7;
+}
+
+.nav-item span {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.nav-item.active {
+  color: #5a3c6d;
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.nav-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+/* Center Button Styling */
+.center-btn-container {
+  flex: 1.2;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.raised-gradient-btn {
+  width: 68px;
+  height: 68px;
+  background: linear-gradient(145deg, #7a5c8d 0%, #5a3c6d 100%);
+  border-radius: 50%;
+  position: absolute;
+  top: -45px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid #ffffff; /* White cutout effect */
+  box-shadow: 0 10px 20px rgba(90, 60, 109, 0.3);
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.center-heart-img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+/* Animations */
+.raised-gradient-btn:active {
+  transform: scale(0.9) translateY(-40px);
+}
+
+.nav-item:active {
+  transform: scale(0.9);
+}
+
+/* Desktop and Tablet Adjustment */
+@media (max-width: 768px) {
+  .nav-wrapper {
+    max-width: 100%;
+    left: 0;
+    transform: none;
+  }
+}

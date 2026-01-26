@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
+.dos-donts-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #FFF8F7;
+  font-family: 'Outfit', sans-serif;
+  overflow: hidden;
+}
+
+.page-header {
+  padding: 40px 20px 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-circle-btn { background: none; border: none; cursor: pointer; }
+.header-title { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+.header-right { display: flex; gap: 15px; }
+
+.content-scrollable {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.content-scrollable::-webkit-scrollbar { display: none; }
+
+.status-msg {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 800;
+  margin: 15px 20px 30px 20px;
+}
+
+/* --- INFO GRID: FIXED TO MATCH DATEPLANNED --- */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  padding: 0 20px;
+  margin-bottom: 40px;
+}
+
+.info-card {
+  height: 125px; /* Exact size as DatePlanned */
+  border-radius: 25px; /* Clean rounded corners */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.info-card.dark-purple { background-color: #5a3c6d; color: #ffffff; }
+.info-card.light-purple { background-color: #f9f4ff; color: #1a1a1a; }
+.card-label { font-size: 15px; font-weight: 600; opacity: 0.8; }
+.card-value { font-size: 22px; font-weight: 700; }
+.purple-text { color: #5a3c6d; }
+
+/* --- TABS --- */
+.tab-section { padding: 0 20px; margin-bottom: 30px; }
+.tab-desc { font-size: 18px; color: #333; font-weight: 500; margin-bottom: 15px; }
+
+.tab-pill-box {
+  display: flex;
+  background-color: #f7f7f7;
+  border-radius: 16px;
+  padding: 6px;
+  border: 1px solid #eee;
+}
+
+.tab-pill {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #777;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-pill.active {
+  background-color: #5a3c6d;
+  color: white;
+  box-shadow: 0 4px 12px rgba(90, 60, 109, 0.25);
+}
+
+/* --- HORIZONTAL SCROLL CARDS (INCREASED WIDTH) --- */
+.horizontal-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 20px;
+}
+.horizontal-scroll-container::-webkit-scrollbar { display: none; }
+
+.scroll-track {
+  display: flex;
+  gap: 18px;
+  padding: 0 20px;
+}
+
+.wide-scroll-card {
+  min-width: 280px; /* Width Increased */
+  max-width: 280px;
+  height: 180px; /* Height Adjusted for proportion */
+  border-radius: 28px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.bg-light { background-color: #fdf4ff; color: #1a1a1a; }
+.bg-dark { background-color: #5a3c6d; color: #ffffff; }
+
+.wide-scroll-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 12px; }
+.wide-scroll-card p { font-size: 14px; line-height: 1.5; opacity: 0.95; }
+
+.nav-padding-bottom { height: 110px; }
+
+/* ANIMATIONS */
+.fade-in { animation: fadeIn 0.8s ease-out; }
+.slide-up { animation: slideUp 0.6s ease-out forwards; }
+.slide-up-delay { animation: slideUp 0.6s ease-out 0.15s both; }
+.slide-up-delay-2 { animation: slideUp 0.6s ease-out 0.3s both; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }

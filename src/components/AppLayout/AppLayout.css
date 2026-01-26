@@ -1,0 +1,43 @@
+/* ===== Root Wrapper ===== */
+.app-viewport-wrapper {
+  width: 100%;
+  min-height: 100svh; /* safer than vh */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FFF8FB;
+}
+
+/* ===== Main App Container ===== */
+.mobile-container-main {
+  width: 100%;
+  max-width: 420px; /* supports larger mobiles */
+  min-height: 100svh;
+
+  background-color: #FFF8FB;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+
+  /* Desktop look */
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+
+  /* iOS safe area */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ===== Mobile Devices ===== */
+@media (max-width: 768px) {
+  .app-viewport-wrapper {
+    align-items: stretch;
+  }
+
+  .mobile-container-main {
+    max-width: 100%;
+    min-height: 100dvh; /* dynamic viewport */
+    border-radius: 0;
+    box-shadow: none;
+  }
+}

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
-import StepProgressButton from '../../components/StepProgressButton/StepProgressButton'; // component import karein
+import AppLayout from '../../components/AppLayout/AppLayout';
+import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
+import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
 import './Gender.css';
 
 const Gender = () => {
@@ -9,57 +10,66 @@ const Gender = () => {
   const navigate = useNavigate();
 
   const handleNext = () => {
-  if (selectedGender) {
-    navigate('/askName', { state: { gender: selectedGender } }); // Gender pass kiya
-  }
-};
+    if (selectedGender) {
+      navigate('/askName', { state: { gender: selectedGender } });
+    }
+  };
 
   return (
-    <div className="gender-container">
-      <div className="header">
-        <button className="back-btn" onClick={() => window.history.back()}>
-          <ChevronLeft size={28} />
-        </button>
-      </div>
+    <AppLayout> 
+      <div className="gender-screen-container">
+        
+        {/* TOP SECTION: Header & Progress */}
+        <div className="gender-header-wrap">
+          <OnboardingHeader title="Let’s start by choosing your gender!" />
+        </div>
 
-      <div className="content-wrapper">
-        <h1 className="title">Let's start by choosing your gender!</h1>
-
-        <div className="options-container">
-          <div 
-            className={`gender-card ${selectedGender === 'male' ? 'selected' : ''}`}
-            onClick={() => setSelectedGender('male')}
-          >
-             <div className="icon-wrapper">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="gender-icon">
-                <circle cx="10" cy="14" r="5" /><path d="M14 10l7-7M16 3h5v5" />
-              </svg>
+        {/* MIDDLE SECTION: Chips (Centered) */}
+        <div className="gender-selection-body">
+          <div className="gender-chips-stack">
+            {/* MALE CHIP */}
+            <div 
+              className={`gender-select-card slide-up-1 ${selectedGender === 'male' ? 'is-selected' : ''}`}
+              onClick={() => setSelectedGender('male')}
+            >
+              <div className="gender-icon-svg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <circle cx="9" cy="15" r="5" />
+                  <path d="M14 10l7-7M16 3h5v5" />
+                </svg>
+              </div>
+              <span className="gender-label-text">Male</span>
             </div>
-            <span>Male</span>
-          </div>
 
-          <div 
-            className={`gender-card ${selectedGender === 'female' ? 'selected' : ''}`}
-            onClick={() => setSelectedGender('female')}
-          >
-            <div className="icon-wrapper">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="gender-icon">
-                <circle cx="12" cy="9" r="6" /><path d="M12 15v7M9 19h6" />
-              </svg>
+            {/* FEMALE CHIP */}
+            <div 
+              className={`gender-select-card slide-up-2 ${selectedGender === 'female' ? 'is-selected' : ''}`}
+              onClick={() => setSelectedGender('female')}
+            >
+              <div className="gender-icon-svg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <circle cx="12" cy="8" r="6" />
+                  <path d="M12 14v7M9 19h6" />
+                </svg>
+              </div>
+              <span className="gender-label-text">Female</span>
             </div>
-            <span>Female</span>
           </div>
         </div>
-      </div>
 
-      {/* REUSABLE COMPONENT USAGE */}
-      <StepProgressButton 
-        currentStep={1} 
-        totalSteps={20} 
-        disabled={!selectedGender} 
-        onClick={handleNext} 
-      />
-    </div>
+        {/* BOTTOM SECTION: Progress Button */}
+        <div className="gender-footer-action">
+          <div className="wavy-bg-decoration"></div>
+          <StepProgressButton 
+            currentStep={1} 
+            totalSteps={20} 
+            disabled={!selectedGender} 
+            onClick={handleNext} 
+          />
+        </div>
+
+      </div>
+    </AppLayout>
   );
 };
 

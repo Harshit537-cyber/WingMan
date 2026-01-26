@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
+
+.location-container {
+  max-width: 430px;
+  height: 100dvh;
+  margin: 0 auto;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 25px 20px 25px;
+  box-sizing: border-box;
+  font-family: 'Outfit', sans-serif;
+  overflow: hidden;
+}
+
+/* Illustration Styling */
+.illustration-wrapper {
+  flex: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.location-main-img {
+  width: 85%;
+  height: auto;
+  object-fit: contain;
+  /* Floating animation */
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Text Section */
+.text-section {
+  flex: 0.8;
+  text-align: center;
+  width: 100%;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 15px;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #666;
+  line-height: 1.4;
+  padding: 0 15px;
+}
+
+/* Buttons */
+.button-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.allow-btn {
+  width: 100%;
+  background-color: #5a3c6d;
+  color: white;
+  padding: 18px;
+  border-radius: 50px;
+  font-size: 20px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 15px rgba(90, 60, 109, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.allow-btn:active {
+  transform: scale(0.96);
+}
+
+.manual-btn {
+  background: none;
+  border: none;
+  color: #5a3c6d;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Footer & Progress */
+.location-footer {
+  width: 120%;
+  margin-left: -10%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.curved-path {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* --- Animations --- */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.fade-in-down {
+  animation: fadeInDown 0.8s ease-out forwards;
+}
+
+.slide-up {
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+.slide-up-delay {
+  animation: slideUp 0.8s ease-out 0.2s both;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

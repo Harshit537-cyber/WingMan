@@ -1,0 +1,164 @@
+/* Prevent Scroll - Main Wrapper */
+.topic-screen-wrapper {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    background-color: #F8F9FA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+}
+
+.topic-screen-container {
+    width: 100%;
+    max-width: 430px; /* Precise Mobile Width */
+    height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Header Styling */
+.topic-header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0 24px;
+    flex-shrink: 0;
+}
+
+.topic-back-btn {
+    position: absolute;
+    left: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.topic-nav-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+/* Slider Section */
+.topic-slider-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.topic-horizontal-scroll {
+    display: flex;
+    gap: 20px;
+    padding: 0 40px; /* Taaki side cards thode nazar aayein */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Firefox hide scroll */
+    -ms-overflow-style: none; /* IE hide scroll */
+    height: 100%;
+    align-items: center;
+}
+
+/* Hide scrollbar Chrome/Safari */
+.topic-horizontal-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.topic-single-card-item {
+    min-width: 85%; /* Mobile standard slider size */
+    scroll-snap-align: center;
+    height: 72%;
+    display: flex;
+    justify-content: center;
+}
+
+/* The purple card content */
+.topic-inner-card-box {
+    width: 100%;
+    background-color: #EAD8F0; /* Soft Purple from image */
+    border-radius: 32px;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+.topic-card-title {
+    font-size: 21px;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+}
+
+.topic-card-subtitle {
+    font-size: 14px;
+    font-weight: 500;
+    color: #444;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.topic-card-image-holder {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+.topic-card-img {
+    max-width: 90%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Footer Section */
+.topic-footer {
+    padding: 30px 24px;
+    flex-shrink: 0;
+}
+
+.topic-continue-btn {
+    width: 100%;
+    height: 60px;
+    background-color: #5D326F; /* Deep Purple Theme */
+    color: #ffffff;
+    border: none;
+    border-radius: 18px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.topic-continue-btn:active {
+    transform: scale(0.97);
+    opacity: 0.95;
+}
+
+/* Adjustments for Web/Desktop Mouse support */
+@media (min-width: 431px) {
+    .topic-horizontal-scroll {
+        cursor: grab;
+    }
+}
+
+/* Very small mobile screen adjustments */
+@media (max-height: 700px) {
+    .topic-single-card-item { height: 90%; }
+    .topic-inner-card-box { padding: 20px 15px; }
+    .topic-card-title { font-size: 19px; }
+    .topic-footer { padding: 20px 24px; }
+}

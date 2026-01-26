@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
+.planed-dates-container {
+  width: 100%;
+  height: 100%;
+  background-color: #FFF8F7;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Outfit', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header UI Consistency */
+.planed-header {
+  padding: 45px 20px 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.back-circle-btn, .filter-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.back-circle-btn:active { transform: scale(0.9); }
+
+.planed-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+/* Scroll Area & List Styling */
+.planed-scroll-view {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px 20px;
+  scrollbar-width: none;
+}
+.planed-scroll-view::-webkit-scrollbar { display: none; }
+
+.dates-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Card UI matching the image */
+.plan-item-card {
+  background-color: #ffffff;
+  border-radius: 35px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #f2ecf6;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.04);
+}
+
+/* Avatar Ring Effect */
+.avatar-outer {
+  flex-shrink: 0;
+}
+
+.avatar-inner-ring {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 3.5px solid #5a3c6d;
+  padding: 4px;
+  overflow: hidden;
+  display: flex;
+}
+
+.avatar-inner-ring img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Info Spacing */
+.info-section {
+  flex: 1;
+  margin-left: 18px;
+}
+
+.name-text {
+  font-size: 21px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.dist-text {
+  font-size: 16px;
+  color: #888;
+  margin-top: 3px;
+}
+
+/* Button UI */
+.view-btn {
+  background-color: #5a3c6d;
+  color: #ffffff;
+  padding: 11px 24px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 5px 12px rgba(90, 60, 109, 0.25);
+  transition: opacity 0.2s ease;
+}
+
+.view-btn:active {
+  opacity: 0.8;
+}
+
+.nav-bottom-spacer {
+  height: 110px;
+}
+
+/* --- Smooth Entrance Animation --- */
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.staggered-slide-in {
+  opacity: 0;
+  animation: slideFromRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}

@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import AppLayout from '../../components/AppLayout/AppLayout';
 import './SayHy.css';
 
-// Images import karein
-import confettiImg from '../../assets/confetti.png'; // Jo image aapne abhi di
+// Images import
+import confettiImg from '../../assets/confetti.png'; 
 import maleImg from '../../assets/male-wingman.png'; 
 import femaleImg from '../../assets/female-wingman.png';
 
@@ -15,46 +16,53 @@ const SayHy = () => {
   const gender = location.state?.gender || "female";
 
   useEffect(() => {
-  const timer = setTimeout(() => {
-    navigate('/birthday'); // 3 second baad Birthday page pe jayega
-  }, 3000);
-  return () => clearTimeout(timer);
-}, [navigate]);
+    const timer = setTimeout(() => {
+      // Navigating to birthday with previous state data
+      navigate('/birthday', { state: { ...location.state } }); 
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [navigate, location.state]);
 
   return (
-    <div className="say-hy-container">
-      {/* Celebration Confetti Animation */}
-      <div className="confetti-wrapper">
-        {[...Array(12)].map((_, i) => (
+    <AppLayout>
+      <div className="say-hy-screen-wrapper">
+        
+        {/* Confetti Animation Layer */}
+        <div className="confetti-container">
+          {[...Array(12)].map((_, i) => (
+            <img 
+              key={i}
+              src={confettiImg} 
+              className={`confetti-item c${i}`} 
+              alt="confetti"
+            />
+          ))}
+        </div>
+
+        {/* Center Text Content */}
+        <div className="hy-text-content">
+          <h1 className="hy-title-main fade-in-up">
+            Hey <span className="name-highlight">{name}</span>,
+          </h1>
+          <h2 className="hy-subtitle-main fade-in-up-delay">
+            I’m your WingMann,
+          </h2>
+          <p className="hy-tagline-main fade-in-slow">
+            let’s find you a great date!
+          </p>
+        </div>
+
+        {/* Bottom Illustration */}
+        <div className="wingman-illustration-wrap slide-up-char">
           <img 
-            key={i}
-            src={confettiImg} 
-            className={`confetti-piece p${i}`} 
-            alt="confetti"
+            src={gender === 'male' ? maleImg : femaleImg} 
+            alt="WingMann" 
+            className="wingman-character"
           />
-        ))}
-      </div>
+        </div>
 
-      {/* Center Text Section */}
-      <div className="centered-content">
-        <h1 className="hy-title fade-in-up">
-          Hey <span className="highlight-name">{name}</span>,
-        </h1>
-        <h2 className="hy-subtitle fade-in-up-delay">
-          I’m your WingMann,
-        </h2>
-        <p className="hy-tagline fade-in-slow">let’s find you a great date!</p>
       </div>
-
-      {/* Character Image at Bottom */}
-      <div className="illustration-container slide-up-char">
-        <img 
-          src={gender === 'male' ? maleImg : femaleImg} 
-          alt="WingMann" 
-          className="wingman-img"
-        />
-      </div>
-    </div>
+    </AppLayout>
   );
 };
 
