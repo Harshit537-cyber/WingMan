@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
 
-.date-requested-screen {
+.date-requested-container {
   width: 100%;
   height: 100%;
   position: relative;
   background-color: #ffffff;
 }
 
-.date-req-inner {
+.main-content-wrapper {
   width: 100%;
   height: 100%;
   display: flex;
@@ -15,8 +15,9 @@
   transition: filter 0.3s ease;
 }
 
-.is-blurred {
-  filter: blur(5px);
+/* Background Blur Logic */
+.apply-blur {
+  filter: blur(8px);
   pointer-events: none;
 }
 
@@ -30,7 +31,7 @@
 .nav-title { font-size: 22px; font-weight: 700; color: #1a1a1a; }
 .nav-right { display: flex; gap: 15px; align-items: center; }
 
-/* Scroll Area */
+/* Scroll Body */
 .req-scroll-body {
   flex: 1;
   overflow-y: auto;
@@ -39,27 +40,22 @@
 }
 .req-scroll-body::-webkit-scrollbar { display: none; }
 
-.selection-counter {
-    font-weight: 800;
-    color: #ccc;
-    margin-bottom: 20px;
-    font-size: 15px;
-}
-.selection-counter span { color: #5a3c6d; }
+.selection-status { font-weight: 800; color: #d0d0d0; margin-bottom: 20px; font-size: 15px; }
+.selection-status span { color: #5a3c6d; }
 
-.req-section { margin-bottom: 35px; }
+.ui-card-section { margin-bottom: 35px; }
 .section-h2 { font-size: 22px; font-weight: 800; color: #1a1a1a; margin-bottom: 5px; }
 .section-p { font-size: 14px; color: #888; font-weight: 500; margin-bottom: 15px; }
 
-/* DATE UI - Underline fix */
-.date-picker-row {
+/* DATE CARD UI - Underline fix (No BG color) */
+.date-picker-card {
   display: flex;
   justify-content: space-between;
   background: #ffffff;
   border-radius: 20px;
   padding: 15px 10px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-  border: 1px solid #f9f9f9;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+  border: 1px solid #fcfcfc;
 }
 
 .date-node {
@@ -69,15 +65,15 @@
   gap: 8px;
   cursor: pointer;
   position: relative;
-  width: 42px;
+  width: 45px;
   padding-bottom: 10px;
 }
 
-.node-day-text { font-size: 15px; color: #b0b0b0; font-weight: 600; }
-.node-date-num { font-size: 18px; color: #1a1a1a; font-weight: 700; }
+.node-day { font-size: 15px; color: #b0b0b0; font-weight: 600; }
+.node-date { font-size: 18px; color: #1a1a1a; font-weight: 700; }
 
-/* Underline bar only on active */
-.active-bar-indicator {
+/* Image Match: Underline Indicator */
+.purple-underline-bar {
   position: absolute;
   bottom: 0;
   width: 32px;
@@ -86,18 +82,18 @@
   border-radius: 10px;
 }
 
-.date-node.disabled { opacity: 0.3; cursor: default; }
+.date-node.done { opacity: 0.2; cursor: default; }
 
-/* TIME UI - 4 Column Grid Fix */
-.time-grid-4col {
+/* TIME GRID - 4 Columns */
+.time-grid-layout {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
 }
 
-.time-slot-card {
+.time-slot-item {
   aspect-ratio: 1/1.05;
-  background-color: #FFF9FC; /* Light pinkish white */
+  background-color: #FFF9FC; /* Soft pink/white card bg */
   border-radius: 18px;
   display: flex;
   align-items: center;
@@ -107,22 +103,20 @@
   font-weight: 700;
   color: #1a1a1a;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
-  border: 1px solid #fcfcfc;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f8f8f8;
   line-height: 1.2;
-  transition: all 0.2s ease;
 }
 
-.time-slot-card:active {
+.time-slot-item:active {
   background-color: #5a3c6d;
   color: #ffffff;
-  transform: scale(0.95);
 }
 
-.bottom-spacer-box { height: 120px; }
+.bottom-spacer { height: 120px; }
 
-/* --- POPUP MODAL FIX --- */
-.modal-fixed-overlay {
+/* --- MODAL CSS (EXACT IMAGE MATCH) --- */
+.fixed-modal-overlay {
   position: fixed;
   top: 0; left: 0;
   width: 100vw; height: 100vh;
@@ -130,11 +124,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* Higher than everything */
+  z-index: 9999;
   padding: 20px;
 }
 
-.success-popup-card {
+.success-modal-box {
   width: 100%;
   max-width: 340px;
   background-color: #ffffff;
@@ -144,7 +138,7 @@
   box-shadow: 0 25px 60px rgba(0,0,0,0.2);
 }
 
-.popup-icon-square {
+.modal-icon-square {
   width: 68px;
   height: 68px;
   border: 2px solid #1a1a1a;
@@ -155,14 +149,14 @@
   justify-content: center;
 }
 
-.popup-title { font-size: 24px; font-weight: 800; color: #000; margin: 0 0 15px 0; }
-.popup-subtitle { font-size: 16px; color: #666; font-weight: 600; line-height: 1.5; margin-bottom: 35px; }
+.modal-title-text { font-size: 24px; font-weight: 800; color: #000; margin-bottom: 15px; }
+.modal-subtitle-text { font-size: 16px; color: #666; font-weight: 600; line-height: 1.5; margin-bottom: 35px; }
 
-.popup-okay-btn {
+.modal-action-btn {
   width: 100%;
   background-color: #5a3c6d;
   color: white;
-  padding: 16px;
+  padding: 18px;
   border: none;
   border-radius: 18px;
   font-size: 18px;
@@ -170,10 +164,11 @@
   cursor: pointer;
 }
 
-/* Animations */
-.slide-up { animation: reqSlideUp 0.6s ease-out forwards; }
-.slide-up-modal { animation: reqSlideUp 0.3s ease-out forwards; }
-@keyframes reqSlideUp { 
-  from { opacity: 0; transform: translateY(20px); } 
-  to { opacity: 1; transform: translateY(0); } 
+.slide-up-animation {
+  animation: modalSlideUp 0.3s ease-out forwards;
+}
+
+@keyframes modalSlideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }

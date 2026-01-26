@@ -8,7 +8,7 @@ import './DateRequested.css';
 const DateRequested = () => {
   const navigate = useNavigate();
   
-  // Selection States
+  // Selection Logic States
   const [selectedDate, setSelectedDate] = useState(null); 
   const [completedPairs, setCompletedPairs] = useState([]); 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -30,20 +30,14 @@ const DateRequested = () => {
       return;
     }
 
-    // Check if date already has a time assigned
-    if (completedPairs.find(p => p.date === selectedDate)) {
-        alert("This date is already assigned. Please pick another date.");
-        return;
-    }
-
     const newPair = { date: selectedDate, time: time };
     const updatedPairs = [...completedPairs, newPair];
     setCompletedPairs(updatedPairs);
 
-    // Reset selection for next round
+    // Reset current date selection to allow next pair
     setSelectedDate(null);
 
-    // If 3 pairs are done, show modal
+    // After 3 pairs, trigger modal
     if (updatedPairs.length === 3) {
       setShowSuccessModal(true);
     }
@@ -51,11 +45,12 @@ const DateRequested = () => {
 
   return (
     <AppLayout>
-      <div className="date-requested-screen">
+      <div className="date-requested-container">
         
-        {/* Main Content Area */}
-        <div className={`date-req-inner ${showSuccessModal ? 'is-blurred' : ''}`}>
+        {/* Is div ko blur karenge jab modal open hoga */}
+        <div className={`main-content-wrapper ${showSuccessModal ? 'apply-blur' : ''}`}>
           
+          {/* HEADER */}
           <header className="top-nav-bar">
             <button className="back-circle" onClick={() => navigate(-1)}>
               <ChevronLeft size={28} color="#5a3c6d" />
@@ -69,26 +64,27 @@ const DateRequested = () => {
 
           <div className="req-scroll-body">
             
-            <div className="selection-counter">
-              Selected: <span>{completedPairs.length} / 3</span>
+            <div className="selection-status">
+              Selected: <span>{completedPairs.length} / 3 slots</span>
             </div>
 
             {/* DATE SECTION */}
-            <section className="req-section">
+            <section className="ui-card-section">
               <h2 className="section-h2">Choose Dates</h2>
               <p className="section-p">Select a date as per your availability.</p>
-              <div className="date-picker-row">
+              
+              <div className="date-picker-card">
                 {dates.map((item) => {
-                  const isDone = completedPairs.find(p => p.date === item.id);
+                  const isAlreadyDone = completedPairs.find(p => p.date === item.id);
                   return (
                     <div 
                       key={item.id} 
-                      className={`date-node ${selectedDate === item.id ? 'active' : ''} ${isDone ? 'disabled' : ''}`}
-                      onClick={() => !isDone && setSelectedDate(item.id)}
+                      className={`date-node ${selectedDate === item.id ? 'active' : ''} ${isAlreadyDone ? 'done' : ''}`}
+                      onClick={() => !isAlreadyDone && setSelectedDate(item.id)}
                     >
-                      <span className="node-day-text">{item.day}</span>
-                      <span className="node-date-num">{item.id}</span>
-                      {selectedDate === item.id && <div className="active-bar-indicator"></div>}
+                      <span className="node-day">{item.day}</span>
+                      <span className="node-date">{item.id}</span>
+                      {selectedDate === item.id && <div className="purple-underline-bar"></div>}
                     </div>
                   );
                 })}
@@ -96,14 +92,15 @@ const DateRequested = () => {
             </section>
 
             {/* TIME SECTION */}
-            <section className="req-section">
+            <section className="ui-card-section">
               <h2 className="section-h2">Choose Time</h2>
-              <p className="section-p">Select 1 time slot for selected date</p>
-              <div className="time-grid-4col">
+              <p className="section-p">Select 1 time slot for the selected date</p>
+              
+              <div className="time-grid-layout">
                 {timeSlots.map((slot) => (
                   <div 
                     key={slot} 
-                    className="time-slot-card"
+                    className="time-slot-item"
                     onClick={() => handleTimeSelect(slot)}
                   >
                     {slot.split(' ')[0]}<br/>{slot.split(' ')[1]}
@@ -112,22 +109,25 @@ const DateRequested = () => {
               </div>
             </section>
 
-            <div className="bottom-spacer-box"></div>
+            <div className="bottom-spacer"></div>
           </div>
 
+          {/* User's BottomNav Component - Unchanged */}
           <BottomNav />
         </div>
 
-        {/* POPUP MODAL - Position Fixed for center opening */}
+        {/* POPUP MODAL - Fixed and Centered */}
         {showSuccessModal && (
-          <div className="modal-fixed-overlay">
-            <div className="success-popup-card slide-up-modal">
-              <div className="popup-icon-square">
+          <div className="fixed-modal-overlay">
+            <div className="success-modal-box slide-up-animation">
+              <div className="modal-icon-square">
                 <X size={35} strokeWidth={1.5} color="#1a1a1a" />
               </div>
-              <h2 className="popup-title">Your date request is sent</h2>
-              <p className="popup-subtitle">We’ll notify you once the user confirms.</p>
-              <button className="popup-okay-btn" onClick={() => navigate('/home')}>Okay</button>
+              <h2 className="modal-title-text">Your date request is sent</h2>
+              <p className="modal-subtitle-text">We’ll notify you once the user confirms.</p>
+              <button className="modal-action-btn" onClick={() => navigate('/home')}>
+                Okay
+              </button>
             </div>
           </div>
         )}
