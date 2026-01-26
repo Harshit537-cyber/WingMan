@@ -17,7 +17,6 @@ const SayHy = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // Navigating to birthday with previous state data
       navigate('/birthday', { state: { ...location.state } }); 
     }, 3000);
     return () => clearTimeout(timer);

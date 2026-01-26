@@ -1,15 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
+
 .manual-loc-wrapper {
   display: flex;
   flex-direction: column;
-  background-color: FFF8FB;
-  height: 100%;
+  background-color: #FFF8FB;
+  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   position: relative;
   z-index: 1;
-  
-  /* --- YE PADDING FIX HAI --- */
-  padding: 0 24px; /* Left aur Right mein 24px ki padding */
-  box-sizing: border-box; /* Isse padding width ke andar hi rahegi */
+  padding: 40px 24px 0 24px;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-family: 'Outfit', sans-serif;
 }
 
 /* Background Animation */
@@ -24,37 +27,45 @@
 }
 
 .dashed-svg {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 /* Input Container Alignment */
 .input-container {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Title ke thoda niche hi rahega */
-  padding-top: 20px;
+  justify-content: flex-start;
+  padding-top: 30px;
 }
 
 .location-input {
   width: 100%;
-  height: 75px;
+  height: 70px;
   background: #ffffff;
   border: 1.5px solid #5a3c6d;
   border-radius: 20px;
-  padding: 0 25px; /* Input ke andar ka text padding */
+  padding: 0 25px;
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
   color: #1a1a1a;
   outline: none;
-  box-sizing: border-box; /* Bahut important hai taaki border bahar na jaye */
-  box-shadow: 0 4px 15px rgba(90, 60, 109, 0.05);
+  box-sizing: border-box;
+  box-shadow: 0 10px 25px rgba(90, 60, 109, 0.05);
+  transition: all 0.3s ease;
+  font-family: 'Outfit', sans-serif;
+}
+
+.location-input:focus {
+  box-shadow: 0 10px 30px rgba(90, 60, 109, 0.12);
+  border-width: 2.5px;
 }
 
 .location-input::placeholder {
   color: #1a1a1a;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 /* Footer Section Fix */
@@ -63,21 +74,86 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  padding-bottom: 40px; /* AppLayout ke logic ke hisaab se space */
+  padding-bottom: 50px;
   position: relative;
+  flex-shrink: 0;
 }
 
 /* Wavy line */
 .footer-fixed::before {
   content: "";
   position: absolute;
-  top: -30px;
+  top: -40px;
   width: 150%;
   left: -25%;
   height: 80px;
   background-image: url("data:image/svg+xml,%3Csvg width='400' height='80' viewBox='0 0 400 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60 Q100 20 200 60 T400 60' stroke='%23E2D8E8' stroke-width='2' stroke-dasharray='8 8'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-size: cover;
-  opacity: 0.7;
+  opacity: 0.6;
   pointer-events: none;
+}
+
+/* Animation */
+.slide-up-delay {
+  animation: slideUpFade 0.6s ease-out 0.2s both;
+}
+
+@keyframes slideUpFade {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* --- DESKTOP/WEB VIEW FIX --- */
+@media (min-width: 769px) {
+    .manual-loc-wrapper {
+        max-width: 600px;
+        margin: 0 auto;
+        padding-top: 30px;
+    }
+
+    .footer-fixed {
+        padding-bottom: 40px;
+    }
+    
+    .footer-fixed::before {
+        top: -35px;
+    }
+
+    .input-container {
+        padding-top: 40px;
+    }
+}
+
+/* Small screen adjustments */
+@media (max-height: 700px) {
+    .location-input {
+        height: 60px;
+        font-size: 18px;
+    }
+
+    .footer-fixed {
+        padding-bottom: 30px;
+    }
+
+    .input-container {
+        padding-top: 20px;
+    }
+}
+
+/* Extra small screens */
+@media (max-height: 600px) {
+    .manual-loc-wrapper {
+        padding-top: 20px;
+    }
+
+    .input-container {
+        padding-top: 15px;
+    }
 }

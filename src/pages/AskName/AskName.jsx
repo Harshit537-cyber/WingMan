@@ -22,14 +22,13 @@ const AskName = () => {
     <AppLayout> 
       <div className="onboarding-screen-container">
         
-        {/* TOP SECTION: Header & Input (Flowing from top) */}
+        {/* TOP SECTION: Header & Input */}
         <div className="onboarding-header-wrap">
           <OnboardingHeader 
             title="Cool, what's your name?" 
             description="I'll save it as your display name."
           />
           
-          {/* Input Field: Directly below header text */}
           <div className="name-input-box slide-up">
             <input 
               type="text" 
@@ -42,10 +41,10 @@ const AskName = () => {
           </div>
         </div>
 
-        {/* MIDDLE SECTION: Empty flex to push footer down */}
+        {/* MIDDLE SECTION: Spacer to push footer down */}
         <div className="onboarding-body-spacer"></div>
 
-        {/* BOTTOM SECTION: Progress Button */}
+        {/* BOTTOM SECTION: Fixed Footer */}
         <div className="onboarding-footer-action">
           <div className="footer-wavy-decoration"></div>
           <StepProgressButton 

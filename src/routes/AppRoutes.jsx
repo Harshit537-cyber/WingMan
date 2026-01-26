@@ -43,7 +43,14 @@ import EditProfile from '../pages/Profile/EditProfile/EditProfile';
 import Matches from '../pages/Matches/Matches/Matches';
 import ProfileDetail from '../pages/Matches/ProfileDetail/ProfileDetail.jsx';
 import Gallery from '../pages/Matches/Gallery/Gallery.jsx';
-
+import CallScreen from '../pages/HomePages/CallScreen/CallScreen.jsx';
+import DateRequested from '../pages/HomePages/DateRequested/DateRequested.jsx';
+import Appreciate from '../pages/Appreciate/Appreciate';
+import Interests from '../pages/Interests/Interests';
+import UploadPhoto  from  '../pages/UploadPhoto/UploadPhoto';
+import Notifications from '../pages/HomePages/Notifications/Notifications.jsx';
+import VibeSurvey from '../pages/HomePages/VibeSurvey/VibeSurvey.jsx';
+import DatePreferences from '../pages/HomePages/DatePreferences/DatePreferences.jsx';
 
 const AppRoutes = () => {
   return (
@@ -70,7 +77,7 @@ const AppRoutes = () => {
         <Route path="/ManualLocation" element={<ManualLocation/>} />
         <Route path="/LocationSuccess" element={<LocationSuccess/>} />
         <Route path="/home" element={<Home/>} />
-        <Route path="/home/*" element={<VerifyProfile/>} />
+        <Route path="/verify-profile" element={<VerifyProfile/>} />
         <Route path="/schedule" element={<Schedule/>} />
         <Route path="/schedule-video-call" element={<ScheduleVideoCall />} />
         <Route path="/schedule-confirmed" element={<ScheduleConfirmed />} />
@@ -94,8 +101,16 @@ const AppRoutes = () => {
         <Route path="/matches/profile-details" element={<ProfileDetail />} />
         <Route path="gallery-preview" element={<Gallery />} />
         <Route path="/match" element={<Matches />} />
-    
+        <Route path="/notifications" element={<Notifications />} />
+        {/* <Route path="/curate-vibee" element={<CurateVibe />} /> */}
+        <Route path="/curate-vibe" element={<VibeSurvey />} />
+        <Route path="/date-preferences" element={<DatePreferences />} />
+        <Route path="/date-requested" element={<DateRequested />} />
+        <Route path="/call" element={<CallScreen />} />
       
+        <Route path="/appreciate" element={<Appreciate />} />
+          <Route path="/interests" element={<Interests />} />
+          <Route path="/uploads" element={<UploadPhoto />} />
       </Routes>
     </Router>
   );

@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+/* Container Logic */
+.web-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.upload-screen {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #ffffff; /* Image matches white background */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+@media (min-width: 640px) {
+  .upload-screen {
+    width: 390px;
+    border-left: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+  }
+}
+
+/* Top Nav Logic */
+.top-nav-bar {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.back-arrow {
+  cursor: pointer;
+  z-index: 10;
+}
+
+.header-progress-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 10px; /* Moti progress bar */
+  background: #f0f0f0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.header-progress-fill {
+  width: 65%; /* Progress position */
+  height: 100%;
+  background-color: #5d3d63;
+  border-radius: 20px;
+}
+
+/* Content & Spacing */
+.scrollable-content {
+  flex: 1;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.upload-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 12px;
+}
+
+.upload-subtext {
+  font-size: 15px;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 40px;
+}
+
+/* Grid Design */
+.photo-upload-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.photo-upload-box {
+  aspect-ratio: 1 / 1.35; /* Rectangular boxes as per image */
+  border: 1.5px solid #5d3d63; /* Purple border */
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+/* Decorative Element */
+.bottom-wave-container {
+  position: absolute;
+  bottom: 130px;
+  width: 100%;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Bottom Nav Action */
+.action-nav {
+  height: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 30;
+}
+
+.outer-circle-ring {
+  width: 85px;
+  height: 85px;
+  border: 2px solid #5d3d63; /* Ring around button */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.outer-circle-ring:active {
+  transform: scale(0.95);
+}
+
+.inner-solid-circle {
+  width: 68px;
+  height: 68px;
+  background-color: #5d3d63; /* Solid purple button */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

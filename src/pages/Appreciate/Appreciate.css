@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/* ===== Animations (Same as your Splash) ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(1.05); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* ===== Layout Logic (Matching SplashScreen) ===== */
+
+/* White Background overlay jaisa */
+.web-container {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff; /* Outer White background */
+}
+
+/* Center Strip - Exact size as sm:w-[390px] */
+.appreciate-screen {
+  position: relative;
+  width: 100%;           /* Mobile par full width */
+  height: 100%;          /* Full height top to bottom */
+  background-color: #4b3152; /* Same purple as your Splash */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Desktop sizing (sm breakpoint) */
+@media (min-width: 640px) {
+  .appreciate-screen {
+    width: 390px;        /* Exact width from your Splash code */
+  }
+}
+
+/* Background Image positioning */
+.bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: bottom; /* Taaki handshake niche rahe */
+  z-index: 1;
+}
+
+/* Content Container */
+.content-overlay {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 25vh; /* Text ki height adjustment */
+  text-align: center;
+}
+
+/* Text Styling */
+.text-style {
+  color: #ffffff;
+  font-family: 'serif', Georgia, serif;
+  font-size: 2.2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}

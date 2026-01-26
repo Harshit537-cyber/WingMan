@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
+.date-pref-main-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Header fix */
+.top-nav-bar {
+  padding: 45px 20px 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  z-index: 100;
+}
+.nav-title { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+.nav-right { display: flex; gap: 15px; align-items: center; }
+.bell-box { position: relative; cursor: pointer; }
+.dot { position: absolute; top: 2px; right: 2px; width: 8px; height: 8px; background: #ff4d4d; border-radius: 50%; border: 1.5px solid white; }
+
+/* Content Layout - Fixes Scrolling */
+.pref-content-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px 25px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.pref-content-scroll::-webkit-scrollbar { display: none; }
+
+.pref-section { margin-bottom: 30px; }
+.section-q { font-size: 19px; font-weight: 700; color: #1a1a1a; margin-bottom: 12px; }
+
+/* Toggle Switchers */
+.segmented-switch, .payment-toggle-group {
+  display: flex;
+  background: #ffffff;
+  border: 1px solid #f2f2f2;
+  border-radius: 20px;
+  padding: 5px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.segmented-switch button, .payment-toggle-group button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: transparent;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.active {
+  background-color: #5a3c6d !important;
+  color: #ffffff !important;
+}
+
+/* Chips Grid */
+.mood-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mood-pill {
+  padding: 10px 18px;
+  background: #f2f2f2;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+
+.mood-pill.selected {
+  background-color: #5a3c6d;
+  color: #fff;
+}
+
+/* Budget Slider */
+.budget-flex { display: flex; justify-content: space-between; align-items: center; }
+.amount-label { font-size: 17px; font-weight: 600; color: #888; }
+
+.multi-range-slider {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+}
+
+.slider-track-bg {
+  position: absolute;
+  height: 6px; width: 100%;
+  background: #f0f0f0;
+  border-radius: 3px;
+  top: 50%; transform: translateY(-50%);
+  z-index: 1;
+}
+
+.slider-track-fill {
+  position: absolute;
+  height: 6px;
+  background: #5a3c6d;
+  border-radius: 3px;
+  top: 50%; transform: translateY(-50%);
+  z-index: 2;
+}
+
+.thumb {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  outline: none;
+  pointer-events: none;
+  -webkit-appearance: none;
+  z-index: 5;
+  top: 50%; transform: translateY(-50%);
+  background: transparent;
+}
+
+.thumb::-webkit-slider-thumb {
+  height: 24px; width: 24px;
+  border-radius: 50%;
+  background-color: #5a3c6d;
+  border: 4px solid #ffffff;
+  box-shadow: 0 4px 10px rgba(90, 60, 109, 0.3);
+  cursor: pointer;
+  pointer-events: all;
+  -webkit-appearance: none;
+}
+
+/* Footer & Button Fix */
+.pref-footer-sticky {
+  padding: 10px 25px 5px 25px;
+  background: #ffffff;
+  z-index: 100;
+  box-shadow: 0 -10px 20px rgba(255, 255, 255, 1); /* Blends into white bg */
+}
+
+.pref-continue-btn {
+  width: 100%;
+  background: #5a3c6d;
+  color: white;
+  padding: 16px;
+  border: none;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 95px; /* Pushes button above BottomNav (approx 85px nav + 10px gap) */
+}
+
+.scroll-spacer-bottom {
+  height: 150px; /* Crucial: ensures we can scroll past the fixed footer */
+}
+
+/* DESKTOP/WEB VIEW FIX */
+@media (min-width: 769px) {
+    .pref-continue-btn {
+        margin-bottom: 90px;
+    }
+}
+
+.slide-up { animation: prefIn 0.6s ease-out forwards; }
+@keyframes prefIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
