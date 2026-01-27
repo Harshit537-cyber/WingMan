@@ -1,63 +1,64 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
 
-.call-screen-wrapper {
+.call-screen-container {
   width: 100%;
   height: 100%;
-  background-color: #5a3c6d; /* Main Purple Theme */
+  flex: 1;
+  background-color: #5a3c6d;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  color: white;
+  color: #ffffff;
   font-family: 'Outfit', sans-serif;
   text-align: center;
+  /* Sharp corners for Desktop Frame if needed */
+  border-radius: inherit;
 }
 
-/* Background Wavy Patterns */
-.bg-wavy-overlay {
+/* Responsive Background Waves */
+.call-bg-overlay {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.4;
+    opacity: 0.3;
 }
 
-.wave-circle {
+.call-wave {
     position: absolute;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
     border-radius: 50%;
 }
 
-.c1 { width: 500px; height: 500px; top: -100px; right: -150px; }
-.c2 { width: 600px; height: 600px; bottom: -200px; left: -200px; }
-.c3 { width: 700px; height: 700px; bottom: -250px; left: -250px; }
+.w1 { width: 120%; aspect-ratio: 1; top: -10%; right: -20%; }
+.w2 { width: 150%; aspect-ratio: 1; bottom: -20%; left: -30%; }
+.w3 { width: 180%; aspect-ratio: 1; bottom: -30%; left: -40%; }
 
-/* Profile Section */
-.call-top-content {
-  margin-top: 100px;
+/* Profile Section - Responsive Spacing */
+.call-profile-section {
+  margin-top: 15vh; /* Responsive top margin */
   z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 20px;
 }
 
-.caller-avatar-frame {
-  width: 150px;
-  height: 150px;
+.call-avatar-wrapper {
+  width: clamp(120px, 30vw, 150px); /* Scales between 120px and 150px */
+  height: clamp(120px, 30vw, 150px);
   border-radius: 50%;
   border: 4px solid rgba(255, 255, 255, 0.2);
   overflow: hidden;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-.caller-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+.call-avatar-img { width: 100%; height: 100%; object-fit: cover; }
 
-.caller-name {
-  font-size: 26px;
+.call-user-name {
+  font-size: clamp(22px, 5vw, 28px);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -66,15 +67,15 @@
   margin: 0;
 }
 
-.caller-profession {
-  font-size: 18px;
+.call-user-sub {
+  font-size: 16px;
   color: rgba(255, 255, 255, 0.7);
-  margin-top: 5px;
+  margin-top: 6px;
   font-weight: 500;
 }
 
-/* Status Area */
-.call-status-area {
+/* Middle Status */
+.call-status-middle {
   flex: 1;
   display: flex;
   align-items: center;
@@ -82,57 +83,55 @@
   z-index: 5;
 }
 
-.status-text {
+.call-status-text {
   font-size: 18px;
   font-weight: 500;
-  opacity: 0.9;
   letter-spacing: 0.5px;
+  animation: pulseFade 2s infinite;
 }
 
-/* Footer Action Buttons */
-.call-actions-footer {
-  padding-bottom: 80px;
+@keyframes pulseFade {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* Footer Buttons - Responsive */
+.call-footer-actions {
+  padding-bottom: 10vh;
   z-index: 10;
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
-.action-row-incoming {
-  display: flex;
-  gap: 80px;
-}
+.actions-incoming-row { display: flex; gap: 60px; }
+.actions-active-row { display: flex; align-items: center; gap: 30px; }
 
-.action-row-active {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
-
-/* Circle Buttons Styling */
-.btn-call {
-  width: 85px;
-  height: 85px;
+/* Buttons Base */
+.call-btn-circle {
+  width: 75px;
+  height: 75px;
   border-radius: 50%;
   border: none;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.btn-call:active { transform: scale(0.9); }
+.call-btn-circle:active { transform: scale(0.9); }
 
-.accept { background-color: #4cd964; } /* Green */
-.hangup { background-color: #ff3b30; } /* Red */
+.accept-bg { background-color: #4cd964; }
+.hangup-bg { background-color: #ff3b30; }
+.hangup-rotate { transform: rotate(135deg); }
 
-.rotate-hangup { transform: rotate(135deg); }
-
-/* Active Call Action Circles (Mic/Speaker) */
-.btn-action-circle {
-  width: 65px;
-  height: 65px;
+/* Option Buttons (Mute/Speaker) */
+.call-opt-circle {
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.15);
   border: none;
@@ -142,15 +141,34 @@
   align-items: center;
   cursor: pointer;
   backdrop-filter: blur(10px);
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.2s ease;
 }
 
-.active-mute {
-    background-color: white;
+.muted-active {
+    background-color: #ffffff;
     color: #5a3c6d;
 }
 
-/* Figma Responsive Adjustments */
+/* --- RESPONSIVE BREAKPOINTS --- */
+
+/* 1. Desktop View (AppLayout Frame) */
 @media (min-width: 769px) {
-    .call-actions-footer { padding-bottom: 50px; }
-    .call-top-content { margin-top: 60px; }
+    .call-profile-section { margin-top: 80px; }
+    .call-footer-actions { padding-bottom: 40px; }
+    .call-avatar-wrapper { width: 130px; height: 130px; }
+}
+
+/* 2. Small Height Phones (iPhone SE etc.) */
+@media (max-height: 667px) {
+    .call-profile-section { margin-top: 40px; }
+    .call-avatar-wrapper { width: 100px; height: 100px; }
+    .call-footer-actions { padding-bottom: 30px; }
+    .actions-incoming-row { gap: 40px; }
+}
+
+/* 3. General Mobile Tap Fix */
+button {
+    outline: none;
+    user-select: none;
 }

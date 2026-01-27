@@ -30,7 +30,7 @@ const LandingPage = () => {
         <h1 className="landing-title">
           Ready to stop <br /> 
           <span>swiping and start</span> <br /> 
-          meeting?
+          dating with intent?
         </h1>
       </div>
 

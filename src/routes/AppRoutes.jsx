@@ -5,7 +5,7 @@ import Gender from '../pages/gender/Gender';
 import AskName from '../pages/AskName/AskName';
 import SayHy from '../pages/SayHy/SayHy';
 import Birthday from '../pages/Birthday/Birthday';
-import AskHight from '../pages/AskHight/AskHight';
+import Hight from '../pages/AskHight/AskHight.jsx';
 import Intrest from '../pages/Intrest/Intrest';
 import AccessLocation from '../pages/AccessLocation/AccessLocation';
 import Native from '../pages/Place/Native';
@@ -62,7 +62,7 @@ const AppRoutes = () => {
         <Route path="/askName" element={<AskName />} />
         <Route path="/hy" element={<SayHy />} />
         <Route path="/birthday" element={<Birthday />} />
-        <Route path="/hight" element={<AskHight />} />
+        <Route path="/hight" element={<Hight />} />
         <Route path="/intrest" element={<Intrest />} />
         <Route path="/Acesslocation" element={<AccessLocation />} />
         <Route path="/Native" element={<Native/>} />

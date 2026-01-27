@@ -12,7 +12,7 @@ const Birthday = () => {
   
   const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, '0'));
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const years = Array.from({ length: 50 }, (_, i) => (2024 - i).toString());
+  const years = Array.from({ length: 50 }, (_, i) => (2025 - i).toString());
 
   const [selectedDay, setSelectedDay] = useState('01');
   const [selectedMonth, setSelectedMonth] = useState('January');
@@ -41,23 +41,21 @@ const Birthday = () => {
     <AppLayout> 
       <div className="birthday-screen-container">
         
-        {/* TOP SECTION */}
-        <div className="birthday-header-wrap">
+        {/* TOP SECTION: Left Aligned Header */}
+        <div className="birthday-header-section">
           <OnboardingHeader 
             title="When’s your birthday?" 
-            description="I like sending good vibes to people on their special day"
+            description="I like acknowledging the days that matter."
           />
         </div>
 
         {/* MIDDLE SECTION: Content area */}
-        <div className="birthday-body-content scroll-prevent">
+        <div className="birthday-body-content">
           
-          {/* Cake Illustration */}
           <div className="cake-illustration-box scale-up">
             <img src={cakeImg} alt="Birthday Cake" />
           </div>
 
-          {/* Selected Value Boxes */}
           <div className="date-display-row fade-in">
             <div className="display-unit">
               <span className="unit-label">Day</span>

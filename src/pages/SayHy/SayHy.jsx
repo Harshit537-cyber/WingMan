@@ -47,7 +47,7 @@ const SayHy = () => {
             I’m your WingMann,
           </h2>
           <p className="hy-tagline-main fade-in-slow">
-            let’s find you a great date!
+            Let's find you a date worth showing up for.
           </p>
         </div>
 

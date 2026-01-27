@@ -22,7 +22,7 @@ const Home = () => {
             {/* Bell Icon -> Notifications Page */}
             <div
               className="bell-box"
-              onClick={() => navigate('/notifications')}
+              onClick={() => navigate('/request')}
               style={{ cursor: 'pointer' }}
             >
               <Bell size={26} color="#5a3c6d" />

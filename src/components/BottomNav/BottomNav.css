@@ -5,9 +5,8 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  /* Width must match AppLayout's mobile-container-main */
   width: 100%;
-  max-width: 420px; 
+  max-width: 420px; /* Layout consistency with AppLayout */
   z-index: 1000;
   background-color: transparent;
 }
@@ -19,10 +18,8 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* Premium soft shadow */
   box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
   position: relative;
-  /* Safe area for iPhone notch */
   padding-bottom: env(safe-area-inset-bottom);
   font-family: 'Outfit', sans-serif;
   border-top: 1px solid #f2f2f2;
@@ -39,6 +36,12 @@
   transition: all 0.2s ease;
   color: #7a6691;
   opacity: 0.7;
+  
+  /* --- YEH HAI FIX --- */
+  background: transparent !important; /* Force no background */
+  -webkit-tap-highlight-color: transparent; /* Removes mobile tap gray background */
+  outline: none;
+  user-select: none; /* Prevents text selection on long press */
 }
 
 .nav-item span {
@@ -50,6 +53,7 @@
   color: #5a3c6d;
   opacity: 1;
   transform: translateY(-2px);
+  background: transparent !important; 
 }
 
 .nav-icon {
@@ -58,14 +62,16 @@
   object-fit: contain;
 }
 
-/* Center Button Styling */
+/* Center Button Container */
 .center-btn-container {
   flex: 1.2;
   display: flex;
   justify-content: center;
   position: relative;
+  -webkit-tap-highlight-color: transparent;
 }
 
+/* Central raised button with gradient */
 .raised-gradient-btn {
   width: 68px;
   height: 68px;
@@ -76,10 +82,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 5px solid #ffffff; /* White cutout effect */
+  border: 5px solid #ffffff;
   box-shadow: 0 10px 20px rgba(90, 60, 109, 0.3);
   cursor: pointer;
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .center-heart-img {
@@ -88,13 +95,14 @@
   object-fit: contain;
 }
 
-/* Animations */
+/* Click Animations */
 .raised-gradient-btn:active {
   transform: scale(0.9) translateY(-40px);
 }
 
 .nav-item:active {
   transform: scale(0.9);
+  background: transparent !important;
 }
 
 /* Desktop and Tablet Adjustment */

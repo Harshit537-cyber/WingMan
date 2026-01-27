@@ -19,15 +19,17 @@ const Gender = () => {
     <AppLayout> 
       <div className="gender-screen-container">
         
-        {/* TOP SECTION: Header & Progress */}
-        <div className="gender-header-wrap">
-          <OnboardingHeader title="Let’s start by choosing your gender!" />
+        {/* TOP SECTION: Header (Back Button + Title) */}
+        <div className="gender-header-section">
+          <OnboardingHeader 
+            title="Let’s start by choosing your gender!" 
+            // description="Apna gender select karein" // Agar description ho toh yahan add kar sakte ho
+          />
         </div>
 
-        {/* MIDDLE SECTION: Chips (Centered) */}
+        {/* MIDDLE SECTION: Gender Selection (Centered & Non-scrollable) */}
         <div className="gender-selection-body">
           <div className="gender-chips-stack">
-            {/* MALE CHIP */}
             <div 
               className={`gender-select-card slide-up-1 ${selectedGender === 'male' ? 'is-selected' : ''}`}
               onClick={() => setSelectedGender('male')}
@@ -41,7 +43,6 @@ const Gender = () => {
               <span className="gender-label-text">Male</span>
             </div>
 
-            {/* FEMALE CHIP */}
             <div 
               className={`gender-select-card slide-up-2 ${selectedGender === 'female' ? 'is-selected' : ''}`}
               onClick={() => setSelectedGender('female')}
@@ -57,7 +58,7 @@ const Gender = () => {
           </div>
         </div>
 
-        {/* BOTTOM SECTION: Progress Button */}
+        {/* BOTTOM SECTION: Footer (Fixed at bottom) */}
         <div className="gender-footer-action">
           <div className="wavy-bg-decoration"></div>
           <StepProgressButton 

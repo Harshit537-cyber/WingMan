@@ -14,8 +14,6 @@ const AskHight = () => {
   const navigate = useNavigate();
   
   const gender = location.state?.gender || 'male'; 
-  
-  // Height range: 7.0 down to 4.0
   const heights = Array.from({ length: 31 }, (_, i) => (7.0 - i * 0.1).toFixed(1));
   
   const [selectedHeight, setSelectedHeight] = useState('5.3');
@@ -39,7 +37,6 @@ const AskHight = () => {
     }
   }, []);
 
-  // Scale calculation logic preserved
   const calculateScale = (height) => {
     const val = parseFloat(height);
     const baseScale = 0.8; 
@@ -49,18 +46,18 @@ const AskHight = () => {
 
   return (
     <AppLayout> 
-      <div className="onboarding-screen-container">
+      <div className="hight-screen-container">
         
-        {/* TOP SECTION */}
-        <div className="onboarding-header-wrap">
+        {/* TOP SECTION: Left Aligned Header */}
+        <div className="hight-header-section">
           <OnboardingHeader 
             title="Now tell me, how tall are you?" 
-            description="Just getting the full picture of you."
+            description="How tall are you?"
           />
         </div>
 
         {/* MIDDLE SECTION: Vertical Centered Content */}
-        <div className="onboarding-body-content">
+        <div className="hight-body-content">
           <div className="selector-main-area">
             
             {/* Illustration Section */}
@@ -83,7 +80,7 @@ const AskHight = () => {
               <div className="ruler-scroll" ref={scrollRef} onScroll={onScroll}>
                 <div className="ruler-spacer"></div>
                 {heights.map((h) => (
-                  <div key={h} className={`ruler-item ${selectedHeight === h ? 'active' : ''}`}>
+                  <div key={h} className={`ruler-item ${selectedHeight === h ? 'activee' : ''}`}>
                     <div className="line"></div>
                     <span className="label">{h}</span>
                   </div>
@@ -104,7 +101,7 @@ const AskHight = () => {
         </div>
 
         {/* BOTTOM SECTION: Fixed Footer */}
-        <div className="onboarding-footer-action">
+        <div className="hight-footer-action">
           <div className="footer-wavy-decoration"></div>
           <StepProgressButton 
             currentStep={4} 
