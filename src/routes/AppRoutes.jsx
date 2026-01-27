@@ -51,6 +51,7 @@ import UploadPhoto  from  '../pages/UploadPhoto/UploadPhoto';
 import Notifications from '../pages/HomePages/Notifications/Notifications.jsx';
 import VibeSurvey from '../pages/HomePages/VibeSurvey/VibeSurvey.jsx';
 import DatePreferences from '../pages/HomePages/DatePreferences/DatePreferences.jsx';
+import FullView from '../pages/Matches/FullView/FullView.jsx';
 
 const AppRoutes = () => {
   return (
@@ -99,7 +100,8 @@ const AppRoutes = () => {
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/matches" element={<Matches />} />
         <Route path="/matches/profile-details" element={<ProfileDetail />} />
-        <Route path="gallery-preview" element={<Gallery />} />
+        <Route path="gallery" element={<Gallery />} />
+        <Route path="FullView" element={<FullView />} />
         <Route path="/match" element={<Matches />} />
         <Route path="/notifications" element={<Notifications />} />
         {/* <Route path="/curate-vibee" element={<CurateVibe />} /> */}
