@@ -18,8 +18,9 @@ const ManualLocation = () => {
 
   return (
     <AppLayout>
-      <div className="manual-loc-wrapper">
+      <div className="location-screen-container">
         
+        {/* Background Animation (kept non-blocking) */}
         <div className="bg-line-animation">
           <svg viewBox="0 0 400 600" fill="none" className="dashed-svg">
             <path d="M-50,550 C100,500 350,500 350,350 C350,200 100,200 100,350 C100,450 250,500 450,450" 
@@ -27,22 +28,31 @@ const ManualLocation = () => {
           </svg>
         </div>
 
-        <OnboardingHeader 
-          title="Where do you currently live?" 
-          description="I’ll try to show matches in the same city."
-        />
-
-        <div className="input-container slide-up-delay">
-            <input 
-              type="text" 
-              className="location-input" 
-              placeholder="Enter Location" 
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
+        {/* TOP SECTION: Left Aligned Header */}
+        <div className="location-header-section">
+          <OnboardingHeader 
+            title="Where do you currently live?" 
+            description="So we suggest meaningful connections close to you."
+          />
         </div>
 
-        <div className="footer-fixed">
+        {/* MIDDLE SECTION: Input area */}
+        <div className="location-body-content">
+          <div className="input-box-wrapper slide-up-delay">
+              <input 
+                type="text" 
+                className="location-input-field" 
+                placeholder="Enter Location" 
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                autoFocus
+              />
+          </div>
+        </div>
+
+        {/* BOTTOM SECTION: Fixed Footer */}
+        <div className="location-footer-action">
+          <div className="footer-wavy-decoration"></div>
           <StepProgressButton 
             currentStep={7} 
             totalSteps={20} 

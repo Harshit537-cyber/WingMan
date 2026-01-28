@@ -14,7 +14,7 @@ const ProfileDetail = () => {
   const navigate = useNavigate();
   const [showCallModal, setShowCallModal] = useState(false);
 
-  // Background scroll lock logic - Taaki popup ke piche scroll na ho
+  // Background scroll lock logic
   useEffect(() => {
     if (showCallModal) {
       document.body.style.overflow = 'hidden';
@@ -27,10 +27,8 @@ const ProfileDetail = () => {
   const openModal = () => setShowCallModal(true);
   const closeModal = () => setShowCallModal(false);
 
-  // Navigate to Gallery Page
   const handleGalleryClick = () => navigate('/gallery');
 
-  // Navigate to Date Preferences after sending request from Modal
   const handleSendRequest = () => {
     closeModal();
     navigate('/date-preferences');
@@ -40,33 +38,33 @@ const ProfileDetail = () => {
     <AppLayout>
       <div className="detail-main-container">
         
-        {/* HERO SECTION */}
+        {/* HERO SECTION - Animated Image and Icons */}
         <div className="hero-section">
-          <img src={profileHero} alt="Jessica" className="hero-img" />
-          <button className="top-back-btn" onClick={() => navigate(-1)}>
+          <img src={profileHero} alt="Jessica" className="hero-img animate-zoom" />
+          <button className="top-back-btn pop-in" onClick={() => navigate(-1)}>
             <ChevronLeft size={24} color="#5a3c6d" />
           </button>
-          <button className="top-fav-heart">
+          <button className="top-fav-heart pop-in-delay">
             <Heart size={28} color="#fff" />
           </button>
-          <div className="hero-compat-badge">90% Compatible</div>
+          <div className="hero-compat-badge slide-right">90% Compatible</div>
         </div>
 
         <div className={`detail-scroll-content ${showCallModal ? 'blur-content' : ''}`}>
           
-          {/* INTRO SECTION */}
-          <div className="profile-intro-row">
+          {/* INTRO SECTION - Staggered 1 */}
+          <div className="profile-intro-row slide-up staggered-1">
             <div className="intro-text">
               <h1 className="user-name-age">Jessica Parker, 23</h1>
               <p className="user-profession">Software Developer</p>
             </div>
-            {/* CALL ICON -> Route to /call */}
             <button className="call-action-square" onClick={() => navigate('/call')}>
               <Phone size={24} color="#5a3c6d" fill="#5a3c6d" />
             </button>
           </div>
 
-          <div className="info-block">
+          {/* LOCATION - Staggered 2 */}
+          <div className="info-block slide-up staggered-2">
             <div className="block-header">
               <h3 className="block-title">Location</h3>
               <span className="dist-badge">1 km</span>
@@ -74,7 +72,8 @@ const ProfileDetail = () => {
             <p className="block-desc">Chicago, IL United States</p>
           </div>
 
-          <div className="info-block">
+          {/* ABOUT ME - Staggered 3 */}
+          <div className="info-block slide-up staggered-3">
             <h3 className="block-title">About me</h3>
             <div className="chips-grid">
               <div className="info-chip"><Globe size={16} /> Bengaluru, India</div>
@@ -86,7 +85,8 @@ const ProfileDetail = () => {
             </div>
           </div>
 
-          <div className="info-block">
+          {/* STORY - Staggered 4 */}
+          <div className="info-block slide-up staggered-4">
             <h3 className="block-title">My Story</h3>
             <p className="story-text">
               My name is Jessica Parker and I enjoy meeting new people and finding ways to help them have an uplifting experience. I enjoy reading..
@@ -94,7 +94,8 @@ const ProfileDetail = () => {
             </p>
           </div>
 
-          <div className="info-block">
+          {/* INTERESTS - Staggered 5 */}
+          <div className="info-block slide-up staggered-5">
             <h3 className="block-title">Interests</h3>
             <div className="chips-grid">
               <div className="interest-chip"><Accessibility size={16} color="#f1c40f" /> Yoga</div>
@@ -103,8 +104,8 @@ const ProfileDetail = () => {
             </div>
           </div>
 
-          {/* GALLERY SECTION */}
-          <div className="gallery-section">
+          {/* GALLERY - Staggered 6 */}
+          <div className="gallery-section slide-up staggered-6">
             <div className="block-header">
               <h3 className="block-title">Gallery</h3>
               <span className="see-all" onClick={handleGalleryClick}>See all</span>
@@ -118,8 +119,8 @@ const ProfileDetail = () => {
             </div>
           </div>
 
-          {/* REQUEST BUTTON -> Opens Modal */}
-          <div className="request-btn-container">
+          {/* REQUEST BUTTON - Staggered 7 */}
+          <div className="request-btn-container slide-up staggered-7">
             <button className="request-btn" onClick={openModal}>Request For Call</button>
           </div>
 
@@ -128,25 +129,21 @@ const ProfileDetail = () => {
 
         <BottomNav />
 
-        {/* REQUEST FOR CALL MODAL - Logic fixed for Centering */}
+        {/* MODAL SECTION */}
         {showCallModal && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-content slide-up-modal" onClick={(e) => e.stopPropagation()}>
-              
               <button className="modal-close-x" onClick={closeModal}>
                 <X size={24} color="#5a3c6d" />
               </button>
-
               <div className="modal-inner">
-                <div className="call-icon-illustration">
+                <div className="call-icon-illustration animate-pulse-slow">
                    <PhoneCall size={60} color="#4A90E2" strokeWidth={1.5} />
                 </div>
-
                 <h2 className="modal-title">Request for a call</h2>
                 <p className="modal-subtitle">
                   For safety reasons we suggest not to share personal information too early. Don't rush trust.
                 </p>
-
                 <button className="modal-primary-btn" onClick={handleSendRequest}>
                   Send Request
                 </button>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Phone, Mic, Volume2, MicOff } from 'lucide-react';
 import AppLayout from '../../../components/AppLayout/AppLayout';
-import profileImg from '../../../assets/match-profile.jpg'; // Nikita/John Michel image
+import profileImg from '../../../assets/profile-user.png'; 
 import './CallScreen.css';
 
 const CallScreen = () => {
@@ -11,7 +11,7 @@ const CallScreen = () => {
   const [isMuted, setIsMuted] = useState(false);
 
   const handleHangup = () => {
-    navigate(-1); // Back to previous screen
+    navigate(-1); 
   };
 
   const handleAccept = () => {
@@ -20,60 +20,64 @@ const CallScreen = () => {
 
   return (
     <AppLayout>
-      <div className="call-screen-wrapper">
+      <div className="call-screen-container">
         
-        {/* WAVE PATTERN BACKGROUND DECORATION */}
-        <div className="bg-wavy-overlay">
-           <div className="wave-circle c1"></div>
-           <div className="wave-circle c2"></div>
-           <div className="wave-circle c3"></div>
+        {/* WAVE PATTERN BACKGROUND */}
+        <div className="call-bg-overlay">
+           <div className="call-wave w1"></div>
+           <div className="call-wave w2"></div>
+           <div className="call-wave w3"></div>
         </div>
 
-        {/* TOP CONTENT: PROFILE INFO */}
-        <div className="call-top-content">
-          <div className="caller-avatar-frame">
-            <img src={profileImg} alt="John Michel" className="caller-img" />
+        {/* PROFILE INFO */}
+        <div className="call-profile-section">
+          <div className="call-avatar-wrapper">
+            <img src={profileImg} alt="John Michel" className="call-avatar-img" />
           </div>
-          <div className="caller-meta">
-            <h1 className="caller-name">John Michel <Mic size={20} className="inline-mic" /></h1>
-            <p className="caller-profession">Student</p>
+          <div className="call-user-info">
+            <h1 className="call-user-name">
+              John Michel <Mic size={20} className="mic-icon-inline" />
+            </h1>
+            <p className="call-user-sub">Student</p>
           </div>
         </div>
 
-        {/* CENTER STATUS */}
-        <div className="call-status-area">
-          <p className="status-text">Incoming call...</p>
+        {/* CALL STATUS */}
+        <div className="call-status-middle">
+          <p className="call-status-text">
+            {isAccepted ? '00:05' : 'Incoming call...'}
+          </p>
         </div>
 
-        {/* BOTTOM ACTION BUTTONS */}
-        <div className="call-actions-footer">
+        {/* ACTION BUTTONS */}
+        <div className="call-footer-actions">
           
           {!isAccepted ? (
-            // STATE 1: INCOMING (Green & Red Buttons)
-            <div className="action-row-incoming">
-              <button className="btn-call accept" onClick={handleAccept}>
+            /* STATE: INCOMING */
+            <div className="actions-incoming-row">
+              <button className="call-btn-circle accept-bg" onClick={handleAccept}>
                 <Phone size={32} fill="white" color="white" />
               </button>
-              <button className="btn-call hangup" onClick={handleHangup}>
-                <Phone size={32} fill="white" color="white" className="rotate-hangup" />
+              <button className="call-btn-circle hangup-bg" onClick={handleHangup}>
+                <Phone size={32} fill="white" color="white" className="hangup-rotate" />
               </button>
             </div>
           ) : (
-            // STATE 2: ACCEPTED (Mic, Speaker & Red Buttons)
-            <div className="action-row-active">
+            /* STATE: ACTIVE CALL */
+            <div className="actions-active-row">
               <button 
-                className={`btn-action-circle ${isMuted ? 'active-mute' : ''}`} 
+                className={`call-opt-circle ${isMuted ? 'muted-active' : ''}`} 
                 onClick={() => setIsMuted(!isMuted)}
               >
                 {isMuted ? <MicOff size={24} /> : <Mic size={24} />}
               </button>
               
-              <button className="btn-action-circle">
+              <button className="call-opt-circle">
                 <Volume2 size={24} />
               </button>
               
-              <button className="btn-call hangup" onClick={handleHangup}>
-                <Phone size={32} fill="white" color="white" className="rotate-hangup" />
+              <button className="call-btn-circle hangup-bg" onClick={handleHangup}>
+                <Phone size={32} fill="white" color="white" className="hangup-rotate" />
               </button>
             </div>
           )}

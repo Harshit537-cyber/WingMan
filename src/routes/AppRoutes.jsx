@@ -10,7 +10,7 @@ import Gender from '../pages/gender/Gender';
 import AskName from '../pages/AskName/AskName';
 import SayHy from '../pages/SayHy/SayHy';
 import Birthday from '../pages/Birthday/Birthday';
-import AskHight from '../pages/AskHight/AskHight';
+// import AskHight from '../pages/AskHight/AskHight';
 import Preferences from '../pages/Preferences/Preferences';
 import Celebration from '../pages/Celebration/Celebration';
 import QuizPrompt from '../pages/QuizPrompt/QuizPrompt';
@@ -23,6 +23,7 @@ import TopicSelector from '../pages/TopicSelector/TopicSelector';
 import EmotionalQuiz from '../pages/EmotionalQuiz/EmotionalQuiz';
 import EmotionalCommunication from '../pages/EmotionalCommunication/EmotionalCommunication';
 import EmotionalCommQuiz from '../pages/EmotionalCommQuiz/EmotionalCommQuiz';
+import Hight from '../pages/AskHight/AskHight.jsx';
 import Intrest from '../pages/Intrest/Intrest';
 import AccessLocation from '../pages/AccessLocation/AccessLocation';
 import Native from '../pages/Place/Native';
@@ -73,6 +74,7 @@ import DateRequested from '../pages/HomePages/DateRequested/DateRequested.jsx';
 import Notifications from '../pages/HomePages/Notifications/Notifications.jsx';
 import VibeSurvey from '../pages/HomePages/VibeSurvey/VibeSurvey.jsx';
 import DatePreferences from '../pages/HomePages/DatePreferences/DatePreferences.jsx';
+import FullView from '../pages/Matches/FullView/FullView.jsx';
 
 const AppRoutes = () => {
   return (
@@ -88,7 +90,7 @@ const AppRoutes = () => {
         <Route path="/askName" element={<AskName />} />
         <Route path="/hy" element={<SayHy />} />
         <Route path="/birthday" element={<Birthday />} />
-        <Route path="/hight" element={<AskHight />} />
+        {/* <Route path="/hight" element={<AskHight />} /> */}
         <Route path="/celebration" element={<Celebration />} />
 
         {/* Quizzes & Selection */}
@@ -112,6 +114,7 @@ const AppRoutes = () => {
         <Route path='/conflict-quiz' element={<ConflictQuiz />} />
 
         {/* Profile Details & Location */}
+        <Route path="/hight" element={<Hight />} />
         <Route path="/intrest" element={<Intrest />} />
         <Route path="/Acesslocation" element={<AccessLocation />} />
         <Route path="/Native" element={<Native />} />
@@ -157,6 +160,8 @@ const AppRoutes = () => {
         <Route path="/matches" element={<Matches />} />
         <Route path="/matches/profile-details" element={<ProfileDetail />} />
         <Route path="/gallery-preview" element={<Gallery />} />
+        <Route path="gallery" element={<Gallery />} />
+        <Route path="FullView" element={<FullView />} />
         <Route path="/match" element={<Matches />} />
 
         {/* Communication & Vibe */}

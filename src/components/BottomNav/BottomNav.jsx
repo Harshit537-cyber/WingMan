@@ -3,11 +3,11 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import './BottomNav.css';
 
 // Assets Icons Import
-import homeIcon from '../../assets/home.png';
-import datesIcon from '../../assets/dates.png';
-import heartActionIcon from '../../assets/center-heart.png'; 
-import requestsIcon from '../../assets/requests.png';
-import profileIcon from '../../assets/profile.png';
+import homeIcon from '../../assets/home.svg';
+import datesIcon from '../../assets/dates.svg';
+import heartActionIcon from '../../assets/center-heart.svg'; 
+import requestsIcon from '../../assets/requests.svg';
+import profileIcon from '../../assets/profile.svg';
 
 const BottomNav = () => {
   const navigate = useNavigate();

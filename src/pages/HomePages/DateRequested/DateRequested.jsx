@@ -125,7 +125,7 @@ const DateRequested = () => {
               </div>
               <h2 className="modal-title-text">Your date request is sent</h2>
               <p className="modal-subtitle-text">We’ll notify you once the user confirms.</p>
-              <button className="modal-action-btn" onClick={() => navigate('/home')}>
+              <button className="modal-action-btn" onClick={() => navigate('/matches')}>
                 Okay
               </button>
             </div>

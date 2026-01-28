@@ -29,11 +29,11 @@ const EditProfile = () => {
           </button>
           <h1 className="edit-nav-title">Edit Profile</h1>
           <div className="edit-nav-right">
-             <div className="bell-wrapper">
+             {/* <div className="bell-wrapper">
                 <Bell size={26} color="#5a3c6d" />
                 <span className="orange-dot"></span>
-             </div>
-             <AlignRight size={26} color="#5a3c6d" />
+             </div> */}
+             {/* <AlignRight size={26} color="#5a3c6d" /> */}
           </div>
         </header>
 

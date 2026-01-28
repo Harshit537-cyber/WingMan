@@ -1,37 +1,58 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap');
 
-/* Main Wrapper - Force full height of the AppLayout frame */
-.onboarding-screen-container {
+.name-screen-container {
   width: 100%;
-  height: 100vh; /* Changed from 100% to 100vh for proper viewport height */
-  min-height: 100vh;
+  height: 100dvh; /* Force dynamic viewport height */
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
   font-family: 'Outfit', sans-serif;
-  overflow: hidden;
+  overflow: hidden; /* No scrolling */
   position: relative;
 }
 
-/* Header & Input Wrapper */
-.onboarding-header-wrap {
-  padding: 40px 25px 10px 25px;
+/* Header Section: Left Aligned Title and Description */
+.name-header-section {
+  padding: 20px 25px 0px 25px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  z-index: 5;
-  flex-shrink: 0; /* Prevent header from shrinking */
+  align-items: flex-start; /* Content left aligned */
+  text-align: left;
+}
+
+/* Description heading ke bilkul niche se start ho */
+.name-header-section h1, 
+.name-header-section h2 {
+  margin-bottom: 4px; /* Heading aur description ke beech ka gap kam karne ke liye */
+  text-align: left;
+}
+
+.name-header-section p {
+  margin-top: 0;
+  text-align: left;
+  color: #666; /* Example color, apne hisab se change kar lena */
+}
+
+/* Body Content: Input box position */
+.name-body-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 25px 0 25px; /* Input ko thoda upar rakha hai taaki keyboard space mile */
 }
 
 .name-input-box {
   width: 100%;
-  margin-top: 30px;
+  max-width: 500px;
 }
 
 .custom-name-field {
   width: 100%;
-  height: 70px;
+  height: 65px;
   background-color: #ffffff;
-  border: 1.5px solid #5a3c6d; 
+  border: 1.5px solid #8B6FA8; /* Matching the purple theme */
   border-radius: 20px;
   padding: 0 25px;
   font-family: 'Outfit', sans-serif;
@@ -39,32 +60,24 @@
   font-weight: 600;
   color: #1a1a1a;
   outline: none;
-  box-shadow: 0 10px 25px rgba(90, 60, 109, 0.05);
+  box-shadow: 0 10px 25px rgba(139, 111, 168, 0.08);
   transition: all 0.3s ease;
 }
 
 .custom-name-field:focus {
-  box-shadow: 0 10px 30px rgba(90, 60, 109, 0.12);
-  border-width: 2.5px;
+  border-color: #5a3c6d;
+  box-shadow: 0 10px 30px rgba(90, 60, 109, 0.15);
 }
 
-/* Spacer - Fills the middle gap and pushes footer down */
-.onboarding-body-spacer {
-  flex: 1;
-  min-height: 0; /* Allow flex item to shrink if needed */
-}
-
-/* Footer Section - Strictly at the bottom */
-.onboarding-footer-action {
-  margin-top: auto;
-  padding: 0 25px 50px 25px; /* Added horizontal padding */
+/* Footer Section: Fixed at bottom */
+.name-footer-action {
+  padding: 20px 25px 40px 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   z-index: 10;
-  width: 100%;
-  flex-shrink: 0; /* Prevent footer from shrinking */
+  flex-shrink: 0;
 }
 
 .footer-wavy-decoration {
@@ -76,67 +89,33 @@
   background-image: url("data:image/svg+xml,%3Csvg width='400' height='80' viewBox='0 0 400 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60 Q100 20 200 60 T400 60' stroke='%23E2D8E8' stroke-width='2' stroke-dasharray='8 8'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-size: cover;
-  opacity: 0.6;
+  opacity: 0.5;
   pointer-events: none;
 }
 
-/* --- DESKTOP/WEB VIEW FIX --- */
-@media (min-width: 769px) {
-    .onboarding-screen-container {
-        max-width: 100%;
-        margin: 0 auto;
-    }
-
-    .onboarding-footer-action {
-        padding-bottom: 40px; /* Proper spacing from bottom on desktop */
-    }
-    
-    .footer-wavy-decoration {
-        top: -35px;
-    }
-
-    .onboarding-header-wrap {
-        padding-top: 30px;
-        max-width: 600px; /* Optional: constrain content width on large screens */
-        margin: 0 auto;
-    }
-
-    .name-input-box {
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+/* Responsive Fix for small screens */
+@media (max-height: 650px) {
+  .name-header-section {
+    padding-top: 15px;
+  }
+  .name-body-content {
+    padding-top: 20px;
+  }
+  .custom-name-field {
+    height: 55px;
+    font-size: 18px;
+  }
+  .name-footer-action {
+    padding-bottom: 20px;
+  }
 }
 
 /* Animation */
 .slide-up {
-  animation: nameSlideUp 0.6s ease-out both;
+  animation: nameSlideUp 0.5s ease-out both;
 }
 
 @keyframes nameSlideUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-/* Small screen adjustments */
-@media (max-height: 700px) {
-  .custom-name-field { 
-    height: 60px; 
-    font-size: 18px; 
-  }
-  
-  .onboarding-footer-action {
-    padding-bottom: 30px;
-  }
-}
-
-/* Extra small screens */
-@media (max-height: 600px) {
-  .onboarding-header-wrap {
-    padding-top: 20px;
-  }
-  
-  .name-input-box {
-    margin-top: 20px;
-  }
 }

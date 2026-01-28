@@ -45,7 +45,7 @@ const AccessLocation = () => {
       <div className="text-section">
         <h1 className="title slide-up">Enable Your Location</h1>
         <p className="subtitle slide-up-delay">
-          Choose your location to start find people around you
+          To discover meaningful connections near by
         </p>
       </div>
 

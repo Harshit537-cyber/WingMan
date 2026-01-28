@@ -11,7 +11,7 @@
   overflow: hidden;
 }
 
-/* Hero Section */
+/* --- HERO ANIMATIONS --- */
 .hero-section {
   width: 100%;
   height: 480px;
@@ -19,115 +19,147 @@
   overflow: hidden;
   border-radius: 0 0 40px 40px;
 }
+
+.animate-zoom {
+    animation: zoomEffect 10s ease-in-out infinite alternate;
+}
+
+@keyframes zoomEffect {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
 .hero-img { width: 100%; height: 100%; object-fit: cover; }
 
+.pop-in { animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
+.pop-in-delay { animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both; }
+
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.slide-right { animation: slideRight 0.8s ease-out 0.4s both; }
+@keyframes slideRight {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* --- SCROLL CONTENT ANIMATIONS --- */
+.detail-scroll-content { flex: 1; overflow-y: auto; padding: 25px 20px; scrollbar-width: none; }
+.detail-scroll-content::-webkit-scrollbar { display: none; }
+
+/* Global Slide Up */
+.slide-up {
+    opacity: 0;
+    animation: slideUp 0.7s ease-out forwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Staggered Delays */
+.staggered-1 { animation-delay: 0.1s; }
+.staggered-2 { animation-delay: 0.2s; }
+.staggered-3 { animation-delay: 0.3s; }
+.staggered-4 { animation-delay: 0.4s; }
+.staggered-5 { animation-delay: 0.5s; }
+.staggered-6 { animation-delay: 0.6s; }
+.staggered-7 { animation-delay: 0.7s; }
+
+/* --- MODAL ANIMATIONS --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-pulse-slow {
+    animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1) rotate(-15deg); }
+    50% { transform: scale(1.1) rotate(-10deg); }
+}
+
+.blur-content { 
+    filter: blur(5px); 
+    pointer-events: none; 
+    transition: filter 0.4s ease; 
+}
+
+/* --- REST OF THE CSS (STAY UNCHANGED) --- */
 .top-back-btn {
-  position: absolute;
-  top: 50px; left: 20px;
+  position: absolute; top: 50px; left: 20px;
   width: 45px; height: 45px;
-  background: rgba(255,255,255,0.4);
-  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.4); backdrop-filter: blur(10px);
   border: none; border-radius: 50%;
   display: flex; justify-content: center; align-items: center;
 }
-
 .top-fav-heart { position: absolute; top: 50px; right: 20px; background: none; border: none; }
 .hero-compat-badge {
   position: absolute; bottom: 25px; left: 20px;
   background: #fff; padding: 8px 18px; border-radius: 12px;
   font-weight: 700; font-size: 14px; color: #1a1a1a;
 }
-
-/* Content Area */
-.detail-scroll-content { flex: 1; overflow-y: auto; padding: 25px 20px; scrollbar-width: none; }
-.detail-scroll-content::-webkit-scrollbar { display: none; }
-
 .profile-intro-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
 .user-name-age { font-size: 28px; font-weight: 800; color: #1a1a1a; margin: 0; }
 .user-profession { font-size: 16px; color: #b0b0b0; font-weight: 600; }
-
 .call-action-square {
   width: 55px; height: 50px;
   background: #fff; border: 1px solid #f2f2f2; border-radius: 15px;
   display: flex; justify-content: center; align-items: center;
   box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }
-
 .info-block { margin-bottom: 30px; }
 .block-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .block-title { font-size: 18px; font-weight: 800; color: #1a1a1a; }
 .dist-badge { background: #E8D9F1; padding: 6px 14px; border-radius: 10px; font-weight: 800; color: #5a3c6d; font-size: 13px; }
-
 .chips-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
 .info-chip, .interest-chip {
   background: #f2f2f2; padding: 8px 15px; border-radius: 12px;
   font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px;
 }
-
 .story-text { font-size: 15px; line-height: 1.6; color: #666; font-weight: 500; }
 .read-more { color: #5a3c6d; font-weight: 800; margin-left: 5px; cursor: pointer; }
-
-/* Gallery */
 .gallery-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-top: 15px; }
 .gal-big { grid-column: span 3; height: 180px; border-radius: 20px; overflow: hidden; }
 .gal-small { grid-column: span 2; height: 110px; border-radius: 15px; overflow: hidden; }
 .gallery-grid img { width: 100%; height: 100%; object-fit: cover; }
 .clickable { cursor: pointer; }
-
-/* Main Action Button */
 .request-btn-container { margin-top: 20px; }
 .request-btn {
   width: 100%; background: #5a3c6d; color: white; padding: 18px;
   border: none; border-radius: 20px; font-size: 18px; font-weight: 800;
   cursor: pointer;
 }
-
 .footer-spacer { height: 110px; }
-
-/* --- FIXED POPUP STYLES (CENTERED) --- */
-.modal-overlay {
-    position: fixed; /* FIXED use kiya hai taaki hamesha screen ke center mein rahe */
-    top: 0; 
-    left: 0; 
-    width: 100vw; 
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.4);
-    display: flex; 
-    justify-content: center; /* Horizontally Center */
-    align-items: center;     /* Vertically Center */
-    z-index: 9999;           /* Sabse upar rahega */
-    backdrop-filter: blur(4px);
-}
-
 .modal-content {
-    width: 88%; 
-    max-width: 350px;
-    background: #FFF5FA;
-    border-radius: 35px;
-    padding: 45px 30px;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    width: 88%; max-width: 350px;
+    background: #FFF5FA; border-radius: 35px;
+    padding: 45px 30px; text-align: center;
+    position: relative; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
-
 .modal-close-x { position: absolute; top: 20px; right: 20px; background: none; border: none; cursor: pointer; }
-
 .modal-inner { display: flex; flex-direction: column; align-items: center; gap: 20px; }
-
-.call-icon-illustration { margin-bottom: 10px; transform: rotate(-15deg); }
-
+.call-icon-illustration { margin-bottom: 10px; }
 .modal-title { font-size: 26px; font-weight: 800; color: #000; margin: 0; }
 .modal-subtitle { font-size: 15px; color: #333; font-weight: 500; line-height: 1.5; }
-
 .modal-primary-btn {
     width: 100%; background: #5a3c6d; color: white; border: none;
     padding: 16px; border-radius: 18px; font-size: 18px; font-weight: 700;
     cursor: pointer;
 }
-
-.blur-content { filter: blur(5px); pointer-events: none; transition: filter 0.3s; }
-
-/* Animations */
-.slide-up { animation: slideUp 0.6s ease-out; }
-.slide-up-modal { animation: slideUp 0.3s ease-out; }
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.slide-up-modal { animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; }

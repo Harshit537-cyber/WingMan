@@ -2,42 +2,55 @@
 
 .gender-screen-container {
   width: 100%;
-  height: 100vh;
-  min-height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile browsers */
   display: flex;
   flex-direction: column;
   background-color: #FFF8FB;
   font-family: 'Outfit', sans-serif;
-  overflow: hidden;
+  overflow: hidden; /* No scrolling */
   position: relative;
 }
 
-/* Header Wrap */
-.gender-header-wrap {
-  padding: 40px 25px 10px 25px;
+/* Header Section: Back button ke niche Heading, Left Aligned */
+.gender-header-section {
+  padding: 20px 25px 0px 25px; 
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Isse content left side chipak jayega */
+  text-align: left; /* Text alignment left */
 }
 
-/* Middle Selection Body */
+/* Agar OnboardingHeader ke andar koi default margin hai toh usse override karne ke liye */
+.gender-header-section h1, 
+.gender-header-section h2, 
+.gender-header-section p {
+  margin-left: 0;
+  padding-left: 0;
+  text-align: left;
+  width: 100%;
+}
+
+/* Middle Selection Body: Centered and flexible */
 .gender-selection-body {
-  flex: 1;
-  min-height: 0;
+  flex: 1; /* Baki bachi hui space le lega */
   display: flex;
-  align-items: flex-start; /* Changed from center to flex-start */
+  align-items: center; /* Content ko vertically center rakhega */
   justify-content: center;
-  padding: 60px 25px 20px 25px; /* Added more top padding */
+  padding: 0 25px;
 }
 
 .gender-chips-stack {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
   align-items: center;
-  justify-content: center;
 }
 
 .gender-select-card {
-  width: 140px;
+  width: 100%;
+  max-width: 160px; /* Card size balance karne ke liye */
   height: 150px;
   background: #ffffff;
   border: 1.5px solid #e2d8e8;
@@ -47,29 +60,22 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
   color: #7a6691;
 }
 
-.gender-select-card:active {
-  transform: scale(0.97); /* Click feedback */
-}
-
 .gender-select-card.is-selected {
-  background-color: #8B6FA8; /* Purple color jaise screenshot me hai */
+  background-color: #8B6FA8;
   border-color: #8B6FA8;
   color: #ffffff;
-  transform: scale(1.02);
+  transform: scale(1.05);
   box-shadow: 0 8px 20px rgba(139, 111, 168, 0.25);
-}
-
-.gender-icon-svg {
-  margin-bottom: 10px;
 }
 
 .gender-icon-svg svg {
   width: 50px;
   height: 50px;
+  margin-bottom: 8px;
 }
 
 .gender-label-text {
@@ -77,10 +83,9 @@
   font-weight: 700;
 }
 
-/* Footer Section */
+/* Footer Section: Hamesha screen ke bottom pe rahega */
 .gender-footer-action {
-  margin-top: auto;
-  padding: 0 25px 50px 25px;
+  padding: 20px 25px 40px 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -98,97 +103,33 @@
   background-image: url("data:image/svg+xml,%3Csvg width='400' height='80' viewBox='0 0 400 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60 Q100 20 200 60 T400 60' stroke='%23E2D8E8' stroke-width='2' stroke-dasharray='8 8'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-size: cover;
-  opacity: 0.6;
+  opacity: 0.4;
   pointer-events: none;
 }
 
-/* Staggered Animations */
-.slide-up-1 { animation: genderSlideUp 0.6s ease-out 0.1s both; }
-.slide-up-2 { animation: genderSlideUp 0.6s ease-out 0.2s both; }
+/* --- Responsive Adjustments for Small Screens --- */
+@media (max-height: 650px) {
+  .gender-select-card {
+    height: 120px;
+    max-width: 130px;
+  }
+  .gender-icon-svg svg {
+    width: 40px;
+    height: 40px;
+  }
+  .gender-header-section {
+    padding-top: 15px;
+  }
+  .gender-footer-action {
+    padding-bottom: 20px;
+  }
+}
+
+/* Animations */
+.slide-up-1 { animation: genderSlideUp 0.5s ease-out 0.1s both; }
+.slide-up-2 { animation: genderSlideUp 0.5s ease-out 0.2s both; }
 
 @keyframes genderSlideUp {
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-/* --- DESKTOP/WEB VIEW --- */
-@media (min-width: 769px) {
-    .gender-screen-container {
-        max-width: 100%;
-        margin: 0 auto;
-    }
-
-    .gender-header-wrap {
-        padding-top: 30px;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .gender-footer-action {
-        padding-bottom: 40px;
-    }
-    
-    .wavy-bg-decoration {
-        top: -35px;
-    }
-
-    /* Cards vertical centered rahenge */
-    .gender-chips-stack {
-        gap: 20px;
-    }
-
-    .gender-select-card {
-        width: 145px;
-        height: 155px;
-    }
-
-    .gender-icon-svg svg {
-        width: 55px;
-        height: 55px;
-    }
-
-    .gender-label-text {
-        font-size: 20px;
-    }
-}
-
-/* Small screen adjustments */
-@media (max-height: 700px) {
-    .gender-select-card {
-        height: 150px;
-        width: 140px;
-    }
-    
-    .gender-icon-svg svg {
-        width: 45px;
-        height: 45px;
-    }
-
-    .gender-label-text {
-        font-size: 18px;
-    }
-
-    .gender-footer-action {
-        padding-bottom: 30px;
-    }
-}
-
-/* Extra small screens */
-@media (max-height: 600px) {
-    .gender-header-wrap {
-        padding-top: 20px;
-    }
-
-    .gender-selection-body {
-        padding: 10px 25px;
-    }
-
-    .gender-chips-stack {
-        gap: 15px;
-    }
-
-    .gender-select-card {
-        height: 130px;
-        width: 120px;
-    }
 }

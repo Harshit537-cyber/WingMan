@@ -20,20 +20,23 @@ const AskName = () => {
 
   return (
     <AppLayout> 
-      <div className="onboarding-screen-container">
+      <div className="name-screen-container">
         
-        {/* TOP SECTION: Header & Input */}
-        <div className="onboarding-header-wrap">
+        {/* TOP SECTION: Header (Title & Description right below back button) */}
+        <div className="name-header-section">
           <OnboardingHeader 
             title="Cool, what's your name?" 
             description="I'll save it as your display name."
           />
-          
+        </div>
+
+        {/* MIDDLE SECTION: Input field */}
+        <div className="name-body-content">
           <div className="name-input-box slide-up">
             <input 
               type="text" 
               className="custom-name-field" 
-              placeholder="Name" 
+              placeholder="Enter your name" 
               value={name}
               onChange={(e) => setName(e.target.value)}
               autoFocus
@@ -41,11 +44,8 @@ const AskName = () => {
           </div>
         </div>
 
-        {/* MIDDLE SECTION: Spacer to push footer down */}
-        <div className="onboarding-body-spacer"></div>
-
-        {/* BOTTOM SECTION: Fixed Footer */}
-        <div className="onboarding-footer-action">
+        {/* BOTTOM SECTION: Footer Fixed */}
+        <div className="name-footer-action">
           <div className="footer-wavy-decoration"></div>
           <StepProgressButton 
             currentStep={2} 

@@ -54,10 +54,21 @@ const Matches = () => {
              <h1 className="main-match-title">Matches</h1>
              <p className="sub-match-title">Request a call and see where things go</p>
           </div>
-          <div className="action-icons-right">
-             <Bell size={26} color="#5a3c6d" />
-             <AlignRight size={26} color="#5a3c6d" />
-          </div>
+          <div className="header-icons">
+                      {/* Bell Icon -> Notifications Page */}
+                      <div
+                        className="bell-box"
+                        onClick={() => navigate('/request')}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        <Bell size={26} color="#5a3c6d" />
+                        <span className="dot"></span>
+                      </div>
+                      {/* Menu Icon -> Settings or Profile */}
+                      <button className="menu-btn" onClick={() => navigate('/settings')}>
+                        <AlignRight size={28} color="#5a3c6d" />
+                      </button>
+                    </div>
         </header>
 
         <div className="matches-body-content slide-up">
