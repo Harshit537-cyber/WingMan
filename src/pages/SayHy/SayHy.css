@@ -2,15 +2,18 @@
 
 .say-hy-screen-wrapper {
   width: 100%;
-  height: 100%;
-  background-color: #5a3c6d; /* Theme Purple Background */
+  flex: 1;
+  min-height: 100%; 
+  background-color: #5a3c6d; /* Theme Purple */
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden; /* No scrolling */
+  overflow: hidden;
   color: #ffffff;
   text-align: center;
   font-family: 'Outfit', sans-serif;
+  /* Radius removed for sharp corners */
+  border-radius: 0 !important; 
 }
 
 /* Confetti Layer */
@@ -32,7 +35,7 @@
   animation: confettiFall 4s linear infinite;
 }
 
-/* Confetti Positions & Delays */
+/* Confetti Positions */
 .c0 { left: 5%;  animation-delay: 0s; width: 30px; }
 .c1 { left: 15%; animation-delay: 2s; width: 45px; }
 .c2 { left: 25%; animation-delay: 1s; }
@@ -43,8 +46,6 @@
 .c7 { left: 33%; animation-delay: 4s; }
 .c8 { left: 60%; animation-delay: 1.2s; }
 .c9 { left: 10%; animation-delay: 3.5s; }
-.c10 { left: 50%; animation-delay: 0.8s; width: 35px; }
-.c11 { left: 80%; animation-delay: 2.2s; width: 30px; }
 
 @keyframes confettiFall {
   0% { transform: translateY(0) rotate(0deg); opacity: 0; }
@@ -53,16 +54,16 @@
   100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
 
-/* Center Content */
+/* Center Content - Perfectly centered on screen */
 .hy-text-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* Vertically Center */
+  align-items: center;    /* Horizontally Center */
   z-index: 5;
   padding: 0 30px;
-  margin-top: -50px; /* Slight offset for visual balance */
+  margin-top: -80px; /* Offset to counter-balance the character at bottom */
 }
 
 .hy-title-main {
@@ -103,7 +104,7 @@
 
 .wingman-character {
   width: 85%;
-  max-height: 380px;
+  max-height: 42vh; 
   object-fit: contain;
   display: block;
 }
@@ -129,9 +130,17 @@
   to { transform: translateY(0); opacity: 1; }
 }
 
-/* Responsiveness for small screens */
-@media (max-height: 700px) {
-  .hy-title-main { font-size: 28px; }
-  .hy-subtitle-main { font-size: 24px; }
-  .wingman-character { max-height: 300px; }
+/* Desktop Frame Specific Adjustments */
+@media (min-width: 769px) {
+  .say-hy-screen-wrapper {
+    border-radius: 0 !important; /* Sharp corners for desktop frame */
+  }
+
+  .hy-text-content {
+    margin-top: -100px; /* Slight adjust for 420px frame height */
+  }
+
+  .wingman-character {
+    max-height: 300px; /* Fixed height for Desktop frame consistency */
+  }
 }

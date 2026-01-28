@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Pages Imports
 import LandingPage from '../pages/landing/LandingPage';
 import Appreciate from '../pages/Appreciate/Appreciate';
 import Interests from '../pages/Interests/Interests';
-import UploadPhoto  from  '../pages/UploadPhoto/UploadPhoto';
+import UploadPhoto from '../pages/UploadPhoto/UploadPhoto';
 import Gender from '../pages/gender/Gender';
 import AskName from '../pages/AskName/AskName';
 import SayHy from '../pages/SayHy/SayHy';
@@ -66,64 +68,73 @@ import AttachmentEmojiQuiz from '../pages/AttachmentEmojiQuiz/AttachmentEmojiQui
 import CompletionScreen from '../pages/CompletionScreen/CompletionScreen.jsx';
 import TopicSelection from '../pages/TopicSelection/TopicSelection.jsx';
 import ConflictQuiz from '../pages/ConflictQuiz/ConflictQuiz.jsx';
-
+import CallScreen from '../pages/HomePages/CallScreen/CallScreen.jsx';
+import DateRequested from '../pages/HomePages/DateRequested/DateRequested.jsx';
+import Notifications from '../pages/HomePages/Notifications/Notifications.jsx';
+import VibeSurvey from '../pages/HomePages/VibeSurvey/VibeSurvey.jsx';
+import DatePreferences from '../pages/HomePages/DatePreferences/DatePreferences.jsx';
 
 const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        {/* Base path "/" par Landing Page dikhega */}
-          <Route path="/preference" element={<Preferences />} />
+        {/* Auth & Onboarding */}
         <Route path="/" element={<LandingPage />} />
+        <Route path="/preference" element={<Preferences />} />
         <Route path="/appreciate" element={<Appreciate />} />
-          <Route path="/interests" element={<Interests />} />
-          <Route path="/uploads" element={<UploadPhoto />} />
+        <Route path="/interests" element={<Interests />} />
+        <Route path="/uploads" element={<UploadPhoto />} />
         <Route path="/gender" element={<Gender />} />
         <Route path="/askName" element={<AskName />} />
         <Route path="/hy" element={<SayHy />} />
         <Route path="/birthday" element={<Birthday />} />
         <Route path="/hight" element={<AskHight />} />
         <Route path="/celebration" element={<Celebration />} />
+
+        {/* Quizzes & Selection */}
         <Route path="/quiz-world" element={<QuizPrompt />} />
         <Route path="/pick-card" element={<PickCard />} />
-        <Route path='/lifestyle-quiz' element={<LifestyleQuiz/>} />
-        <Route path='/finance-quiz' element={<FinanceQuiz/>} />
-        <Route path='/habit-quiz' element={<HabitQuiz/>} />
-        <Route path='/topic-selector' element={<TopicSelector/>} />
-        <Route path='/emotional-quiz' element={<EmotionalQuiz/>} />
-        <Route path='/emotional-communication' element={<EmotionalCommunication/>} />
-        <Route path='/relationship-quiz' element={<RelationshipInputQuiz/>} />
-        <Route path='/emotional-commQuiz' element={<EmotionalCommQuiz/>} />
-         <Route path='/pick-a-card' element={<PickACard/>} />
-         <Route path='/attachment' element={<AttachmentQuiz/>} />
-         <Route path='/life-style-card' element={<LifestyleAndValue/>} />
+        <Route path='/lifestyle-quiz' element={<LifestyleQuiz />} />
+        <Route path='/finance-quiz' element={<FinanceQuiz />} />
+        <Route path='/habit-quiz' element={<HabitQuiz />} />
+        <Route path='/topic-selector' element={<TopicSelector />} />
+        <Route path='/emotional-quiz' element={<EmotionalQuiz />} />
+        <Route path='/emotional-communication' element={<EmotionalCommunication />} />
+        <Route path='/relationship-quiz' element={<RelationshipInputQuiz />} />
+        <Route path='/emotional-commQuiz' element={<EmotionalCommQuiz />} />
+        <Route path='/pick-a-card' element={<PickACard />} />
+        <Route path='/attachment' element={<AttachmentQuiz />} />
+        <Route path='/life-style-card' element={<LifestyleAndValue />} />
+        <Route path='/life-style-quiz' element={<DatingReactionQuiz />} />
+        <Route path='/attach-quiz' element={<AttachmentEmojiQuiz />} />
+        <Route path='/completions' element={<CompletionScreen />} />
+        <Route path='/topic-selection' element={<TopicSelection />} />
+        <Route path='/conflict-quiz' element={<ConflictQuiz />} />
 
-         <Route path='/life-style-quiz' element={<DatingReactionQuiz/>}/>
-         <Route path='/attach-quiz' element={<AttachmentEmojiQuiz/>}/>
-         <Route path='/completions' element={<CompletionScreen/>}/>
-         <Route path='/topic-selection' element={<TopicSelection />}/>
-         <Route path='/conflict-quiz' element={<ConflictQuiz />}/>
-
-
+        {/* Profile Details & Location */}
         <Route path="/intrest" element={<Intrest />} />
         <Route path="/Acesslocation" element={<AccessLocation />} />
-        <Route path="/Native" element={<Native/>} />
-        <Route path="/About" element={<About/>} />
-        <Route path="/Habit" element={<Habit/>} />
-        <Route path="/Story" element={<Story/>} />
-        <Route path="/Working" element={<Working/>} />
-        <Route path="/Study" element={<Study/>} />
-        <Route path="/Work" element={<Work/>} />
-        <Route path="/Education" element={<Education/>} />
-        <Route path="/Religion" element={<Religion/>} />
-        <Route path="/ManualLocation" element={<ManualLocation/>} />
-        <Route path="/LocationSuccess" element={<LocationSuccess/>} />
-        <Route path="/home" element={<Home/>} />
-        <Route path="/home/*" element={<VerifyProfile/>} />
-        <Route path="/schedule" element={<Schedule/>} />
+        <Route path="/Native" element={<Native />} />
+        <Route path="/About" element={<About />} />
+        <Route path="/Habit" element={<Habit />} />
+        <Route path="/Story" element={<Story />} />
+        <Route path="/Working" element={<Working />} />
+        <Route path="/Study" element={<Study />} />
+        <Route path="/Work" element={<Work />} />
+        <Route path="/Education" element={<Education />} />
+        <Route path="/Religion" element={<Religion />} />
+        <Route path="/ManualLocation" element={<ManualLocation />} />
+        <Route path="/LocationSuccess" element={<LocationSuccess />} />
+
+        {/* Home & Core App Features */}
+        <Route path="/home" element={<Home />} />
+        <Route path="/verify-profile" element={<VerifyProfile />} />
+        <Route path="/schedule" element={<Schedule />} />
         <Route path="/schedule-video-call" element={<ScheduleVideoCall />} />
         <Route path="/schedule-confirmed" element={<ScheduleConfirmed />} />
         <Route path="/verified" element={<ProfileVerified />} />
+        
+        {/* Dates Section */}
         <Route path="/dates" element={<Dates />} />
         <Route path="/asked-out" element={<AskedOutList />} />
         <Route path="/planned-dates" element={<PlanedDates />} />
@@ -132,6 +143,8 @@ const AppRoutes = () => {
         <Route path="/dos-donts" element={<DosAndDonts />} />
         <Route path="/cancel-date" element={<CancelDate />} />
         <Route path="/proposed-dates" element={<ProposedDates />} />
+
+        {/* Profile & Settings */}
         <Route path="/profile" element={<Profile />} />
         <Route path="/Request" element={<Request />} />
         <Route path="/settings" element={<AccountSetting />} />
@@ -139,17 +152,22 @@ const AppRoutes = () => {
         <Route path="/invite" element={<Invite />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+
+        {/* Matches & Gallery */}
         <Route path="/matches" element={<Matches />} />
         <Route path="/matches/profile-details" element={<ProfileDetail />} />
-        <Route path="gallery-preview" element={<Gallery />} />
+        <Route path="/gallery-preview" element={<Gallery />} />
         <Route path="/match" element={<Matches />} />
-    
-      
+
+        {/* Communication & Vibe */}
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/curate-vibe" element={<VibeSurvey />} />
+        <Route path="/date-preferences" element={<DatePreferences />} />
+        <Route path="/date-requested" element={<DateRequested />} />
+        <Route path="/call" element={<CallScreen />} />
       </Routes>
     </Router>
   );
 };
 
 export default AppRoutes;
-
- FinanceQuiz.jsx

@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
+.call-screen-wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: #5a3c6d; /* Main Purple Theme */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  color: white;
+  font-family: 'Outfit', sans-serif;
+  text-align: center;
+}
+
+/* Background Wavy Patterns */
+.bg-wavy-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.wave-circle {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+}
+
+.c1 { width: 500px; height: 500px; top: -100px; right: -150px; }
+.c2 { width: 600px; height: 600px; bottom: -200px; left: -200px; }
+.c3 { width: 700px; height: 700px; bottom: -250px; left: -250px; }
+
+/* Profile Section */
+.call-top-content {
+  margin-top: 100px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.caller-avatar-frame {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+
+.caller-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.caller-name {
+  font-size: 26px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.caller-profession {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* Status Area */
+.call-status-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.status-text {
+  font-size: 18px;
+  font-weight: 500;
+  opacity: 0.9;
+  letter-spacing: 0.5px;
+}
+
+/* Footer Action Buttons */
+.call-actions-footer {
+  padding-bottom: 80px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+}
+
+.action-row-incoming {
+  display: flex;
+  gap: 80px;
+}
+
+.action-row-active {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+/* Circle Buttons Styling */
+.btn-call {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.btn-call:active { transform: scale(0.9); }
+
+.accept { background-color: #4cd964; } /* Green */
+.hangup { background-color: #ff3b30; } /* Red */
+
+.rotate-hangup { transform: rotate(135deg); }
+
+/* Active Call Action Circles (Mic/Speaker) */
+.btn-action-circle {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+
+.active-mute {
+    background-color: white;
+    color: #5a3c6d;
+}
+
+/* Figma Responsive Adjustments */
+@media (min-width: 769px) {
+    .call-actions-footer { padding-bottom: 50px; }
+    .call-top-content { margin-top: 60px; }
+}

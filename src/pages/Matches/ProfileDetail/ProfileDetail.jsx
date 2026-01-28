@@ -14,7 +14,7 @@ const ProfileDetail = () => {
   const navigate = useNavigate();
   const [showCallModal, setShowCallModal] = useState(false);
 
-  // Background scroll lock
+  // Background scroll lock logic - Taaki popup ke piche scroll na ho
   useEffect(() => {
     if (showCallModal) {
       document.body.style.overflow = 'hidden';
@@ -26,7 +26,15 @@ const ProfileDetail = () => {
 
   const openModal = () => setShowCallModal(true);
   const closeModal = () => setShowCallModal(false);
-  const handleGalleryClick = () => navigate('/gallery-preview'); // Dummy route
+
+  // Navigate to Gallery Page
+  const handleGalleryClick = () => navigate('/gallery');
+
+  // Navigate to Date Preferences after sending request from Modal
+  const handleSendRequest = () => {
+    closeModal();
+    navigate('/date-preferences');
+  };
 
   return (
     <AppLayout>
@@ -46,13 +54,14 @@ const ProfileDetail = () => {
 
         <div className={`detail-scroll-content ${showCallModal ? 'blur-content' : ''}`}>
           
-          {/* INTRO & CALL TRIGGER */}
+          {/* INTRO SECTION */}
           <div className="profile-intro-row">
             <div className="intro-text">
               <h1 className="user-name-age">Jessica Parker, 23</h1>
               <p className="user-profession">Software Developer</p>
             </div>
-            <button className="call-action-square" onClick={openModal}>
+            {/* CALL ICON -> Route to /call */}
+            <button className="call-action-square" onClick={() => navigate('/call')}>
               <Phone size={24} color="#5a3c6d" fill="#5a3c6d" />
             </button>
           </div>
@@ -80,7 +89,7 @@ const ProfileDetail = () => {
           <div className="info-block">
             <h3 className="block-title">My Story</h3>
             <p className="story-text">
-              My name is Jessica Parker and I enjoy meeting new people... 
+              My name is Jessica Parker and I enjoy meeting new people and finding ways to help them have an uplifting experience. I enjoy reading..
               <span className="read-more">Read more</span>
             </p>
           </div>
@@ -94,7 +103,7 @@ const ProfileDetail = () => {
             </div>
           </div>
 
-          {/* GALLERY SECTION (CLICKABLE) */}
+          {/* GALLERY SECTION */}
           <div className="gallery-section">
             <div className="block-header">
               <h3 className="block-title">Gallery</h3>
@@ -109,7 +118,7 @@ const ProfileDetail = () => {
             </div>
           </div>
 
-          {/* REQUEST BUTTON (CALL TRIGGER) */}
+          {/* REQUEST BUTTON -> Opens Modal */}
           <div className="request-btn-container">
             <button className="request-btn" onClick={openModal}>Request For Call</button>
           </div>
@@ -119,7 +128,7 @@ const ProfileDetail = () => {
 
         <BottomNav />
 
-        {/* REQUEST FOR CALL MODAL */}
+        {/* REQUEST FOR CALL MODAL - Logic fixed for Centering */}
         {showCallModal && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-content slide-up-modal" onClick={(e) => e.stopPropagation()}>
@@ -138,7 +147,7 @@ const ProfileDetail = () => {
                   For safety reasons we suggest not to share personal information too early. Don't rush trust.
                 </p>
 
-                <button className="modal-primary-btn" onClick={closeModal}>
+                <button className="modal-primary-btn" onClick={handleSendRequest}>
                   Send Request
                 </button>
               </div>

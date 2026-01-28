@@ -1,34 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap');
 
+/* Main Wrapper - Force full height of the AppLayout frame */
 .onboarding-screen-container {
   width: 100%;
-  height: 100%;
+  height: 100vh; /* Changed from 100% to 100vh for proper viewport height */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
   font-family: 'Outfit', sans-serif;
-  overflow: hidden; /* No scrolling */
+  overflow: hidden;
   position: relative;
 }
 
-/* Header & Input Wrapper (Starts from top) */
+/* Header & Input Wrapper */
 .onboarding-header-wrap {
   padding: 40px 25px 10px 25px;
   display: flex;
   flex-direction: column;
+  z-index: 5;
+  flex-shrink: 0; /* Prevent header from shrinking */
 }
 
-/* Input Box - Positioned below text */
 .name-input-box {
   width: 100%;
-  margin-top: 30px; /* Space from description text */
+  margin-top: 30px;
 }
 
 .custom-name-field {
   width: 100%;
   height: 70px;
   background-color: #ffffff;
-  border: 1.5px solid #5a3c6d; /* Theme Purple */
+  border: 1.5px solid #5a3c6d; 
   border-radius: 20px;
   padding: 0 25px;
   font-family: 'Outfit', sans-serif;
@@ -42,32 +45,32 @@
 
 .custom-name-field:focus {
   box-shadow: 0 10px 30px rgba(90, 60, 109, 0.12);
-  border-width: 2px;
+  border-width: 2.5px;
 }
 
-.custom-name-field::placeholder {
-  color: #b0b0b0;
-  font-weight: 400;
-}
-
-/* Spacer to maintain layout structure */
+/* Spacer - Fills the middle gap and pushes footer down */
 .onboarding-body-spacer {
   flex: 1;
+  min-height: 0; /* Allow flex item to shrink if needed */
 }
 
-/* Footer & Progress Button */
+/* Footer Section - Strictly at the bottom */
 .onboarding-footer-action {
-  padding-bottom: 50px;
+  margin-top: auto;
+  padding: 0 25px 50px 25px; /* Added horizontal padding */
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  z-index: 5;
+  z-index: 10;
+  width: 100%;
+  flex-shrink: 0; /* Prevent footer from shrinking */
 }
 
 .footer-wavy-decoration {
   position: absolute;
   top: -40px;
+  left: 0;
   width: 100%;
   height: 80px;
   background-image: url("data:image/svg+xml,%3Csvg width='400' height='80' viewBox='0 0 400 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60 Q100 20 200 60 T400 60' stroke='%23E2D8E8' stroke-width='2' stroke-dasharray='8 8'/%3E%3C/svg%3E");
@@ -77,29 +80,63 @@
   pointer-events: none;
 }
 
+/* --- DESKTOP/WEB VIEW FIX --- */
+@media (min-width: 769px) {
+    .onboarding-screen-container {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .onboarding-footer-action {
+        padding-bottom: 40px; /* Proper spacing from bottom on desktop */
+    }
+    
+    .footer-wavy-decoration {
+        top: -35px;
+    }
+
+    .onboarding-header-wrap {
+        padding-top: 30px;
+        max-width: 600px; /* Optional: constrain content width on large screens */
+        margin: 0 auto;
+    }
+
+    .name-input-box {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
 /* Animation */
 .slide-up {
   animation: nameSlideUp 0.6s ease-out both;
 }
 
 @keyframes nameSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Small screen adjustments */
+@media (max-height: 700px) {
+  .custom-name-field { 
+    height: 60px; 
+    font-size: 18px; 
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  .onboarding-footer-action {
+    padding-bottom: 30px;
   }
 }
 
-/* Mobile responsive height adjustment */
-@media (max-height: 700px) {
-  .custom-name-field {
-    height: 60px;
-    font-size: 18px;
-  }
+/* Extra small screens */
+@media (max-height: 600px) {
   .onboarding-header-wrap {
-    padding-top: 30px;
+    padding-top: 20px;
+  }
+  
+  .name-input-box {
+    margin-top: 20px;
   }
 }
