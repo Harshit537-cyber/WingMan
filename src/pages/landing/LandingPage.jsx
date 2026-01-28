@@ -38,7 +38,7 @@ const LandingPage = () => {
       <div className="button-box fade-in-up-delay">
         {/* 3. Button pe onClick handler lagayein */}
         <button className="google-login-btn" onClick={handleLogin}>
-          Connect to Google
+          Let Start
         </button>
       </div>
     </div>

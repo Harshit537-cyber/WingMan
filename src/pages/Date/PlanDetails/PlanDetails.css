@@ -1,214 +1,269 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
 
 .plan-page-container {
   width: 100%;
-  height: 100%;
-  background-color: #FFF8F7;
+  height: 100vh;
+  background-color: #FFF9FC; /* Light background from screenshot */
   display: flex;
   flex-direction: column;
   font-family: 'Outfit', sans-serif;
+  overflow: hidden;
 }
 
 /* Header */
 .plan-header {
-  padding: 40px 20px 10px 20px;
+  padding: 45px 20px 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fcfaff;
-}
-
-.back-btn, .menu-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
 }
 
 .header-title {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 600;
   color: #1a1a1a;
 }
 
-/* Content */
+/* Scroll Area */
 .plan-scroll-content {
   flex: 1;
   overflow-y: auto;
-  padding: 10px 20px;
+  padding: 10px 18px;
   scrollbar-width: none;
 }
 .plan-scroll-content::-webkit-scrollbar { display: none; }
 
-.request-msg {
-  color: #5a3c6d;
-  font-weight: 700;
-  font-size: 18px;
+.main-msg-section {
   text-align: center;
-  margin: 15px 0 25px 0;
+  margin: 10px 0 25px;
+}
+
+.request-title {
+  color: #5a3c6d;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.request-subtitle {
+  color: #777;
+  font-size: 14px;
 }
 
 /* Card General Styling */
 .plan-card {
   background: #ffffff;
-  border-radius: 20px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 15px rgba(90, 60, 109, 0.04);
-  border: 1px solid #f3eef7;
+  border-radius: 30px;
+  padding: 22px;
+  margin-bottom: 18px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
 }
 
-.card-heading {
+.card-header-main {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 12px;
   margin-bottom: 18px;
 }
 
-.card-heading span {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1a1a1a;
+.icon-bg-purple {
+  background: #5a3c6d;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Date Section */
-.date-banner {
-  background-color: #f3ecf6;
-  color: #5a3c6d;
-  text-align: center;
-  padding: 12px;
-  border-radius: 12px;
-  font-weight: 700;
+.card-title-text {
   font-size: 18px;
+  font-weight: 700;
+  color: #2D2D2D;
+}
+
+.card-subtitle-text {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
+}
+
+/* --- DATES ROW (FIXED CUTTING) --- */
+.dates-row {
+  display: flex;
+  justify-content: space-between; /* Space out evenly to prevent cutting */
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.date-chip-box {
+  flex: 1; /* Makes them equal width */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 4px;
+  border-radius: 12px;
+  border: 1px solid #5a3c6d;
+  background: white;
+  color: #5a3c6d;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.date-chip-box.active {
+  background: #5a3c6d;
+  color: white;
+}
+
+/* --- TIMES ROW --- */
+.slot-heading {
+  font-size: 15px;
+  color: #333;
+  font-weight: 700;
   margin-bottom: 15px;
 }
 
-.time-slots-row {
+.times-row {
   display: flex;
+  justify-content: space-between;
   gap: 10px;
 }
 
-.time-chip {
+.time-chip-pill {
   flex: 1;
-  padding: 12px 5px;
-  border-radius: 12px;
-  background-color: #5a3c6d;
-  color: #fff;
-  border: none;
-  font-weight: 600;
-  font-size: 13px;
-  cursor: pointer;
-  opacity: 0.8;
-  transition: all 0.2s;
-}
-
-.time-chip.active {
-  opacity: 1;
-  box-shadow: 0 4px 10px rgba(90, 60, 109, 0.3);
-}
-
-.helper-text {
-  font-size: 12px;
-  color: #888;
-  font-style: italic;
-  margin-top: 12px;
-}
-
-/* Food Mood & Chips */
-.info-row {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 12px;
-}
-
-.info-row .value {
-  color: #1a1a1a;
-  margin-left: 8px;
-}
-
-.info-row .value.bold {
-  font-weight: 700;
-}
-
-.chips-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 0;
+  border-radius: 25px;
+  background: #F9F2FB;
+  border: none;
+  color: #5a3c6d;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.item-chip {
-  background-color: #f2f2f2;
-  color: #444;
-  padding: 8px 16px;
-  border-radius: 30px;
-  font-size: 14px;
+.time-chip-pill.active {
+  background: #5a3c6d;
+  color: white;
+}
+
+/* --- FOOD MOOD EXACT MATCH CSS --- */
+
+.food-mood-card-exact {
+  background: #ffffff;
+  border-radius: 45px; /* Bada smooth corner jaisa image mein hai */
+  padding: 25px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.fm-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.fm-title {
+  font-size: 26px; /* Bada aur bold title */
+  font-weight: 800;
+  color: #000;
+  margin: 0;
+}
+
+.fm-preference {
+  font-size: 18px;
+  color: #000;
+  margin-bottom: 20px;
   font-weight: 500;
 }
 
+.fm-purple-val {
+  color: #5a3c6d;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+.fm-chips-wrapper {
+  display: flex;
+  flex-wrap: wrap; /* Chips ko line mein laane ke liye */
+  gap: 10px; /* Chips ke beech ka gap thoda kam kiya hai taaki fit ho sakein */
+}
+
+.fm-chip-box {
+  background-color: #fef8ff; /* Exact light lavender tint */
+  border: 1px solid #f3e9f5; /* Subtle thin border */
+  color: #5a3c6d; /* Image wala purple text color */
+  padding: 8px 14px;
+  border-radius: 10px; /* Rounded rectangle corners */
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap; /* Text ko ek hi line mein rakhne ke liye */
+}
+
+/* Screen ke hisaab se spacing balance karne ke liye */
+@media (max-width: 400px) {
+  .fm-chip-box {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+  .fm-chips-wrapper {
+    gap: 8px;
+  }
+}
+
+/* Responsive adjustment taaki screen choti ho tab bhi grid na tute */
+@media (max-width: 380px) {
+  .fm-chip-item {
+    font-size: 13px;
+    padding: 10px 5px;
+  }
+}
+
 /* Budget Styling */
-.flex-between {
+.budget-info-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.b-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.mt-15 { margin-top: 15px; }
-
-.pay-chip {
-  background-color: #5a3c6d;
-  color: #fff;
-  padding: 6px 15px;
-  border-radius: 8px;
-  font-size: 14px;
+.b-label {
+  font-size: 15px;
+  color: #2D2D2D;
   font-weight: 600;
 }
 
-/* Footer Buttons */
-.action-buttons-row {
-  display: flex;
-  gap: 15px;
-  margin-top: 10px;
-}
-
-.btn-decline {
-  flex: 0.8;
-  background: #fff;
-  border: 1.5px solid #5a3c6d;
+.b-value {
   color: #5a3c6d;
-  padding: 16px;
-  border-radius: 15px;
-  font-weight: 700;
-  font-size: 18px;
-  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
 }
 
-.btn-accept {
-  flex: 1.2;
+.pay-status-chip {
   background: #5a3c6d;
-  border: none;
-  color: #fff;
-  padding: 16px;
-  border-radius: 15px;
-  font-weight: 700;
-  font-size: 18px;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(90, 60, 109, 0.2);
-}
-
-.btn-decline:active, .btn-accept:active {
-  transform: scale(0.97);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .bottom-padding {
   height: 100px;
 }
-
-/* Animations */
-.fade-in { animation: fadeIn 0.8s ease-out; }
-.slide-up { animation: slideUp 0.6s ease-out both; }
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
-
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
