@@ -1,0 +1,138 @@
+/* Scrollbar hatane ke liye main wrapper */
+.crp-page-wrapper {
+    width: 100%;
+    height: 100vh; /* Viewport height */
+    height: 100dvh; /* Mobile browser bottom bar handle karne ke liye */
+    display: flex;
+    justify-content: center;
+    background-color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden; /* Scroll bilkul band */
+}
+
+.crp-container {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Full screen height occupy karega */
+    box-sizing: border-box;
+}
+
+/* Header fix */
+.crp-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px; /* Thoda gap kam kiya taaki fit ho jaye */
+}
+
+.crp-back-btn { background: none; border: none; cursor: pointer; padding: 0; }
+.crp-nav-title { font-size: 1.1rem; font-weight: 700; color: #000; margin: 0; }
+
+/* Question text */
+.crp-question {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #000;
+    margin-bottom: 25px;
+    line-height: 1.2;
+}
+
+/* Flex content area */
+.crp-content {
+    flex: 1; /* Bacha hua space grid ko dega */
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* Important for flex items to shrink */
+}
+
+/* Grid adjustment for exact fitting */
+.crp-options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr; /* 2 equal rows */
+    gap: 14px;
+    flex: 1;
+    min-height: 0;
+}
+
+.crp-card {
+    border: 1.8px solid #7a518a;
+    border-radius: 24px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    background: #fff;
+    transition: 0.2s;
+    overflow: hidden; /* Card ke andar ka scroll band */
+}
+
+.crp-card.crp-selected {
+    background-color: #f8f0fb;
+    border-width: 2.5px;
+}
+
+.crp-card-text {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.crp-img-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+}
+
+.crp-card-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Footer fix */
+.crp-footer {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.crp-action-area {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.crp-progress-arc {
+    margin-bottom: -4px;
+}
+
+.crp-next-button {
+    width: 65px;
+    height: 65px;
+    background-color: #4b2c5e;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Choti screens ke liye adjustments */
+@media (max-height: 700px) {
+    .crp-question { font-size: 1.2rem; margin-bottom: 15px; }
+    .crp-header { margin-bottom: 15px; }
+    .crp-card { padding: 12px; }
+    .crp-card-text { font-size: 0.8rem; }
+    .crp-next-button { width: 55px; height: 55px; }
+}

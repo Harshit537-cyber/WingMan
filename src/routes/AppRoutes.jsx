@@ -75,6 +75,14 @@ import Notifications from '../pages/HomePages/Notifications/Notifications.jsx';
 import VibeSurvey from '../pages/HomePages/VibeSurvey/VibeSurvey.jsx';
 import DatePreferences from '../pages/HomePages/DatePreferences/DatePreferences.jsx';
 import FullView from '../pages/Matches/FullView/FullView.jsx';
+import RepairPatternQuiz from '../pages/RepairPatternQuiz.jsx/RepairPatternQuiz.jsx';
+import ConflictRepairQuiz from '../pages/ConflictRepairQuiz/ConflictRepairQuiz.jsx';
+import ChooseFocus from '../pages/ChooseFocus/ChooseFocus.jsx';
+import AssessmentQuiz from '../pages/AssessmentQuiz/AssessmentQuiz.jsx';
+import GrowthReadiness from '../pages/GrowthReadiness/GrowthReadiness.jsx';
+import RelationshipLearning from '../pages/RelationshipLearning/RelationshipLearning.jsx';
+import ViewMatches from '../pages/ViewMatches/ViewMatches.jsx';
+
 
 const AppRoutes = () => {
   return (
@@ -90,6 +98,7 @@ const AppRoutes = () => {
         <Route path="/askName" element={<AskName />} />
         <Route path="/hy" element={<SayHy />} />
         <Route path="/birthday" element={<Birthday />} />
+
         {/* <Route path="/hight" element={<AskHight />} /> */}
         <Route path="/celebration" element={<Celebration />} />
 
@@ -112,6 +121,14 @@ const AppRoutes = () => {
         <Route path='/completions' element={<CompletionScreen />} />
         <Route path='/topic-selection' element={<TopicSelection />} />
         <Route path='/conflict-quiz' element={<ConflictQuiz />} />
+        <Route path='/repair-patternQuiz' element={<RepairPatternQuiz />} />
+        <Route path='/conflict-repair-Quiz' element={<ConflictRepairQuiz />} />
+        <Route path='/Choose-Focus' element={<ChooseFocus />} />
+        <Route path='/assessment-quiz' element={<AssessmentQuiz />} />
+
+        <Route path='/growth-readiness' element={<GrowthReadiness />} />
+        <Route path='/relationship-learning' element={<RelationshipLearning />} />
+        <Route path='/view-matches' element={<ViewMatches />} />
 
         {/* Profile Details & Location */}
         <Route path="/hight" element={<Hight />} />

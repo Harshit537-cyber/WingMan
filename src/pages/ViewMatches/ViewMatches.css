@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+/* --- LAYOUT WRAPPER (Perfect Fit) --- */
+.vm-screen-wrapper {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    background-color: #F8F9FA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+}
+
+.vm-container {
+    width: 100%;
+    max-width: 430px;
+    height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 24px;
+    box-sizing: border-box;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+}
+
+/* --- HEADER --- */
+.vm-header {
+    flex: 0 0 auto;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.vm-back-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: -8px;
+}
+
+/* --- MAIN CONTENT CENTERED --- */
+.vm-main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center Vertically */
+    align-items: center;
+    margin-bottom: 40px; /* Thoda space footer ke liye */
+}
+
+/* --- 1. IMAGE STYLING --- */
+.vm-image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    opacity: 0; /* Hidden initially for animation */
+}
+
+.vm-illustration {
+    width: 90%;
+    max-width: 300px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* --- 2. ROBOT & BUBBLE LAYOUT --- */
+.vm-message-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    justify-content: center;
+    opacity: 0; /* Hidden initially */
+}
+
+/* Robot Icon Positioned Absolutely */
+.vm-robot-icon {
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    background-color: #fff; /* Border hide na ho isliye bg white */
+    border-radius: 50%;
+    padding: 2px;
+}
+
+/* Speech Bubble Box */
+.vm-speech-bubble {
+    border: 1.5px solid #725188; /* Purple Border */
+    border-radius: 16px;
+    padding: 18px 20px 18px 50px; /* Left padding zyada robot ke liye */
+    background-color: #fff;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    text-align: center;
+}
+
+.vm-bubble-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+/* --- 3. FOOTER BUTTON --- */
+.vm-footer {
+    flex: 0 0 auto;
+    width: 100%;
+    padding-bottom: 20px;
+    opacity: 0; /* Hidden initially */
+}
+
+.vm-primary-btn {
+    width: 100%;
+    height: 56px;
+    background-color: #5B2B66; /* Deep Purple as per design */
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(91, 43, 102, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.vm-primary-btn:active {
+    transform: scale(0.98);
+}
+
+/* =========================================
+   🔥 KHATARNAK ANIMATIONS 🔥
+   ========================================= */
+
+/* 1. Image Float Animation (Entrance + Floating) */
+.anim-float {
+    animation: fadeInUp 0.8s ease-out forwards, float 3s ease-in-out infinite 0.8s;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); } /* Hawa mein upar */
+    100% { transform: translateY(0px); }
+}
+
+/* 2. Robot & Bubble Pop In */
+.anim-pop-in {
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation-delay: 0.4s; /* Thoda late aayega */
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.8) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* 3. Button Slide Up */
+.anim-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+    animation-delay: 0.7s;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 4. Robot Eyes Blinking */
+.vm-robot-eye {
+    animation: blink 3s infinite;
+}
+
+@keyframes blink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.1); transform-origin: center; } /* Blink effect */
+}
+
+/* --- RESPONSIVE FIXES --- */
+@media (max-height: 700px) {
+    .vm-illustration { max-width: 240px; }
+    .vm-bubble-text { font-size: 14px; }
+    .vm-primary-btn { height: 50px; font-size: 15px; }
+    .vm-robot-icon svg { width: 40px; height: 40px; }
+    .vm-speech-bubble { padding-left: 45px; }
+}
