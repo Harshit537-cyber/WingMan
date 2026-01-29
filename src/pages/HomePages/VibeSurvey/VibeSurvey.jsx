@@ -83,7 +83,7 @@ const VibeSurvey = () => {
             className="vibe-btn-action" 
             disabled={!selectedPhoto}
             onClick={handleNext}
-          >
+          > 
             {getButtonText()}
           </button>
         </div>

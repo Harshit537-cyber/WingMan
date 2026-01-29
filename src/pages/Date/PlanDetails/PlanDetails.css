@@ -154,6 +154,7 @@
 
 /* --- FOOD MOOD EXACT MATCH CSS --- */
 
+
 .food-mood-card-exact {
   background: #ffffff;
   border-radius: 45px; /* Bada smooth corner jaisa image mein hai */
@@ -192,10 +193,11 @@
 }
 
 .fm-chips-wrapper {
-  display: flex;
-  flex-wrap: wrap; /* Chips ko line mein laane ke liye */
-  gap: 10px; /* Chips ke beech ka gap thoda kam kiya hai taaki fit ho sakein */
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  gap: 12px 14px;
 }
+
 
 .fm-chip-box {
   background-color: #fef8ff; /* Exact light lavender tint */

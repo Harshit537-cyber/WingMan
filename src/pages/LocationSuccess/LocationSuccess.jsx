@@ -15,7 +15,7 @@ const LocationSuccess = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       // 3.5 second baad home par move karega
-      navigate('/home', { state: { ...location.state } });
+      navigate('/Native', { state: { ...location.state } });
     }, 3500); 
     return () => clearTimeout(timer);
   }, [navigate, location.state]);
