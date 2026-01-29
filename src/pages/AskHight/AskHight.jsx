@@ -6,8 +6,8 @@ import StepProgressButton from '../../components/StepProgressButton/StepProgress
 import './AskHight.css';
 
 // Images Import
-import maleImg from '../../assets/male-hight.png';
-import femaleImg from '../../assets/female-hight.png';
+import maleImg from '../../assets/male-hight.svg';
+import femaleImg from '../../assets/female-hight.svg';
 
 const AskHight = () => {
   const location = useLocation();

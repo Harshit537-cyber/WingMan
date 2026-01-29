@@ -5,8 +5,8 @@ import './SayHy.css';
 
 // Images import
 import confettiImg from '../../assets/confetti.png'; 
-import maleImg from '../../assets/male-wingman.png'; 
-import femaleImg from '../../assets/female-wingman.png';
+import maleImg from '../../assets/male-wingman.svg'; 
+import femaleImg from '../../assets/female-wingman.svg';
 
 const SayHy = () => {
   const location = useLocation();
