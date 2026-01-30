@@ -45,7 +45,7 @@
 }
 
 .header-title {
-  font-size: 30px;
+  font-size: 23px;
   font-weight: 800;
   color: #1a1a1a;
   line-height: 1.2;
@@ -79,3 +79,4 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+

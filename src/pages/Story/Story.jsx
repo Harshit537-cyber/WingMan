@@ -33,7 +33,7 @@ const Story = () => {
         </div>
 
         {/* TOP SECTION: Shared Header */}
-        <div className="story-header-section">
+        <div className="native-header-section">
           <OnboardingHeader 
             title="What’s your story?" 
             description="Write about your journey in 100 words."

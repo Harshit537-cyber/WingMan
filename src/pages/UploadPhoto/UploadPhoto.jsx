@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Camera, Info, X, CheckCircle2 } from 'lucide-react';
 import AppLayout from '../../components/AppLayout/AppLayout';
@@ -10,9 +10,37 @@ const UploadPhoto = () => {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalStep, setModalStep] = useState(1);
-    const photoSlots = [1, 2, 3, 4, 5, 6];
+    
+    // --- UPLOAD LOGIC START ---
+    const [images, setImages] = useState({}); // Stores photos by index
+    const [activeSlot, setActiveSlot] = useState(null);
+    const fileInputRef = useRef(null);
+    const photoSlots = [0, 1, 2, 3, 4, 5]; // 6 slots
 
-    // Data for the "Perfect Picture" guide shown in your images
+    const handleCardClick = (index) => {
+        setActiveSlot(index);
+        fileInputRef.current.click();
+    };
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file && activeSlot !== null) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImages(prev => ({
+                    ...prev,
+                    [activeSlot]: reader.result
+                }));
+            };
+            reader.readAsDataURL(file);
+        }
+        event.target.value = null; // Reset for same file selection
+    };
+
+    // Button is disabled if no images are uploaded
+    const hasPhotos = Object.keys(images).length > 0;
+    // --- UPLOAD LOGIC END ---
+
     const guideSteps = [
         {
             title: "Visible you",
@@ -53,7 +81,15 @@ const UploadPhoto = () => {
     return (
         <AppLayout>
             <div className="upload-screen-container">
-                {/* TOP SECTION: Shared Header (Step 14) */}
+                {/* Hidden File Input */}
+                <input 
+                    type="file" 
+                    accept="image/*" 
+                    ref={fileInputRef} 
+                    style={{ display: 'none' }} 
+                    onChange={handleFileChange}
+                />
+
                 <div className="upload-header-section">
                     <OnboardingHeader 
                         title="Upload Your Photo"
@@ -61,18 +97,24 @@ const UploadPhoto = () => {
                     />
                 </div>
 
-                {/* MIDDLE SECTION: Grid */}
                 <div className="upload-body-content">
                     <div className="photo-grid-wrapper slide-up-delay">
                         <div className="photo-upload-grid">
-                            {photoSlots.map((slot) => (
-                                <div key={slot} className="photo-upload-box">
-                                    <Camera size={28} color="#8B6FA8" strokeWidth={1.5} />
+                            {photoSlots.map((index) => (
+                                <div 
+                                    key={index} 
+                                    className="photo-upload-box"
+                                    onClick={() => handleCardClick(index)}
+                                >
+                                    {images[index] ? (
+                                        <img src={images[index]} alt="Preview" className="slot-preview-img" />
+                                    ) : (
+                                        <Camera size={28} color="#8B6FA8" strokeWidth={1.5} />
+                                    )}
                                 </div>
                             ))}
                         </div>
 
-                        {/* Trigger for Popup */}
                         <div className="guide-trigger" onClick={() => setIsModalOpen(true)}>
                             <Info size={18} color="#8B6FA8" />
                             <span>How to choose the perfect pictures</span>
@@ -80,17 +122,16 @@ const UploadPhoto = () => {
                     </div>
                 </div>
 
-                {/* BOTTOM SECTION: Shared Progress Button */}
                 <div className="upload-footer-action">
                     <div className="footer-wavy-decoration"></div>
                     <StepProgressButton 
                         currentStep={14} 
                         totalSteps={15} 
-                        onClick={() => navigate('/home')} 
+                        disabled={!hasPhotos} // Disable button if no photo uploaded
+                        onClick={() => navigate('/preferences')} 
                     />
                 </div>
 
-                {/* GUIDE POPUP MODAL */}
                 {isModalOpen && (
                     <div className="guide-modal-overlay">
                         <div className="guide-modal-content animate-pop">
