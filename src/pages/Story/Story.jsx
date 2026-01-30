@@ -12,7 +12,7 @@ const Story = () => {
 
   const handleNext = () => {
     if (story.trim()) {
-      navigate('/education', { 
+      navigate('/Working', { 
         state: { ...location.state, story: story.trim() } 
       });
     }

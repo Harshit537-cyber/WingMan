@@ -15,7 +15,7 @@ const Preferences = () => {
   const [language, setLanguage] = useState('Hindi');
 
   const handleContinue = () => {
-    navigate('/upload-photo');
+    navigate('/home');
   };
 
   // Logic for Slider Percentages (UI positioning)
