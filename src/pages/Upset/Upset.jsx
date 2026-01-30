@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './EmotionalCommunication.css';
+import './Upset.css';
 
-// Assets from img4 folder according to your structure
-import dancingImg from '../../assets/img4/bro.png'; 
-import sofaImg from '../../assets/img4/Love And Peace 8.png'; 
-import checkingImg from '../../assets/img4/Love And Peace 9.png'; 
-import supportImg from '../../assets/img4/Love And Peace 7.png'; 
+// Assets from your Img3 folder
+import readingImg from '../../assets/img16/Rest 4.svg';
+import shakingHandsImg from '../../assets/img16/Love .svg';
+import checkingInImg from '../../assets/img16/Clean Up 4.svg';
+import sweepingImg from '../../assets/img16/pana.svg';
 
-const EmotionalCommunication = () => {
+const Upset = () => {
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState(null);
 
     const options = [
-        { id: 1, text: "Spending quality time together", img: dancingImg },
-        { id: 2, text: "Giving thoughtful gifts", img: sofaImg },
-        { id: 3, text: "Checking in and making sure they are okay", img: checkingImg },
-        { id: 4, text: "Doing things to help or support them", img: supportImg }
+        { id: 1, text: "Stay quiet and think", img: readingImg },
+        { id: 2, text: "Talk things through right away", img: shakingHandsImg },
+        { id: 3, text: "Distract myself until I feel calmer", img: checkingInImg },
+        { id: 4, text: "Wait for the other person to reach out first", img: sweepingImg }
     ];
 
     return (
         <div className="quiz-web-wrapper">
             <div className="quiz-card-container">
 
-                {/* Header - Perfect Centering Logic */}
+                {/* Updated Header with Perfect Centering */}
                 <div className="quiz-header-section">
                     <button className="back-btn-quiz" onClick={() => navigate(-1)}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5D326F" strokeWidth="2.5">
@@ -36,10 +36,9 @@ const EmotionalCommunication = () => {
 
                 <div className="quiz-content-main">
                     <h1 className="question-text-main">
-                        When you care about someone, you usually show it through...
+                        When I’m upset, I tend to:
                     </h1>
 
-                    {/* 2x2 Grid Layout */}
                     <div className="options-grid-layout">
                         {options.map((opt, index) => (
                             <div
@@ -53,11 +52,11 @@ const EmotionalCommunication = () => {
                                     <img src={opt.img} alt={opt.text} className="opt-main-img" />
                                 </div>            
                                 
-                                {/* Selection Tick with Masking */}
                                 {selectedOption === opt.id && (
                                     <div className="selection-tick-wrapper">
                                         <div className="horizontal-line-divider"></div>
                                         <div className="complex-tick-container">
+                                            {/* Mask to create broken line effect */}
                                             <div className="tick-mask-bg"></div>
                                             <svg className="tick-progress-ring" width="44" height="44">
                                                 <circle
@@ -81,22 +80,22 @@ const EmotionalCommunication = () => {
                     </div>
                 </div>
 
-                {/* Footer Progress Button */}
+                {/* Footer Section */}
                 <div className="quiz-footer-action">
                     <div className="progress-ring-box">
-                        <svg className="svg-ring" width="85" height="85">
-                            <circle cx="42.5" cy="42.5" r="38" stroke="#5d326f15" strokeWidth="3" fill="none" />
+                        <svg className="svg-ring" width="80" height="80">
+                            <circle cx="40" cy="40" r="36" stroke="#5d326f15" strokeWidth="3" fill="none" />
                             <circle
                                 className="ring-bar"
-                                cx="42.5" cy="42.5" r="38"
-                                stroke="#5D326F" strokeWidth="4" fill="none"
-                                style={{ strokeDashoffset: selectedOption ? 120 : 240 }}
+                                cx="40" cy="40" r="36"
+                                stroke="#5D326F" strokeWidth="3.5" fill="none"
+                                style={{ strokeDashoffset: selectedOption ? 100 : 226 }}
                             />
                         </svg>
                         <button
                             className={`nav-next-btn ${selectedOption ? 'ready' : ''}`}
                             disabled={!selectedOption}
-                            onClick={() => navigate('/emotional-commQuiz')}
+                            onClick={() => navigate('/emotional-communication')}
                         >
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3.5">
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -111,4 +110,4 @@ const EmotionalCommunication = () => {
     );
 };
 
-export default EmotionalCommunication;
+export default Upset;

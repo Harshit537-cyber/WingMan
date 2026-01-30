@@ -82,6 +82,7 @@ import AssessmentQuiz from '../pages/AssessmentQuiz/AssessmentQuiz.jsx';
 import GrowthReadiness from '../pages/GrowthReadiness/GrowthReadiness.jsx';
 import RelationshipLearning from '../pages/RelationshipLearning/RelationshipLearning.jsx';
 import ViewMatches from '../pages/ViewMatches/ViewMatches.jsx';
+import Upset from '../pages/Upset/Upset.jsx';
 
 
 const AppRoutes = () => {
@@ -111,6 +112,7 @@ const AppRoutes = () => {
         <Route path='/topic-selector' element={<TopicSelector />} />
         <Route path='/emotional-quiz' element={<EmotionalQuiz />} />
         <Route path='/emotional-communication' element={<EmotionalCommunication />} />
+        <Route path='/upset' element={<Upset />} />
         <Route path='/relationship-quiz' element={<RelationshipInputQuiz />} />
         <Route path='/emotional-commQuiz' element={<EmotionalCommQuiz />} />
         <Route path='/pick-a-card' element={<PickACard />} />

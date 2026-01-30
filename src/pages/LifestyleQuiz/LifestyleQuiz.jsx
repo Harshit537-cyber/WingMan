@@ -94,7 +94,7 @@ const LifestyleQuiz = () => {
                         </svg>
                         <button
                             className={`nav-next-btn ${selectedOption ? 'ready' : ''}`}
-                            onClick={() => selectedOption && navigate('/next-page')}
+                            onClick={() => selectedOption && navigate('/finance-quiz')}
                         >
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
                                 <line x1="5" y1="12" x2="19" y2="12"></line>

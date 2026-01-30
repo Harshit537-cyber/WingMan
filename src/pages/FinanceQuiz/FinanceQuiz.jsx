@@ -71,7 +71,7 @@ const FinanceQuiz = () => {
                             <circle className="ring-bg" cx="40" cy="40" r="36" stroke="#5d326f15" strokeWidth="3" fill="none" />
                             <circle className="ring-bar" cx="40" cy="40" r="36" stroke="#5D326F" strokeWidth="3" fill="none" style={{ strokeDashoffset: selectedOption ? 100 : 226 }} />
                         </svg>
-                        <button className={`nav-next-btn ${selectedOption ? 'ready' : ''}`} onClick={() => selectedOption && navigate('/next-page')}>
+                        <button className={`nav-next-btn ${selectedOption ? 'ready' : ''}`} onClick={() => selectedOption && navigate('/habit-quiz')}>
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                                 <polyline points="12 5 19 12 12 19"></polyline>

@@ -88,7 +88,7 @@ const Home = () => {
           {/* Know Your Type Section */}
           <section className="section-wrapper slide-up delay-2">
             <h2 className="section-title">Know Your Type</h2>
-            <button className="outline-purple-btn" onClick={() => navigate('/quiz')}>
+            <button className="outline-purple-btn" onClick={() => navigate('/quiz-world')}>
               Take A Quiz
             </button>
           </section>

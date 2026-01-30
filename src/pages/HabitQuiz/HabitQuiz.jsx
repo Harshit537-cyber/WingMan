@@ -41,7 +41,7 @@ const HabitQuiz = () => {
                 setIsAnimating(false);
             }, 400); // Animation delay
         } else {
-            navigate('/next-step'); // Final screen par jane ke liye
+            navigate('/relationship-quiz'); // Final screen par jane ke liye
         }
     };
 

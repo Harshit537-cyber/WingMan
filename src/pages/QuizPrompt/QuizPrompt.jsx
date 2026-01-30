@@ -32,10 +32,10 @@ const QuizPrompt = () => {
 
         {/* Bottom Button Area */}
         <div className="quiz-buttons-section">
-          <button className="btn-primary-quiz" onClick={() => navigate('/next')}>
+          <button className="btn-primary-quiz" onClick={() => navigate('/pick-card')}>
             Continue
           </button>
-          <button className="btn-secondary-quiz" onClick={() => navigate('/dashboard')}>
+          <button className="btn-secondary-quiz" onClick={() => navigate('/home')}>
             Maybe Later
           </button>
         </div>
