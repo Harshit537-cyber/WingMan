@@ -13,6 +13,8 @@ const AskName = () => {
   const [name, setName] = useState('');
 
   const handleNext = () => {
+    // This logic will only be called once because of the internal 
+    // hasClicked state in StepProgressButton
     if (name.trim()) {
       navigate('/hy', { state: { gender, name } }); 
     }
@@ -21,8 +23,6 @@ const AskName = () => {
   return (
     <AppLayout> 
       <div className="name-screen-container">
-        
-        {/* TOP SECTION: Header (Title & Description right below back button) */}
         <div className="name-header-section">
           <OnboardingHeader 
             title="Cool, what's your name?" 
@@ -30,7 +30,6 @@ const AskName = () => {
           />
         </div>
 
-        {/* MIDDLE SECTION: Input field */}
         <div className="name-body-content">
           <div className="name-input-box slide-up">
             <input 
@@ -44,9 +43,12 @@ const AskName = () => {
           </div>
         </div>
 
-        {/* BOTTOM SECTION: Footer Fixed */}
         <div className="name-footer-action">
           <div className="footer-wavy-decoration"></div>
+          {/* Logic: 
+              - currentStep/totalSteps controls the circle progress
+              - disabled={!name.trim()} keeps it disabled until name is typed
+          */}
           <StepProgressButton 
             currentStep={2} 
             totalSteps={20} 
@@ -54,7 +56,6 @@ const AskName = () => {
             onClick={handleNext} 
           />
         </div>
-
       </div>
     </AppLayout> 
   );

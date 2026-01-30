@@ -1,20 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import AppLayout from '../../components/AppLayout/AppLayout';
+import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
+import StepProgressButton from "../../components/StepProgressButton/StepProgressButton";
 import "./Story.css";
 
 const Story = () => {
+  const [story, setStory] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleNext = () => {
+    if (story.trim()) {
+      navigate('/Working', { 
+        state: { ...location.state, story: story.trim() } 
+      });
+    }
+  };
+
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
-    <div className="story-wrapper">
-      {/* Status Bar */}
+    <AppLayout>
+        <div className="story-wrapper">
+      {/* Status Bar space holder */}
       <div className="status-bar">
-    
-        <div className="status-icons">
-         
-        </div>
+        <div className="status-icons"></div>
       </div>
 
       {/* Back Button */}
       <div className="story-header">
-        <button className="story-back">
+        <button className="story-back" onClick={handleBack}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#523461" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
@@ -33,6 +51,8 @@ const Story = () => {
           <textarea 
             className="story-textarea" 
             placeholder="Write Your Story"
+            value={story}
+            onChange={(e) => setStory(e.target.value)}
           ></textarea>
         </div>
       </div>
@@ -49,19 +69,17 @@ const Story = () => {
         </svg>
       </div>
 
-      {/* Bottom Navigation Button */}
+      {/* Bottom Navigation using StepProgressButton */}
       <div className="story-footer">
-        <button className="story-next-wrapper">
-          <div className="progress-ring"></div>
-          <div className="story-next-btn">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
+        <StepProgressButton 
+          currentStep={7} 
+          totalSteps={15} 
+          disabled={!story.trim()} 
+          onClick={handleNext} 
+        />
       </div>
     </div>
+    </AppLayout>
   );
 };
 

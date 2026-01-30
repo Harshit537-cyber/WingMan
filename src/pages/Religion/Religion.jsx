@@ -1,8 +1,14 @@
-import React, { useState } from "react";
-import "./Religion.css";
+import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import AppLayout from '../../components/AppLayout/AppLayout';
+import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
+import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
+import './Religion.css';
 
 const Religion = () => {
   const [selectedReligion, setSelectedReligion] = useState("Hinduism");
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const religions = [
     "Christianity",
@@ -14,70 +20,74 @@ const Religion = () => {
     "Not Belive",
   ];
 
+  const handleNext = () => {
+    navigate('/Habit', { 
+      state: { ...location.state, religion: selectedReligion } 
+    });
+  };
+
   return (
-    <div className="religion-container">
-      <div className="religion-wrapper">
-        {/* Status Bar */}
-        <div className="status-bar">
-    
-          <div className="status-icons">
+    <AppLayout>
+      <div className="religion-screen-container">
         
-          </div>
+        {/* Background Animation Graphics */}
+        <div className="bg-line-animation">
+          <svg viewBox="0 0 400 600" fill="none" className="dashed-svg">
+            <path d="M-50,550 C100,500 350,500 350,350 C350,200 100,200 100,350 C100,450 250,500 450,450" 
+                  stroke="#E2D8E8" strokeWidth="2" strokeDasharray="8 8" />
+          </svg>
         </div>
 
-        {/* Header with Back and Skip */}
-        <div className="religion-header">
-          <button className="back-btn">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#523461" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </button>
-          <button className="skip-btn">Skip</button>
+        {/* TOP SECTION: Shared Header */}
+        <div className="native-header-section">
+          <OnboardingHeader 
+            title="Do you follow any particular religion?" 
+            description="You can totally skip it if you'd like."
+          />
         </div>
 
-        {/* Content Section */}
-        <div className="religion-content">
-          <h1 className="religion-title">Do you follow any particular religion?</h1>
-          <p className="religion-subtitle">You can totally skip it if you'd like.</p>
-
-          {/* Display Box */}
-          <div className="religion-display-box">
-            <span>{selectedReligion || "What's It"}</span>
-          </div>
-
-          {/* Religion Selection Card */}
-          <div className="religion-card">
-            <div className="card-header">
-              Please select your religion
+        {/* MIDDLE SECTION: Selection Area */}
+        <div className="religion-body-content">
+          <div className="selection-wrapper slide-up-delay">
+            
+            {/* Display Box */}
+            <div className="religion-display-box">
+              <span>{selectedReligion || "Select Religion"}</span>
             </div>
-            <div className="religion-list">
-              {religions.map((religion) => (
-                <div
-                  key={religion}
-                  className={`religion-item ${selectedReligion === religion ? "selected" : ""}`}
-                  onClick={() => setSelectedReligion(religion)}
-                >
-                  {religion}
-                </div>
-              ))}
+
+            {/* Selection Card */}
+            <div className="religion-card">
+              <div className="religion-card-header">
+                Please select your religion
+              </div>
+              <div className="religion-list">
+                {religions.map((religion) => (
+                  <div
+                    key={religion}
+                    className={`religion-item ${selectedReligion === religion ? "selected" : ""}`}
+                    onClick={() => setSelectedReligion(religion)}
+                  >
+                    {religion}
+                  </div>
+                ))}
+              </div>
             </div>
+
           </div>
         </div>
 
-        {/* Footer Next Button */}
-        <div className="religion-footer">
-          <div className="next-btn-container">
-            <div className="progress-circle"></div>
-            <button className="purple-next-btn">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </button>
-          </div>
+        <div className="religion-footer-action">
+          <div className="footer-wavy-decoration"></div>
+          <StepProgressButton 
+            currentStep={12} 
+            totalSteps={15} 
+            disabled={!selectedReligion} 
+            onClick={handleNext} 
+          />
         </div>
+
       </div>
-    </div>
+    </AppLayout>
   );
 };
 

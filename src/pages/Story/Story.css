@@ -2,9 +2,8 @@
 
 .story-wrapper {
   width: 100%;
-  max-width: 400px;
   height: 100vh;
-  background-color: #fcf9fc; /* Light background as per image */
+  background-color: #fcf9fc;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
@@ -19,19 +18,6 @@
   display: flex;
   justify-content: space-between;
   padding: 15px 10px 5px 10px;
-  font-weight: 600;
-  font-size: 14px;
-  color: #000;
-}
-
-.battery {
-  width: 22px;
-  height: 11px;
-  border: 1.5px solid #000;
-  display: inline-block;
-  border-radius: 3px;
-  position: relative;
-  margin-left: 5px;
 }
 
 /* Header */
@@ -61,7 +47,7 @@
 
 .story-subtitle {
   font-size: 15px;
-  color: #757575; /* Gray color for subtitle */
+  color: #757575;
   margin-bottom: 35px;
 }
 
@@ -72,18 +58,21 @@
 
 .story-textarea {
   width: 100%;
-  height: 280px; /* Big height as per image */
+  height: 280px;
   background: #ffffff;
-  border: 1.5px solid #8e658c; /* Purple border */
+  border: 1.5px solid #8e658c;
   border-radius: 20px;
   padding: 20px;
   font-size: 16px;
   color: #333;
-  resize: none; /* User can't resize it */
+  resize: none;
   font-family: 'Inter', sans-serif;
   box-shadow: 0 8px 20px rgba(142, 101, 140, 0.1);
   outline: none;
-  transition: border-color 0.3s ease;
+}
+
+.story-textarea:focus {
+  border-color: #523461;
 }
 
 .story-textarea::placeholder {
@@ -100,7 +89,7 @@
   pointer-events: none;
 }
 
-/* Footer & Button */
+/* Footer styling for StepProgressButton */
 .story-footer {
   position: absolute;
   bottom: 45px;
@@ -108,44 +97,6 @@
   right: 0;
   display: flex;
   justify-content: center;
+  align-items: center;
   z-index: 3;
-}
-
-.story-next-wrapper {
-  position: relative;
-  width: 85px;
-  height: 85px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-/* Outer ring effect */
-.progress-ring {
-  position: absolute;
-  width: 78px;
-  height: 78px;
-  border: 2px solid #523461;
-  border-radius: 50%;
-  border-left-color: transparent; /* Top gap as per image */
-  transform: rotate(-10deg);
-}
-
-/* Purple inner circle with arrow */
-.story-next-btn {
-  width: 62px;
-  height: 62px;
-  background-color: #523461;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 20px rgba(82, 52, 97, 0.3);
-}
-
-.story-next-btn:active {
-  transform: scale(0.95);
 }

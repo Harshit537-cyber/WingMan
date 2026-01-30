@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import AppLayout from '../../components/AppLayout/AppLayout';
 import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
 import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
-import cakeImg from '../../assets/cake.png'; 
 import './Birthday.css';
 
 const Birthday = () => {
@@ -20,6 +19,7 @@ const Birthday = () => {
 
   const handleNext = () => {
     const birthdayData = `${selectedDay}-${selectedMonth}-${selectedYear}`;
+    // Pura data (gender, name, birthday) next screen par pass ho raha hai
     navigate('/hight', { 
       state: { ...location.state, birthday: birthdayData } 
     });
@@ -41,7 +41,6 @@ const Birthday = () => {
     <AppLayout> 
       <div className="birthday-screen-container">
         
-        {/* TOP SECTION: Left Aligned Header */}
         <div className="birthday-header-section">
           <OnboardingHeader 
             title="When’s your birthday?" 
@@ -49,11 +48,33 @@ const Birthday = () => {
           />
         </div>
 
-        {/* MIDDLE SECTION: Content area */}
         <div className="birthday-body-content">
           
+          {/* CUSTOM CSS CAKE WITH ANIMATION */}
           <div className="cake-illustration-box scale-up">
-            <img src={cakeImg} alt="Birthday Cake" />
+            <div className="custom-cake-wrapper">
+              <div className="confetti c1"></div>
+              <div className="confetti c2"></div>
+              <div className="confetti c3"></div>
+              <div className="confetti c4"></div>
+
+              <div className="cake-main">
+                <div className="candles-row">
+                  {[1, 2, 3].map(i => (
+                    <div key={i} className="purple-candle">
+                      <div className="flame-glow"></div>
+                    </div>
+                  ))}
+                </div>
+                <div className="tier tier-1">
+                  <div className="scallop-border"></div>
+                </div>
+                <div className="tier tier-2">
+                  <div className="scallop-border"></div>
+                </div>
+                <div className="cake-base-line"></div>
+              </div>
+            </div>
           </div>
 
           <div className="date-display-row fade-in">
@@ -73,7 +94,7 @@ const Birthday = () => {
 
           <div className="selection-prompt-banner bounce-in">Please select date</div>
 
-          {/* Wheel Picker Section */}
+          {/* WHEEL PICKER */}
           <div className="wheel-picker-wrapper">
             <div className="picker-selection-bar"></div>
             
@@ -97,12 +118,14 @@ const Birthday = () => {
           </div>
         </div>
 
-        {/* BOTTOM SECTION: Fixed Footer */}
+        {/* FOOTER SECTION: Step 3 of 15 */}
         <div className="birthday-footer-action">
           <div className="footer-wavy-line"></div>
+          
           <StepProgressButton 
             currentStep={3} 
-            totalSteps={20} 
+            totalSteps={15} 
+            disabled={false} // Birthday hamesha default value ke sath start hoti hai
             onClick={handleNext} 
           />
         </div>

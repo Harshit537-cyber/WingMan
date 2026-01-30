@@ -10,6 +10,7 @@ const Gender = () => {
   const navigate = useNavigate();
 
   const handleNext = () => {
+    // Agar gender selected hai toh hi next screen par jaye
     if (selectedGender) {
       navigate('/askName', { state: { gender: selectedGender } });
     }
@@ -19,17 +20,17 @@ const Gender = () => {
     <AppLayout> 
       <div className="gender-screen-container">
         
-        {/* TOP SECTION: Header (Back Button + Title) */}
+        {/* TOP SECTION: Header */}
         <div className="gender-header-section">
           <OnboardingHeader 
             title="Let’s start by choosing your gender!" 
-            // description="Apna gender select karein" // Agar description ho toh yahan add kar sakte ho
           />
         </div>
 
-        {/* MIDDLE SECTION: Gender Selection (Centered & Non-scrollable) */}
+        {/* MIDDLE SECTION: Gender Selection */}
         <div className="gender-selection-body">
           <div className="gender-chips-stack">
+            {/* Male Card */}
             <div 
               className={`gender-select-card slide-up-1 ${selectedGender === 'male' ? 'is-selected' : ''}`}
               onClick={() => setSelectedGender('male')}
@@ -43,6 +44,7 @@ const Gender = () => {
               <span className="gender-label-text">Male</span>
             </div>
 
+            {/* Female Card */}
             <div 
               className={`gender-select-card slide-up-2 ${selectedGender === 'female' ? 'is-selected' : ''}`}
               onClick={() => setSelectedGender('female')}
@@ -58,12 +60,19 @@ const Gender = () => {
           </div>
         </div>
 
-        {/* BOTTOM SECTION: Footer (Fixed at bottom) */}
+        {/* BOTTOM SECTION: Footer Fixed */}
         <div className="gender-footer-action">
           <div className="wavy-bg-decoration"></div>
+          
+          {/* 
+              Logic:
+              - currentStep={1} (Pehla step)
+              - totalSteps={15} (Total 15 steps)
+              - disabled={!selectedGender} (Jab tak select na ho tab tak disable)
+          */}
           <StepProgressButton 
             currentStep={1} 
-            totalSteps={20} 
+            totalSteps={15} 
             disabled={!selectedGender} 
             onClick={handleNext} 
           />

@@ -1,129 +1,133 @@
-.interest-container {
-  max-width: 430px;
-  height: 100vh;
-  margin: 0 auto;
-  background-color: #ffffff;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
+
+.interest-screen-container {
+  width: 100%;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  background-color: #FFF8FB;
+  font-family: 'Outfit', sans-serif;
   overflow: hidden;
-  font-family: -apple-system, sans-serif;
+  position: relative;
 }
 
-.header {
-  margin-top: 30px;
-  margin-bottom: 20px;
+/* Background Animation */
+.bg-line-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
 }
 
-.back-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #000;
-  padding: 5px;
-  transition: transform 0.2s;
+/* Centering the Header */
+.centered-header {
+    text-align: center;
+    padding: 20px 25px 0 25px;
+    z-index: 2;
 }
 
-.back-btn:active { transform: scale(0.9); }
-
-.title {
-  font-size: 32px;
-  font-weight: 700;
-  color: #000;
-  margin-bottom: 12px;
-  text-align: center;
+/* Force OnboardingHeader to center its children */
+.centered-header h1, 
+.centered-header p {
+    text-align: center !important;
+    width: 100%;
 }
 
-.subtitle {
-  font-size: 18px;
-  color: #666;
-  text-align: center;
-  margin-bottom: 50px;
-  line-height: 1.4;
-  padding: 0 20px;
+.interest-content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  overflow: hidden;
 }
 
-/* Chips Grid Styling */
+/* Interests Grid: Centered exactly as the image */
 .interests-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center; /* Centers the chips */
+  align-content: flex-start;
   gap: 12px;
-  padding: 0 10px;
+  padding: 30px 20px;
+  overflow-y: auto; /* Allows internal scrolling if items are many */
+  flex: 1;
 }
 
 .interest-chip {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 22px;
+  padding: 10px 18px;
   border-radius: 50px;
-  border: 1.5px solid #e2d8e8;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1.5px solid transparent;
   background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
   user-select: none;
 }
 
-.interest-chip:active {
-  transform: scale(0.92);
-}
-
-.chip-icon {
-  color: #5a3c6d;
-  display: flex;
-  align-items: center;
-}
-
 .chip-label {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: #333;
 }
 
-/* Selected State */
+.chip-icon {
+  color: #523461;
+}
+
+/* Selected State: Dark Purple from Image */
 .interest-chip.selected {
-  background-color: #5a3c6d;
-  border-color: #5a3c6d;
-  box-shadow: 0 8px 15px rgba(90, 60, 109, 0.2);
+  background-color: #523461;
+  box-shadow: 0 8px 15px rgba(82, 52, 97, 0.2);
 }
 
 .interest-chip.selected .chip-label,
 .interest-chip.selected .chip-icon {
-  color: #fff;
+  color: #ffffff;
 }
 
-/* Animations */
-.slide-in-top {
-  animation: slideInTop 0.6s ease-out both;
+/* Footer & Bottom Padding */
+.interest-footer-action {
+  padding: 10px 25px 40px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
 }
 
-.fade-in {
-  animation: fadeIn 0.8s ease-out 0.2s both;
+.footer-wavy-decoration {
+  position: absolute;
+  top: -40px;
+  width: 100%;
+  height: 80px;
+  background-image: url("data:image/svg+xml,%3Csvg width='400' height='80' viewBox='0 0 400 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60 Q100 20 200 60 T400 60' stroke='%23E2D8E8' stroke-width='2' stroke-dasharray='8 8'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
-.pop-in {
-  opacity: 0;
-  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+/* Animation */
+.slide-up-delay {
+  animation: slideUpFade 0.5s ease-out 0.2s both;
 }
 
-@keyframes slideInTop {
-  from { opacity: 0; transform: translateY(-30px); }
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes popIn {
-  from { 
-    opacity: 0; 
-    transform: scale(0.5) translateY(20px); 
-  }
-  to { 
-    opacity: 1; 
-    transform: scale(1) translateY(0); 
-  }
+/* Small screen adjustments */
+@media (max-height: 700px) {
+    .interest-chip { padding: 8px 14px; }
+    .chip-label { font-size: 13px; }
+    .centered-header { padding-top: 10px; }
 }
