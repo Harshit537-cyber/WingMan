@@ -5,11 +5,10 @@ import datingImg from '../../assets/image.svg';
 import AppLayout from '../../components/AppLayout/AppLayout';
 
 const LandingPage = () => {
-  const navigate = useNavigate(); // 2. Hook ko initialize karein
+  const navigate = useNavigate(); 
 
   const handleLogin = () => {
-    // Yaha aap logic add kar sakte hain (jaise Google Auth) 
-    // Uske baad niche wali line se navigate hoga
+    
     navigate('/gender'); 
   };
 
