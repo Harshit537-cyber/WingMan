@@ -1,70 +1,92 @@
-import React from "react";
-import "./Native.css";
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ChevronDown } from 'lucide-react';
+import AppLayout from '../../components/AppLayout/AppLayout';
+import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
+import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
+import './Native.css';
 
 const Native = () => {
+  const [selectedState, setSelectedState] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const states = [
+    "Delhi", "Maharashtra", "Karnataka", "Uttar Pradesh", "Punjab", 
+    "Gujarat", "Rajasthan", "West Bengal", "Tamil Nadu", "Bihar",
+    "Haryana", "Madhya Pradesh", "Kerala"
+  ];
+
+  const handleNext = () => {
+    // Sirf tab navigate karega jab state select ho chuki ho
+    if (selectedState) {
+      navigate('/story', { 
+        state: { ...location.state, homeState: selectedState } 
+      });
+    }
+  };
+
   return (
-    <div className="native-wrapper">
-      {/* Status Bar (Optional - for exact look) */}
-      <div className="status-bar">
+    <AppLayout>
+      <div className="native-screen-container">
         
-        <div className="status-icons">
-        
-        
-          
-        </div>
-      </div>
-
-      {/* Back Button */}
-      <div className="native-header">
-        <button className="native-back">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#523461" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6"></polyline>
+        {/* Background Animation */}
+        <div className="bg-line-animation">
+          <svg viewBox="0 0 400 600" fill="none" className="dashed-svg">
+            <path d="M-50,550 C100,500 350,500 350,350 C350,200 100,200 100,350 C100,450 250,500 450,450" 
+                  stroke="#E2D8E8" strokeWidth="2" strokeDasharray="8 8" />
           </svg>
-        </button>
-      </div>
+        </div>
 
-      {/* Content */}
-      <div className="native-content">
-        <h1 className="native-title">What’s your native state?</h1>
-        <p className="native-subtitle">
-          It’s good to know where’s someone story began.
-        </p>
+        {/* TOP SECTION: Left Aligned Header */}
+        <div className="native-header-section">
+          <OnboardingHeader 
+            title="What state do you call home?" 
+            description="It’s good to know where’s someone story began."
+          />
+        </div>
 
-        <div className="native-select-container">
-          <div className="native-select-box">
-            <span>Select State</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M6 9l6 6 6-6"/>
-            </svg>
+        {/* MIDDLE SECTION: Custom Select area */}
+        <div className="native-body-content">
+          <div className="select-box-wrapper slide-up-delay">
+              <div className="custom-select-container">
+                <select 
+                  className="native-dropdown-field"
+                  value={selectedState}
+                  onChange={(e) => setSelectedState(e.target.value)}
+                >
+                  <option value="" disabled hidden>Select State</option>
+                  {states.map((st, index) => (
+                    <option key={index} value={st}>{st}</option>
+                  ))}
+                </select>
+                <div className="dropdown-chevron">
+                  <ChevronDown size={24} color="#8B6FA8" />
+                </div>
+              </div>
           </div>
         </div>
-      </div>
 
-      {/* Background Dotted Path (SVG) */}
-      <div className="background-graphics">
-        <svg viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path 
-            d="M-50 450 C 50 420, 250 380, 200 250 C 150 120, 20 150, 50 300 C 80 450, 400 350, 450 200" 
-            stroke="#E8E0E8" 
-            strokeWidth="2" 
-            strokeDasharray="8 8" 
+        {/* BOTTOM SECTION: Fixed Footer */}
+        <div className="native-footer-action">
+          <div className="footer-wavy-decoration"></div>
+          
+          {/* 
+              Logic:
+              - currentStep={6} (Ye 6th step hai)
+              - totalSteps={15} (Sequence ke hisab se)
+              - disabled={!selectedState} (Jab tak state select nahi hogi tab tak disabled)
+          */}
+          <StepProgressButton 
+            currentStep={6} 
+            totalSteps={15} 
+            disabled={!selectedState} 
+            onClick={handleNext} 
           />
-        </svg>
-      </div>
+        </div>
 
-      {/* Next Button with Progress Ring */}
-      <div className="native-footer">
-        <button className="native-next-wrapper">
-          <div className="progress-ring"></div>
-          <div className="native-next-btn">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
       </div>
-    </div>
+    </AppLayout>
   );
 };
 

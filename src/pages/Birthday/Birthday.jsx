@@ -19,6 +19,7 @@ const Birthday = () => {
 
   const handleNext = () => {
     const birthdayData = `${selectedDay}-${selectedMonth}-${selectedYear}`;
+    // Pura data (gender, name, birthday) next screen par pass ho raha hai
     navigate('/hight', { 
       state: { ...location.state, birthday: birthdayData } 
     });
@@ -52,15 +53,12 @@ const Birthday = () => {
           {/* CUSTOM CSS CAKE WITH ANIMATION */}
           <div className="cake-illustration-box scale-up">
             <div className="custom-cake-wrapper">
-              
-              {/* Confetti Elements */}
               <div className="confetti c1"></div>
               <div className="confetti c2"></div>
               <div className="confetti c3"></div>
               <div className="confetti c4"></div>
 
               <div className="cake-main">
-                {/* Three Candles */}
                 <div className="candles-row">
                   {[1, 2, 3].map(i => (
                     <div key={i} className="purple-candle">
@@ -68,13 +66,9 @@ const Birthday = () => {
                     </div>
                   ))}
                 </div>
-
-                {/* Top Tier */}
                 <div className="tier tier-1">
                   <div className="scallop-border"></div>
                 </div>
-
-                {/* Bottom Tier */}
                 <div className="tier tier-2">
                   <div className="scallop-border"></div>
                 </div>
@@ -100,6 +94,7 @@ const Birthday = () => {
 
           <div className="selection-prompt-banner bounce-in">Please select date</div>
 
+          {/* WHEEL PICKER */}
           <div className="wheel-picker-wrapper">
             <div className="picker-selection-bar"></div>
             
@@ -123,11 +118,14 @@ const Birthday = () => {
           </div>
         </div>
 
+        {/* FOOTER SECTION: Step 3 of 15 */}
         <div className="birthday-footer-action">
           <div className="footer-wavy-line"></div>
+          
           <StepProgressButton 
             currentStep={3} 
-            totalSteps={20} 
+            totalSteps={15} 
+            disabled={false} // Birthday hamesha default value ke sath start hoti hai
             onClick={handleNext} 
           />
         </div>

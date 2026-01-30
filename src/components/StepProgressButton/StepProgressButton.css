@@ -1,64 +1,53 @@
-.step-footer-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  padding-bottom: 20px;
+.step-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
 }
 
-/* .curved-line {
-  width: 120%; 
-  position: absolute;
-  top: 15px;
-  z-index: 0;
-  opacity: 0.6;
-} */
-
-.step-btn-wrapper {
-  position: relative;
-  z-index: 1;
-  transition: all 0.3s ease;
+/* Gray out the whole component when disabled */
+.btn-disabled {
+    opacity: 0.5;
+    pointer-events: none;
 }
 
-.step-btn-wrapper.disabled {
-  opacity: 0.5;
-  filter: grayscale(0.5);
-  cursor: not-allowed;
+.outer-card-wrapper {
+    position: relative;
+    width: 65.45px;
+    height: 65.45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.main-action-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.progress-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
-.progress-ring {
-  transform: rotate(-90deg); /* Progress top se start ho */
+.inner-card-btn {
+    position: relative;
+    z-index: 2;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #5B3765;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.1s;
+    padding: 0;
+    box-shadow: 0 4px 10px rgba(91, 55, 101, 0.3);
 }
 
-.progress-ring-fill {
-  transition: stroke-dashoffset 0.4s ease-out;
+.inner-card-btn:active {
+    transform: scale(0.9);
 }
 
-.inner-purple-circle {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  background-color: #5a3c6d;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(90, 60, 109, 0.3);
-  transition: transform 0.2s ease;
-}
-
-.step-btn-wrapper.active .inner-purple-circle:active {
-  transform: scale(0.92);
+.inner-card-btn:disabled {
+    cursor: not-allowed;
 }

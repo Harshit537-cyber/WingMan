@@ -39,28 +39,32 @@ const AskHight = () => {
 
   const calculateScale = (height) => {
     const val = parseFloat(height);
-    const baseScale = 0.8; 
+    const baseScale = 0.7; // Thoda kam kiya mobile ke liye
     const factor = (val - 4.0) / 3; 
     return baseScale + (factor * 0.4); 
+  };
+
+  const handleNext = () => {
+    navigate('/Acesslocation', { 
+      state: { ...location.state, height: selectedHeight } 
+    });
   };
 
   return (
     <AppLayout> 
       <div className="hight-screen-container">
         
-        {/* TOP SECTION: Left Aligned Header */}
         <div className="hight-header-section">
           <OnboardingHeader 
             title="Now tell me, how tall are you?" 
-            description="How tall are you?"
+            description="I'll use this to calculate your BMI."
           />
         </div>
 
-        {/* MIDDLE SECTION: Vertical Centered Content */}
         <div className="hight-body-content">
           <div className="selector-main-area">
             
-            {/* Illustration Section */}
+            {/* Character Illustration */}
             <div className="illustration-wrapper slide-in-left">
               <div className="character-bg-box">
                 <img 
@@ -75,7 +79,7 @@ const AskHight = () => {
               </div>
             </div>
 
-            {/* Ruler Section */}
+            {/* Ruler Picker */}
             <div className="ruler-wrapper fade-in-right">
               <div className="ruler-scroll" ref={scrollRef} onScroll={onScroll}>
                 <div className="ruler-spacer"></div>
@@ -89,7 +93,7 @@ const AskHight = () => {
               </div>
             </div>
 
-            {/* Display Box */}
+            {/* Height Display Card */}
             <div className="height-display-box bounce-in">
               <span className="unit-label">Inch</span>
               <div className="value-card">
@@ -100,13 +104,12 @@ const AskHight = () => {
           </div>
         </div>
 
-        {/* BOTTOM SECTION: Fixed Footer */}
         <div className="hight-footer-action">
           <div className="footer-wavy-decoration"></div>
           <StepProgressButton 
             currentStep={4} 
-            totalSteps={20} 
-            onClick={() => navigate('/Acesslocation', { state: { ...location.state, height: selectedHeight } })} 
+            totalSteps={15} 
+            onClick={handleNext} 
           />
         </div>
 

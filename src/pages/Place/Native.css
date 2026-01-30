@@ -1,215 +1,135 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
 
-.native-wrapper {
+.native-screen-container {
   width: 100%;
-  max-width: 400px; /* Mobile width */
-  height: 100vh;
-  background-color: #fdfafd; /* Very light pink/white background */
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-  font-family: 'Inter', sans-serif;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
-  padding: 0 24px;
+  background-color: #FFF8FB; /* Matching ManualLocation */
+  font-family: 'Outfit', sans-serif;
+  overflow: hidden;
+  position: relative;
 }
 
-/* Status Bar styling */
-.status-bar {
+/* Background Decoration */
+.bg-line-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.dashed-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Header Section: Left Aligned as per Example File */
+.native-header-section {
+  padding: 20px 25px 0px 25px;
+  flex-shrink: 0;
   display: flex;
-  justify-content: space-between;
-  padding: 15px 10px;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.battery {
-  width: 20px;
-  height: 10px;
-  border: 1px solid #000;
-  display: inline-block;
-  border-radius: 2px;
-  margin-left: 5px;
-}
-
-/* Header & Back Button */
-.native-header {
-  margin-top: 20px;
-}
-
-.native-back {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-/* Typography */
-.native-content {
-  margin-top: 40px;
+  flex-direction: column;
+  align-items: flex-start; /* Forcing Left Alignment */
+  text-align: left;
   z-index: 2;
 }
 
-.native-title {
-  font-size: 26px;
-  font-weight: 700;
+/* Forcing Left Alignment for Header Content */
+.native-header-section h1, 
+.native-header-section p {
+  text-align: left;
+  width: 100%;
+}
+
+/* Body Content area */
+.native-body-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 25px 0 25px;
+  z-index: 2;
+}
+
+.select-box-wrapper {
+  width: 100%;
+}
+
+.custom-select-container {
+  position: relative;
+  width: 100%;
+}
+
+.native-dropdown-field {
+  width: 100%;
+  height: 65px;
+  background: #ffffff;
+  border: 1.5px solid #8B6FA8; /* Purple theme from example */
+  border-radius: 20px;
+  padding: 0 25px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
   color: #1a1a1a;
-  margin-bottom: 12px;
-}
-
-.native-subtitle {
-  font-size: 16px;
-  color: #665e66;
-  line-height: 1.5;
-  margin-bottom: 40px;
-  max-width: 90%;
-}
-
-/* Styled Select Box */
-.native-select-container {
-  width: 100%;
-}
-
-.native-select-box {
-  width: 100%;
-  height: 56px;
-  background: #ffffff;
-  border: 1px solid #dcd0dc;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  color: #333;
-  font-size: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
-}
-
-/* SVG Background Graphics */
-.background-graphics {
-  position: absolute;
-  top: 150px;
-  left: 0;
-  width: 100%;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Footer & Circular Button */
-.native-footer {
-  position: absolute;
-  bottom: 50px;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  z-index: 3;
-}
-
-.native-next-wrapper {
-  position: relative;
-  width: 80px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
+  outline: none;
+  appearance: none; /* Hide default arrow */
+  box-shadow: 0 10px 25px rgba(139, 111, 168, 0.08);
   cursor: pointer;
-}
-
-/* Outer Purple Circle (Progress look) */
-.progress-ring {
-  position: absolute;
-  width: 72px;
-  height: 72px;
-  border: 2px solid #523461;
-  border-radius: 50%;
-  border-right-color: transparent; /* Progress effect */
-  transform: rotate(-45deg);
-}
-
-/* Solid Purple Inner Circle */
-.native-next-btn {
-  width: 58px;
-  height: 58px;
-  background-color: #523461;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 15px rgba(82, 52, 97, 0.3);
-}
-
-
-
-.native-dropdown-container {
-  position: relative;
-  width: 100%;
-  z-index: 10; /* Taki list background ke upar dikhe */
-}
-
-.native-select-box {
-  width: 100%;
-  height: 56px;
-  background: #ffffff;
-  border: 1.5px solid #dcd0dc;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
 }
 
-.native-select-box:active {
-  transform: scale(0.98);
+.native-dropdown-field:focus {
+  border-color: #5a3c6d;
+  box-shadow: 0 10px 30px rgba(90, 60, 109, 0.15);
 }
 
-.arrow-icon {
-  transition: transform 0.3s ease;
-}
-
-.arrow-icon.open {
-  transform: rotate(180deg);
-}
-
-/* States List Styling */
-.native-options-list {
+.dropdown-chevron {
   position: absolute;
-  top: 65px;
-  left: 0;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Footer Section */
+.native-footer-action {
+  padding: 10px 25px 40px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.footer-wavy-decoration {
+  position: absolute;
+  top: -40px;
   width: 100%;
-  max-height: 250px; /* List zyada lambi na ho */
-  background: #ffffff;
-  border: 1px solid #dcd0dc;
-  border-radius: 16px;
-  list-style: none;
-  padding: 10px 0;
-  margin: 0;
-  overflow-y: auto; /* Scroll bar enable karne ke liye */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  height: 80px;
+  background-image: url("data:image/svg+xml,%3Csvg width='400' height='80' viewBox='0 0 400 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60 Q100 20 200 60 T400 60' stroke='%23E2D8E8' stroke-width='2' stroke-dasharray='8 8'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
-.native-options-list li {
-  padding: 12px 20px;
-  font-size: 15px;
-  color: #333;
-  cursor: pointer;
-  transition: background 0.2s;
+/* Animations */
+.slide-up-delay {
+  animation: slideUpFade 0.5s ease-out 0.2s both;
 }
 
-.native-options-list li:hover {
-  background-color: #f5eff5; /* Hover par halka purple color */
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Custom Scrollbar for the list */
-.native-options-list::-webkit-scrollbar {
-  width: 5px;
-}
-.native-options-list::-webkit-scrollbar-thumb {
-  background: #dcd0dc;
-  border-radius: 10px;
+@media (max-height: 650px) {
+    .native-header-section { padding-top: 15px; }
+    .native-body-content { padding-top: 20px; }
+    .native-dropdown-field { height: 55px; font-size: 16px; }
 }
