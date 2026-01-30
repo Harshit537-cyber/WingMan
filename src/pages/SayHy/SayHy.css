@@ -78,7 +78,7 @@
 }
 
 .hy-subtitle-main {
-  font-size: 30px;
+  font-size: 3px;
   font-weight: 700;
   margin-bottom: 12px;
 }
@@ -144,3 +144,4 @@
     max-height: 300px; /* Fixed height for Desktop frame consistency */
   }
 }
+

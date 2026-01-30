@@ -91,7 +91,7 @@ const AppRoutes = () => {
       <Routes>
         {/* Auth & Onboarding */}
         <Route path="/" element={<LandingPage />} />
-        <Route path="/preference" element={<Preferences />} />
+        <Route path="/preferences" element={<Preferences />} />
         <Route path="/appreciate" element={<Appreciate />} />
         <Route path="/interests" element={<Interests />} />
         <Route path="/uploads" element={<UploadPhoto />} />
@@ -195,3 +195,7 @@ const AppRoutes = () => {
 };
 
 export default AppRoutes;
+
+// CancelDate
+// ScheduleConfirmed
+// QuizPrompt
