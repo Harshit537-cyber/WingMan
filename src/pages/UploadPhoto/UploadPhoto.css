@@ -9,6 +9,7 @@
   font-family: 'Outfit', sans-serif;
   overflow: hidden;
   position: relative;
+  z-index: 10;
 }
 
 /* Header Alignment - Force Center as requested */

@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
+
+.comp-screen-wrapper {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Web background */
+    overflow: hidden;
+}
+
+.comp-card-container {
+    position: relative;
+    width: 100%;
+    max-width: 430px; /* Mobile Responsive Width */
+    height: 100%;
+    background-color: #5D326F; /* Deep Purple */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 30px;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: 'Libre Baskerville', serif; /* Image jaisa serif font */
+}
+
+/* --- Khatnak Confetti Animation --- */
+.confetti-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 150%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.6;
+}
+
+.layer-1 {
+    top: -100%;
+    animation: rainSlow 8s linear infinite;
+}
+
+.layer-2 {
+    top: -200%;
+    animation: rainSlow 8s linear infinite 4s;
+}
+
+@keyframes rainSlow {
+    from { transform: translateY(0); }
+    to { transform: translateY(300%); }
+}
+
+/* --- Text & Content Area --- */
+.comp-content-area {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    color: white;
+    margin-top: -120px; /* Thoda upar move kiya text ko */
+}
+
+.text-anim-box {
+    animation: fadeInUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.comp-main-text {
+    font-size: 28px;
+    font-weight: 400;
+    margin: 5px 0;
+    line-height: 1.4;
+    letter-spacing: 0.5px;
+}
+
+.comp-percent-text {
+    font-size: 30px;
+    font-weight: 400;
+    margin: 10px 0;
+}
+
+.count-number {
+    font-weight: 700;
+    display: inline-block;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* --- Character Pop-up Animation --- */
+.comp-char-box {
+    position: absolute;
+    bottom: -30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 5;
+    transform: translateY(100%);
+    animation: charEntry 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.5s;
+}
+
+.comp-trumpet-man {
+    width: 280px;
+    height: auto;
+    /* Trumpet playing pulse effect */
+    animation: trumpetPulse 2s ease-in-out infinite;
+}
+
+@keyframes charEntry {
+    to { transform: translateY(0); }
+}
+
+@keyframes trumpetPulse {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.04) rotate(1deg); }
+}
+
+/* Proceed logic area */
+.comp-click-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    cursor: pointer;
+}
+
+/* Mobile responsive adjustments for small heights */
+@media (max-height: 700px) {
+    .comp-main-text { font-size: 22px; }
+    .comp-percent-text { font-size: 24px; }
+    .comp-trumpet-man { width: 220px; }
+    .comp-content-area { margin-top: -80px; }
+}
