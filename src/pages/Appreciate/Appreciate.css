@@ -1,77 +1,85 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap');
 
-/* ===== Animations (Same as your Splash) ===== */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(1.05); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-/* ===== Layout Logic (Matching SplashScreen) ===== */
-
-/* White Background overlay jaisa */
-.web-container {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #ffffff; /* Outer White background */
-}
-
-/* Center Strip - Exact size as sm:w-[390px] */
-.appreciate-screen {
-  position: relative;
-  width: 100%;           /* Mobile par full width */
-  height: 100%;          /* Full height top to bottom */
-  background-color: #4b3152; /* Same purple as your Splash */
-  overflow: hidden;
+.appreciate-screen-wrapper {
+  width: 100%;
+  flex: 1;
+  height: 100%; 
+  background-color: #4b3152; /* Same purple as your Splash/SayHy */
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+  text-align: center;
 }
 
-/* Desktop sizing (sm breakpoint) */
-@media (min-width: 640px) {
-  .appreciate-screen {
-    width: 390px;        /* Exact width from your Splash code */
-  }
-}
-
-/* Background Image positioning */
-.bg-image {
+/* Background Image positioning (Handshake) */
+.appreciate-bg-image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: bottom; /* Taaki handshake niche rahe */
+  object-position: bottom;
   z-index: 1;
 }
 
 /* Content Container */
-.content-overlay {
+.appreciate-content-overlay {
   position: relative;
-  z-index: 2;
+  z-index: 5;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding-top: 25vh; /* Text ki height adjustment */
+  padding-top: 22vh; /* Positioning text in the upper-middle */
   text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /* Text Styling */
-.text-style {
+.appreciate-text-style h1 {
   color: #ffffff;
-  font-family: 'serif', Georgia, serif;
-  font-size: 2.2rem;
+  /* Using serif font as requested */
+  font-family: 'serif', Georgia, serif; 
+  font-size: 2.3rem;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: 0.02em;
-  text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+/* ===== Animations (Matching SayHy logic) ===== */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.fade-in-up { 
+  animation: appreciateFadeUp 1s ease-out 0.3s both; 
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes appreciateFadeUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(40px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* Desktop Frame Consistency */
+@media (min-width: 769px) {
+  .appreciate-screen-wrapper {
+    width: 390px; /* Matching your Splash/SayHy desktop width */
+    margin: 0 auto;
+  }
 }

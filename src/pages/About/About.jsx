@@ -23,7 +23,7 @@ const About = () => {
   };
 
   const handleNext = () => {
-    navigate('/next-screen', { 
+    navigate('/appreciate', { 
       state: { ...location.state, lifestyle: choices } 
     });
   };
@@ -94,7 +94,7 @@ const About = () => {
         {/* BOTTOM SECTION: Step 12 Button */}
         <div className="lifestyle-footer-action">
           <StepProgressButton 
-            currentStep={12} 
+            currentStep={14} 
             totalSteps={15} 
             onClick={handleNext} 
           />

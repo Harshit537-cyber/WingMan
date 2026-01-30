@@ -1,23 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import AppLayout from '../../components/AppLayout/AppLayout';
 import './Appreciate.css';
 import bgImage from '../../assets/Frame (2).jpg'; 
 
 const Appreciate = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // Functionality: Move to next screen after 3 seconds
+        const timer = setTimeout(() => {
+            // Update '/religion' to whatever your next route is (e.g., /habit or /religion)
+            navigate('/uploads', { state: { ...location.state } }); 
+        }, 3000);
+        
+        return () => clearTimeout(timer);
+    }, [navigate, location.state]);
+
     return (
-        <div className="web-container">
-            {/* Center Strip (390px on Desktop) */}
-            <div className="appreciate-screen animate-fade-in">
+        <AppLayout>
+            <div className="appreciate-screen-wrapper animate-fade-in">
                 
                 {/* Background Image (Handshake at bottom) */}
                 <img 
                     src={bgImage} 
                     alt="background" 
-                    className="bg-image" 
+                    className="appreciate-bg-image" 
                 />
 
                 {/* Text Content */}
-                <div className="content-overlay">
-                    <div className="text-style">
+                <div className="appreciate-content-overlay">
+                    <div className="appreciate-text-style fade-in-up">
                         <h1>
                             Appreciate your <br />
                             honesty
@@ -26,7 +40,7 @@ const Appreciate = () => {
                 </div>
 
             </div>
-        </div>
+        </AppLayout>
     );
 };
 
