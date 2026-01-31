@@ -278,3 +278,28 @@
     padding-bottom: 50px; /* button fully visible */
   }
 }
+/* 1. Main Container ko full height dein aur flex banayein */
+.birthday-screen-container {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh; /* Mobile screen height fix */
+  overflow: hidden; 
+}
+
+/* 2. Beech ka content scrollable ho jaye */
+.birthday-body-content {
+  flex: 1; 
+  overflow-y: auto;
+  padding-bottom: 20px;
+  scrollbar-width: none; /* Hide scrollbar */
+}
+.birthday-body-content::-webkit-scrollbar { display: none; }
+
+/* 3. Footer ko bottom mein fix karein aur margin dein */
+.birthday-footer-action {
+  flex-shrink: 0; /* Isse button compress nahi hoga */
+  padding: 10px 25px 40px 25px; /* Niche se 40px ki margin */
+  background: #ffffff; /* Background dena zaroori hai taaki peeche ka content na dikhe */
+  position: relative;
+  z-index: 10;
+}

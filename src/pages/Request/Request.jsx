@@ -7,16 +7,16 @@ import './Request.css';
 
 const Request = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('Call'); // 'Call' ya 'Date'
+  const [activeTab, setActiveTab] = useState('Call');
 
-  // Image mein 6 cards hain
-  const requestsData = [1, 2, 3, 4, 5, 6]; 
+  // Extended mock data to ensure scrolling is visible
+  const requestsData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; 
 
   return (
     <AppLayout>
       <div className="requests-page-main">
         
-        {/* TOP NAVIGATION */}
+        {/* HEADER - Fixed at top */}
         <header className="request-header">
           <button className="nav-icon-btn" onClick={() => navigate(-1)}>
             <ChevronLeft size={28} color="#5a3c6d" />
@@ -27,7 +27,7 @@ const Request = () => {
           </div>
         </header>
 
-        {/* SEGMENTED TAB CONTROL */}
+        {/* TABS - Fixed at top */}
         <div className="tab-container-wrap">
           <div className="segmented-control-bar">
             <button 
@@ -45,14 +45,14 @@ const Request = () => {
           </div>
         </div>
 
-        {/* SCROLLABLE CONTENT */}
+        {/* SCROLLABLE LIST AREA */}
         <div className="requests-scroll-area slide-up">
           {requestsData.map((_, index) => (
             <div key={index} className="ui-request-card-item">
               <div className="card-left-part">
                 <div className="avatar-circle">
                   <img 
-                    src={`https://randomuser.me/api/portraits/women/${44 + index}.jpg`} 
+                    src={`https://randomuser.me/api/portraits/women/${40 + index}.jpg`} 
                     alt="User" 
                   />
                 </div>
@@ -72,6 +72,7 @@ const Request = () => {
               </div>
             </div>
           ))}
+          {/* Bottom spacer ensures the last card isn't hidden by BottomNav */}
           <div className="footer-spacer"></div>
         </div>
 

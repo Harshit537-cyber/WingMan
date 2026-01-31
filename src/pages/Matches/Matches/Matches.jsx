@@ -25,7 +25,7 @@ const Matches = () => {
   const handleScroll = () => {
     if (scrollRef.current) {
       const scrollLeft = scrollRef.current.scrollLeft;
-      const cardFullWidth = 315; // card width + gap
+      const cardFullWidth = 315; // card width (300) + gap (15)
       const index = Math.round(scrollLeft / cardFullWidth);
       if (index !== activeIndex) setActiveIndex(index);
     }
@@ -35,7 +35,7 @@ const Matches = () => {
     <AppLayout>
       <div className="matches-main-container">
         
-        {/* DOTS PAGINATION - Image Asset Style */}
+        {/* DOTS PAGINATION */}
         <div className="pagination-dots-wrap">
           {profiles.map((_, idx) => (
             <span 
@@ -55,20 +55,18 @@ const Matches = () => {
              <p className="sub-match-title">Request a call and see where things go</p>
           </div>
           <div className="header-icons">
-                      {/* Bell Icon -> Notifications Page */}
-                      <div
-                        className="bell-box"
-                        onClick={() => navigate('/request')}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        <Bell size={26} color="#5a3c6d" />
-                        <span className="dot"></span>
-                      </div>
-                      {/* Menu Icon -> Settings or Profile */}
-                      <button className="menu-btn" onClick={() => navigate('/settings')}>
-                        <AlignRight size={28} color="#5a3c6d" />
-                      </button>
-                    </div>
+              <div
+                className="bell-box"
+                onClick={() => navigate('/request')}
+                style={{ cursor: 'pointer' }}
+              >
+                <Bell size={26} color="#5a3c6d" />
+                <span className="dot"></span>
+              </div>
+              <button className="menu-btn" onClick={() => navigate('/settings')}>
+                <AlignRight size={28} color="#5a3c6d" />
+              </button>
+          </div>
         </header>
 
         <div className="matches-body-content slide-up">
@@ -81,21 +79,21 @@ const Matches = () => {
             </div>
           </div>
 
-          {/* PERFECTED SLIDER */}
+          {/* HORIZONTAL CAROUSEL */}
           <div 
             className="cards-carousel-container" 
             ref={scrollRef} 
             onScroll={handleScroll}
           >
             {profiles.map((profile, index) => {
-              // Rotation Logic: Side cards at -6.75 or 6.75, Center at 0
+              // Center card stays straight, side cards tilt away
               let rotateValue = 0;
               let scaleValue = 1;
               if (index < activeIndex) {
-                 rotateValue = 6.75; // Left card
+                 rotateValue = 6.75; 
                  scaleValue = 0.9;
               } else if (index > activeIndex) {
-                 rotateValue = -6.75; // Right card
+                 rotateValue = -6.75; 
                  scaleValue = 0.9;
               }
 
@@ -103,7 +101,7 @@ const Matches = () => {
                 <div 
                   key={profile.id} 
                   className="card-anchor"
-                  onClick={() => navigate('profile-details')}
+                  onClick={() => navigate('/matches/profile-details')}
                   style={{
                     transform: `rotate(${rotateValue}deg) scale(${scaleValue})`,
                     zIndex: activeIndex === index ? 10 : 1
@@ -136,7 +134,6 @@ const Matches = () => {
                 </div>
               );
             })}
-            {/* Spacer for ending scroll */}
             <div className="carousel-end-spacer"></div>
           </div>
 

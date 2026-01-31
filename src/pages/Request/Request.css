@@ -2,20 +2,21 @@
 
 .requests-page-main {
   width: 100%;
-  height: 100%;
+  height: 100dvh; /* Force Dynamic Viewport Height to enable inner scroll */
   display: flex;
   flex-direction: column;
-  background-color: #FFF8FB; /* Original Soft Pink */
+  background-color: #FFF8FB;
   font-family: 'Outfit', sans-serif;
-  overflow: hidden;
+  overflow: hidden; /* Prevent the main container from scrolling */
 }
 
 /* Header Styles */
 .request-header {
-  padding: 45px 15px 10px 15px;
+  padding: 20px 15px 10px 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .right-nav-icons {
@@ -31,11 +32,12 @@
   align-items: center;
 }
 
-/* Tab Switcher (Exact UI match) */
+/* Tab Switcher */
 .tab-container-wrap {
   display: flex;
   justify-content: center;
   margin: 15px 0 20px;
+  flex-shrink: 0;
 }
 
 .segmented-control-bar {
@@ -44,7 +46,6 @@
   padding: 4px;
   display: flex;
   width: 85%;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .control-tab-btn {
@@ -58,28 +59,32 @@
   background: transparent;
   color: #888;
   transition: all 0.3s ease;
-  font-family: 'Outfit', sans-serif;
 }
 
 .control-tab-btn.is-active {
   background-color: #5a3c6d;
   color: #ffffff;
-  box-shadow: 0 4px 10px rgba(90, 60, 109, 0.25);
 }
 
-/* Scrollable List */
+/* --- SCROLLING LOGIC --- */
 .requests-scroll-area {
-  flex: 1;
+  flex: 1; /* Takes up all remaining vertical space */
   padding: 0 15px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  overflow-y: auto;
-  scrollbar-width: none;
+  
+  overflow-y: auto;          /* Enable vertical scrolling */
+  scrollbar-width: none;     /* Hide for Firefox */
+  -ms-overflow-style: none;  /* Hide for IE/Edge */
 }
-.requests-scroll-area::-webkit-scrollbar { display: none; }
 
-/* Card Styling (Exact Match) */
+/* Hide scrollbar for Chrome/Safari */
+.requests-scroll-area::-webkit-scrollbar {
+  display: none;
+}
+
+/* Card Styling */
 .ui-request-card-item {
   background: #ffffff;
   border-radius: 20px;
@@ -101,7 +106,6 @@
   height: 55px;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .avatar-circle img {
@@ -124,7 +128,7 @@
   font-weight: 500;
 }
 
-/* Actions Area */
+/* Actions */
 .card-right-part {
   display: flex;
   align-items: center;
@@ -140,19 +144,18 @@
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(90, 60, 109, 0.3);
-  font-family: 'Outfit', sans-serif;
 }
 
 .cancel-x-btn {
   background: none;
   border: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
 }
 
-.footer-spacer { height: 110px; }
+.footer-spacer {
+  height: 120px; /* Large spacer so bottom content clears BottomNav */
+  flex-shrink: 0;
+}
 
 /* Animations */
 .slide-up { animation: slideUpRequest 0.6s ease-out; }
@@ -161,6 +164,6 @@
   to { opacity: 1; transform: translateY(0); } 
 }
 
-.confirm-purple-btn:active, .nav-icon-btn:active {
+.confirm-purple-btn:active {
   transform: scale(0.95);
 }

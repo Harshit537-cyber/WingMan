@@ -2,24 +2,36 @@ import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AppLayout from '../../components/AppLayout/AppLayout';
 
-// Images Import - Using the paths from your example
+// Assets
 import characterImg from '../../assets/img9/Character.png';
 import confettiImg from '../../assets/img9/Confetti.png';
+import successAudio from '../../assets/img9/audio.mp3'; // <--- Import your audio file here
 import './SharingSuccess.css';
 
 const SharingSuccess = () => {
     const location = useLocation();
     const navigate = useNavigate();
-
-    // Pulling name from AskName screen state
     const userName = location.state?.name || "Friend";
 
     useEffect(() => {
+        // 1. Play Audio Logic
+        const audio = new Audio(successAudio);
+        audio.volume = 0.6; // Adjust volume (0.0 to 1.0)
+        
+        // Browsers allow autoplay if user has interacted with the site (which they did by typing their name)
+        audio.play().catch(err => console.log("Playback interaction required", err));
+
+        // 2. Navigation Logic
         const timer = setTimeout(() => {
-            // Navigate to next screen after 4 seconds
             navigate('/home', { state: { ...location.state } });
-        }, 4000);
-        return () => clearTimeout(timer);
+        }, 4000); // Increased slightly so audio can finish
+
+        // Cleanup: stop audio if user leaves page early
+        return () => {
+            audio.pause();
+            audio.currentTime = 0;
+            clearTimeout(timer);
+        };
     }, [navigate, location.state]);
 
     return (
@@ -27,13 +39,11 @@ const SharingSuccess = () => {
             <div className="sharing-screen-wrapper">
                 <div className="sharing-card-container">
                     
-                    {/* Continuous Confetti Rain Animation */}
                     <div className="confetti-rain-layer">
                         <img src={confettiImg} alt="confetti" className="rain-piece r-layer-1" />
                         <img src={confettiImg} alt="confetti" className="rain-piece r-layer-2" />
                     </div>
 
-                    {/* Main Content Area */}
                     <div className="sharing-content-area">
                         <div className="text-anim-box">
                             <h1 className="sharing-main-title">
@@ -44,13 +54,12 @@ const SharingSuccess = () => {
                         </div>
                     </div>
 
-                    {/* Character Animation at Bottom */}
+                    {/* Character is now smaller via CSS */}
                     <div className="sharing-char-box">
                         <img src={characterImg} alt="Trumpet Character" className="sharing-trumpet-man" />
                     </div>
 
-                    {/* Click anywhere to skip/proceed manually */}
-                    <div className="skip-overlay" onClick={() => navigate('/home')}></div>
+                    <div className="skip-overlay" onClick={() => navigate('/next-step')}></div>
                     
                 </div>
             </div>

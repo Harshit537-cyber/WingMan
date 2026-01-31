@@ -13,6 +13,7 @@ import './ProfileDetail.css';
 const ProfileDetail = () => {
   const navigate = useNavigate();
   const [showCallModal, setShowCallModal] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false); // State for heart fill
 
   // Background scroll lock logic
   useEffect(() => {
@@ -26,8 +27,11 @@ const ProfileDetail = () => {
 
   const openModal = () => setShowCallModal(true);
   const closeModal = () => setShowCallModal(false);
-
   const handleGalleryClick = () => navigate('/gallery');
+  const toggleFavorite = (e) => {
+    e.stopPropagation();
+    setIsFavorite(!isFavorite);
+  };
 
   const handleSendRequest = () => {
     closeModal();
@@ -38,93 +42,103 @@ const ProfileDetail = () => {
     <AppLayout>
       <div className="detail-main-container">
         
-        {/* HERO SECTION - Animated Image and Icons */}
-        <div className="hero-section">
-          <img src={profileHero} alt="Jessica" className="hero-img animate-zoom" />
-          <button className="top-back-btn pop-in" onClick={() => navigate(-1)}>
-            <ChevronLeft size={24} color="#5a3c6d" />
-          </button>
-          <button className="top-fav-heart pop-in-delay">
-            <Heart size={28} color="#fff" />
-          </button>
-          <div className="hero-compat-badge slide-right">90% Compatible</div>
-        </div>
-
-        <div className={`detail-scroll-content ${showCallModal ? 'blur-content' : ''}`}>
+        {/* Everything inside this div will scroll together */}
+        <div className={`detail-scroll-area ${showCallModal ? 'blur-content' : ''}`}>
           
-          {/* INTRO SECTION - Staggered 1 */}
-          <div className="profile-intro-row slide-up staggered-1">
-            <div className="intro-text">
-              <h1 className="user-name-age">Jessica Parker, 23</h1>
-              <p className="user-profession">Software Developer</p>
-            </div>
-            <button className="call-action-square" onClick={() => navigate('/call')}>
-              <Phone size={24} color="#5a3c6d" fill="#5a3c6d" />
+          {/* HERO SECTION - Now inside scroll area */}
+          <div className="hero-section">
+            <img src={profileHero} alt="Jessica" className="hero-img animate-zoom" />
+            <button className="top-back-btn pop-in" onClick={() => navigate(-1)}>
+              <ChevronLeft size={24} color="#5a3c6d" />
             </button>
+            
+            {/* Heart Icon with Toggle Logic */}
+            <button className="top-fav-heart pop-in-delay" onClick={toggleFavorite}>
+              <Heart 
+                size={28} 
+                color={isFavorite ? "#ff4d4d" : "#fff"} 
+                fill={isFavorite ? "#ff4d4d" : "none"} 
+                className={isFavorite ? "heart-pop" : ""}
+              />
+            </button>
+            <div className="hero-compat-badge slide-right">90% Compatible</div>
           </div>
 
-          {/* LOCATION - Staggered 2 */}
-          <div className="info-block slide-up staggered-2">
-            <div className="block-header">
-              <h3 className="block-title">Location</h3>
-              <span className="dist-badge">1 km</span>
+          <div className="detail-content-padding">
+            {/* INTRO SECTION */}
+            <div className="profile-intro-row slide-up staggered-1">
+              <div className="intro-text">
+                <h1 className="user-name-age">Jessica Parker, 23</h1>
+                <p className="user-profession">Software Developer</p>
+              </div>
+              <button className="call-action-square" onClick={() => navigate('/call')}>
+                <Phone size={24} color="#5a3c6d" fill="#5a3c6d" />
+              </button>
             </div>
-            <p className="block-desc">Chicago, IL United States</p>
-          </div>
 
-          {/* ABOUT ME - Staggered 3 */}
-          <div className="info-block slide-up staggered-3">
-            <h3 className="block-title">About me</h3>
-            <div className="chips-grid">
-              <div className="info-chip"><Globe size={16} /> Bengaluru, India</div>
-              <div className="info-chip"><PersonStanding size={16} /> Regularly</div>
-              <div className="info-chip"><Moon size={16} /> Hindu</div>
-              <div className="info-chip"><Wine size={16} /> ocasionally</div>
-              <div className="info-chip"><Cigarette size={16} /> Rarely</div>
-              <div className="info-chip"><Languages size={16} /> English</div>
+            {/* LOCATION */}
+            <div className="info-block slide-up staggered-2">
+              <div className="block-header">
+                <h3 className="block-title">Location</h3>
+                <span className="dist-badge">1 km</span>
+              </div>
+              <p className="block-desc">Chicago, IL United States</p>
             </div>
-          </div>
 
-          {/* STORY - Staggered 4 */}
-          <div className="info-block slide-up staggered-4">
-            <h3 className="block-title">My Story</h3>
-            <p className="story-text">
-              My name is Jessica Parker and I enjoy meeting new people and finding ways to help them have an uplifting experience. I enjoy reading..
-              <span className="read-more">Read more</span>
-            </p>
-          </div>
-
-          {/* INTERESTS - Staggered 5 */}
-          <div className="info-block slide-up staggered-5">
-            <h3 className="block-title">Interests</h3>
-            <div className="chips-grid">
-              <div className="interest-chip"><Accessibility size={16} color="#f1c40f" /> Yoga</div>
-              <div className="interest-chip"><Film size={16} /> Film lover</div>
-              <div className="interest-chip"><Coffee size={16} color="#d35400" /> Matcha</div>
+            {/* ABOUT ME */}
+            <div className="info-block slide-up staggered-3">
+              <h3 className="block-title">About me</h3>
+              <div className="chips-grid">
+                <div className="info-chip"><Globe size={16} /> Bengaluru, India</div>
+                <div className="info-chip"><PersonStanding size={16} /> Regularly</div>
+                <div className="info-chip"><Moon size={16} /> Hindu</div>
+                <div className="info-chip"><Wine size={16} /> ocasionally</div>
+                <div className="info-chip"><Cigarette size={16} /> Rarely</div>
+                <div className="info-chip"><Languages size={16} /> English</div>
+              </div>
             </div>
-          </div>
 
-          {/* GALLERY - Staggered 6 */}
-          <div className="gallery-section slide-up staggered-6">
-            <div className="block-header">
-              <h3 className="block-title">Gallery</h3>
-              <span className="see-all" onClick={handleGalleryClick}>See all</span>
+            {/* STORY */}
+            <div className="info-block slide-up staggered-4">
+              <h3 className="block-title">My Story</h3>
+              <p className="story-text">
+                My name is Jessica Parker and I enjoy meeting new people and finding ways to help them have an uplifting experience. I enjoy reading..
+                <span className="read-more">Read more</span>
+              </p>
             </div>
-            <div className="gallery-grid">
-              <div className="gal-big clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g1" /></div>
-              <div className="gal-big clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g2" /></div>
-              <div className="gal-small clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g3" /></div>
-              <div className="gal-small clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g4" /></div>
-              <div className="gal-small clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g5" /></div>
+
+            {/* INTERESTS */}
+            <div className="info-block slide-up staggered-5">
+              <h3 className="block-title">Interests</h3>
+              <div className="chips-grid">
+                <div className="interest-chip"><Accessibility size={16} color="#f1c40f" /> Yoga</div>
+                <div className="interest-chip"><Film size={16} /> Film lover</div>
+                <div className="interest-chip"><Coffee size={16} color="#d35400" /> Matcha</div>
+              </div>
             </div>
-          </div>
 
-          {/* REQUEST BUTTON - Staggered 7 */}
-          <div className="request-btn-container slide-up staggered-7">
-            <button className="request-btn" onClick={openModal}>Request For Call</button>
-          </div>
+            {/* GALLERY */}
+            <div className="gallery-section slide-up staggered-6">
+              <div className="block-header">
+                <h3 className="block-title">Gallery</h3>
+                <span className="see-all" onClick={handleGalleryClick}>See all</span>
+              </div>
+              <div className="gallery-grid">
+                <div className="gal-big clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g1" /></div>
+                <div className="gal-big clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g2" /></div>
+                <div className="gal-small clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g3" /></div>
+                <div className="gal-small clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g4" /></div>
+                <div className="gal-small clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g5" /></div>
+              </div>
+            </div>
 
-          <div className="footer-spacer"></div>
+            {/* REQUEST BUTTON */}
+            <div className="request-btn-container slide-up staggered-7">
+              <button className="request-btn" onClick={openModal}>Request For Call</button>
+            </div>
+
+            <div className="footer-spacer"></div>
+          </div>
         </div>
 
         <BottomNav />
