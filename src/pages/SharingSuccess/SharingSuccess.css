@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
+
+.sharing-screen-wrapper {
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.sharing-card-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #5D326F; /* Deep Purple */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 25px;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: 'Libre Baskerville', serif;
+}
+
+/* --- "Khatnak" Confetti Rain Animation --- */
+.confetti-rain-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.rain-piece {
+    position: absolute;
+    width: 150%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.5;
+}
+
+.r-layer-1 {
+    top: -100%;
+    animation: rainEffect 7s linear infinite;
+}
+
+.r-layer-2 {
+    top: -200%;
+    animation: rainEffect 7s linear infinite 3.5s;
+}
+
+@keyframes rainEffect {
+    from { transform: translateY(0); }
+    to { transform: translateY(300%); }
+}
+
+/* --- Content Styling --- */
+.sharing-content-area {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    color: white;
+    margin-top: -100px; /* Centering adjustment */
+}
+
+.sharing-main-title {
+    font-size: 32px; /* Fixed as requested */
+    font-weight: 400;
+    line-height: 1.3;
+    margin: 0;
+    animation: sharingFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.user-dynamic-name {
+    font-weight: 700;
+    text-transform: capitalize;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+@keyframes sharingFadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Trumpet Character Animations --- */
+.sharing-char-box {
+    position: absolute;
+    bottom: -10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 5;
+    transform: translateY(100%);
+    animation: charPopUp 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.3s;
+}
+
+.sharing-trumpet-man {
+    width: 300px;
+    height: auto;
+    /* Pulsing & Rotating animation while playing trumpet */
+    animation: playingTrumpet 2.5s ease-in-out infinite;
+}
+
+@keyframes charPopUp {
+    to { transform: translateY(0); }
+}
+
+@keyframes playingTrumpet {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.05) rotate(2deg); }
+}
+
+/* Skip overlay */
+.skip-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    cursor: pointer;
+}
+
+/* Responsive fixes for small heights */
+@media (max-height: 700px) {
+    .sharing-main-title { font-size: 28px; }
+    .sharing-trumpet-man { width: 240px; }
+    .sharing-content-area { margin-top: -60px; }
+}

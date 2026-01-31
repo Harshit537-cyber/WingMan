@@ -15,7 +15,7 @@ const Preferences = () => {
   const [language, setLanguage] = useState('Hindi');
 
   const handleContinue = () => {
-    navigate('/home');
+    navigate('/sharingSuccess');
   };
 
   // Logic for Slider Percentages (UI positioning)
