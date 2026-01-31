@@ -44,7 +44,7 @@ const EmotionalCommQuiz = () => {
                 setIsAnimating(false);
             }, 400); 
         } else {
-            navigate('/next-section'); // Agli category par jaane ke liye
+            navigate('/pick-card'); // Agli category par jaane ke liye
         }
     };
 

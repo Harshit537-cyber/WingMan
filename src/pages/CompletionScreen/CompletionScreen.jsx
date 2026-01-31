@@ -57,7 +57,7 @@ const Completion = () => {
                 </div>
 
                 {/* Hidden click area to proceed */}
-                <div className="comp-click-overlay" onClick={() => navigate('/next-route')}></div>
+                <div className="comp-click-overlay" onClick={() => navigate('/pick-card')}></div>
                 
             </div>
         </div>

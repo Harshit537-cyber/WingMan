@@ -50,7 +50,7 @@ const ViewMatches = () => {
 
                 {/* Footer Button */}
                 <footer className={`vm-footer ${animate ? 'anim-slide-up' : ''}`}>
-                    <button className="vm-primary-btn" onClick={() => navigate('/final-matches')}>
+                    <button className="vm-primary-btn" onClick={() => navigate('/match')}>
                         View Matches
                     </button>
                 </footer>
