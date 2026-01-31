@@ -86,7 +86,7 @@ const RelationshipLearning = () => {
                         </svg>
                         <button 
                             className={`learning-next-btn ${selectedOption ? 'is-ready' : ''}`} 
-                            onClick={() => selectedOption && navigate('/next')}
+                            onClick={() => selectedOption && navigate('/view-matches')}
                             disabled={!selectedOption}
                         >
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">

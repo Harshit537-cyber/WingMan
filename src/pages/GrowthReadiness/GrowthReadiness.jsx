@@ -88,7 +88,7 @@ const GrowthReadiness = () => {
                         </svg>
                         <button 
                             className={`growth-next-btn ${selectedOption ? 'is-ready' : ''}`} 
-                            onClick={() => selectedOption && navigate('/next')}
+                            onClick={() => selectedOption && navigate('/relationship-learning')}
                             disabled={!selectedOption}
                         >
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">

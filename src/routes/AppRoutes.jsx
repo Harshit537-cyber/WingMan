@@ -129,7 +129,7 @@ const AppRoutes = () => {
         <Route path='/conflict-quiz' element={<ConflictQuiz />} />
         <Route path='/repair-patternQuiz' element={<RepairPatternQuiz />} />
         <Route path='/conflict-repair-Quiz' element={<ConflictRepairQuiz />} />
-        <Route path='/Choose-Focus' element={<ChooseFocus />} />
+        {/* <Route path='/Choose-Focus' element={<ChooseFocus />} /> */}
         <Route path='/assessment-quiz' element={<AssessmentQuiz />} />
 
         <Route path='/growth-readiness' element={<GrowthReadiness />} />

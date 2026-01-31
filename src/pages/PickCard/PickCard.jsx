@@ -5,6 +5,9 @@ import "./PickCard.css";
 // Assets
 import attachmentImg from "../../assets/img5/rafiki.png";
 import lifestyleImg from "../../assets/img5/rafiki.png";
+import AttachmentImg from "../../assets/img5/bro.png";
+
+
 
 const PickCard = () => {
   const navigate = useNavigate();
@@ -21,10 +24,10 @@ const PickCard = () => {
     },
     {
       id: 2,
-      title: "Health & Fitness",
-      description: "Daily habits, wellness, physical activity",
-      img: lifestyleImg,
-      route: "/mavita-screen-2",
+      title: "Attachment & Comfort Zone",
+      description: "Emotional availability, reassurance, independence, fear of closeness",
+      img: AttachmentImg,
+      route: "/attachment",
     },
     {
       id: 3,
@@ -35,17 +38,17 @@ const PickCard = () => {
     },
     {
       id: 4,
-      title: "Personal Interests",
-      description: "Hobbies, passions, leisure preferences",
+      title: "Conflict & Repair Patterns",
+      description: "Handling disagreements, emotional regulation, recovery",
       img: lifestyleImg,
-      route: "/mavita-screen-4",
+      route: "/conflict-quiz",
     },
     {
       id: 5,
-      title: "Future Goals",
-      description: "Aspirations, planning, long-term vision",
+      title: "Growth, Readiness & Emotional Maturity",
+      description: "Reflection, accountability, long-term mindset",
       img: attachmentImg,
-      route: "/mavita-screen-5",
+      route: "/",
     },
   ];
 

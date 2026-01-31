@@ -110,8 +110,9 @@ const ConflictRepairQuiz = () => {
              </svg>
              <button 
                 className={`fab-button ${selectedOption ? 'active' : ''}`}
-                onClick={handleNext}
+                onClick={() => navigate('/pick-card')}
                 disabled={!selectedOption}
+                
               >
                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
                  <line x1="5" y1="12" x2="19" y2="12"></line>
