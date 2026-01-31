@@ -23,7 +23,7 @@ const About = () => {
   };
 
   const handleNext = () => {
-    navigate('/appreciate', { 
+    navigate('/honestysuccess', { 
       state: { ...location.state, lifestyle: choices } 
     });
   };

@@ -83,6 +83,8 @@ import GrowthReadiness from '../pages/GrowthReadiness/GrowthReadiness.jsx';
 import RelationshipLearning from '../pages/RelationshipLearning/RelationshipLearning.jsx';
 import ViewMatches from '../pages/ViewMatches/ViewMatches.jsx';
 import Upset from '../pages/Upset/Upset.jsx';
+import HonestySuccess from '../pages/HonestySuccess/HonestySuccess.jsx';
+import SharingSuccess from '../pages/SharingSuccess/SharingSuccess.jsx';
 
 
 const AppRoutes = () => {
@@ -93,12 +95,14 @@ const AppRoutes = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/preferences" element={<Preferences />} />
         <Route path="/appreciate" element={<Appreciate />} />
+        <Route path="/honestysuccess" element={<HonestySuccess />} />
         <Route path="/interests" element={<Interests />} />
         <Route path="/uploads" element={<UploadPhoto />} />
         <Route path="/gender" element={<Gender />} />
         <Route path="/askName" element={<AskName />} />
         <Route path="/hy" element={<SayHy />} />
         <Route path="/birthday" element={<Birthday />} />
+        <Route path="/sharingSuccess" element={<SharingSuccess />} />
 
         {/* <Route path="/hight" element={<AskHight />} /> */}
         <Route path="/celebration" element={<Celebration />} />
