@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from './../../components/AppLayout/AppLayout.jsx';
 import './QuizPrompt.css';
-import illustrationImg from '../../assets/Frame.png'; // Path check kar lena bhai
+import illustrationImg from '../../assets/Frame.svg'; // Path check kar lena bhai
 
 const QuizPrompt = () => {
   const navigate = useNavigate();

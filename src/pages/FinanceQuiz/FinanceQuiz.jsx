@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AppLayout from '../../components/AppLayout/AppLayout';
+import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
 import './FinanceQuiz.css';
 
 // Assets
@@ -12,6 +14,13 @@ const FinanceQuiz = () => {
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState(null);
 
+    const CURRENT_STEP = 2;
+    const TOTAL_STEPS = 5;
+
+    const handleNext = () => {
+        if (!selectedOption) return;
+        navigate('/habit-quiz');
+    };
     const options = [
         { id: 1, text: "Putting it all together.", img: togetherImg },
         { id: 2, text: "Keeping our own accounts but being open about stuff.", img: openImg },
@@ -44,7 +53,7 @@ const FinanceQuiz = () => {
                                 <p className="opt-card-label">{opt.text}</p>
                                 <div className="opt-img-wrapper">
                                     <img src={opt.img} alt={opt.text} className="opt-main-img" />
-                                </div>            
+                                </div>
                                 {selectedOption === opt.id && (
                                     <div className="selection-tick-wrapper">
                                         <div className="horizontal-line-divider"></div>
@@ -64,19 +73,15 @@ const FinanceQuiz = () => {
                         ))}
                     </div>
                 </div>
-
+                
                 <div className="quiz-footer-action">
-                    <div className="progress-ring-box">
-                        <svg className="svg-ring" width="80" height="80">
-                            <circle className="ring-bg" cx="40" cy="40" r="36" stroke="#5d326f15" strokeWidth="3" fill="none" />
-                            <circle className="ring-bar" cx="40" cy="40" r="36" stroke="#5D326F" strokeWidth="3" fill="none" style={{ strokeDashoffset: selectedOption ? 100 : 226 }} />
-                        </svg>
-                        <button className={`nav-next-btn ${selectedOption ? 'ready' : ''}`} onClick={() => selectedOption && navigate('/habit-quiz')}>
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </button>
+                    <div className="step-btn-wrapper">
+                        <StepProgressButton
+                            currentStep={CURRENT_STEP}
+                            totalSteps={TOTAL_STEPS}
+                            disabled={!selectedOption}
+                            onClick={handleNext}
+                        />
                     </div>
                 </div>
             </div>

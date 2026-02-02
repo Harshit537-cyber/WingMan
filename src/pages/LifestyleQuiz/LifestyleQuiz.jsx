@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AppLayout from '../../components/AppLayout/AppLayout';
+import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
 import './LifestyleQuiz.css';
 
 // Assets according to your folder structure
@@ -11,6 +13,14 @@ import moodImg from '../../assets/Quizassets/four.png';
 const LifestyleQuiz = () => {
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState(null);
+
+    const CURRENT_STEP = 1;
+    const TOTAL_STEPS = 5;
+
+    const handleNext = () => {
+        if (!selectedOption) return;
+        navigate('/finance-quiz');
+    };
 
     const options = [
         { id: 1, text: "Relaxing at home", img: relaxingImg },
@@ -78,30 +88,14 @@ const LifestyleQuiz = () => {
                 </div>
 
                 <div className="quiz-footer-action">
-                    <div className="progress-ring-box">
-                        <svg className="svg-ring" width="80" height="80">
-                            <circle
-                                className="ring-bg"
-                                cx="40" cy="40" r="36"
-                                stroke="#5d326f15" strokeWidth="3" fill="none"
-                            />
-                            <circle
-                                className="ring-bar"
-                                cx="40" cy="40" r="36"
-                                stroke="#5D326F" strokeWidth="3" fill="none"
-                                style={{ strokeDashoffset: selectedOption ? 100 : 226 }}
-                            />
-                        </svg>
-                        <button
-                            className={`nav-next-btn ${selectedOption ? 'ready' : ''}`}
-                            onClick={() => selectedOption && navigate('/finance-quiz')}
-                        >
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </button>
-                    </div>
+                    <div className="step-btn-wrapper">
+          <StepProgressButton
+            currentStep={CURRENT_STEP}
+            totalSteps={TOTAL_STEPS}
+            disabled={!selectedOption}
+            onClick={handleNext}
+          />
+        </div>
                 </div>
 
             </div>

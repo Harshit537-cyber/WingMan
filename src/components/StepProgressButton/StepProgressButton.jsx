@@ -13,6 +13,7 @@ const StepProgressButton = ({ currentStep = 0, totalSteps = 10, disabled, onClic
     if (!disabled && !hasClicked) {
       setHasClicked(true); 
       onClick();
+      resetKey();
     }
   };
 
