@@ -1,14 +1,13 @@
-/* Puray page ki scrolling lock karne ke liye */
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden; /* Screen se bahar scroll nahi hoga */
+    overflow: hidden;
 }
 
 .main-container-fixed {
     width: 100%;
-    height: 100vh; /* Mobile browser height fix */
+    height: 100vh;
     height: 100dvh; 
     display: flex;
     flex-direction: column;
@@ -16,9 +15,8 @@ html, body {
     font-family: 'Inter', sans-serif;
 }
 
-/* Header fix height */
 .fixed-header {
-    flex-shrink: 0; /* Isko dabne mat dena */
+    flex-shrink: 0;
     height: 80px;
     display: flex;
     align-items: center;
@@ -41,26 +39,30 @@ html, body {
     color: #1A1A1A;
 }
 
-/* Cards Slider Section - Yeh akela scroll hoga */
+/* 🔥 UPDATED SECTION */
 .horizontal-scroll-section {
-    flex: 1; /* Baki bachi hui space ye lega */
+    flex: 1;
     display: flex;
     align-items: center;
     overflow-x: auto;
-    overflow-y: hidden; /* Vertical scroll bilkul band */
-    padding: 0 10%;
+    overflow-y: hidden;
+    /* First card ko center karne ke liye padding */
+    padding-left: 10%; 
+    padding-right: 5%; 
     gap: 15px;
+    /* Mandatory snap se card beech mein chipak jayega */
     scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch; /* Smooth mobile scroll */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
 }
 
 .horizontal-scroll-section::-webkit-scrollbar {
-    display: none; /* Scrollbar chhupa di */
+    display: none;
 }
 
 .card-wrapper {
     min-width: 80%;
-    height: 80%; /* Height adjust kari taaki footer ke liye space bache */
+    height: 75%;
     max-height: 520px;
     scroll-snap-align: center;
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -76,7 +78,7 @@ html, body {
 .card-content-box {
     width: 100%;
     height: 100%;
-    background-color: #EEDFF2; /* Lavender color */
+    background-color: #EEDFF2;
     border-radius: 32px;
     padding: 35px 25px;
     display: flex;
@@ -86,14 +88,14 @@ html, body {
 }
 
 .card-heading {
-    font-size: 24px;
+    font-size: 22px; /* Thoda chota kiya taaki text fit ho */
     font-weight: 800;
     color: #1A1A1A;
     margin-bottom: 12px;
 }
 
 .card-subtext {
-    font-size: 15px;
+    font-size: 14px;
     color: #333;
     line-height: 1.4;
 }
@@ -112,7 +114,6 @@ html, body {
     object-fit: contain;
 }
 
-/* Footer fix height */
 .fixed-footer {
     flex-shrink: 0;
     padding: 20px 24px 40px;
@@ -134,12 +135,16 @@ html, body {
     cursor: pointer;
 }
 
-/* For Desktop scaling */
+/* 🔥 LAST CARD KO CENTER LANE KE LIYE SPACER */
+.scroll-end-spacer {
+    flex: 0 0 50%; 
+}
+
 @media (min-width: 500px) {
     .main-container-fixed {
         max-width: 400px;
         margin: 0 auto;
-        border: 1px solid #FFF8FB;
+        border: 1px solid #f0f0f0;
         border-radius: 40px;
     }
 }

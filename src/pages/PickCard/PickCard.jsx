@@ -7,8 +7,6 @@ import attachmentImg from "../../assets/img5/rafiki.png";
 import lifestyleImg from "../../assets/img5/rafiki.png";
 import AttachmentImg from "../../assets/img5/bro.png";
 
-
-
 const PickCard = () => {
   const navigate = useNavigate();
   const [activeCard, setActiveCard] = useState(0);
@@ -25,7 +23,8 @@ const PickCard = () => {
     {
       id: 2,
       title: "Attachment & Comfort Zone",
-      description: "Emotional availability, reassurance, independence, fear of closeness",
+      description:
+        "Emotional availability, reassurance, independence, fear of closeness",
       img: AttachmentImg,
       route: "/attachment",
     },
@@ -48,16 +47,26 @@ const PickCard = () => {
       title: "Growth, Readiness & Emotional Maturity",
       description: "Reflection, accountability, long-term mindset",
       img: attachmentImg,
-      route: "/",
+      route: "/assessment-quiz",
     },
   ];
 
+  // 🔥 FIXED SCROLL LOGIC
   const handleScroll = () => {
     if (scrollRef.current) {
-      const width = scrollRef.current.offsetWidth;
-      const scrollLeft = scrollRef.current.scrollLeft;
-      const index = Math.round(scrollLeft / (width * 0.82));
-      setActiveCard(index);
+      const container = scrollRef.current;
+      const scrollLeft = container.scrollLeft;
+
+      // Card ki width aur gap (+15px gap) nikalna
+      const cardElement = container.querySelector(".card-wrapper");
+      if (cardElement) {
+        const cardWidth = cardElement.offsetWidth + 15;
+        const index = Math.round(scrollLeft / cardWidth);
+
+        if (index >= 0 && index < cardsData.length) {
+          setActiveCard(index);
+        }
+      }
     }
   };
 
@@ -70,7 +79,6 @@ const PickCard = () => {
 
   return (
     <div className="main-container-fixed">
-      {/* Header */}
       <header className="fixed-header">
         <button className="back-btn-icon" onClick={() => navigate(-1)}>
           <svg
@@ -87,7 +95,6 @@ const PickCard = () => {
         <h1 className="title-text">Pick A Card</h1>
       </header>
 
-      {/* Cards */}
       <div
         className="horizontal-scroll-section"
         ref={scrollRef}
@@ -96,9 +103,7 @@ const PickCard = () => {
         {cardsData.map((card, index) => (
           <div
             key={card.id}
-            className={`card-wrapper ${
-              activeCard === index ? "active-card" : "inactive-card"
-            }`}
+            className={`card-wrapper ${activeCard === index ? "active-card" : "inactive-card"}`}
           >
             <div className="card-content-box">
               <div className="text-area">
@@ -111,9 +116,10 @@ const PickCard = () => {
             </div>
           </div>
         ))}
+        {/* Spacer for last card scrolling */}
+        <div className="scroll-end-spacer"></div>
       </div>
 
-      {/* Footer */}
       <footer className="fixed-footer">
         <button className="cta-button" onClick={handleContinue}>
           Continue

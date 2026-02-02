@@ -29,7 +29,7 @@ const Preferences = () => {
       <div className="pref-screen-container">
         
         {/* FIXED HEADER SECTION */}
-        <div className="pref-header-section">
+        <div className="native-header-section">
           <OnboardingHeader 
             title="What's your preferences?" 
             description="Help us find the best match for you."
