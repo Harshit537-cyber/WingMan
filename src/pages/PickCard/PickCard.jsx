@@ -4,8 +4,11 @@ import "./PickCard.css";
 
 // Assets
 import attachmentImg from "../../assets/img5/rafiki.png";
-import lifestyleImg from "../../assets/img5/rafiki.png";
+import growthImg from "../../assets/growth.svg";
 import AttachmentImg from "../../assets/img5/bro.png";
+import emotionalImg from "../../assets/emotional.svg";
+import ConflictImg from "../../assets/Conflict.svg";
+
 
 const PickCard = () => {
   const navigate = useNavigate();
@@ -32,21 +35,21 @@ const PickCard = () => {
       id: 3,
       title: "Emotional Communication",
       description: "Responsiveness, vulnerability, expression styles",
-      img: attachmentImg,
+      img: emotionalImg,
       route: "/upset",
     },
     {
       id: 4,
       title: "Conflict & Repair Patterns",
       description: "Handling disagreements, emotional regulation, recovery",
-      img: lifestyleImg,
+      img: ConflictImg,
       route: "/conflict-quiz",
     },
     {
       id: 5,
       title: "Growth, Readiness & Emotional Maturity",
       description: "Reflection, accountability, long-term mindset",
-      img: attachmentImg,
+      img: growthImg,
       route: "/assessment-quiz",
     },
   ];
