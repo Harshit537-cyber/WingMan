@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "./PickCard.css";
 
 // Assets
-import attachmentImg from "../../assets/img5/rafiki.png";
+import attachmentImg from "../../assets/lifestyle.svg";
 import growthImg from "../../assets/growth.svg";
-import AttachmentImg from "../../assets/img5/bro.png";
+import AttachmentImg from "../../assets/bro.svg";
 import emotionalImg from "../../assets/emotional.svg";
 import ConflictImg from "../../assets/Conflict.svg";
 
