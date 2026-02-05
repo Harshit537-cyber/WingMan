@@ -14,7 +14,14 @@ const AskHight = () => {
   const navigate = useNavigate();
   
   const gender = location.state?.gender || 'male'; 
-  const heights = Array.from({ length: 31 }, (_, i) => (7.0 - i * 0.1).toFixed(1));
+  const heights = [];
+
+for (let ft = 7; ft >= 4; ft--) {
+  for (let inch = 11; inch >= 0; inch--) {
+    heights.push(`${ft}.${inch}`);
+  }
+}
+
   
   const [selectedHeight, setSelectedHeight] = useState('5.3');
   const scrollRef = useRef(null);

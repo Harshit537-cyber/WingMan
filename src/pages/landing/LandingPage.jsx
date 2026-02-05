@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate
 import './LandingPage.css';
 import datingImg from '../../assets/image.svg'; 
 import AppLayout from '../../components/AppLayout/AppLayout';
 
 const LandingPage = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
+  // 👇 YE LINE YAHAN PASTE KARO
+  const [loading, setLoading] = useState(false);
+
 
   const handleLogin = () => {
-    
-    navigate('/gender'); 
-  };
+  setLoading(true); // loader ON
+
+  setTimeout(() => {
+    navigate('/gender'); // next page
+  }, 2000);
+};
+
 
   return (
     <AppLayout> 
@@ -36,9 +44,14 @@ const LandingPage = () => {
       {/* Button Section */}
       <div className="button-box fade-in-up-delay">
         {/* 3. Button pe onClick handler lagayein */}
-        <button className="google-login-btn" onClick={handleLogin}>
-          Let Start
-        </button>
+        <button
+  className="google-login-btn"
+  onClick={handleLogin}
+  disabled={loading}
+>
+  {loading ? <span className="loader"></span> : 'Continue to Google'}
+</button>
+
       </div>
     </div>
     </AppLayout>
