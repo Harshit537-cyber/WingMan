@@ -3,40 +3,27 @@ import { useNavigate } from "react-router-dom";
 import AppLayout from "../../components/AppLayout/AppLayout";
 import OnboardingHeader from "../../components/OnboardingHeader/OnboardingHeader";
 import StepProgressButton from "../../components/StepProgressButton/StepProgressButton";
-import { saveOnboardingData } from "../../api/onboarding.api"; // ✅ Using your API file
 import "./Gender.css";
 
 const Gender = () => {
   const [selectedGender, setSelectedGender] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false); // ✅ Track network request
   const navigate = useNavigate();
 
-  const handleNext = async () => {
+  const handleNext = () => {
     if (!selectedGender) return;
 
-    setIsSubmitting(true);
-    try {
-      // ✅ Save to Network using the axios function you created
-      // The payload only sends the 'gender' key as requested
-      await saveOnboardingData({ gender: selectedGender });
-
-      // ✅ Navigate to the next screen on success
-      navigate("/askName", {
-        state: {
-          gender: selectedGender,
-        },
-      });
-    } catch (error) {
-      console.error("Error saving gender:", error);
-      alert("Something went wrong. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    // ✅ ONLY pass data forward (NO API CALL)
+    navigate("/askName", {
+      state: {
+        gender: selectedGender,
+      },
+    });
   };
 
   return (
     <AppLayout>
       <div className="gender-screen-container">
+
         {/* Header */}
         <div className="gender-header-section">
           <OnboardingHeader title="Let’s start by choosing your gender!" />
@@ -45,6 +32,7 @@ const Gender = () => {
         {/* Gender Selection */}
         <div className="gender-selection-body">
           <div className="gender-chips-stack">
+
             {/* Male */}
             <div
               className={`gender-select-card slide-up-1 ${
@@ -76,6 +64,7 @@ const Gender = () => {
               </div>
               <span className="gender-label-text">Female</span>
             </div>
+
           </div>
         </div>
 
@@ -86,10 +75,11 @@ const Gender = () => {
           <StepProgressButton
             currentStep={1}
             totalSteps={15}
-            disabled={!selectedGender || isSubmitting} // ✅ Disable button while saving
+            disabled={!selectedGender}
             onClick={handleNext}
           />
         </div>
+
       </div>
     </AppLayout>
   );

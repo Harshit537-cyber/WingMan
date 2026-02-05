@@ -2,7 +2,8 @@
 
 export const saveFCMTokenAPI = async (userId, fcmToken) => {
   try {
-    const response = await fetch("https://wingmann.onrender.com/api/notifications/save-token", {
+    // 5000 ya 5001 (jo bhi aapne backend mein rakha ho)
+    const response = await fetch("http://localhost:5000/api/notifications/save-token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

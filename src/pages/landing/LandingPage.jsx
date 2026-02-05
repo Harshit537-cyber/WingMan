@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 import datingImg from '../../assets/image.svg'; 
 import AppLayout from '../../components/AppLayout/AppLayout';
-import { getFCMToken } from '../../firebase'; // 👈 Import function check kar lena path sahi ho
+import { getFCMToken } from '../../firebase'; 
+import { saveFCMTokenAPI } from '../../api/notificationApi'; // 👈 Naya Import
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -17,8 +18,17 @@ const LandingPage = () => {
     
     if (fcmToken) {
       console.log("📲 FCM Token for Wingmann:", fcmToken);
-      // Token ko storage mein save kar lo taaki backend ko bhej sako
       localStorage.setItem("fcmToken", fcmToken);
+
+      // 🔥 API Call to save token in Backend
+      try {
+        // userId abhi temporary bhej rahe hain, login ke baad aap update bhi kar sakte hain
+        const userId = localStorage.getItem("userId") || "guest_user_" + Date.now();
+        await saveFCMTokenAPI(userId, fcmToken);
+        console.log("✅ Token successfully saved to server");
+      } catch (err) {
+        console.error("❌ Failed to save token to server");
+      }
     }
 
     // Login logic / Navigation
