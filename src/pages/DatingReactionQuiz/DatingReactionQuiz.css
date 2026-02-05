@@ -23,6 +23,24 @@
     box-shadow: 0 10px 40px rgba(0,0,0,0.05);
 }
 
+/* 🔥 Select animation (same feel as previous quizzes) */
+.dating-grid-card.animate {
+  animation: cardSelect 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes cardSelect {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(0.97);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
 /* Header Section */
 .dating-header-nav {
     display: flex;
@@ -180,4 +198,12 @@
     .dating-img-holder { height: 90px; }
     .dating-main-heading { font-size: 20px; }
     .dating-header-nav { margin-bottom: 20px; }
+}
+/* 🔥 Force override global .active class */
+.dating-grid-card.active {
+    background-color: #ffffff !important;
+    color: #111111 !important;
+}
+.dating-grid-card.animate {
+  animation: cardSelect 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
