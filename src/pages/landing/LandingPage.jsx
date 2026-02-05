@@ -1,59 +1,67 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 import datingImg from '../../assets/image.svg'; 
 import AppLayout from '../../components/AppLayout/AppLayout';
+import { getFCMToken } from '../../firebase'; 
+import { saveFCMTokenAPI } from '../../api/notificationApi'; // 👈 Naya Import
 
 const LandingPage = () => {
   const navigate = useNavigate();
-
-  // 👇 YE LINE YAHAN PASTE KARO
   const [loading, setLoading] = useState(false);
 
+  const handleLogin = async () => {
+    setLoading(true);
 
-  const handleLogin = () => {
-  setLoading(true); // loader ON
+    // 🔥 FCM Token Generate Start
+    const fcmToken = await getFCMToken();
+    
+    if (fcmToken) {
+      console.log("📲 FCM Token for Wingmann:", fcmToken);
+      localStorage.setItem("fcmToken", fcmToken);
 
-  setTimeout(() => {
-    navigate('/gender'); // next page
-  }, 2000);
-};
+      // 🔥 API Call to save token in Backend
+      try {
+        // userId abhi temporary bhej rahe hain, login ke baad aap update bhi kar sakte hain
+        const userId = localStorage.getItem("userId") || "guest_user_" + Date.now();
+        await saveFCMTokenAPI(userId, fcmToken);
+        console.log("✅ Token successfully saved to server");
+      } catch (err) {
+        console.error("❌ Failed to save token to server");
+      }
+    }
 
+    // Login logic / Navigation
+    setTimeout(() => {
+      navigate('/gender'); 
+    }, 1500);
+  };
 
   return (
     <AppLayout> 
-    <div className="landing-container">
-      {/* Illustration Section */}
-      <div className="illustration-box fade-in-down">
-        <img 
-          src={datingImg} 
-          alt="Dating Illustration" 
-          className="illustration-img"
-        />
-      </div>
+      <div className="landing-container">
+        <div className="illustration-box fade-in-down">
+          <img src={datingImg} alt="Dating" className="illustration-img" />
+        </div>
 
-      {/* Text Section */}
-      <div className="text-box fade-in-up">
-        <h1 className="landing-title">
-          Ready to stop <br /> 
-          <span>swiping and start</span> <br /> 
-          dating with intent?
-        </h1>
-      </div>
+        <div className="text-box fade-in-up">
+          <h1 className="landing-title">
+            Ready to stop <br /> 
+            <span>swiping and start</span> <br /> 
+            dating with intent?
+          </h1>
+        </div>
 
-      {/* Button Section */}
-      <div className="button-box fade-in-up-delay">
-        {/* 3. Button pe onClick handler lagayein */}
-        <button
-  className="google-login-btn"
-  onClick={handleLogin}
-  disabled={loading}
->
-  {loading ? <span className="loader"></span> : 'Continue to Google'}
-</button>
-
+        <div className="button-box fade-in-up-delay">
+          <button
+            className="google-login-btn"
+            onClick={handleLogin}
+            disabled={loading}
+          >
+            {loading ? <span className="loader"></span> : 'Continue to Google'}
+          </button>
+        </div>
       </div>
-    </div>
     </AppLayout>
   );
 };
