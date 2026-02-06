@@ -21,10 +21,9 @@ export const getOnboardingData = () => {
 
 export const uploadUserImages = (formData) => {
   const token = getToken(); // ✅ Get the token directly
-  return axiosInstance.post("/userData/upload-images", formData, {
+  return axiosInstance.post("userData/upload-images", formData, { // ✅ Removed leading /
     headers: {
       "Content-Type": "multipart/form-data",
-      "Authorization": `Bearer ${token}` // ✅ Manually pass it to be 100% sure
     },
   });
 };

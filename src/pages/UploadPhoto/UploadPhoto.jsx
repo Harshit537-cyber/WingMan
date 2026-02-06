@@ -50,29 +50,34 @@ const UploadPhoto = () => {
 
         setLoading(true);
         try {
+            // 1. Get the token and extract the User ID
+            const token = localStorage.getItem("auth_token");
+            if (!token) {
+                alert("Session expired. Please restart onboarding.");
+                return;
+            }
+
+            // Simple way to decode the ID from your JWT token string
+            const payloadBase64 = token.split('.')[1];
+            const decodedPayload = JSON.parse(atob(payloadBase64));
+            const userId = decodedPayload.id; // This will be "6985794a46a..."
+
+            // 2. Prepare FormData exactly like Postman
             const formData = new FormData();
+            formData.append('userId', userId); // ✅ Added userId (Required by your API)
+
             filesToUpload.forEach((file) => {
-                // ✅ Check with your backend: Is the key 'images' or 'photo'?
-                formData.append('images', file);
+                formData.append('images', file); // ✅ Matching Postman key
             });
 
-            // ✅ Debug: Check if token exists before calling
-            const token = localStorage.getItem("auth_token");
-            console.log("Token being used:", token);
-
+            // 3. Call API
             const response = await uploadUserImages(formData);
             console.log("Upload Success:", response.data);
 
             navigate('/preferences');
         } catch (error) {
-            console.error("Upload Error Details:", error.response || error);
-
-            // If it's still 404, the path '/userData/upload-images' is likely wrong on the server
-            if (error.response?.status === 404) {
-                alert("Server error: Upload path not found. Please check the API route name.");
-            } else {
-                alert("Failed to upload images. Please try again.");
-            }
+            console.error("Upload Error:", error.response || error);
+            alert("Upload failed. Please check if all images are valid.");
         } finally {
             setLoading(false);
         }
