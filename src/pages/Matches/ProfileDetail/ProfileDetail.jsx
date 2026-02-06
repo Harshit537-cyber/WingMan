@@ -53,14 +53,15 @@ const ProfileDetail = () => {
             </button>
             
             {/* Heart Icon with Toggle Logic */}
-            <button className="top-fav-heart pop-in-delay" onClick={toggleFavorite}>
-              <Heart 
-                size={28} 
-                color={isFavorite ? "#ff4d4d" : "#fff"} 
-                fill={isFavorite ? "#ff4d4d" : "none"} 
-                className={isFavorite ? "heart-pop" : ""}
-              />
-            </button>
+<button className="top-fav-heart pop-in-delay" onClick={toggleFavorite}>
+  <Heart 
+    size={28} 
+    color={isFavorite ? "rgb(90, 60, 109)" : "#fff"} 
+    fill={isFavorite ? "rgb(90, 60, 109)" : "none"} 
+    className={isFavorite ? "heart-pop" : ""}
+  />
+</button>
+
             <div className="hero-compat-badge slide-right">90% Compatible</div>
           </div>
 

@@ -140,3 +140,25 @@
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+
+.spinner-icon {
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.map-wrapper {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+.allow-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
