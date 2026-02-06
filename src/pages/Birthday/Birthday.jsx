@@ -18,10 +18,21 @@ const Birthday = () => {
   const [selectedYear, setSelectedYear] = useState('2005');
 
   const handleNext = () => {
-    const birthdayData = `${selectedDay}-${selectedMonth}-${selectedYear}`;
-    // Pura data (gender, name, birthday) next screen par pass ho raha hai
+    // 1. Convert month name to number (January -> 01)
+    const monthMap = {
+      "January": "01", "February": "02", "March": "03", "April": "04", "May": "05", "June": "06",
+      "July": "07", "August": "08", "September": "09", "October": "10", "November": "11", "December": "12"
+    };
+    
+    // 2. Format as YYYY-MM-DD to match your target JSON key 'dob'
+    const formattedDob = `${selectedYear}-${monthMap[selectedMonth]}-${selectedDay}`;
+
+    // 3. Pass everything forward
     navigate('/hight', { 
-      state: { ...location.state, birthday: birthdayData } 
+      state: { 
+        ...location.state, 
+        dob: formattedDob // ✅ Changed key to 'dob' and format to YYYY-MM-DD
+      } 
     });
   };
 

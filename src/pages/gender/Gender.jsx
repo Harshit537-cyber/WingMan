@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom"; // ✅ Added useLocation
 import AppLayout from "../../components/AppLayout/AppLayout";
 import OnboardingHeader from "../../components/OnboardingHeader/OnboardingHeader";
 import StepProgressButton from "../../components/StepProgressButton/StepProgressButton";
@@ -8,15 +8,23 @@ import "./Gender.css";
 const Gender = () => {
   const [selectedGender, setSelectedGender] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation(); // ✅ To catch data if user comes back/forward
 
   const handleNext = () => {
     if (!selectedGender) return;
 
-    // ✅ ONLY pass data forward (NO API CALL)
+    // 1. Get existing data from previous screens (if any)
+    const existingData = location.state || {};
+
+    // 2. Merge current screen data with existing data
+    const updatedData = {
+      ...existingData,
+      gender: selectedGender,
+    };
+
+    // 3. ✅ Pass the accumulated data to the next screen (NO API CALL)
     navigate("/askName", {
-      state: {
-        gender: selectedGender,
-      },
+      state: updatedData,
     });
   };
 

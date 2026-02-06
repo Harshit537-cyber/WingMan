@@ -20,9 +20,15 @@ const Religion = () => {
     "Not Belive",
   ];
 
-  const handleNext = () => {
+const handleNext = () => {
+    // ✅ No changes needed here, it's already correct.
+    // ✅ Carrying forward: gender, name, dob, height, location, state, story, type, [work/study info], education
+    // ✅ Adding: religion
     navigate('/Habit', { 
-      state: { ...location.state, religion: selectedReligion } 
+      state: { 
+        ...location.state, 
+        religion: selectedReligion 
+      } 
     });
   };
 

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 // Updated icons to match the image variety
-import { 
-  Book, Camera, Gamepad2, Music, Plane, Palette, Gavel, Heart, 
-  Utensils, PawPrint, Trophy, Shirt, Music2, Mic2, Activity, 
-  Theater, ShoppingCart, Compass, Leaf, Brush 
+import {
+  Book, Camera, Gamepad2, Music, Plane, Palette, Gavel, Heart,
+  Utensils, PawPrint, Trophy, Shirt, Music2, Mic2, Activity,
+  Theater, ShoppingCart, Compass, Leaf, Brush
 } from 'lucide-react';
 
 import AppLayout from '../../components/AppLayout/AppLayout';
@@ -52,9 +52,14 @@ const Intrest = () => {
   };
 
   const handleNext = () => {
+    // Ensuring we have at least 3 interests selected
     if (selected.length >= 3) {
-      navigate('/About', { 
-        state: { ...location.state, interests: selected } 
+      navigate('/About', {
+        state: {
+          ...location.state,
+          // ✅ Converting to lowercase to match your target JSON example exactly
+          interests: selected.map(item => item.toLowerCase())
+        }
       });
     }
   };
@@ -62,28 +67,28 @@ const Intrest = () => {
   return (
     <AppLayout>
       <div className="interest-screen-container">
-        
+
         {/* Background Animation Graphic */}
         <div className="bg-line-animation">
-            <svg viewBox="0 0 400 600" fill="none">
-                <path d="M-50,550 C100,500 350,500 350,350 C350,200 100,200 100,350 C100,450 250,500 450,450" 
-                      stroke="#E2D8E8" strokeWidth="2" strokeDasharray="8 8" />
-            </svg>
+          <svg viewBox="0 0 400 600" fill="none">
+            <path d="M-50,550 C100,500 350,500 350,350 C350,200 100,200 100,350 C100,450 250,500 450,450"
+              stroke="#E2D8E8" strokeWidth="2" strokeDasharray="8 8" />
+          </svg>
         </div>
 
         <div className="interest-content-wrapper">
           {/* Centered Header Section */}
           <div className="centered-header">
-            <OnboardingHeader 
-                title="Select Up To 3 Interest" 
-                description="Tell us what piques your curiosity and passions"
+            <OnboardingHeader
+              title="Select Up To 3 Interest"
+              description="Tell us what piques your curiosity and passions"
             />
           </div>
 
           {/* Centered Interests Grid */}
           <div className="interests-grid slide-up-delay">
             {interests.map((item, index) => (
-              <div 
+              <div
                 key={item.id}
                 className={`interest-chip ${selected.includes(item.label) ? 'selected' : ''}`}
                 onClick={() => toggleInterest(item.label)}
@@ -95,15 +100,15 @@ const Intrest = () => {
             ))}
           </div>
         </div>
-              
+
         {/* Footer Section */}
         <div className="interest-footer-action">
           <div className="footer-wavy-decoration"></div>
-          <StepProgressButton 
-            currentStep={13} 
-            totalSteps={15} 
-            disabled={selected.length < 3} 
-            onClick={handleNext} 
+          <StepProgressButton
+            currentStep={13}
+            totalSteps={15}
+            disabled={selected.length < 3}
+            onClick={handleNext}
           />
         </div>
 

@@ -12,24 +12,24 @@ import femaleImg from '../../assets/female-hight.svg';
 const AskHight = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  
-  const gender = location.state?.gender || 'male'; 
+
+  const gender = location.state?.gender || 'male';
   const heights = [];
 
-for (let ft = 7; ft >= 4; ft--) {
-  for (let inch = 11; inch >= 0; inch--) {
-    heights.push(`${ft}.${inch}`);
+  for (let ft = 7; ft >= 4; ft--) {
+    for (let inch = 11; inch >= 0; inch--) {
+      heights.push(`${ft}.${inch}`);
+    }
   }
-}
 
-  
+
   const [selectedHeight, setSelectedHeight] = useState('5.3');
   const scrollRef = useRef(null);
 
   const onScroll = () => {
     if (scrollRef.current) {
       const scrollTop = scrollRef.current.scrollTop;
-      const itemHeight = 40; 
+      const itemHeight = 40;
       const index = Math.round(scrollTop / itemHeight);
       if (heights[index]) {
         setSelectedHeight(heights[index]);
@@ -47,40 +47,49 @@ for (let ft = 7; ft >= 4; ft--) {
   const calculateScale = (height) => {
     const val = parseFloat(height);
     const baseScale = 0.7; // Thoda kam kiya mobile ke liye
-    const factor = (val - 4.0) / 3; 
-    return baseScale + (factor * 0.4); 
+    const factor = (val - 4.0) / 3;
+    return baseScale + (factor * 0.4);
   };
 
   const handleNext = () => {
-    navigate('/Acesslocation', { 
-      state: { ...location.state, height: selectedHeight } 
+    // 1. Convert "5.3" string to total inches, then to cm
+    const [ft, inch] = selectedHeight.split('.').map(Number);
+    const totalInches = (ft * 12) + (inch || 0);
+    const heightInCm = Math.round(totalInches * 2.54);
+
+    // 2. Pass the number to the next screen to match your JSON format
+    navigate('/Acesslocation', {
+      state: {
+        ...location.state,
+        height: heightInCm // ✅ This saves it as 160 (number) instead of "5.3"
+      }
     });
   };
 
   return (
-    <AppLayout> 
+    <AppLayout>
       <div className="hight-screen-container">
-        
+
         <div className="hight-header-section">
-          <OnboardingHeader 
-            title="Now tell me, how tall are you?" 
+          <OnboardingHeader
+            title="Now tell me, how tall are you?"
             description="I'll use this to calculate your BMI."
           />
         </div>
 
         <div className="hight-body-content">
           <div className="selector-main-area">
-            
+
             {/* Character Illustration */}
             <div className="illustration-wrapper slide-in-left">
               <div className="character-bg-box">
-                <img 
-                  src={gender === 'male' ? maleImg : femaleImg} 
-                  alt="Character" 
-                  className="character-img" 
-                  style={{ 
+                <img
+                  src={gender === 'male' ? maleImg : femaleImg}
+                  alt="Character"
+                  className="character-img"
+                  style={{
                     transform: `translateX(-50%) scale(${calculateScale(selectedHeight)})`,
-                    transformOrigin: 'bottom center' 
+                    transformOrigin: 'bottom center'
                   }}
                 />
               </div>
@@ -113,10 +122,10 @@ for (let ft = 7; ft >= 4; ft--) {
 
         <div className="hight-footer-action">
           <div className="footer-wavy-decoration"></div>
-          <StepProgressButton 
-            currentStep={4} 
-            totalSteps={15} 
-            onClick={handleNext} 
+          <StepProgressButton
+            currentStep={4}
+            totalSteps={15}
+            onClick={handleNext}
           />
         </div>
 

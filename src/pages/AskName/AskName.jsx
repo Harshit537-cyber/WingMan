@@ -9,14 +9,19 @@ const AskName = () => {
   const location = useLocation();
   const navigate = useNavigate();
   
-  const gender = location.state?.gender; 
+  // const gender = location.state?.gender; 
   const [name, setName] = useState('');
 
   const handleNext = () => {
-    // This logic will only be called once because of the internal 
-    // hasClicked state in StepProgressButton
     if (name.trim()) {
-      navigate('/hy', { state: { gender, name } }); 
+      // ✅ Spreading location.state ensures ALL previous data (gender, etc.) 
+      // is carried forward along with the new 'name'
+      navigate('/hy', { 
+        state: { 
+          ...location.state, 
+          name: name 
+        } 
+      }); 
     }
   };
 

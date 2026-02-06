@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, MarkerF } from '@react-google-maps/api';
 import { Loader2 } from 'lucide-react'; 
@@ -11,53 +11,30 @@ const AccessLocation = () => {
 
   const [showMap, setShowMap] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [coords, setCoords] = useState({ lat: null, lng: null });
+  const [coords, setCoords] = useState({ lat: 30.2831, lng: 77.9921 }); // Default value
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyAjpwhp-RgMlzJCM_8KGHtejxRyIfVaNHI" 
+    googleMapsApiKey: "AIzaSyAjpwhp-RgMlzJCM_8KGHtejxRyIfVOOO" 
   });
 
   const mapContainerStyle = {
     width: '100%',
     height: '300px',
     borderRadius: '20px',
-    marginBottom: '20px',
   };
 
-  // --- UPDATED API FUNCTION ---
-  const syncLocationWithBackend = async (lat, lng) => {
-    try {
-      // AGAR APKI API TAYYAR HAI TO YE CODE CHALAYEIN:
-      /*
-      const response = await fetch('https://your-api-url.com/api/location', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          latitude: lat,
-          longitude: lng,
-          userId: location.state?.userId // example
-        }),
-      });
-      if (!response.ok) throw new Error('Network response was not ok');
-      const data = await response.json();
-      */
+  // Sync aur Navigate logic
+  const handleSyncAndNavigate = async (lat, lng) => {
+    console.log("Syncing with backend...", { lat, lng });
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000)); 
 
-      // TESTING KE LIYE (Simulating API Delay):
-      console.log("Syncing with backend...", { lat, lng });
-      await new Promise(resolve => setTimeout(resolve, 1500)); // 1.5 second wait
-
-      // Success hone par next page par bhej rahe hain
-      navigate('/LocationSuccess', { 
-        state: { ...location.state, lat, lng } 
-      });
-
-    } catch (error) {
-      console.error("API Error:", error);
-      // Agar API fail bhi ho jaye, tab bhi testing ke liye agle page par bhejna chahte hain toh navigate yahan bhi rakh sakte hain
-      alert("API Error: Make sure your URL is correct. Moving to next screen for demo.");
-      navigate('/LocationSuccess', { state: { ...location.state, lat, lng } });
-    }
+    console.log("Navigating with:", { lat, lng });
+    navigate('/LocationSuccess', { 
+      state: { ...location.state, lat, lng } 
+    });
   };
 
   const handleAllowAccess = () => {
@@ -66,17 +43,14 @@ const AccessLocation = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          const newCoords = { lat: latitude, lng: longitude };
+          setCoords({ lat: latitude, lng: longitude });
+          setShowMap(true); // Map ko show karenge display toggle se
           
-          setCoords(newCoords);
-          setShowMap(true);
-
-          // API call function call kar rahe hain
-          syncLocationWithBackend(latitude, longitude);
+          handleSyncAndNavigate(latitude, longitude);
         },
         (error) => {
           setLoading(false);
-          alert("Permission Denied: Please enable location in your browser settings.");
+          alert("Location access denied. Please enable it in browser settings.");
         },
         { enableHighAccuracy: true }
       );
@@ -88,39 +62,51 @@ const AccessLocation = () => {
 
   return (
     <div className="location-container">
-      {!showMap ? (
-        <div className="illustration-wrapper fade-in-down">
-          <img src={locationImg} alt="Location Access" className="location-main-img" />
+      
+      {/* VISUAL AREA: Dono elements hamesha DOM mein rahenge, bas hide/show honge */}
+      <div className="visual-display-area" style={{ minHeight: '320px', position: 'relative' }}>
+        
+        {/* Illustration: Hidden when showMap is true */}
+        <div 
+          className="illustration-wrapper fade-in" 
+          style={{ display: showMap ? 'none' : 'block' }}
+        >
+          <img src={locationImg} alt="Location" className="location-main-img" />
         </div>
-      ) : (
-        <div className="map-wrapper fade-in">
-          {isLoaded ? (
+
+        {/* Map: Hidden when showMap is false */}
+        <div 
+          className="map-wrapper fade-in" 
+          style={{ display: showMap ? 'block' : 'none' }}
+        >
+          {isLoaded && (
             <GoogleMap
               mapContainerStyle={mapContainerStyle}
               center={coords}
               zoom={15}
-              options={{ disableDefaultUI: true, zoomControl: true }}
+              options={{ 
+                disableDefaultUI: true,
+                gestureHandling: 'none' 
+              }}
             >
               <MarkerF position={coords} />
             </GoogleMap>
-          ) : (
-            <div className="map-loading">Loading Map...</div>
           )}
         </div>
-      )}
+      </div>
 
       <div className="text-section">
-        <h1 className="title slide-up">
+        <h1 className="title">
           {showMap ? "Location Found!" : "Enable Your Location"}
         </h1>
-        <p className="subtitle slide-up-delay">
+        <p className="subtitle">
           {showMap 
-            ? "Syncing your coordinates with your profile..." 
+            ? "Your coordinates are being synced..." 
             : "To discover meaningful connections near by"}
         </p>
       </div>
 
-      <div className="button-group fade-in-up">
+      <div className="button-group">
         <button 
           className="allow-btn" 
           onClick={handleAllowAccess} 
@@ -130,16 +116,18 @@ const AccessLocation = () => {
           {loading ? (
             <><Loader2 className="spinner-icon" size={20} /> Processing...</>
           ) : (
-            showMap ? "Verified" : "Allow Location Access"
+             "Allow Location Access"
           )}
         </button>
         
-        <button 
-          className="manual-btn" 
-          onClick={() => navigate('/ManualLocation', { state: { ...location.state } })}
-        >
-          Enter Location Manually
-        </button>
+        {!loading && (
+          <button 
+            className="manual-btn" 
+            onClick={() => navigate('/ManualLocation', { state: { ...location.state } })}
+          >
+            Enter Location Manually
+          </button>
+        )}
       </div>
 
       <div className="location-footer">

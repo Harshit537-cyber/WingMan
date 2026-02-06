@@ -14,9 +14,27 @@ const Working = () => {
 
   const handleNext = () => {
     if (selectedOption !== null) {
-      navigate('/Study', { 
-        state: { ...location.state, workingStatus: options[selectedOption] } 
-      });
+      // 1. Map labels to the 'type' values required by your JSON
+      const typeMap = ["working", "student", "figuring_it_out"];
+      const selectedType = typeMap[selectedOption];
+
+      // 2. Prepare the updated state
+      const nextState = {
+        ...location.state,
+        type: selectedType
+      };
+
+      // 3. ✅ Conditional Routing Logic
+      if (selectedOption === 0) {
+        // "I’m Working" -> Route to Work
+        navigate('/Work', { state: nextState });
+      } else if (selectedOption === 1) {
+        // "I’m Studying" -> Route to Study
+        navigate('/Study', { state: nextState });
+      } else {
+        // "Figuring It Out" -> Default route (usually Study or a general info page)
+        navigate('/Study', { state: nextState });
+      }
     }
   };
 
@@ -24,8 +42,8 @@ const Working = () => {
     <AppLayout>
       <div className="working-screen-container">
         <div className="native-header-section">
-          <OnboardingHeader 
-            title="What’s your scene these days?" 
+          <OnboardingHeader
+            title="What’s your scene these days?"
             description="job, studies, or a creative hustle?"
           />
         </div>
@@ -48,11 +66,11 @@ const Working = () => {
         {/* Background Dotted Wave SVG */}
         <div className="background-wave">
           <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path 
-              d="M-20 120 C 60 190, 220 180, 280 140 C 340 100, 400 120, 450 160" 
-              stroke="#E8E0E8" 
-              strokeWidth="2.5" 
-              strokeDasharray="8 10" 
+            <path
+              d="M-20 120 C 60 190, 220 180, 280 140 C 340 100, 400 120, 450 160"
+              stroke="#E8E0E8"
+              strokeWidth="2.5"
+              strokeDasharray="8 10"
             />
           </svg>
         </div>
@@ -60,11 +78,11 @@ const Working = () => {
         {/* BOTTOM SECTION: Fixed Footer */}
         <div className="working-footer-action">
           <div className="footer-wavy-decoration"></div>
-          <StepProgressButton 
-            currentStep={8} 
-            totalSteps={15} 
-            disabled={selectedOption === null} 
-            onClick={handleNext} 
+          <StepProgressButton
+            currentStep={8}
+            totalSteps={15}
+            disabled={selectedOption === null}
+            onClick={handleNext}
           />
         </div>
 

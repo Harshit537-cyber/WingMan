@@ -12,8 +12,13 @@ const Story = () => {
 
   const handleNext = () => {
     if (story.trim()) {
-      navigate('/Working', { 
-        state: { ...location.state, story: story.trim() } 
+      // ✅ Carrying forward: gender, name, dob, height, location, state
+      // ✅ Adding: story
+      navigate('/Working', {
+        state: {
+          ...location.state,
+          story: story.trim()
+        }
       });
     }
   };
@@ -21,21 +26,21 @@ const Story = () => {
   return (
     <AppLayout>
       <div className="story-screen-container">
-        
+
         {/* Background Animation Graphics */}
         <div className="bg-line-animation">
           <svg viewBox="0 0 400 600" fill="none" className="dashed-svg">
-            <path 
-              d="M-50 480 C 100 450, 300 420, 150 280 C 50 150, 200 100, 380 250 C 450 350, 480 500, 500 600" 
-              stroke="#E2D8E8" strokeWidth="2" strokeDasharray="8 8" 
+            <path
+              d="M-50 480 C 100 450, 300 420, 150 280 C 50 150, 200 100, 380 250 C 450 350, 480 500, 500 600"
+              stroke="#E2D8E8" strokeWidth="2" strokeDasharray="8 8"
             />
           </svg>
         </div>
 
         {/* TOP SECTION: Shared Header */}
         <div className="native-header-section">
-          <OnboardingHeader 
-            title="What’s your story?" 
+          <OnboardingHeader
+            title="What’s your story?"
             description="Write about your journey in 100 words."
           />
         </div>
@@ -43,8 +48,8 @@ const Story = () => {
         {/* MIDDLE SECTION: Textarea Area */}
         <div className="story-body-content">
           <div className="story-input-wrapper slide-up-delay">
-            <textarea 
-              className="story-textarea" 
+            <textarea
+              className="story-textarea"
               placeholder="Write Your Story..."
               value={story}
               onChange={(e) => setStory(e.target.value)}
@@ -55,11 +60,11 @@ const Story = () => {
         {/* BOTTOM SECTION: Step 7 Button */}
         <div className="story-footer-action">
           <div className="footer-wavy-decoration"></div>
-          <StepProgressButton 
-            currentStep={7} 
-            totalSteps={15} 
-            disabled={!story.trim()} 
-            onClick={handleNext} 
+          <StepProgressButton
+            currentStep={7}
+            totalSteps={15}
+            disabled={!story.trim()}
+            onClick={handleNext}
           />
         </div>
 

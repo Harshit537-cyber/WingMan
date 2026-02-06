@@ -13,27 +13,31 @@ const Habit = () => {
   const habits = ["vegetarian", "Non vegetarian", "vegan"];
 
   const handleNext = () => {
-    navigate('/intrest', { 
-      state: { ...location.state, foodHabit: selectedHabit } 
+    // ✅ Changing key to 'habits' to match your network requirement
+    navigate('/intrest', {
+      state: {
+        ...location.state,
+        habits: selectedHabit
+      }
     });
   };
 
   return (
     <AppLayout>
       <div className="habit-screen-container">
-        
+
         {/* Background Animation Graphics */}
         <div className="bg-line-animation">
           <svg viewBox="0 0 400 600" fill="none" className="dashed-svg">
-            <path d="M-20 140 C 80 180, 200 180, 300 140 C 350 120, 420 140, 450 170" 
-                  stroke="#E2D8E8" strokeWidth="2.5" strokeDasharray="8 10" />
+            <path d="M-20 140 C 80 180, 200 180, 300 140 C 350 120, 420 140, 450 170"
+              stroke="#E2D8E8" strokeWidth="2.5" strokeDasharray="8 10" />
           </svg>
         </div>
 
         {/* TOP SECTION: Shared Header */}
         <div className="native-header-section">
-          <OnboardingHeader 
-            title="Whats your food habits?" 
+          <OnboardingHeader
+            title="Whats your food habits?"
             description="You can totally skip it if you'd like."
           />
         </div>
@@ -41,7 +45,7 @@ const Habit = () => {
         {/* MIDDLE SECTION: Picker Content */}
         <div className="habit-body-content">
           <div className="picker-wrapper slide-up-delay">
-            
+
             {/* Display Box */}
             <div className="habit-display-box">
               <span>{selectedHabit}</span>
@@ -71,11 +75,11 @@ const Habit = () => {
         {/* BOTTOM SECTION: Step 11 Button */}
         <div className="habit-footer-action">
           <div className="footer-wavy-decoration"></div>
-          <StepProgressButton 
-            currentStep={12.5} 
-            totalSteps={15} 
-            disabled={!selectedHabit} 
-            onClick={handleNext} 
+          <StepProgressButton
+            currentStep={12.5}
+            totalSteps={15}
+            disabled={!selectedHabit}
+            onClick={handleNext}
           />
         </div>
 
