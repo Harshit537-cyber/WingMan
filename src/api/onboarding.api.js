@@ -27,3 +27,14 @@ export const uploadUserImages = (formData) => {
     },
   });
 };
+
+export const savePreferences = (userId, data) => {
+  const token = getToken(); // ✅ Get the current token from localStorage
+  
+  return axiosInstance.post(`preference/create-preference/${userId}`, data, {
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}` // ✅ Manually passing the token
+    },
+  });
+};

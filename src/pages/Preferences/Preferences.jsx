@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../../components/AppLayout/AppLayout';
 import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
+import { savePreferences } from '../../api/onboarding.api'; // ✅ Import API
 import './Preferences.css';
 
 const Preferences = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false); // ✅ Loading state
 
   // States for Sliders
   const [age, setAge] = useState(28);
@@ -16,8 +18,53 @@ const Preferences = () => {
   const [ethnicity, setEthnicity] = useState('Tamil Nadu');
   const [language, setLanguage] = useState('Hindi');
 
-  const handleContinue = () => {
-    navigate('/sharingSuccess');
+  const handleContinue = async () => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem("auth_token");
+      if (!token) {
+        alert("Session expired.");
+        return;
+      }
+
+      // Decode User ID
+      const payloadBase64 = token.split('.')[1];
+      const decodedPayload = JSON.parse(atob(payloadBase64));
+      const userId = decodedPayload.id;
+
+      // --- DATA CONVERSION ---
+      // 1. Convert height from feet to cm (1 ft = 30.48 cm)
+      const heightInCm = Math.round(height * 30.48);
+
+      // 2. Prepare Payload exactly like your Postman screenshot
+      const payload = {
+        age: {
+          min: 18,               // Default min age
+          max: parseInt(age)     // Selected age as max
+        },
+        height: {
+          min: 140,              // Default min height in cm
+          max: heightInCm        // Selected height converted to cm
+        },
+        religion: religion,
+        ethnicity: ethnicity,
+        spokenLanguage: [language] // ✅ Must be an Array
+      };
+
+      console.log("Sending Payload to Match Postman:", payload);
+
+      // 3. Call API
+      const response = await savePreferences(userId, payload);
+
+      if (response.status === 201 || response.status === 200) {
+        navigate('/sharingSuccess');
+      }
+    } catch (error) {
+      console.error("Preference Error:", error.response?.data || error);
+      alert(error.response?.data?.message || "Check console for required fields");
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Logic for Slider UI positioning
@@ -27,20 +74,17 @@ const Preferences = () => {
   return (
     <AppLayout>
       <div className="pref-screen-container">
-        
-        {/* FIXED HEADER SECTION */}
+
         <div className="native-header-section">
-          <OnboardingHeader 
-            title="What's your preferences?" 
+          <OnboardingHeader
+            title="What's your preferences?"
             description="Help us find the best match for you."
           />
         </div>
 
-        {/* SCROLLABLE BODY CONTENT */}
         <div className="pref-body-content">
           <div className="fields-stack">
-            
-            {/* Age Slider Section */}
+
             <div className="slider-group">
               <div className="pref-label-row">
                 <label className="pref-field-label">Age</label>
@@ -50,16 +94,15 @@ const Preferences = () => {
                 <div className="slider-track">
                   <div className="slider-progress" style={{ width: `${agePercent}%` }}></div>
                 </div>
-                <input 
-                  type="range" min="18" max="60" value={age} 
-                  onChange={(e) => setAge(e.target.value)} 
+                <input
+                  type="range" min="18" max="60" value={age}
+                  onChange={(e) => setAge(e.target.value)}
                   className="real-slider"
                 />
                 <div className="slider-thumb" style={{ left: `${agePercent}%` }}>{age}</div>
               </div>
             </div>
 
-            {/* Height Slider Section */}
             <div className="slider-group">
               <div className="pref-label-row">
                 <label className="pref-field-label">Height</label>
@@ -69,16 +112,15 @@ const Preferences = () => {
                 <div className="slider-track">
                   <div className="slider-progress" style={{ width: `${heightPercent}%` }}></div>
                 </div>
-                <input 
-                  type="range" min="4" max="8" step="0.1" value={height} 
-                  onChange={(e) => setHeight(e.target.value)} 
+                <input
+                  type="range" min="4" max="8" step="0.1" value={height}
+                  onChange={(e) => setHeight(e.target.value)}
                   className="real-slider"
                 />
                 <div className="slider-thumb" style={{ left: `${heightPercent}%` }}>{Math.round(height)}</div>
               </div>
             </div>
 
-            {/* Dropdowns */}
             <div className="pref-dropdown-item">
               <label className="pref-field-label">Religion</label>
               <div className="pref-select-box">
@@ -132,10 +174,13 @@ const Preferences = () => {
           </div>
         </div>
 
-        {/* FIXED FOOTER SECTION */}
         <div className="pref-footer-action">
-          <button onClick={handleContinue} className="pref-continue-btn">
-            Continue
+          <button
+            onClick={handleContinue}
+            className="pref-continue-btn"
+            disabled={loading} // ✅ Disable while saving
+          >
+            {loading ? "Saving..." : "Continue"}
           </button>
         </div>
 

@@ -13,6 +13,17 @@ const Matches = () => {
   const navigate = useNavigate();
   const scrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [showCallPopup, setShowCallPopup] = useState(false);
+
+  const [favorites, setFavorites] = useState({});
+  const toggleFavorite = (id) => {
+  setFavorites(prev => ({
+    ...prev,
+    [id]: !prev[id],
+  }));
+};
+
+
 
   const profiles = [
     { id: 1, name: "Nikita", age: 28, city: "California", compat: "90%" },
@@ -112,9 +123,21 @@ const Matches = () => {
                       
                       <div className="card-top-ui">
                          <div className="match-badge">{profile.compat} Compatible</div>
-                         <button className="heart-icon-btn" onClick={(e) => e.stopPropagation()}>
-                            <Heart size={24} color="#fff" strokeWidth={2.5} />
-                         </button>
+                         <button
+  className="heart-icon-btn"
+  onClick={(e) => {
+    e.stopPropagation();
+    toggleFavorite(profile.id);
+  }}
+>
+  <Heart
+    size={24}
+    strokeWidth={2.5}
+    color={favorites[profile.id] ? "#612E70" : "#fff"}
+    fill={favorites[profile.id] ? "#612E70" : "none"}
+  />
+</button>
+
                       </div>
 
                       <div className="card-bottom-ui">
@@ -126,7 +149,14 @@ const Matches = () => {
                             </div>
                          </div>
                          
-                         <button className="call-btn-fixed" onClick={(e) => e.stopPropagation()}>
+                         <button
+  className="call-btn-fixed"
+  onClick={(e) => {
+    e.stopPropagation();
+    setShowCallPopup(true);
+  }}
+>
+
                             <Phone size={22} fill="#5a3c6d" color="#5a3c6d" />
                          </button>
                       </div>
@@ -138,6 +168,41 @@ const Matches = () => {
           </div>
 
         </div>
+
+        {showCallPopup && (
+  <div className="call-popup-overlay" onClick={() => setShowCallPopup(false)}>
+    <div
+      className="call-popup-card"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        className="popup-close-btn"
+        onClick={() => setShowCallPopup(false)}
+      >
+        ✕
+      </button>
+
+      <div className="popup-icon">
+        
+      </div>
+
+      <h2 className="popup-title">Request for a call</h2>
+
+      <p className="popup-desc">
+        For safety reasons we suggest not to share personal information too early.
+        Don't rush trust.
+      </p>
+
+      <button
+        className="popup-primary-btn"
+        onClick={() => setShowCallPopup(false)}
+      >
+        Send Request
+      </button>
+    </div>
+  </div>
+)}
+
 
         <BottomNav />
       </div>

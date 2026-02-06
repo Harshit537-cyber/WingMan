@@ -192,3 +192,7 @@
     cursor: pointer;
 }
 .slide-up-modal { animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; }
+
+.top-fav-heart svg {
+  transition: all 0.3s ease;
+}
