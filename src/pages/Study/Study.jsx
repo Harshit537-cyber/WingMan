@@ -17,11 +17,16 @@ const Study = () => {
 
   const handleNext = () => {
     if (isFormValid) {
-      navigate('/Work', { 
+      // ✅ 1. Navigate to Education screen
+      // ✅ 2. Use 'college' key instead of 'university' to match your JSON
+      // ✅ 3. Ensure work fields are empty strings for students
+      navigate('/Education', { 
         state: { 
           ...location.state, 
-          university: university, 
-          course: course 
+          college: university.trim(), 
+          course: course.trim(),
+          company: "",  
+          position: "" 
         } 
       });
     }

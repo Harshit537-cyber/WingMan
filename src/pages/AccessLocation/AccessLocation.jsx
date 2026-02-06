@@ -15,12 +15,18 @@ const AccessLocation = () => {
         (position) => {
           console.log("Location Access Granted");
           // Navigate with previous state + location
-          navigate('/next-step', { 
-            state: { 
-              ...location.state, 
-              lat: position.coords.latitude, 
-              lng: position.coords.longitude 
-            } 
+          // ✅ Replace your current navigate block with this
+          navigate('/SelectState', {
+            state: {
+              ...location.state,
+              location: {
+                address: "Current Location", // Placeholder for now
+                coordinates: {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude
+                }
+              }
+            }
           });
         },
         (error) => {
@@ -34,10 +40,10 @@ const AccessLocation = () => {
     <div className="location-container">
       {/* Top Illustration */}
       <div className="illustration-wrapper fade-in-down">
-        <img 
-          src={locationImg} 
-          alt="Location Access" 
-          className="location-main-img" 
+        <img
+          src={locationImg}
+          alt="Location Access"
+          className="location-main-img"
         />
       </div>
 
@@ -68,7 +74,7 @@ const AccessLocation = () => {
           </svg>
         </div>
 
-        
+
       </div>
     </div>
   );

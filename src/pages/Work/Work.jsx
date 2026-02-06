@@ -8,7 +8,7 @@ import './Work.css';
 const Work = () => {
   const [company, setCompany] = useState('');
   const [position, setPosition] = useState('');
-  
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -17,12 +17,14 @@ const Work = () => {
 
   const handleNext = () => {
     if (isFormValid) {
-      navigate('/Education', { 
-        state: { 
-          ...location.state, 
-          company: company, 
-          position: position 
-        } 
+      navigate('/Education', {
+        state: {
+          ...location.state, // Keeps gender, name, dob, height, location, state, story, type
+          company: company.trim(),
+          position: position.trim(),
+          college: "", // ✅ Ensuring student-specific keys are empty for workers
+          course: ""   // ✅ Ensuring student-specific keys are empty for workers
+        }
       });
     }
   };
@@ -30,28 +32,28 @@ const Work = () => {
   return (
     <AppLayout>
       <div className="work-screen-container">
-        
+
         {/* Background Animation Graphics */}
         <div className="bg-line-animation">
           <svg viewBox="0 0 400 600" fill="none" className="dashed-svg">
-            <path d="M-20 140 C 50 190, 200 180, 250 150 C 300 120, 380 140, 420 170" 
-                  stroke="#E2D8E8" strokeWidth="2.5" strokeDasharray="8 10" />
+            <path d="M-20 140 C 50 190, 200 180, 250 150 C 300 120, 380 140, 420 170"
+              stroke="#E2D8E8" strokeWidth="2.5" strokeDasharray="8 10" />
           </svg>
         </div>
 
         {/* TOP SECTION: Header component */}
         <div className="native-header-section">
-          <OnboardingHeader 
-            title="Where do you work?" 
+          <OnboardingHeader
+            title="Where do you work?"
             description="Tell us about your job! Where are you working and in what position?"
           />
         </div>
-        
+
 
         {/* MIDDLE SECTION: Input Cards */}
         <div className="work-body-content">
           <div className="input-cards-wrapper slide-up-delay">
-            
+
             {/* Card 1: Company */}
             <div className="input-card">
               <div className="card-label">
@@ -62,9 +64,9 @@ const Work = () => {
                 <span>Where Do You Work?</span>
               </div>
               <div className="inner-input-box">
-                <input 
-                  type="text" 
-                  placeholder="Company Name" 
+                <input
+                  type="text"
+                  placeholder="Company Name"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
                 />
@@ -85,9 +87,9 @@ const Work = () => {
                 <span>Your Position</span>
               </div>
               <div className="inner-input-box">
-                <input 
-                  type="text" 
-                  placeholder="Your Job Title" 
+                <input
+                  type="text"
+                  placeholder="Your Job Title"
                   value={position}
                   onChange={(e) => setPosition(e.target.value)}
                 />
@@ -100,11 +102,11 @@ const Work = () => {
         {/* BOTTOM SECTION: Step Progress Button (Step 8) */}
         <div className="work-footer-action">
           <div className="footer-wavy-decoration"></div>
-          <StepProgressButton 
-            currentStep={10} 
-            totalSteps={15} 
-            disabled={!isFormValid} 
-            onClick={handleNext} 
+          <StepProgressButton
+            currentStep={10}
+            totalSteps={15}
+            disabled={!isFormValid}
+            onClick={handleNext}
           />
         </div>
 

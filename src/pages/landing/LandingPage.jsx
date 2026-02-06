@@ -34,7 +34,7 @@ const LandingPage = () => {
     // Login logic / Navigation
     setTimeout(() => {
       navigate('/gender'); 
-    }, 1500);
+    },120);
   };
 
   return (

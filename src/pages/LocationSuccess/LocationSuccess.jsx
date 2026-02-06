@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AppLayout from '../../components/AppLayout/AppLayout';
-import confettiImg from '../../assets/confetti.png'; 
-import workingImg from '../../assets/working-char.png'; 
+import confettiImg from '../../assets/confetti.png';
+import workingImg from '../../assets/working-char.png';
 import './LocationSuccess.css';
 
 const LocationSuccess = () => {
@@ -10,27 +10,28 @@ const LocationSuccess = () => {
   const navigate = useNavigate();
 
   // Pichle page se city ka naam nikaalna
-  const city = location.state?.manualAddress || "Banglore";
+  // ✅ Extracting address from the nested location object we created in the previous screen
+  const city = location.state?.location?.address || "Banglore";
 
   useEffect(() => {
     const timer = setTimeout(() => {
       // 3.5 second baad home par move karega
       navigate('/Native', { state: { ...location.state } });
-    }, 3500); 
+    }, 3500);
     return () => clearTimeout(timer);
   }, [navigate, location.state]);
 
   return (
     <AppLayout>
       <div className="loc-success-screen-wrapper">
-        
+
         {/* Confetti Animation Layer */}
         <div className="confetti-overlay">
           {[...Array(12)].map((_, i) => (
-            <img 
+            <img
               key={i}
-              src={confettiImg} 
-              className={`confetti-bit p${i}`} 
+              src={confettiImg}
+              className={`confetti-bit p${i}`}
               alt="confetti"
             />
           ))}
