@@ -1,0 +1,104 @@
+/* Importing a nice Serif font to match the design */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
+
+.whyhow-section {
+    background-color: #fffcf9; /* Light off-white background */
+    padding: 100px 20px;
+    position: relative;
+    
+    font-family: 'Playfair Display', serif;
+    color: #5c3a5e; /* Theme Purple Color */
+    text-align: center;
+}
+
+.content-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Titles */
+.section-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Text Styling */
+.highlight-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 15px;
+}
+
+.sub-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    opacity: 0.9;
+}
+
+/* Button/Link style */
+.read-more-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid #5c3a5e;
+    color: #5c3a5e;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    padding-bottom: 2px;
+    transition: opacity 0.3s;
+}
+
+.read-more-btn:hover {
+    opacity: 0.6;
+}
+
+/* Spacing between sections */
+.why-block {
+    margin-bottom: 150px;
+}
+
+/* SVG Waves Styling */
+.wave-container {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.top-wave { top: 50px; }
+.bottom-wave { bottom: 50px; }
+
+.dashed-path {
+    stroke: #5c3a5e;
+    stroke-width: 2.5;
+    stroke-dasharray: 12, 12; /* This creates the dash effect */
+    fill: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .section-title { font-size: 2.2rem; }
+    .highlight-text { font-size: 1.2rem; }
+    .why-block { margin-bottom: 100px; }
+    .top-wave { top: 20px; }
+    .bottom-wave { bottom: 20px; }
+}
+
+.wave-container {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.content-container {
+    position: relative;
+    z-index: 2;
+}

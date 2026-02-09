@@ -85,6 +85,7 @@ import ViewMatches from '../pages/ViewMatches/ViewMatches.jsx';
 import Upset from '../pages/Upset/Upset.jsx';
 import HonestySuccess from '../pages/HonestySuccess/HonestySuccess.jsx';
 import SharingSuccess from '../pages/SharingSuccess/SharingSuccess.jsx';
+import { Landingroutes } from '../pages/landingfront/landingroutes.jsx';
 
 
 
@@ -93,7 +94,8 @@ const AppRoutes = () => {
     <Router>
       <Routes>
         {/* Auth & Onboarding */}
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<Landingroutes />} />
+        <Route path="splash" element={<LandingPage />} />
         <Route path="/preferences" element={<Preferences />} />
         <Route path="/appreciate" element={<Appreciate />} />
         <Route path="/honestysuccess" element={<HonestySuccess />} />
