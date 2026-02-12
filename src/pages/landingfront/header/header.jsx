@@ -1,52 +1,26 @@
-import React from "react";
-// 1. Apne logo ko import karein
-import myLogo from "../../../../src/assets/img7/logo.png";
+import { ArrowRight } from "lucide-react";
+import Logo from "../../../assets/landingimg/logo.svg"; // apna svg yaha import karna
 
-
-export const Header = () => {
+export default function Header() {
   return (
-    <header
-      style={{
-        backgroundColor: "#5d316a", // Purple background
-        height: "80px",
-        display: "flex",
-        alignItems: "center",
-        padding: "0 40px",
-        position: "relative",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      {/* WingMann Text */}
-      <div
-        style={{
-          color: "white",
-          fontSize: "28px",
-          fontWeight: "bold",
-        }}
-      >
-        WingMann
-      </div>
+    <div className="w-full bg-[#E9E9E9] py-8 flex justify-center">
+      <div className="w-[95%] bg-[#63316F] rounded-[50px] px-10 h-[70px] flex items-center justify-between">
+        {/* Left SVG Logo */}
+        <div className="flex items-center ml-50">
+          <img src={Logo} alt="logo" className="h-10 w-auto object-contain" />
+        </div>
 
-      {/* 2. Photo (Logo) yahan lagegi */}
-      <div
-        style={{
-          position: "absolute",
-          left: "50%",
-          transform: "translateX(-50%)",
-        }}
-      >
-        <img
-          src={myLogo}
-          alt="Logo"
-          style={{
-            height: "80px", // Aap height apne hisaab se kam-zyada kar sakte hain
-            width: "auto",
-            display: "block",
-          }}
-        />
+        {/* Center Text */}
+        <h1 className="text-white text-xl font-medium tracking-wide">
+          WingMann
+        </h1>
+
+        {/* Right Button */}
+        <button className="bg-[#F3F3F3] text-black  h-8 r-16 px-6 py-2.5 rounded-full text-sm font-medium flex items-center gap-5 hover:bg-white transition">
+          Start Meeting
+          <ArrowRight size={16} />
+        </button>
       </div>
-    </header>
+    </div>
   );
-};
-
-export default Header;
+}

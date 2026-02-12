@@ -1,104 +1,154 @@
-/* Importing a nice Serif font to match the design */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
-
-.whyhow-section {
-    background-color: #fffcf9; /* Light off-white background */
-    padding: 100px 20px;
-    position: relative;
-    
-    font-family: 'Playfair Display', serif;
-    color: #5c3a5e; /* Theme Purple Color */
-    text-align: center;
+/* ===== MAIN CONTAINER ===== */
+.whyhow-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #e9e4ea;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Georgia', serif;
 }
 
-.content-container {
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
+/* ===== LEFT IMAGE ===== */
+.whyhow-left {
+  position: absolute;
+  left: 60px;
+  bottom: 140px;
+  animation: fadeSlideIn 1.5s ease forwards;
 }
 
-/* Titles */
-.section-title {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 20px;
+.left-image {
+  width: 260px;
+  opacity: 0;
+  animation: imageFade 2s ease forwards;
+  animation-delay: 0.5s;
 }
 
-/* Text Styling */
-.highlight-text {
-    font-size: 1.5rem;
-    font-weight: 600;
-    line-height: 1.4;
-    margin-bottom: 15px;
+/* ===== CENTER TEXT ===== */
+.whyhow-content {
+  text-align: center;
+  color: #5d316a;
+  animation: fadeUp 1.2s ease forwards;
 }
 
-.sub-text {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    opacity: 0.9;
+.why-title {
+  font-size: 42px;
+  margin-bottom: 20px;
+  font-weight: 600;
 }
 
-/* Button/Link style */
-.read-more-btn {
-    background: none;
-    border: none;
-    border-bottom: 2px solid #5c3a5e;
-    color: #5c3a5e;
-    font-weight: 700;
-    font-size: 1.1rem;
-    cursor: pointer;
-    margin-top: 20px;
-    padding-bottom: 2px;
-    transition: opacity 0.3s;
+.why-text {
+  font-size: 20px;
+  line-height: 1.6;
+  margin-bottom: 25px;
 }
 
-.read-more-btn:hover {
-    opacity: 0.6;
+.read-more {
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-/* Spacing between sections */
-.why-block {
-    margin-bottom: 150px;
+.read-more:hover {
+  letter-spacing: 1px;
+  transform: scale(1.05);
 }
 
-/* SVG Waves Styling */
-.wave-container {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    z-index: 1;
-    pointer-events: none;
+/* ===== RIGHT TOOLBAR ===== */
+.vertical-toolbar {
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 55px;
+  background: #8b6c91;
+  border-radius: 20px;
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  animation: slideInRight 1s ease forwards;
 }
 
-.top-wave { top: 50px; }
-.bottom-wave { bottom: 50px; }
-
-.dashed-path {
-    stroke: #5c3a5e;
-    stroke-width: 2.5;
-    stroke-dasharray: 12, 12; /* This creates the dash effect */
-    fill: none;
+.tool-icon {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #e9e4ea;
+  border-radius: 6px;
+  opacity: 0.9;
+  transition: all 0.3s ease;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .section-title { font-size: 2.2rem; }
-    .highlight-text { font-size: 1.2rem; }
-    .why-block { margin-bottom: 100px; }
-    .top-wave { top: 20px; }
-    .bottom-wave { bottom: 20px; }
+.tool-icon:hover {
+  background: #e9e4ea;
+  transform: scale(1.1);
 }
 
-.wave-container {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    z-index: 1;
-    pointer-events: none;
+/* ===== DASHED CURVE ===== */
+.dashed-curve {
+  position: absolute;
+  bottom: -50px;
+  left: -50px;
+  width: 120%;
+  height: 200px;
+  border-bottom: 3px dashed #b8a7be;
+  border-radius: 50%;
+  animation: dashMove 6s linear infinite;
 }
 
-.content-container {
-    position: relative;
-    z-index: 2;
+/* ================== ANIMATIONS ================== */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes imageFade {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translate(50px, -50%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+}
+
+@keyframes dashMove {
+  0% {
+    border-bottom-color: #b8a7be;
+  }
+  50% {
+    border-bottom-color: #8b6c91;
+  }
+  100% {
+    border-bottom-color: #b8a7be;
+  }
 }
