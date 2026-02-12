@@ -1,204 +1,165 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-
-/* Main Wrapper */
-.growth-screen-wrapper {
+.growth-quiz-wrapper {
     width: 100%;
-    min-height: 100vh;
-    background-color: #F8F9FA;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Inter', sans-serif;
-}
-
-.growth-container {
-    width: 100%;
-    max-width: 430px; /* Mobile width fixed */
-    height: 100vh;
-    max-height: 900px;
-    background-color: #ffffff;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 20px 24px;
-    box-sizing: border-box;
-    position: relative;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    background-color: #FFF9FB;
 }
 
-/* Header Styling */
-.growth-header {
+.growth-quiz-container {
+    padding: 30px 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.growth-header-nav {
     display: flex;
     align-items: center;
-    justify-content: center; /* Centers the title */
-    height: 60px;
-    position: relative;
+    gap: 15px;
     margin-bottom: 20px;
-    text-align: center;
 }
 
-.growth-back-btn {
-    position: absolute;
-    left: 0;
+.back-btn-circle {
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
-    display: flex;
-    align-items: center;
 }
 
-.growth-category-title {
-    font-size: 16px; /* Slightly smaller to fit long text */
+.growth-top-title {
+    font-size: 18px;
     font-weight: 700;
-    color: #1a1a1a;
-    width: 80%; /* Ensures title doesn't overlap back button */
-    line-height: 1.2;
+    color: #1A1A1A;
 }
 
-/* Question Area */
-.growth-main-content {
-    flex: 1;
-}
-
-.growth-question-text {
-    font-size: 22px;
-    line-height: 1.35;
+.growth-main-heading {
+    font-size: 24px;
     font-weight: 800;
-    color: #000000;
-    margin-bottom: 30px;
-    letter-spacing: -0.5px;
+    color: #1A1A1A;
+    line-height: 1.25;
+    margin-bottom: 25px;
 }
 
-/* 2x2 Grid Layout */
-.growth-options-grid {
+.growth-content-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.growth-grid-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+    padding-bottom: 40px; /* Space for Tick */
 }
 
-.growth-card {
-    border: 2px solid #725188; /* Same purple border */
+.growth-grid-card {
+    position: relative;
+    background: #ffffff;
+    border: 2px solid #5d326f15;
     border-radius: 24px;
-    height: 220px;
     padding: 16px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     cursor: pointer;
-    background-color: #fff;
-    /* Animation Properties */
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.25s ease;
 }
 
-.growth-card.is-selected {
-    border-color: #432C51;
-    border-width: 3px;
-    background-color: #F9F4FA;
-    transform: translateY(-4px); /* Slight lift effect */
-    box-shadow: 0 8px 16px rgba(67, 44, 81, 0.1);
+.growth-grid-card.active {
+    border: 3px solid #5D326F; /* Purple border */
+    background-color: #FFF9FB; /* Very light pink/white background */
+    transform: translateY(-2px); /* Slight lift */
 }
 
-.growth-card-label {
+.growth-grid-card.active .growth-card-text {
+    color: #1A1A1A; /* Black/Dark color */
+    font-weight: 700;
+}
+
+.growth-card-text {
     font-size: 14px;
     font-weight: 700;
-    color: #333;
-    line-height: 1.4;
-    margin: 0;
+    color: #1A1A1A;
+    margin-bottom: 10px;
+    line-height: 1.3;
 }
 
-.growth-image-holder {
+.growth-img-holder {
+    flex: 1;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-    height: 100px;
-    overflow: hidden;
+    align-items: center;
+    min-height: 0;
 }
 
 .growth-illustration {
     max-width: 100%;
-    max-height: 100%;
+    max-height: 100px;
     object-fit: contain;
-    transition: transform 0.3s ease;
 }
 
-/* Animation: Slight zoom on selection */
-.growth-card.is-selected .growth-illustration {
-    transform: scale(1.05);
-}
-
-/* Footer Section */
-.growth-footer {
+/* 🔥 TICK DESIGN STYLES */
+.selection-tick-wrapper {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 44px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 20px 0 30px 0;
+    justify-content: center;
+    z-index: 10;
+    pointer-events: none;
 }
 
-.growth-fab-container {
+.horizontal-line-divider {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #5D326F;
+    z-index: 1;
+}
+
+.complex-tick-container {
     position: relative;
-    width: 90px;
-    height: 90px;
+    width: 44px;
+    height: 44px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    background-color: #FFF9FB;
+    border-radius: 50%;
+    z-index: 2;
 }
 
-.growth-ring-svg {
+.inner-tick-circle {
+    width: 30px;
+    height: 30px;
+    background-color: #6f3232;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+}
+
+.tick-progress-ring {
     position: absolute;
     transform: rotate(-90deg);
 }
 
-.growth-ring-track {
-    fill: none;
-    stroke: #F2EEF4;
-    stroke-width: 4;
+.growth-footer-section {
+    margin-top: auto;
+    padding: 10px 0;
 }
 
-.growth-ring-fill {
-    fill: none;
-    stroke: #432C51;
-    stroke-width: 4;
-    stroke-linecap: round;
-    stroke-dasharray: 239; /* 2 * PI * 38 */
-    transition: stroke-dashoffset 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.growth-next-btn {
-    width: 65px;
-    height: 65px;
-    background-color: #432C51;
-    border-radius: 50%;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 2;
-    opacity: 0.4;
-    transition: all 0.3s ease;
-    transform: scale(0.9);
-}
-
-.growth-next-btn.is-ready {
-    opacity: 1;
-    transform: scale(1);
-    box-shadow: 0 10px 25px rgba(67, 44, 81, 0.3);
-}
-
-/* Responsiveness for small mobiles (iPhone SE, etc.) */
-@media (max-height: 700px) {
-    .growth-card { 
-        height: 180px; 
-        padding: 12px; 
-    }
-    .growth-image-holder { 
-        height: 80px; 
-    }
-    .growth-question-text { 
-        font-size: 18px; 
-        margin-bottom: 20px;
-    }
-    .growth-category-title {
-        font-size: 14px;
-    }
+@media (max-height: 720px) {
+    .growth-main-heading { font-size: 20px; margin-bottom: 15px; }
+    .growth-illustration { max-height: 80px; }
+    .growth-grid-card { padding: 12px; }
 }

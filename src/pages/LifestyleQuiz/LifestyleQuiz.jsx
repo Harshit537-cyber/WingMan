@@ -19,7 +19,32 @@ const LifestyleQuiz = () => {
 
     const handleNext = () => {
         if (!selectedOption) return;
-        navigate('/finance-quiz');
+
+        // 1. Pehle selected option ka text nikal lo
+        const selectedText = options.find(opt => opt.id === selectedOption).text;
+
+        // 2. Quiz ka data object banao (Quiz name wahi rakhna jo PickCard mein hai)
+        const quizData = {
+            quizName: "Lifestyle & Value",
+            answers: [
+                {
+                    question: "How do you usually like to spend your weekends?",
+                    selectedOption: selectedText
+                }
+            ]
+        };
+
+        // 3. Local storage se purana data nikal kar naya add karo
+        const existingProgress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+
+        // Purane data mein se agar ye quiz pehle se hai toh use hata do (duplicate na ho)
+        const updatedProgress = existingProgress.filter(q => q.quizName !== quizData.quizName);
+        updatedProgress.push(quizData);
+
+        localStorage.setItem("quiz_progress", JSON.stringify(updatedProgress));
+
+        // 4. Agle page par jao
+        navigate('/finance-quiz', { replace: true });
     };
 
     const options = [

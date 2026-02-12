@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AppLayout from '../../components/AppLayout/AppLayout';
+import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
+import { handleDynamicSubmit } from '../../utils/quizHelpers'; // 🔥 Helper Import
 import './LifestyleAndValue.css';
 
-// Images import (Aapke paths ke hisaab se)
+// Images import
 import characterCalm from '../../assets/img7/1.png';
 import characterAnxious from '../../assets/img7/2.png';
 import characterUnbothered from '../../assets/img7/3.png';
@@ -11,6 +14,10 @@ import characterIrritated from '../../assets/img7/4.png';
 const LifestyleAndValue = () => {
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState(null);
+    const [showExitModal, setShowExitModal] = useState(false);
+    const [loading, setLoading] = useState(false); // 🔥 Loading state add ki
+
+    const QUIZ_NAME = "Lifestyle & Value";
 
     const options = [
         { id: 'calm', text: 'Calm — they’re probably busy', image: characterCalm },
@@ -19,69 +26,128 @@ const LifestyleAndValue = () => {
         { id: 'irritated', text: 'Irritated — communication should be consistent', image: characterIrritated }
     ];
 
+    const handleExit = () => {
+        const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+        const filteredProgress = progress.filter(q => q.quizName !== QUIZ_NAME);
+        localStorage.setItem("quiz_progress", JSON.stringify(filteredProgress));
+        navigate('/pick-card', { replace: true });
+    };
+
+    const handleNext = async () => {
+        if (!selectedOption || loading) return;
+        setLoading(true); // 🔥 API call start
+
+        try {
+            const selectedText = options.find(opt => opt.id === selectedOption).text;
+            const currentQuestion = "If someone you’re dating doesn’t text back for hours, what’s your first reaction?";
+
+            const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+            let quizIndex = progress.findIndex(q => q.quizName === QUIZ_NAME);
+
+            const newAnswer = {
+                question: currentQuestion,
+                selectedOption: selectedText
+            };
+
+            if (quizIndex !== -1) {
+                const answerIndex = progress[quizIndex].answers.findIndex(a => a.question === currentQuestion);
+                if (answerIndex !== -1) {
+                    progress[quizIndex].answers[answerIndex] = newAnswer;
+                } else {
+                    progress[quizIndex].answers.push(newAnswer);
+                }
+            } else {
+                progress.push({
+                    quizName: QUIZ_NAME,
+                    answers: [newAnswer]
+                });
+            }
+
+            // 1. Pehle storage save karo
+            localStorage.setItem("quiz_progress", JSON.stringify(progress));
+
+            // 2. 🔥 DYNAMIC API CALL: Check if this is the final card
+            await handleDynamicSubmit(progress, navigate, setLoading);
+
+        } catch (error) {
+            console.error("Submission error:", error);
+            setLoading(false);
+            alert("Something went wrong. Please try again.");
+        }
+    };
+
     return (
-        <div className="lifestyle-screen-wrapper">
-            <div className="lifestyle-container">
-                {/* Header Section */}
-                <header className="lifestyle-header">
-                    <button className="lifestyle-back-btn" onClick={() => navigate(-1)}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#432C51" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                    </button>
-                    <h2 className="lifestyle-category-title">Lifestyle And Value</h2>
-                </header>
-
-                {/* Question Section */}
-                <main className="lifestyle-main-content">
-                    <h1 className="lifestyle-question-text">
-                        If someone you’re dating doesn’t text back for hours, what’s your first reaction?
-                    </h1>
-
-                    {/* 2x2 Grid Layout */}
-                    <div className="lifestyle-options-grid">
-                        {options.map((option) => (
-                            <div 
-                                key={option.id}
-                                className={`lifestyle-card ${selectedOption === option.id ? 'is-selected' : ''}`}
-                                onClick={() => setSelectedOption(option.id)}
-                            >
-                                <p className="lifestyle-card-label">{option.text}</p>
-                                <div className="lifestyle-image-holder">
-                                    <img src={option.image} alt="" className="lifestyle-illustration" />
-                                </div>
-                            </div>
-                        ))}
+        <AppLayout>
+            {/* EXIT POP-UP MODAL */}
+            {showExitModal && (
+                <div className="exit-modal-overlay">
+                    <div className="exit-modal-box">
+                        <h3>Exit Quiz?</h3>
+                        <p>Your current progress for this card will not be saved.</p>
+                        <div className="modal-btns">
+                            <button className="cancel-btn" onClick={() => setShowExitModal(false)}>Keep Going</button>
+                            <button className="confirm-btn" onClick={handleExit}>Exit</button>
+                        </div>
                     </div>
-                </main>
+                </div>
+            )}
 
-                {/* Footer Section with Progress Ring */}
-                <footer className="lifestyle-footer">
-                    <div className="lifestyle-fab-container">
-                        <svg className="lifestyle-ring-svg" width="90" height="90">
-                            <circle className="lifestyle-ring-track" cx="45" cy="45" r="38" />
-                            <circle 
-                                className="lifestyle-ring-fill" 
-                                cx="45" cy="45" r="38" 
-                                style={{ 
-                                    strokeDashoffset: selectedOption ? 100 : 239 
-                                }} 
-                            />
-                        </svg>
-                        <button 
-                            className={`lifestyle-next-btn ${selectedOption ? 'is-ready' : ''}`} 
-                            onClick={() => selectedOption && navigate('/attach-quiz')}
-                            disabled={!selectedOption}
-                        >
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
+            <div className={`quiz-web-wrapper ${showExitModal ? 'blur-bg' : ''}`}>
+                <div className="quiz-card-container">
+                    <div className="quiz-header-section">
+                        <button className="back-btn-quiz" onClick={() => setShowExitModal(true)}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5D326F" strokeWidth="2.5">
+                                <polyline points="15 18 9 12 15 6"></polyline>
                             </svg>
                         </button>
+                        <h2 className="header-title-quiz">Lifestyle & Value</h2>
                     </div>
-                </footer>
+
+                    <div className="quiz-scroll-area">
+                        <div className="quiz-content-main">
+                            <h1 className="question-text-main">
+                                If someone you’re dating doesn’t text back for hours, what’s your first reaction?
+                            </h1>
+
+                            <div className="options-grid-layout">
+                                {options.map((opt, index) => (
+                                    <div
+                                        key={opt.id}
+                                        className={`quiz-opt-card ${selectedOption === opt.id ? 'selected' : ''}`}
+                                        onClick={() => setSelectedOption(opt.id)}
+                                        style={{ animationDelay: `${index * 0.1}s` }}
+                                    >
+                                        <p className="opt-card-label">{opt.text}</p>
+                                        <div className="opt-img-wrapper">
+                                            <img src={opt.image} alt={opt.text} className="opt-main-img" />
+                                        </div>
+
+                                        {selectedOption === opt.id && (
+                                            <div className="selection-tick-wrapper">
+                                                <div className="horizontal-line-divider"></div>
+                                                <div className="complex-tick-container">
+                                                    <svg className="tick-progress-ring" width="44" height="44"><circle cx="22" cy="22" r="19" stroke="#5D326F" strokeWidth="2" fill="none" strokeDasharray="120" strokeDashoffset="40" strokeLinecap="round" /></svg>
+                                                    <div className="inner-tick-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="quiz-footer-action">
+                        <StepProgressButton
+                            currentStep={6}
+                            totalSteps={6}
+                            disabled={!selectedOption || loading} // 🔥 Disable on loading
+                            onClick={handleNext}
+                        />
+                    </div>
+                </div>
             </div>
-        </div>
+        </AppLayout>
     );
 };
 

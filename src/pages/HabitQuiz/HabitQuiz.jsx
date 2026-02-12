@@ -41,8 +41,46 @@ const HabitQuiz = () => {
     const handleNext = () => {
         if (!selectedOption) return;
 
+        // 1. Current Question aur selected Text nikal lo
+        const currentQuestionText = questions[currentIndex].title;
+        const selectedText = options.find(opt => opt.id === selectedOption).text;
+
+        // 2. Local Storage se data fetch karo
+        const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+
+        // 3. "Lifestyle & Value" wala object dhundo
+        const quizIndex = progress.findIndex(q => q.quizName === "Lifestyle & Value");
+
+        const newAnswer = {
+            question: currentQuestionText,
+            selectedOption: selectedText
+        };
+
+        if (quizIndex !== -1) {
+            // Check karo ki ye question pehle se answers array mein toh nahi? 
+            // (Ye tab hota hai jab user 'Back' karke wapas 'Next' kare)
+            const answerIndex = progress[quizIndex].answers.findIndex(a => a.question === currentQuestionText);
+
+            if (answerIndex !== -1) {
+                // Update purana answer
+                progress[quizIndex].answers[answerIndex] = newAnswer;
+            } else {
+                // Add naya answer
+                progress[quizIndex].answers.push(newAnswer);
+            }
+        } else {
+            // Safety: Agar pehle ke quiz se entry nahi bani toh yahan bana do
+            progress.push({
+                quizName: "Lifestyle & Value",
+                answers: [newAnswer]
+            });
+        }
+
+        // 4. Save updated progress
+        localStorage.setItem("quiz_progress", JSON.stringify(progress));
+
+        // --- UI Navigation Logic ---
         if (currentIndex < questions.length - 1) {
-            // next question
             setIsAnimating(true);
             setTimeout(() => {
                 setCurrentIndex((prev) => prev + 1);
@@ -50,8 +88,7 @@ const HabitQuiz = () => {
                 setIsAnimating(false);
             }, 400);
         } else {
-            // ✅ FINAL NAVIGATION (THIS WILL WORK)
-            navigate('/relationship-quiz');
+            navigate('/relationship-quiz', { replace: true });
         }
     };
 

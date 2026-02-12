@@ -26,9 +26,44 @@ const DatingReactionQuiz = () => {
   const TOTAL_STEPS = 6;
 
   const handleNext = () => {
-    if (selectedOption) {
-      navigate("/life-style-card");
+    if (!selectedOption) return;
+
+    // 1. Selected text nikal lo
+    const selectedText = options.find(opt => opt.id === selectedOption).text;
+    const currentQuestion = "When I feel overwhelmed, I usually:";
+
+    // 2. Local Storage se data fetch karo
+    const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+
+    // 3. Quiz Name - "Attachment & Comfort Zone"
+    const quizName = "Attachment & Comfort Zone";
+    let quizIndex = progress.findIndex(q => q.quizName === quizName);
+
+    const newAnswer = {
+      question: currentQuestion,
+      selectedOption: selectedText
+    };
+
+    if (quizIndex !== -1) {
+      // Check if question already exists (to avoid duplicates on 'Back' click)
+      const answerIndex = progress[quizIndex].answers.findIndex(a => a.question === currentQuestion);
+
+      if (answerIndex !== -1) {
+        progress[quizIndex].answers[answerIndex] = newAnswer;
+      } else {
+        progress[quizIndex].answers.push(newAnswer);
+      }
+    } else {
+      // Fallback: Agar pehle ke steps miss hue
+      progress.push({
+        quizName: quizName,
+        answers: [newAnswer]
+      });
     }
+
+    // 4. Save and Navigate
+    localStorage.setItem("quiz_progress", JSON.stringify(progress));
+    navigate("/life-style-card", { replace: true });
   };
 
   return (

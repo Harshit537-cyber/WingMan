@@ -1,177 +1,258 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
-/* Main Wrapper for Web Responsiveness */
-.lifestyle-screen-wrapper {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #F8F9FA;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Inter', sans-serif;
+.quiz-web-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
 }
 
-.lifestyle-container {
-    width: 100%;
-    max-width: 430px; /* Mobile width fixed */
-    height: 100vh;
-    max-height: 900px;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    padding: 20px 24px;
-    box-sizing: border-box;
-    position: relative;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+.quiz-card-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 100vh;
+  max-height: 850px;
+  background-color: #FFF9FB;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 30px 24px;
+  animation: pageFadeIn 0.6s ease-out;
 }
 
-/* Header Styling */
-.lifestyle-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 60px;
-    position: relative;
-    margin-bottom: 20px;
+.quiz-header-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
-.lifestyle-back-btn {
-    position: absolute;
-    left: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
+.back-btn-quiz { background: none; border: none; cursor: pointer; padding: 0; }
+.header-title-quiz { font-size: 18px; font-weight: 700; color: #1A1A1A; }
+
+.quiz-content-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  animation: slideUpContent 0.8s ease-out;
 }
 
-.lifestyle-category-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: #1a1a1a;
+.question-text-main {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1A1A1A;
+  line-height: 1.25;
+  margin-bottom: 25px;
 }
 
-/* Question Area */
-.lifestyle-main-content {
-    flex: 1;
+.options-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  flex: 1;
+  padding-bottom: 40px;
 }
 
-.lifestyle-question-text {
-    font-size: 23px;
-    line-height: 1.35;
-    font-weight: 800;
-    color: #000000;
-    margin-bottom: 30px;
-    letter-spacing: -0.5px;
+.quiz-opt-card {
+  position: relative;
+  background: #ffffff;
+  border: 2px solid #5d326f15;
+  border-radius: 24px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  opacity: 0;
+  animation: entryPop 0.5s forwards;
 }
 
-/* 2x2 Grid Layout */
-.lifestyle-options-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+.quiz-opt-card.selected {
+  border-color: #5D326F;
+  background-color: #fbf7fd;
 }
 
-.lifestyle-card {
-    border: 2px solid #725188; /* Exact purple from UI */
-    border-radius: 24px;
-    height: 220px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    background-color: #fff;
+/* Tick Design Matching File 1 */
+.selection-tick-wrapper {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
 }
 
-.lifestyle-card.is-selected {
-    border-color: #432C51;
-    border-width: 3px;
-    background-color: #F9F4FA;
-    transform: translateY(-2px);
+.horizontal-line-divider {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #5D326F;
+  z-index: 1;
 }
 
-.lifestyle-card-label {
-    font-size: 14px;
-    font-weight: 700;
-    color: #333;
-    line-height: 1.4;
-    margin: 0;
+.complex-tick-container {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFF9FB;
+  border-radius: 50%;
+  z-index: 2;
+  animation: tickPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-.lifestyle-image-holder {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    height: 110px;
+.tick-progress-ring {
+  position: absolute;
+  transform: rotate(-90deg);
 }
 
-.lifestyle-illustration {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+.inner-tick-circle {
+  width: 30px;
+  height: 30px;
+  background-color: #5D326F;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
 }
 
-/* Footer Section */
-.lifestyle-footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px 0;
+.opt-card-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin-bottom: 10px;
+  min-height: 38px;
 }
 
-.lifestyle-fab-container {
-    position: relative;
-    width: 90px;
-    height: 90px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.opt-img-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
 }
 
-.lifestyle-ring-svg {
-    position: absolute;
-    transform: rotate(-90deg);
+.opt-main-img {
+  width: 100%;
+  max-height: 110px;
+  object-fit: contain;
 }
 
-.lifestyle-ring-track {
-    fill: none;
-    stroke: #F2EEF4;
-    stroke-width: 4;
+.quiz-footer-action {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  background: #FFF9FB;
+  position: sticky;
+  bottom: 0;
 }
 
-.lifestyle-ring-fill {
-    fill: none;
-    stroke: #432C51;
-    stroke-width: 4;
-    stroke-linecap: round;
-    stroke-dasharray: 239; /* 2 * PI * 38 */
-    transition: stroke-dashoffset 0.6s ease;
+@keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUpContent { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes entryPop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes tickPop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+
+@media (max-width: 640px) {
+  .quiz-card-container { max-width: 100%; max-height: 100vh; border-radius: 0; }
 }
 
-.lifestyle-next-btn {
-    width: 65px;
-    height: 65px;
-    background-color: #432C51;
-    border-radius: 50%;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 2;
-    opacity: 0.4;
-    transition: 0.3s ease;
+@media (max-height: 720px) {
+  .question-text-main { font-size: 20px; margin-bottom: 15px; }
+  .opt-main-img { max-height: 85px; }
+  .quiz-opt-card { padding: 12px; }
 }
 
-.lifestyle-next-btn.is-ready {
-    opacity: 1;
-    box-shadow: 0 10px 25px rgba(67, 44, 81, 0.3);
+.quiz-web-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  overflow: hidden; /* Screen scroll nahi hogi */
 }
 
-/* Responsiveness for small mobiles */
-@media (max-height: 700px) {
-    .lifestyle-card { height: 180px; padding: 12px; }
-    .lifestyle-image-holder { height: 80px; }
-    .lifestyle-question-text { font-size: 19px; }
+.quiz-card-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 100vh;
+  max-height: 850px;
+  background-color: #FFF9FB;
+  display: flex;
+  flex-direction: column; /* Vertical stack: Header, Body, Footer */
+  box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 20px 24px 0; /* Niche ki padding footer handle karega */
 }
+
+/* 🔥 NAYA SCROLLABLE AREA */
+.quiz-scroll-area {
+  flex: 1; /* Saara bacha hua space body ko milega */
+  overflow-y: auto; /* Agar content zyada ho toh scroll bar aayega */
+  padding-bottom: 20px;
+  scrollbar-width: none; /* Firefox ke liye scrollbar hide */
+}
+
+.quiz-scroll-area::-webkit-scrollbar {
+  display: none; /* Chrome/Safari ke liye scrollbar hide */
+}
+
+.quiz-header-section {
+  flex-shrink: 0; /* Header apni height fix rakhega */
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 15px;
+}
+
+.quiz-content-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.options-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding-bottom: 50px; /* Tick ke liye space */
+}
+
+.quiz-opt-card {
+  min-height: 180px; /* Cards ki minimum height fix ki taaki pichke nahi */
+  background: #ffffff;
+  border: 2px solid #5d326f15;
+  border-radius: 24px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* FIXED FOOTER */
+.quiz-footer-action {
+  flex-shrink: 0; /* Footer hamesha niche rahega */
+  display: flex;
+  justify-content: center;
+  padding: 15px 0 30px;
+  background: #FFF9FB;
+  border-top: 1px solid rgba(93, 50, 111, 0.05); /* Optional: halki line divider */
+}
+
+/* Rest of your keyframes (pageFadeIn, slideUpContent, etc.) as they are */

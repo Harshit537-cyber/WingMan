@@ -3,12 +3,14 @@
     justify-content: center;
     align-items: center;
     transition: opacity 0.3s ease;
+    background: transparent !important; /* 🔥 Force transparent background */
 }
 
-/* Gray out the whole component when disabled */
+/* Is class ki wajah se pura area dhundhla dikh raha hai */
 .btn-disabled {
-    opacity: 0.5;
+    opacity: 0.6; 
     pointer-events: none;
+    background: transparent !important;
 }
 
 .outer-card-wrapper {
@@ -18,7 +20,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background: transparent !important; /* 🔥 Square box hatane ke liye */
 }
+
+/* Baki styles same rahenge... */
 
 .progress-svg {
     position: absolute;
@@ -51,3 +56,4 @@
 .inner-card-btn:disabled {
     cursor: not-allowed;
 }
+

@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-  ChevronLeft, Bell, AlignRight, Pencil, UserPlus, 
-  Settings2, Settings, LifeBuoy, Trash2, Share2, X 
+import {
+  ChevronLeft, Bell, AlignRight, Pencil, UserPlus,
+  Settings2, Settings, LifeBuoy, Trash2, Share2, X
 } from 'lucide-react';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import BottomNav from '../../../components/BottomNav/BottomNav';
-import profileImg from '../../../assets/profile-user.png'; 
+import profileImg from '../../../assets/profile-user.png';
 import './Profile.css';
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [activeModal, setActiveModal] = useState(null); 
+  const [activeModal, setActiveModal] = useState(null);
 
   // Prevent background scroll when modal is active
   useEffect(() => {
@@ -47,10 +47,24 @@ const Profile = () => {
     navigate('/invite');
   };
 
+  // Profile.jsx ke andar ye function add karein
+
+  const handleConfirmLogout = () => {
+    // Sirf Session related keys udaao
+    localStorage.removeItem("auth_token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("fcmToken");
+
+    // quiz_progress ko mat chhedo, taki agar koi beech mein logout kare toh uska kaam bacha rahe
+
+    closeModal();
+    navigate('/', { replace: true });
+  };
+
   return (
     <AppLayout>
       <div className="profile-main-container">
-        
+
         {/* HEADER */}
         <header className="top-nav-bar">
           <button className="back-circle" onClick={() => navigate(-1)}>
@@ -58,26 +72,26 @@ const Profile = () => {
           </button>
           <h1 className="nav-title">{activeModal === 'invite' ? 'Invite Friends' : 'Profile'}</h1>
           <div className="nav-right">
-             <div className="bell-box" onClick={() => navigate('/request')}>
-                <Bell size={26} color="#5a3c6d" />
-                <span className="dot"></span>
-             </div>
-             <AlignRight size={26} color="#5a3c6d" />
+            <div className="bell-box" onClick={() => navigate('/request')}>
+              <Bell size={26} color="#5a3c6d" />
+              <span className="dot"></span>
+            </div>
+            <AlignRight size={26} color="#5a3c6d" />
           </div>
         </header>
 
         <div className={`scroll-content ${activeModal ? 'blur-bg' : ''}`}>
-          
+
           {/* PROFILE RING SECTION */}
           <div className="profile-header-section slide-up">
             <div className="ring-box">
               <span className="perc-label">75%</span>
               <svg className="svg-ring" width="120" height="120">
-                <circle 
-                   className="ring-path" 
-                   cx="60" cy="60" r={radius} 
-                   strokeDasharray={circumference}
-                   style={{ strokeDashoffset: strokeDashoffset }}
+                <circle
+                  className="ring-path"
+                  cx="60" cy="60" r={radius}
+                  strokeDasharray={circumference}
+                  style={{ strokeDashoffset: strokeDashoffset }}
                 />
               </svg>
               <div className="user-avatar">
@@ -85,16 +99,16 @@ const Profile = () => {
               </div>
             </div>
             <div className="user-meta">
-               <h2>GFXAgency</h2>
-               <p>UI UX DESIGN</p>
+              <h2>GFXAgency</h2>
+              <p>UI UX DESIGN</p>
             </div>
           </div>
 
           {/* MENU CARDS */}
           <div className="menu-cards-list">
             {menuItems.map((item, index) => (
-              <div 
-                key={item.id} 
+              <div
+                key={item.id}
                 className="custom-menu-card staggered-up"
                 style={{ animationDelay: `${index * 0.07}s` }}
                 onClick={item.action}
@@ -121,23 +135,28 @@ const Profile = () => {
         {activeModal && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-content slide-up-modal" onClick={(e) => e.stopPropagation()}>
-              
+
               {/* Close Button (X) */}
               <button className="modal-close-btn" onClick={closeModal}>
                 <X size={24} color="#5a3c6d" />
               </button>
 
+              {/* Profile.jsx ke Modal section mein */}
+
               {activeModal === 'logout' && (
                 <div className="modal-inner">
                   <h2 className="modal-title">Log Out</h2>
-                  <button className="modal-primary-btn" onClick={() => navigate('/')}>Continue</button>
+                  {/* navigate('/') ki jagah handleConfirmLogout call karein */}
+                  <button className="modal-primary-btn" onClick={handleConfirmLogout}>
+                    Continue
+                  </button>
                 </div>
               )}
 
               {activeModal === 'invite' && (
                 <div className="modal-inner">
                   <div className="modal-icon-container">
-                     <Share2 size={60} color="#5a3c6d" strokeWidth={1.5} />
+                    <Share2 size={60} color="#5a3c6d" strokeWidth={1.5} />
                   </div>
                   <h2 className="modal-title">Share with Friend</h2>
                   {/* Navigating to Invite Screen on click */}
@@ -148,7 +167,7 @@ const Profile = () => {
               {activeModal === 'delete' && (
                 <div className="modal-inner">
                   <div className="modal-icon-container">
-                     <X size={60} color="#ff4d4d" strokeWidth={3} />
+                    <X size={60} color="#ff4d4d" strokeWidth={3} />
                   </div>
                   <h2 className="modal-title">Delete Account</h2>
                   <p className="modal-subtitle">Do you want to permanently delete your Account ?</p>
