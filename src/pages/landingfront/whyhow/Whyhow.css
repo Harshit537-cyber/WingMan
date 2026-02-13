@@ -1,0 +1,154 @@
+/* ===== MAIN CONTAINER ===== */
+.whyhow-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #e9e4ea;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Georgia', serif;
+}
+
+/* ===== LEFT IMAGE ===== */
+.whyhow-left {
+  position: absolute;
+  left: 60px;
+  bottom: 140px;
+  animation: fadeSlideIn 1.5s ease forwards;
+}
+
+.left-image {
+  width: 260px;
+  opacity: 0;
+  animation: imageFade 2s ease forwards;
+  animation-delay: 0.5s;
+}
+
+/* ===== CENTER TEXT ===== */
+.whyhow-content {
+  text-align: center;
+  color: #5d316a;
+  animation: fadeUp 1.2s ease forwards;
+}
+
+.why-title {
+  font-size: 42px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.why-text {
+  font-size: 20px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.read-more {
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.read-more:hover {
+  letter-spacing: 1px;
+  transform: scale(1.05);
+}
+
+/* ===== RIGHT TOOLBAR ===== */
+.vertical-toolbar {
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 55px;
+  background: #8b6c91;
+  border-radius: 20px;
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  animation: slideInRight 1s ease forwards;
+}
+
+.tool-icon {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #e9e4ea;
+  border-radius: 6px;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+}
+
+.tool-icon:hover {
+  background: #e9e4ea;
+  transform: scale(1.1);
+}
+
+/* ===== DASHED CURVE ===== */
+.dashed-curve {
+  position: absolute;
+  bottom: -50px;
+  left: -50px;
+  width: 120%;
+  height: 200px;
+  border-bottom: 3px dashed #b8a7be;
+  border-radius: 50%;
+  animation: dashMove 6s linear infinite;
+}
+
+/* ================== ANIMATIONS ================== */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes imageFade {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translate(50px, -50%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+}
+
+@keyframes dashMove {
+  0% {
+    border-bottom-color: #b8a7be;
+  }
+  50% {
+    border-bottom-color: #8b6c91;
+  }
+  100% {
+    border-bottom-color: #b8a7be;
+  }
+}

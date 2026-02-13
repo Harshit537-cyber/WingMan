@@ -1,7 +1,6 @@
 import { submitAllQuizzes } from '../api/quizService';
 
 export const handleDynamicSubmit = async (progress, navigate, setLoading) => {
-    // 1. Saare 5 cards ke exact naam jo database accept karta hai
     const requiredQuizzes = [
         'Lifestyle & Value',
         'Emotional Communication',
@@ -10,23 +9,22 @@ export const handleDynamicSubmit = async (progress, navigate, setLoading) => {
         'Growth, Readiness & Emotional Maturity'
     ];
 
-    // 2. Check karo ki progress array mein kitne cards complete ho gaye hain
     const completedNames = progress.map(q => q.quizName);
     const isAllQuizzesDone = requiredQuizzes.every(name => completedNames.includes(name));
 
     if (isAllQuizzesDone) {
         try {
             const result = await submitAllQuizzes(progress);
-            
-            // 🔥 CONDITION: Agar status 201 ya success true hai
             if (result.success || result.status === 201) {
-                localStorage.removeItem("quiz_progress"); // Temporary data delete
-                localStorage.setItem("all_quizzes_done", "true"); // 🔥 Global Flag Set
+                // ✅ Sabse zaruri: Flag set karo aur temporary progress delete karo
+                localStorage.setItem("all_quizzes_done", "true");
+                localStorage.removeItem("quiz_progress");
+                
                 navigate('/view-matches', { replace: true });
             }
         } catch (error) {
-            console.error("API Error:", error);
-            alert("Submission failed. Try again.");
+            console.error("Final Submission Error:", error);
+            alert("Submission failed. Progress kept locally.");
         } finally {
             setLoading(false);
         }
@@ -34,5 +32,4 @@ export const handleDynamicSubmit = async (progress, navigate, setLoading) => {
         setLoading(false);
         navigate('/pick-card', { replace: true });
     }
-
 };

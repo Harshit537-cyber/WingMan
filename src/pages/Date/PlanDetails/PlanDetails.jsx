@@ -13,7 +13,7 @@ const PlanDetails = () => {
   return (
     <AppLayout>
       <div className="plan-page-container">
-        
+
         {/* --- HEADER --- */}
         <header className="plan-header">
           <button className="back-btn" onClick={() => navigate(-1)}>
@@ -27,7 +27,7 @@ const PlanDetails = () => {
 
         {/* --- CONTENT --- */}
         <div className="plan-scroll-content">
-          
+
           <div className="main-msg-section">
             <h2 className="request-title">Rahul Has Requested A Date With You!</h2>
             <p className="request-subtitle">Select One Option That Works Best For You.</p>
@@ -37,7 +37,7 @@ const PlanDetails = () => {
           <section className="plan-card">
             <div className="card-header-main">
               <div className="icon-bg-purple">
-                 <Calendar size={18} color="#fff" />
+                <Calendar size={18} color="#fff" />
               </div>
               <div className="header-text-group">
                 <h3 className="card-title-text">Choose Preferred Date & Time</h3>
@@ -48,7 +48,7 @@ const PlanDetails = () => {
             <div className="selection-area">
               <div className="dates-row">
                 {['12 JAN (Mon)', '13 JAN (Tue)', '14 JAN (Wed)'].map((date) => (
-                  <button 
+                  <button
                     key={date}
                     className={`date-chip-box ${selectedDate === date ? 'active' : ''}`}
                     onClick={() => setSelectedDate(date)}
@@ -62,7 +62,7 @@ const PlanDetails = () => {
               <h4 className="slot-heading">Available Time Slot</h4>
               <div className="times-row">
                 {['11:00 AM', '1:00 PM', '07:00 PM'].map((time) => (
-                  <button 
+                  <button
                     key={time}
                     className={`time-chip-pill ${selectedTime === time ? 'active' : ''}`}
                     onClick={() => setSelectedTime(time)}
@@ -75,29 +75,29 @@ const PlanDetails = () => {
             </div>
           </section>
 
-<section className="food-mood-card-exact">
-  <div className="fm-header">
-    <Utensils size={24} color="#7a4ca3" strokeWidth={2.2} />
-    <h1 className="fm-title">Food Mood</h1>
-  </div>
-  
-  <p className="fm-preference">
-    Preference - <span className="fm-purple-val">Restaurant</span>
-  </p>
+          <section className="food-mood-card-exact">
+            <div className="fm-header">
+              <Utensils size={24} color="#7a4ca3" strokeWidth={2.2} />
+              <h1 className="fm-title">Food Mood</h1>
+            </div>
 
-  <div className="fm-chips-wrapper">
-    <div className="fm-chip-box">North - Indian</div>
-    <div className="fm-chip-box">🥣 Italian</div>
-    <div className="fm-chip-box">North - Indian</div>
-    <div className="fm-chip-box">Sea- Food</div>
-  </div>
-</section>
+            <p className="fm-preference">
+              Preference - <span className="fm-purple-val">Restaurant</span>
+            </p>
+
+            <div className="fm-chips-wrapper">
+              <div className="fm-chip-box">North - Indian</div>
+              <div className="fm-chip-box">🥣 Italian</div>
+              <div className="fm-chip-box">North - Indian</div>
+              <div className="fm-chip-box">Sea- Food</div>
+            </div>
+          </section>
 
           {/* Budget Card */}
           <section className="plan-card">
             <div className="card-header-simple">
               <div className="budget-icon-container">
-                 <Banknote size={20} color="#5a3c6d" fill="#5a3c6d" />
+                <Banknote size={20} color="#5a3c6d" fill="#5a3c6d" />
               </div>
               <h3 className="card-title-text">Budget & Expenses</h3>
             </div>
@@ -114,8 +114,15 @@ const PlanDetails = () => {
           </section>
 
           <div className="bottom-padding"></div>
-        </div>
 
+          <div className="confirm-scroll-container">
+            <button className="confirm-plan-btn" onClick={() => navigate('/dates')}>
+              Confirm Plan
+            </button>
+          </div>
+
+          <div className="bottom-padding"></div>      
+        </div>
         <BottomNav />
       </div>
     </AppLayout>
