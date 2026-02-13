@@ -65,59 +65,13 @@
   font-weight: 700;
 }
 
-/* Slider UI */
-.custom-slider-container {
-  position: relative;
-  height: 40px;
-  display: flex;
-  align-items: center;
-}
 
-.slider-track {
-  position: absolute;
-  width: 100%;
-  height: 8px;
-  background: #EEE4F2;
-  border-radius: 10px;
-  z-index: 1;
-}
 
-.slider-progress {
-  position: absolute;
-  height: 100%;
-  background: #5D326F;
-  border-radius: 10px;
-  z-index: 2;
-}
 
-.real-slider {
-  position: absolute;
-  width: 100%;
-  height: 25px;
-  opacity: 0;
-  cursor: pointer;
-  z-index: 5;
-}
 
-.slider-thumb {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 38px;
-  height: 38px;
-  background: #5D326F;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 12px;
-  border: 4px solid white;
-  box-shadow: 0 4px 12px rgba(93, 50, 111, 0.3);
-  z-index: 4;
-  pointer-events: none;
-}
+
+
+
 
 /* Dropdown UI */
 .pref-select-box {
@@ -176,4 +130,141 @@
 @media (max-height: 700px) {
   .fields-stack { gap: 20px; }
   .pref-footer-action {bottom: calc(12px + env(safe-area-inset-bottom));}
+}
+
+
+/* ====== DUAL RANGE SLIDER UI ====== */
+
+.dual-slider-wrapper {
+  position: relative;
+  width: 100%;
+  height: 65px;
+  margin-top: 10px;
+}
+
+/* ===== CLEAN RANGE FIX ===== */
+
+.thumb {
+  position: absolute;
+  width: 100%;
+  height: 0;              /* IMPORTANT */
+  top: 30px;              /* same as track */
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  z-index: 10;
+  pointer-events: none;   /* slider track inactive */
+}
+
+/* remove track */
+.thumb::-webkit-slider-runnable-track {
+  background: transparent;
+  height: 0;
+}
+
+.thumb::-moz-range-track {
+  background: transparent;
+  height: 0;
+}
+
+/* remove default thumb COMPLETELY */
+.thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 0;
+  width: 0;
+  background: transparent;
+  border: none;
+}
+
+.thumb::-moz-range-thumb {
+  height: 0;
+  width: 0;
+  background: transparent;
+  border: none;
+}
+
+
+/* Background Track */
+.slider-track-bg {
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  height: 8px;
+  background: #EEE4F2;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+/* Active Purple Fill */
+.slider-track-fill {
+  position: absolute;
+  top: 30px;
+  height: 8px;
+  background: #5D326F;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+/* Purple Value Circles */
+.range-circle {
+  position: absolute;
+  top: 8px;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background: #5D326F;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  border: 4px solid #fff;
+  box-shadow: 0 6px 15px rgba(93, 50, 111, 0.25);
+  z-index: 5;
+}
+
+.thumb:first-of-type {
+  z-index: 7;
+}
+
+.thumb:last-of-type {
+  z-index: 8;
+}
+
+/* Hide default thumb COMPLETELY */
+
+.thumb {
+  position: absolute;
+  width: 100%;
+  top: 30px;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  pointer-events: none;
+}
+
+/* Chrome / Edge */
+.thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+/* Firefox */
+.thumb::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  border: none;
+  background: transparent;
+  opacity: 0;   /* 👈 THIS WAS MISSING */
+}
+
+/* Firefox track fix */
+.thumb::-moz-range-track {
+  background: transparent;
 }

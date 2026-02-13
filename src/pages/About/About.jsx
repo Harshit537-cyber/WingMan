@@ -14,10 +14,10 @@ const About = () => {
 
   // State for lifestyle choices
   const [choices, setChoices] = useState({
-    drink: 'Never',
-    smoke: 'Never',
-    exercise: 'Regularly',
-  });
+  drink: '',
+  smoke: '',
+  exercise: '',
+});
 
   const options = ['Regularly', 'Occasionally', 'Never'];
 

@@ -10,8 +10,9 @@ const Preferences = () => {
   const [loading, setLoading] = useState(false); // ✅ Loading state
 
   // States for Sliders
-  const [age, setAge] = useState(28);
-  const [height, setHeight] = useState(6);
+  const [ageRange, setAgeRange] = useState({ min: 18, max: 50 });
+const [heightRange, setHeightRange] = useState({ min: 4, max: 6 });
+
 
   // States for Dropdowns
   const [religion, setReligion] = useState('Hindu');
@@ -33,23 +34,22 @@ const Preferences = () => {
       const userId = decodedPayload.id;
 
       // --- DATA CONVERSION ---
-      // 1. Convert height from feet to cm (1 ft = 30.48 cm)
-      const heightInCm = Math.round(height * 30.48);
+const heightMinCm = Math.round(heightRange.min * 30.48);
+const heightMaxCm = Math.round(heightRange.max * 30.48);
 
-      // 2. Prepare Payload exactly like your Postman screenshot
-      const payload = {
-        age: {
-          min: 18,               // Default min age
-          max: parseInt(age)     // Selected age as max
-        },
-        height: {
-          min: 140,              // Default min height in cm
-          max: heightInCm        // Selected height converted to cm
-        },
-        religion: religion,
-        ethnicity: ethnicity,
-        spokenLanguage: [language] // ✅ Must be an Array
-      };
+const payload = {
+  age: {
+    min: ageRange.min,
+    max: ageRange.max
+  },
+  height: {
+    min: heightMinCm,
+    max: heightMaxCm
+  },
+  religion: religion,
+  ethnicity: ethnicity,
+  spokenLanguage: [language]
+};
 
       console.log("Sending Payload to Match Postman:", payload);
 
@@ -68,8 +68,19 @@ const Preferences = () => {
   };
 
   // Logic for Slider UI positioning
-  const agePercent = ((age - 18) / (60 - 18)) * 100;
-  const heightPercent = ((height - 4) / (8 - 4)) * 100;
+const ageMinPercent = ((ageRange.min - 18) / (60 - 18)) * 100;
+const ageMaxPercent = ((ageRange.max - 18) / (60 - 18)) * 100;
+
+const heightMin = 4;
+const heightMax = 8;
+
+const heightMinPercent =
+  ((heightRange.min - heightMin) / (heightMax - heightMin)) * 100;
+
+const heightMaxPercent =
+  ((heightRange.max - heightMin) / (heightMax - heightMin)) * 100;
+
+
 
   return (
     <AppLayout>
@@ -86,40 +97,125 @@ const Preferences = () => {
           <div className="fields-stack">
 
             <div className="slider-group">
-              <div className="pref-label-row">
-                <label className="pref-field-label">Age</label>
-                <span className="pref-value-display">{age} yrs</span>
-              </div>
-              <div className="custom-slider-container">
-                <div className="slider-track">
-                  <div className="slider-progress" style={{ width: `${agePercent}%` }}></div>
-                </div>
-                <input
-                  type="range" min="18" max="60" value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                  className="real-slider"
-                />
-                <div className="slider-thumb" style={{ left: `${agePercent}%` }}>{age}</div>
-              </div>
-            </div>
+  <div className="pref-label-row">
+    <label className="pref-field-label">Age</label>
+    <span className="pref-value-display">
+      {ageRange.min} - {ageRange.max} yrs
+    </span>
+  </div>
+
+  <div className="dual-slider-wrapper">
+
+    <input
+      type="range"
+      min="18"
+      max="60"
+      value={ageRange.min}
+      onChange={(e) =>
+        setAgeRange({
+          ...ageRange,
+          min: Math.min(parseInt(e.target.value), ageRange.max - 1)
+        })
+      }
+      className="thumb"
+    />
+
+    <input
+      type="range"
+      min="18"
+      max="60"
+      value={ageRange.max}
+      onChange={(e) =>
+        setAgeRange({
+          ...ageRange,
+          max: Math.max(parseInt(e.target.value), ageRange.min + 1)
+        })
+      }
+      className="thumb"
+    />
+
+    <div className="slider-track-bg"></div>
+
+    <div
+      className="slider-track-fill"
+      style={{
+        left: `${ageMinPercent}%`,
+        right: `${100 - ageMaxPercent}%`
+      }}
+    ></div>
+
+    <div className="range-circle" style={{ left: `${ageMinPercent}%` }}>
+      {ageRange.min}
+    </div>
+
+    <div className="range-circle" style={{ left: `${ageMaxPercent}%` }}>
+      {ageRange.max}
+    </div>
+
+  </div>
+</div>
+
 
             <div className="slider-group">
-              <div className="pref-label-row">
-                <label className="pref-field-label">Height</label>
-                <span className="pref-value-display">{height} ft</span>
-              </div>
-              <div className="custom-slider-container">
-                <div className="slider-track">
-                  <div className="slider-progress" style={{ width: `${heightPercent}%` }}></div>
-                </div>
-                <input
-                  type="range" min="4" max="8" step="0.1" value={height}
-                  onChange={(e) => setHeight(e.target.value)}
-                  className="real-slider"
-                />
-                <div className="slider-thumb" style={{ left: `${heightPercent}%` }}>{Math.round(height)}</div>
-              </div>
-            </div>
+  <div className="pref-label-row">
+    <label className="pref-field-label">Height</label>
+    <span className="pref-value-display">
+      {heightRange.min} - {heightRange.max} ft
+    </span>
+  </div>
+
+  <div className="dual-slider-wrapper">
+
+    <input
+      type="range"
+      min="4"
+      max="8"
+      step="0.1"
+      value={heightRange.min}
+      onChange={(e) =>
+        setHeightRange({
+          ...heightRange,
+          min: Math.min(parseFloat(e.target.value), heightRange.max - 0.1)
+        })
+      }
+      className="thumb"
+    />
+
+    <input
+      type="range"
+      min="4"
+      max="8"
+      step="0.1"
+      value={heightRange.max}
+      onChange={(e) =>
+        setHeightRange({
+          ...heightRange,
+          max: Math.max(parseFloat(e.target.value), heightRange.min + 0.1)
+        })
+      }
+      className="thumb"
+    />
+
+    <div className="slider-track-bg"></div>
+
+    <div
+      className="slider-track-fill"
+      style={{
+        left: `${heightMinPercent}%`,
+        right: `${100 - heightMaxPercent}%`
+      }}
+    ></div>
+
+    <div className="range-circle" style={{ left: `${heightMinPercent}%` }}>
+      {heightRange.min}
+    </div>
+
+    <div className="range-circle" style={{ left: `${heightMaxPercent}%` }}>
+      {heightRange.max}
+    </div>
+
+  </div>
+</div>
 
             <div className="pref-dropdown-item">
               <label className="pref-field-label">Religion</label>
