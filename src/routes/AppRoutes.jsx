@@ -95,8 +95,8 @@ const AppRoutes = () => {
     <Router>
       <Routes>
         {/* Auth & Onboarding */}
-        <Route path="/" element={<Dummy />} />
-        {/* <Route path="/" element={<LandingPage />} /> */}
+        {/* <Route path="/" element={<Dummy />} /> */}
+        <Route path="/" element={<LandingPage />} />
         <Route path="/preferences" element={<Preferences />} />
         <Route path="/appreciate" element={<Appreciate />} />
         <Route path="/honestysuccess" element={<HonestySuccess />} />
