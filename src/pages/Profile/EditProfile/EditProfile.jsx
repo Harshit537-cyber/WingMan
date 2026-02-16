@@ -1,117 +1,109 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-  ChevronLeft, Bell, AlignRight, Pencil, 
-  Mail, Lock, EyeOff, Eye 
-} from 'lucide-react';
+import { Camera, Plus, MapPin, ChevronLeft } from 'lucide-react';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import BottomNav from '../../../components/BottomNav/BottomNav';
-import profileImg from '../../../assets/profile-user.png'; 
 import './EditProfile.css';
+
+// Dummy Image (Replace with your actual asset path)
+import userImg from '../../../assets/profile-user.png';
 
 const EditProfile = () => {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-
-  // Profile Ring Calculation
-  const radius = 50;
-  const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (75 / 100) * circumference;
 
   return (
     <AppLayout>
-      <div className="edit-profile-container">
+      <div className="ep-screen-wrapper">
         
-        {/* HEADER */}
-        <header className="edit-top-nav">
-          <button className="nav-back-btn" onClick={() => navigate(-1)}>
-            <ChevronLeft size={28} color="#5a3c6d" />
-          </button>
-          <h1 className="edit-nav-title">Edit Profile</h1>
-          <div className="edit-nav-right">
-             {/* <div className="bell-wrapper">
-                <Bell size={26} color="#5a3c6d" />
-                <span className="orange-dot"></span>
-             </div> */}
-             {/* <AlignRight size={26} color="#5a3c6d" /> */}
-          </div>
-        </header>
+        {/* TOP STATUS BAR SPACE */}
+        <div className="ep-status-bar-mock"></div>
 
-        <div className="edit-scroll-content slide-up">
+        <div className="ep-scroll-view">
           
-          {/* PROFILE IMAGE SECTION WITH EDIT BUTTON */}
-          <div className="edit-avatar-section">
-            <div className="ring-container">
-              <span className="perc-tag">75%</span>
-              <svg className="svg-ring-edit" width="120" height="120">
-                <circle 
-                   className="ring-path-edit" 
-                   cx="60" cy="60" r={radius} 
-                   strokeDasharray={circumference}
-                   style={{ strokeDashoffset: strokeDashoffset }}
-                />
-              </svg>
-              <div className="avatar-main">
-                <img src={profileImg} alt="user" />
-                {/* Small Pencil Edit Icon */}
-                <button className="small-edit-btn">
-                  <Pencil size={14} color="#fff" fill="#fff" />
-                </button>
+          {/* --- PROFILE HEADER --- */}
+          <div className="ep-header">
+            <div className="ep-avatar-box">
+              <img src={userImg} alt="user" className="ep-main-img" />
+              <div className="ep-camera-btn">
+                <Camera size={22} color="white" fill="currentColor" />
               </div>
             </div>
-            <div className="user-info-text">
-               <h2>GFXAgency</h2>
-               <p>UI UX DESIGN</p>
-            </div>
+            <button className="ep-change-photo-text">Change Profile Photo</button>
           </div>
 
-          {/* FORM FIELDS */}
-          <div className="edit-form">
-            
-            {/* Email Field */}
-            <div className="input-field-group">
-              <label>Your Email</label>
-              <div className="input-with-icon">
-                <Mail className="prefix-icon" size={22} color="#1a1a1a" />
-                <input type="email" placeholder="xxx@gmail.com" />
+          {/* --- MAIN INFO CARD --- */}
+          <div className="ep-main-card">
+            <div className="ep-field-row">
+              <div className="ep-label-box">Name</div>
+              <div className="ep-input-box">
+                <input type="text" defaultValue="Jassica Parker" />
+                <span className="ep-age-val">23</span>
               </div>
             </div>
 
-            {/* Password Field */}
-            <div className="input-field-group">
-              <label>Password</label>
-              <div className="input-with-icon">
-                <Lock className="prefix-icon" size={22} color="#1a1a1a" />
-                <input type={showPassword ? "text" : "password"} placeholder="xxx@gmail.com" />
-                <button 
-                  className="suffix-toggle" 
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <Eye size={22} /> : <EyeOff size={22} />}
-                </button>
+            <div className="ep-field-row">
+              <div className="ep-label-box">Occupation</div>
+              <div className="ep-input-box">
+                <input type="text" defaultValue="Software Devloper" />
               </div>
             </div>
 
-            {/* About Field */}
-            <div className="input-field-group">
-              <label>About</label>
-              <textarea 
-                className="about-textarea" 
-                placeholder="About ......." 
-                rows="5"
-              ></textarea>
+            <div className="ep-field-row">
+              <div className="ep-label-box">Location</div>
+              <div className="ep-input-box">
+                <input type="text" defaultValue="Chicago, IL United States" />
+                <div className="ep-dist-tag">1km</div>
+              </div>
             </div>
 
+            <div className="ep-divider"></div>
+
+            {/* About Me Section inside the same card */}
+            <div className="ep-section-header">About me</div>
+            <div className="ep-tags-grid">
+              <div className="ep-tag-chip">🌍 Bengaluru, India</div>
+              <div className="ep-tag-chip">Regularly 🏃‍♂️</div>
+              <div className="ep-tag-chip">Hindu</div>
+              <div className="ep-add-tag-circle"><Plus size={18} color="#D1BBD8" strokeWidth={3} /></div>
+              <div className="ep-tag-chip">ocasionally 🍷</div>
+              <div className="ep-tag-chip">Rarely 🚬</div>
+            </div>
           </div>
 
-          {/* SAVE BUTTON */}
-          <div className="save-btn-container">
-            <button className="save-changes-btn" onClick={() => navigate('/profile')}>
-              Save Changes
-            </button>
+          {/* --- INTERESTS CARD --- */}
+          <div className="ep-main-card">
+            <div className="ep-section-header">Interests</div>
+            <div className="ep-tags-grid">
+              <div className="ep-tag-chip">🧘‍♀️ Yoga</div>
+              <div className="ep-tag-chip">🎬 Film lover</div>
+              <div className="ep-tag-chip">🍵 Matcha</div>
+            </div>
+            <div className="ep-add-interest-btn">
+              <Plus size={16} /> ADD Interest
+            </div>
           </div>
 
-          <div className="footer-spacer"></div>
+          {/* --- PHOTO GRID CARD --- */}
+          <div className="ep-main-card ep-photo-card">
+            <div className="ep-photo-grid">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="ep-photo-slot">
+                  <img src={userImg} alt="slot" />
+                </div>
+              ))}
+              <div className="ep-photo-slot ep-add-slot">
+                <Plus size={32} color="#5D326F" strokeWidth={2.5} />
+                <span>Add Photo</span>
+              </div>
+            </div>
+          </div>
+
+          {/* --- UPDATE BUTTON --- */}
+          <div className="ep-action-container">
+            <button className="ep-update-btn">Update Profile</button>
+          </div>
+
+          <div className="ep-bottom-padding"></div>
         </div>
 
         <BottomNav />

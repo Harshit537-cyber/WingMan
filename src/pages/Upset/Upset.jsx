@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AppLayout from '../../components/AppLayout/AppLayout'; // Added AppLayout
+import StepProgressButton from '../../components/StepProgressButton/StepProgressButton'; // Added Progress Button
 import './Upset.css';
 
-// Assets from your Img3 folder
+// Assets from your folder
 import readingImg from '../../assets/img16/Rest 4.svg';
 import shakingHandsImg from '../../assets/img16/Love .svg';
 import checkingInImg from '../../assets/img16/Clean Up 4.svg';
@@ -19,94 +21,122 @@ const Upset = () => {
         { id: 4, text: "Wait for the other person to reach out first", img: sweepingImg }
     ];
 
+    // 🔥 SETTINGS
+    const CURRENT_STEP = 1; 
+    const TOTAL_STEPS = 5; // Emotional Communication ke total steps ke hisaab se adjust karein
+
+    const handleNext = () => {
+        if (!selectedOption) return;
+
+        // 1. Data Prepare
+        const selectedText = options.find(opt => opt.id === selectedOption).text;
+        const currentQuestion = "When I’m upset, I tend to:";
+        
+        // 2. Local Storage Logic
+        const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+        const quizName = "Emotional Communication"; // Exact name from PickCard
+        let quizIndex = progress.findIndex(q => q.quizName === quizName);
+
+        const newAnswer = { 
+            question: currentQuestion, 
+            selectedOption: selectedText 
+        };
+
+        if (quizIndex !== -1) {
+            // Update or Append
+            const answerIndex = progress[quizIndex].answers.findIndex(a => a.question === currentQuestion);
+            if (answerIndex !== -1) {
+                progress[quizIndex].answers[answerIndex] = newAnswer;
+            } else {
+                progress[quizIndex].answers.push(newAnswer);
+            }
+        } else {
+            // Naya entry create karna
+            progress.push({
+                quizName: quizName,
+                answers: [newAnswer]
+            });
+        }
+
+        // 3. Save & Navigate
+        localStorage.setItem("quiz_progress", JSON.stringify(progress));
+        navigate('/emotional-communication', { replace: true }); // Next step path
+    };
+
     return (
-        <div className="quiz-web-wrapper">
-            <div className="quiz-card-container">
+        <AppLayout>
+            <div className="quiz-web-wrapper">
+                <div className="quiz-card-container">
 
-                {/* Updated Header with Perfect Centering */}
-                <div className="quiz-header-section">
-                    <button className="back-btn-quiz" onClick={() => navigate(-1)}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5D326F" strokeWidth="2.5">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                    </button>
-                    <h2 className="header-title-quiz">Emotional Communication</h2>
-                    <div className="header-spacer-quiz"></div>
-                </div>
-
-                <div className="quiz-content-main">
-                    <h1 className="question-text-main">
-                        When I’m upset, I tend to:
-                    </h1>
-
-                    <div className="options-grid-layout">
-                        {options.map((opt, index) => (
-                            <div
-                                key={opt.id}
-                                className={`quiz-opt-card ${selectedOption === opt.id ? 'selected' : ''}`}
-                                onClick={() => setSelectedOption(opt.id)}
-                                style={{ animationDelay: `${index * 0.1}s` }}
-                            >
-                                <p className="opt-card-label">{opt.text}</p>
-                                <div className="opt-img-wrapper">
-                                    <img src={opt.img} alt={opt.text} className="opt-main-img" />
-                                </div>            
-                                
-                                {selectedOption === opt.id && (
-                                    <div className="selection-tick-wrapper">
-                                        <div className="horizontal-line-divider"></div>
-                                        <div className="complex-tick-container">
-                                            {/* Mask to create broken line effect */}
-                                            <div className="tick-mask-bg"></div>
-                                            <svg className="tick-progress-ring" width="44" height="44">
-                                                <circle
-                                                    cx="22" cy="22" r="19"
-                                                    stroke="#5D326F" strokeWidth="2.5"
-                                                    fill="none"
-                                                    strokeDasharray="120" strokeDashoffset="40"
-                                                    strokeLinecap="round"
-                                                />
-                                            </svg>
-                                            <div className="inner-tick-circle">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4">
-                                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Footer Section */}
-                <div className="quiz-footer-action">
-                    <div className="progress-ring-box">
-                        <svg className="svg-ring" width="80" height="80">
-                            <circle cx="40" cy="40" r="36" stroke="#5d326f15" strokeWidth="3" fill="none" />
-                            <circle
-                                className="ring-bar"
-                                cx="40" cy="40" r="36"
-                                stroke="#5D326F" strokeWidth="3.5" fill="none"
-                                style={{ strokeDashoffset: selectedOption ? 100 : 226 }}
-                            />
-                        </svg>
-                        <button
-                            className={`nav-next-btn ${selectedOption ? 'ready' : ''}`}
-                            disabled={!selectedOption}
-                            onClick={() => navigate('/emotional-communication')}
-                        >
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3.5">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
+                    {/* Header Section */}
+                    <div className="quiz-header-section">
+                        <button className="back-btn-quiz" onClick={() => navigate(-1)}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5D326F" strokeWidth="2.5">
+                                <polyline points="15 18 9 12 15 6"></polyline>
                             </svg>
                         </button>
+                        <h2 className="header-title-quiz">Emotional Communication</h2>
+                        <div className="header-spacer-quiz"></div>
                     </div>
-                </div>
 
+                    <div className="quiz-content-main">
+                        <h1 className="question-text-main">
+                            When I’m upset, I tend to:
+                        </h1>
+
+                        <div className="options-grid-layout">
+                            {options.map((opt, index) => (
+                                <div
+                                    key={opt.id}
+                                    className={`quiz-opt-card ${selectedOption === opt.id ? 'selected' : ''}`}
+                                    onClick={() => setSelectedOption(opt.id)}
+                                    style={{ animationDelay: `${index * 0.1}s` }}
+                                >
+                                    <p className="opt-card-label">{opt.text}</p>
+                                    <div className="opt-img-wrapper">
+                                        <img src={opt.img} alt={opt.text} className="opt-main-img" />
+                                    </div>            
+                                    
+                                    {selectedOption === opt.id && (
+                                        <div className="selection-tick-wrapper">
+                                            <div className="horizontal-line-divider"></div>
+                                            <div className="complex-tick-container">
+                                                <svg className="tick-progress-ring" width="44" height="44">
+                                                    <circle
+                                                        cx="22" cy="22" r="19"
+                                                        stroke="#5D326F" strokeWidth="2.5"
+                                                        fill="none"
+                                                        strokeDasharray="120" strokeDashoffset="40"
+                                                        strokeLinecap="round"
+                                                    />
+                                                </svg>
+                                                <div className="inner-tick-circle">
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Footer Section using StepProgressButton */}
+                    <div className="quiz-footer-action">
+                        <StepProgressButton
+                            currentStep={CURRENT_STEP}
+                            totalSteps={TOTAL_STEPS}
+                            disabled={!selectedOption}
+                            onClick={handleNext}
+                            resetKey={selectedOption}
+                        />
+                    </div>
+
+                </div>
             </div>
-        </div>
+        </AppLayout>
     );
 };
 

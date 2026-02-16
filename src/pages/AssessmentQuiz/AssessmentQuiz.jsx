@@ -1,26 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AppLayout from '../../components/AppLayout/AppLayout'; // Added Layout
+import StepProgressButton from '../../components/StepProgressButton/StepProgressButton'; // Standard Button
 import './AssessmentQuiz.css';
 
 const AssessmentQuiz = () => {
     const navigate = useNavigate();
     
-    // Multi-question data array
     const questions = [
-        {
-            id: 1,
-            title: " I believe relationships help both people grow.",
-        },
-        {
-            id: 2,
-            title: "When I realise I’ve hurt someone, I try to take responsibility and reconnect.",
-        },
-
-        {
-            id: 3,
-            title: " I rarely talk about your feelings and emotions..",
-        },
-        
+        { id: 1, title: "I believe relationships help both people grow." },
+        { id: 2, title: "When I realise I’ve hurt someone, I try to take responsibility and reconnect." },
+        { id: 3, title: "I rarely talk about your feelings and emotions." },
     ];
 
     const options = [
@@ -35,94 +25,105 @@ const AssessmentQuiz = () => {
     const [selectedOption, setSelectedOption] = useState(null);
     const [isAnimating, setIsAnimating] = useState(false);
 
+    // 🔥 SETTINGS
+    const CURRENT_STEP = currentIndex + 1;
+    const TOTAL_STEPS = 6; // Assume total 6 steps for this card
+
     const handleNext = () => {
         if (!selectedOption) return;
 
+        // 1. Data Prepare
+        const currentQuestionText = questions[currentIndex].title;
+        const selectedText = options.find(opt => opt.id === selectedOption).text;
+        
+        // 2. Local Storage Logic
+        const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+        const quizName = "Growth, Readiness & Emotional Maturity"; // PickCard matching name
+        let quizIndex = progress.findIndex(q => q.quizName === quizName);
+
+        const newAnswer = { 
+            question: currentQuestionText, 
+            selectedOption: selectedText 
+        };
+
+        if (quizIndex !== -1) {
+            const answerIndex = progress[quizIndex].answers.findIndex(a => a.question === currentQuestionText);
+            if (answerIndex !== -1) {
+                progress[quizIndex].answers[answerIndex] = newAnswer;
+            } else {
+                progress[quizIndex].answers.push(newAnswer);
+            }
+        } else {
+            progress.push({ quizName: quizName, answers: [newAnswer] });
+        }
+
+        // 3. Save progress
+        localStorage.setItem("quiz_progress", JSON.stringify(progress));
+
+        // 4. UI Logic
         if (currentIndex < questions.length - 1) {
-            // "Khatnak" transition logic
             setIsAnimating(true);
             setTimeout(() => {
                 setCurrentIndex(currentIndex + 1);
                 setSelectedOption(null);
                 setIsAnimating(false);
-            }, 400); // Animation delay
+            }, 400);
         } else {
-            navigate('/'); // Final screen par jane ke liye
+            navigate('/growth-readiness', { replace: true }); // Next file in the flow
         }
     };
 
     return (
-        <div className="quiz-web-wrapper">
-            <div className="quiz-card-container">
-
-                {/* Header */}
-                <div className="quiz-header-section">
-                    <button className="back-btn-quiz" onClick={() => currentIndex > 0 ? setCurrentIndex(currentIndex - 1) : navigate(-1)}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5D326F" strokeWidth="2.5">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                    </button>
-                    <h2 className="header-title-quiz">Growth, Readiness & Emotional Maturity</h2>
-                </div>
-
-                <div className={`quiz-content-main ${isAnimating ? 'fade-exit' : 'fade-enter'}`}>
-                    {/* Dynamic Question Title */}
-                    <h1 className="question-text-main">
-                        {questions[currentIndex].title}
-                    </h1>
-
-                    {/* Vertical Options List */}
-                    <div className="habit-list-container">
-                        {options.map((opt, index) => (
-                            <div
-                                key={opt.id}
-                                className={`habit-row-item ${selectedOption === opt.id ? 'active' : ''}`}
-                                onClick={() => setSelectedOption(opt.id)}
-                                style={{ animationDelay: `${index * 0.08}s` }}
-                            >
-                                <div className="habit-double-circle">
-                                    <div className="outer-ring">
-                                        <div className="inner-ring">
-                                            <span className="emoji-char">{opt.icon}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <span className="habit-label-text">{opt.text}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Progress Button */}
-                <div className="quiz-footer-action">
-                    <div className="progress-btn-box">
-                        <svg className="svg-ring-container" width="90" height="90">
-                            <circle className="ring-bg" cx="45" cy="45" r="40" stroke="#fce4ec" strokeWidth="3" fill="none" />
-                            <circle
-                                className="ring-fill"
-                                cx="45" cy="45" r="40"
-                                stroke="#5D326F" strokeWidth="3.5" fill="none"
-                                style={{ 
-                                    strokeDashoffset: selectedOption ? 100 : 251,
-                                    transition: '0.6s cubic-bezier(0.4, 0, 0.2, 1)' 
-                                }}
-                            />
-                        </svg>
-                        <button
-                            className={`main-action-btn ${selectedOption ? 'enabled' : ''}`}
-                          
-                            onClick={() => navigate('/growth-readiness')}
-                        >
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3.5">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
+        <AppLayout>
+            <div className="quiz-web-wrapper">
+                <div className="quiz-card-container">
+                    {/* Header */}
+                    <div className="quiz-header-section">
+                        <button className="back-btn-quiz" onClick={() => currentIndex > 0 ? setCurrentIndex(currentIndex - 1) : navigate(-1)}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5D326F" strokeWidth="2.5">
+                                <polyline points="15 18 9 12 15 6"></polyline>
                             </svg>
                         </button>
+                        <h2 className="header-title-quiz">Growth & Maturity</h2>
+                    </div>
+
+                    <div className={`quiz-content-main ${isAnimating ? 'fade-exit' : 'fade-enter'}`}>
+                        <h1 className="question-text-main">{questions[currentIndex].title}</h1>
+
+                        <div className="habit-list-container">
+                            {options.map((opt, index) => (
+                                <div
+                                    key={opt.id}
+                                    className={`habit-row-item ${selectedOption === opt.id ? 'active' : ''}`}
+                                    onClick={() => setSelectedOption(opt.id)}
+                                    style={{ animationDelay: `${index * 0.08}s` }}
+                                >
+                                    <div className="habit-double-circle">
+                                        <div className="outer-ring">
+                                            <div className="inner-ring">
+                                                <span className="emoji-char">{opt.icon}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span className="habit-label-text">{opt.text}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Footer using Standard StepProgressButton */}
+                    <div className="quiz-footer-action">
+                        <StepProgressButton 
+                            currentStep={CURRENT_STEP} 
+                            totalSteps={TOTAL_STEPS} 
+                            disabled={!selectedOption} 
+                            onClick={handleNext}
+                            resetKey={currentIndex} 
+                        />
                     </div>
                 </div>
-
             </div>
-        </div>
+        </AppLayout>
     );
 };
 

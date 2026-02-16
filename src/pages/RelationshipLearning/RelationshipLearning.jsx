@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AppLayout from '../../components/AppLayout/AppLayout';
+import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
 import './RelationshipLearning.css';
+import { handleDynamicSubmit } from '../../utils/quizHelpers';
 
-// Images Import (Aapke paths same rahenge)
+// Images Import
 import pastRelImg from '../../assets/img15/bro.png';
 import familyImg from '../../assets/img15/brosss.png';
 import growthImg from '../../assets/img15/Add Profile Picture 5.png';
@@ -11,93 +14,129 @@ import mediaImg from '../../assets/img15/Hello.png';
 const RelationshipLearning = () => {
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [showExitModal, setShowExitModal] = useState(false);
+
+    // 🔥 ZARURI: Naam exactly wahi jo database accept karta hai
+    const QUIZ_NAME = "Growth, Readiness & Emotional Maturity";
 
     const options = [
-        { 
-            id: 'past', 
-            text: 'My past relationships', 
-            image: pastRelImg 
-        },
-        { 
-            id: 'family', 
-            text: 'Watching family or friends', 
-            image: familyImg 
-        },
-        { 
-            id: 'growth', 
-            text: 'Personal growth and self-reflection', 
-            image: growthImg 
-        },
-        { 
-            id: 'media', 
-            text: 'Movies, books, or social media', 
-            image: mediaImg 
-        }
+        { id: 'past', text: 'My past relationships', image: pastRelImg },
+        { id: 'family', text: 'Watching family or friends', image: familyImg },
+        { id: 'growth', text: 'Personal growth and self-reflection', image: growthImg },
+        { id: 'media', text: 'Movies, books, or social media', image: mediaImg }
     ];
 
+    const handleSubmit = async () => {
+        if (!selectedOption) return;
+        setLoading(true);
+
+        const selectedText = options.find(opt => opt.id === selectedOption).text;
+        const currentQuestion = "I’ve learned the most about relationships from...";
+        const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+
+        let quizIndex = progress.findIndex(q => q.quizName === QUIZ_NAME);
+        const finalAnswer = { question: currentQuestion, selectedOption: selectedText };
+
+        if (quizIndex !== -1) {
+            // Check to avoid duplicates if user goes back and forth
+            const ansIdx = progress[quizIndex].answers.findIndex(a => a.question === currentQuestion);
+            if (ansIdx !== -1) progress[quizIndex].answers[ansIdx] = finalAnswer;
+            else progress[quizIndex].answers.push(finalAnswer);
+        } else {
+            progress.push({ quizName: QUIZ_NAME, answers: [finalAnswer] });
+        }
+
+        // Save locally first
+        localStorage.setItem("quiz_progress", JSON.stringify(progress));
+
+        // 🔥 DYNAMIC CALL: Ye decide karega API call karni hai ya PickCard jana hai
+        await handleDynamicSubmit(progress, navigate, setLoading);
+    };
+
+    const handleExit = () => {
+        const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+        // 🔥 Card tick na ho isliye is card ka data delete kar rahe hain
+        const filteredProgress = progress.filter(q => q.quizName !== QUIZ_NAME);
+        localStorage.setItem("quiz_progress", JSON.stringify(filteredProgress));
+        navigate('/pick-card', { replace: true });
+    };
+
     return (
-        <div className="learning-screen-wrapper">
-            <div className="learning-container">
-                {/* Header */}
-                <header className="learning-header">
-                    <button className="learning-back-btn" onClick={() => navigate(-1)}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#432C51" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                    </button>
-                    <h2 className="learning-category-title">Growth, Readiness & Emotional Maturity</h2>
-                </header>
-
-                {/* Question */}
-                <main className="learning-main-content">
-                    <h1 className="learning-question-text">
-                        I’ve learned the most about relationships from...
-                    </h1>
-
-                    {/* Grid Options */}
-                    <div className="learning-options-grid">
-                        {options.map((option) => (
-                            <div 
-                                key={option.id}
-                                className={`learning-card ${selectedOption === option.id ? 'is-selected' : ''}`}
-                                onClick={() => setSelectedOption(option.id)}
-                            >
-                                <p className="learning-card-label">{option.text}</p>
-                                <div className="learning-image-holder">
-                                    <img src={option.image} alt={option.text} className="learning-illustration" />
-                                </div>
-                            </div>
-                        ))}
+        <AppLayout>
+            {/* EXIT MODAL */}
+            {showExitModal && (
+                <div className="exit-modal-overlay">
+                    <div className="exit-modal-box">
+                        <h3>Exit Quiz?</h3>
+                        <p>Your current progress for this card will not be saved.</p>
+                        <div className="modal-btns">
+                            <button className="cancel-btn" onClick={() => setShowExitModal(false)}>Keep Going</button>
+                            <button className="confirm-btn" onClick={handleExit}>Exit</button>
+                        </div>
                     </div>
-                </main>
+                </div>
+            )}
 
-                {/* Footer with Floating Button */}
-                <footer className="learning-footer">
-                    <div className="learning-fab-container">
-                        <svg className="learning-ring-svg" viewBox="0 0 90 90">
-                            <circle className="learning-ring-track" cx="45" cy="45" r="38" />
-                            <circle 
-                                className="learning-ring-fill" 
-                                cx="45" cy="45" r="38" 
-                                style={{ 
-                                    strokeDashoffset: selectedOption ? 100 : 239 
-                                }} 
-                            />
-                        </svg>
-                        <button 
-                            className={`learning-next-btn ${selectedOption ? 'is-ready' : ''}`} 
-                            onClick={() => selectedOption && navigate('/view-matches')}
-                            disabled={!selectedOption}
-                        >
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
+            <div className={`quiz-web-wrapper ${showExitModal ? 'blur-bg' : ''}`}>
+                <div className="quiz-card-container">
+                    
+                    {/* FIXED HEADER */}
+                    <div className="quiz-header-section">
+                        <button className="back-btn-quiz" onClick={() => setShowExitModal(true)}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5D326F" strokeWidth="2.5">
+                                <polyline points="15 18 9 12 15 6"></polyline>
                             </svg>
                         </button>
+                        <h2 className="header-title-quiz">Growth & Maturity</h2>
                     </div>
-                </footer>
+
+                    {/* 🔥 SCROLLABLE AREA: Taki cards hide na ho */}
+                    <div className="quiz-scroll-area">
+                        <div className="quiz-content-main">
+                            <h1 className="question-text-main">
+                                I’ve learned the most about relationships from...
+                            </h1>
+
+                            <div className="options-grid-layout">
+                                {options.map((option) => (
+                                    <div 
+                                        key={option.id} 
+                                        className={`quiz-opt-card ${selectedOption === option.id ? 'selected' : ''}`} 
+                                        onClick={() => setSelectedOption(option.id)}
+                                    >
+                                        <p className="opt-card-label">{option.text}</p>
+                                        <div className="opt-img-wrapper">
+                                            <img src={option.image} alt={option.text} className="opt-main-img" />
+                                        </div>
+                                        {selectedOption === option.id && (
+                                            <div className="selection-tick-wrapper">
+                                                <div className="horizontal-line-divider"></div>
+                                                <div className="complex-tick-container">
+                                                    <svg className="tick-progress-ring" width="44" height="44"><circle cx="22" cy="22" r="19" stroke="#5D326F" strokeWidth="2" fill="none" strokeDasharray="120" strokeDashoffset="40" strokeLinecap="round" /></svg>
+                                                    <div className="inner-tick-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* FIXED FOOTER */}
+                    <div className="quiz-footer-action">
+                        <StepProgressButton 
+                            currentStep={5} 
+                            totalSteps={5} 
+                            disabled={!selectedOption || loading} 
+                            onClick={handleSubmit} 
+                            resetKey={selectedOption} 
+                        />
+                    </div>
+                </div>
             </div>
-        </div>
+        </AppLayout>
     );
 };
 

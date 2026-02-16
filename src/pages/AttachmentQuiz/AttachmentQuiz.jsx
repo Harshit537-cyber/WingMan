@@ -45,16 +45,55 @@ const AttachmentQuiz = () => {
   const handleNext = () => {
     if (!selectedOption) return;
 
+    // 1. Current Question aur selected Text nikal lo
+    const currentQuestionText = questions[currentIndex].title;
+    const selectedText = options.find(opt => opt.id === selectedOption).text;
+
+    // 2. Local Storage se data fetch karo
+    const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+
+    // 3. Quiz Name - "Attachment & Comfort Zone" (PickCard se match hona chahiye)
+    const quizName = "Attachment & Comfort Zone";
+
+    // Check karo ki ye quiz storage mein hai ya nahi
+    let quizIndex = progress.findIndex(q => q.quizName === quizName);
+
+    const newAnswer = {
+      question: currentQuestionText,
+      selectedOption: selectedText
+    };
+
+    if (quizIndex !== -1) {
+      // Agar quiz mil gaya, toh check karo ye wala question pehle se hai?
+      const answerIndex = progress[quizIndex].answers.findIndex(a => a.question === currentQuestionText);
+
+      if (answerIndex !== -1) {
+        progress[quizIndex].answers[answerIndex] = newAnswer; // Update purana answer
+      } else {
+        progress[quizIndex].answers.push(newAnswer); // Naya answer add karo
+      }
+    } else {
+      // Pehli baar is quiz ka data save ho raha hai
+      progress.push({
+        quizName: quizName,
+        answers: [newAnswer]
+      });
+    }
+
+    // 4. Save updated progress
+    localStorage.setItem("quiz_progress", JSON.stringify(progress));
+
+    // --- UI Navigation Logic ---
     if (currentIndex < questions.length - 1) {
-      // "Khatnak" transition logic
       setIsAnimating(true);
       setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
         setSelectedOption(null);
         setIsAnimating(false);
-      }, 400); // Animation delay
+      }, 400);
     } else {
-      navigate("/life-style-quiz"); // Final screen par jane ke liye
+      // Yahan apni agali file ka route check kar lena
+      navigate("/life-style-quiz", { replace: true });
     }
   };
 
