@@ -1,18 +1,37 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, isSupported } from "firebase/messaging";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD_GgWU2gjS06blWUNdLXfhWyh-QZGBfrI",
-  authDomain: "wingmann-9d804.firebaseapp.com",
-  projectId: "wingmann-9d804",
-  storageBucket: "wingmann-9d804.firebasestorage.app",
-  messagingSenderId: "693887690082",
-  appId: "1:693887690082:web:1392bac0d422797215783b",
-  measurementId: "G-4QLKVSMFTB"
+  apiKey: "AIzaSyBmgUscKRnBUw6Z4nIuKdQfbQTkwuPo8D0",
+  authDomain: "wingmann-authentication.firebaseapp.com",
+  projectId: "wingmann-authentication",
+  storageBucket: "wingmann-authentication.firebasestorage.app",
+  messagingSenderId: "66192972723",
+  appId: "1:66192972723:web:0c7409473e55985e9189c6",
+  measurementId: "G-S5GW2R9FJH"
 };
 
 const app = initializeApp(firebaseConfig);
 
+// ✅ AUTH setup
+export const auth = getAuth(app);
+
+// ✅ Google Login function
+export const signInWithGoogle = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+
+    console.log("✅ User:", result.user);
+    return result.user;
+  } catch (error) {
+    console.error("❌ Google Login Error:", error);
+    return null;
+  }
+};
+
+// ✅ FCM Token function (tumhara existing)
 export const getFCMToken = async () => {
   try {
     const supported = await isSupported();
@@ -23,16 +42,14 @@ export const getFCMToken = async () => {
 
     const messaging = getMessaging(app);
 
-    // Notification permission maangein
     const permission = await Notification.requestPermission();
     if (permission !== "granted") {
       console.warn("❌ Notification permission denied.");
       return null;
     }
 
-    // Token generate karein
     const token = await getToken(messaging, {
-      vapidKey: "BHa43mk1s3dOQMwWcK0c3N13KHxp-3QPU5lJtHc3mKPbbDbiqov076xIh44EhqgmzoDJmpD9qovXqPtcoBDkn7A",
+      vapidKey: "BE4pErl4UEULunN39fdmpJHldfhwslUGkBOG3nx4rxb0TcxLgfrcgilDiZNThepecdAGAFDigU-N55lfUBXd66A",
     });
 
     if (token) {

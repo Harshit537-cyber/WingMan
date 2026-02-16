@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { signInWithGoogle } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 import datingImg from '../../assets/image.svg'; 
@@ -11,31 +12,46 @@ const LandingPage = () => {
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    setLoading(true);
+  setLoading(true);
 
-    // 🔥 FCM Token Generate Start
+  try {
+    // 🔐 Google Login
+    const user = await signInWithGoogle();
+
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+
+    console.log("✅ Logged in user:", user);
+
+    // userId save
+    localStorage.setItem("userId", user.uid);
+
+    // 🔥 FCM token
     const fcmToken = await getFCMToken();
-    
+
     if (fcmToken) {
-      console.log("📲 FCM Token for Wingmann:", fcmToken);
       localStorage.setItem("fcmToken", fcmToken);
 
-      // 🔥 API Call to save token in Backend
       try {
-        // userId abhi temporary bhej rahe hain, login ke baad aap update bhi kar sakte hain
-        const userId = localStorage.getItem("userId") || "guest_user_" + Date.now();
-        await saveFCMTokenAPI(userId, fcmToken);
-        console.log("✅ Token successfully saved to server");
-      } catch (err) {
-        console.error("❌ Failed to save token to server");
+        await saveFCMTokenAPI(user.uid, fcmToken);
+        console.log("✅ Token saved");
+      } catch {
+        console.log("❌ Token save failed");
       }
     }
 
-    // Login logic / Navigation
-    setTimeout(() => {
-      navigate('/gender'); 
-    },120);
-  };
+    // redirect
+    navigate('/gender');
+
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <AppLayout> 
