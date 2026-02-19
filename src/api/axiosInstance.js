@@ -3,7 +3,7 @@ import { getToken } from "../utils/token";
 
 const axiosInstance = axios.create({
   // ✅ Add /api at the end of the URL
-  baseURL: "https://wingmann.onrender.com/api/", 
+  baseURL: "https://wingmann.online/api/", 
   headers: {
     "Content-Type": "application/json",
   },

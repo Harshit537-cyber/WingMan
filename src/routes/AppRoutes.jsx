@@ -86,7 +86,9 @@ import Upset from '../pages/Upset/Upset.jsx';
 import HonestySuccess from '../pages/HonestySuccess/HonestySuccess.jsx';
 import SharingSuccess from '../pages/SharingSuccess/SharingSuccess.jsx';
 import { Landingroutes } from '../pages/landingfront/landingroutes.jsx';
-import Dummy from '../pages/Dummy.jsx';
+import AskMobileNumber from '../pages/AskMobileNumber/AskMobileNumber.jsx';
+import AskEmail from '../pages/AskEmail/AskEmail.jsx';
+
 
 
 
@@ -95,8 +97,9 @@ const AppRoutes = () => {
     <Router>
       <Routes>
         {/* Auth & Onboarding */}
-        {/* <Route path="/" element={<Dummy />} /> */}
         <Route path="/" element={<LandingPage />} />
+        <Route path="/AskMobileNumber" element={<AskMobileNumber />} />
+        <Route path="/gmail" element={<AskEmail />} />
         <Route path="/preferences" element={<Preferences />} />
         <Route path="/appreciate" element={<Appreciate />} />
         <Route path="/honestysuccess" element={<HonestySuccess />} />

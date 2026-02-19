@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Bell, AlignRight, ShieldAlert } from 'lucide-react';
-import axios from 'axios';
+// import axios from 'axios'; // API abhi ke liye band kar rahe hain
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import BottomNav from '../../../components/BottomNav/BottomNav';
 import './Home.css';
@@ -12,6 +12,22 @@ const Home = () => {
   const [userData, setUserData] = useState(null); 
 
   useEffect(() => {
+    // --- TESTING MODE START ---
+    // Jab tak backend connect nahi karte, is part ko use karo:
+    
+    // Fake User Data set kar rahe hain UI check karne ke liye
+    setUserData({
+      firstName: "Handsome",
+      profileComplete: true,
+      isVerified: false // Isko true karke verify wala UI check kar lena
+    });
+
+    setIsQuizSubmitted(false); // Isko change karke quiz status check kar lena
+
+    // --- ORIGINAL CODE (Backend wala) ---
+    // Jab backend ready ho jaye, tab upar wala part hata dena aur neeche wala uncomment karna:
+    
+    /*
     const fetchDashboardData = async () => {
       try {
         const token = localStorage.getItem('auth_token');
@@ -39,11 +55,14 @@ const Home = () => {
 
       } catch (error) {
         console.error("Dashboard error:", error);
-        if (error.response?.status === 401) navigate('/login');
+        // if (error.response?.status === 401) navigate('/login');
       }
     };
 
     fetchDashboardData();
+    */
+    // --- TESTING MODE END ---
+
   }, [navigate]);
 
   return (
@@ -52,7 +71,6 @@ const Home = () => {
         {/* --- HEADER SECTION --- */}
         <header className="home-header">
           <div className="welcome-text">
-            {/* Optional chaining prevents crash if userData is null */}
             <h1>Good Evening, {userData?.firstName || "User"}</h1>
             <p>Let's find you a date!</p>
           </div>
@@ -141,6 +159,8 @@ const Home = () => {
 
           <div className="bottom-spacer"></div>
         </div>
+        
+        {/* Bottom Nav Included */}
         <BottomNav />
       </div>
     </AppLayout>

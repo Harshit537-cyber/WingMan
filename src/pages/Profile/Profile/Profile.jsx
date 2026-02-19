@@ -8,6 +8,7 @@ import AppLayout from '../../../components/AppLayout/AppLayout';
 import BottomNav from '../../../components/BottomNav/BottomNav';
 import profileImg from '../../../assets/profile-user.png';
 import './Profile.css';
+// import ChatWidget from '../../ChatWidget';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -128,7 +129,7 @@ const Profile = () => {
 
           <div className="footer-spacer"></div>
         </div>
-
+        {/* <ChatWidget/> */}
         <BottomNav />
 
         {/* POPUP MODALS */}

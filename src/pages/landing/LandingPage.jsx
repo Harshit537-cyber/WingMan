@@ -43,7 +43,7 @@ const LandingPage = () => {
     }
 
     // redirect
-    navigate('/gender');
+    navigate('/AskMobileNumber');
 
   } catch (error) {
     console.error(error);

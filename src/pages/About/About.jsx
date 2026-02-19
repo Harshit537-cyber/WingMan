@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import AppLayout from '../../components/AppLayout/AppLayout';
 import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
 import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
+import { saveOnboardingData } from '../../api/onboarding.api'; // ✅ Import API function
 import './About.css';
 
 const About = () => {
@@ -16,6 +17,9 @@ const About = () => {
     exercise: '',
   });
 
+  // State to handle API loading status
+  const [isLoading, setIsLoading] = useState(false);
+
   const options = ['Regularly', 'Occasionally', 'Never'];
 
   // Check if all 3 selections are made
@@ -25,7 +29,7 @@ const About = () => {
     setChoices((prev) => ({ ...prev, [category]: value }));
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     // 1. Format lifestyle data
     const formattedLifestyle = {
       drink: choices.drink === 'Never' ? 'no' : 'yes',
@@ -33,7 +37,7 @@ const About = () => {
       exercise: choices.exercise === 'Never' ? 'no' : 'weekly'
     };
 
-    // 2. Combine with previous state
+    // 2. Combine with previous state (Data from all previous screens)
     const finalPayload = {
       ...location.state,
       lifestyle: formattedLifestyle
@@ -41,9 +45,28 @@ const About = () => {
 
     console.log("Final Data collected:", finalPayload);
 
-    // 3. Move to the success screen
-    // We pass the state forward in case the success screen needs it
-    navigate('/honestysuccess', { state: finalPayload });
+    try {
+      setIsLoading(true); // Disable button while saving
+
+      // ✅ 3. Call the API function
+      const response = await saveOnboardingData(finalPayload);
+      
+      console.log("API Response:", response);
+
+      if (response.status === 200 || response.status === 201) {
+        // ✅ 4. Success: Move to the success screen
+        // Passing finalPayload or response data if needed
+        navigate('/honestysuccess', { state: finalPayload }); 
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+
+    } catch (error) {
+      console.error("Error saving data:", error);
+      alert("Failed to save data. Check your internet connection or try again.");
+    } finally {
+      setIsLoading(false); // Re-enable button
+    }
   };
 
   return (
@@ -108,9 +131,12 @@ const About = () => {
           <StepProgressButton 
             currentStep={14} 
             totalSteps={15} 
-            disabled={!isAllSelected} // Button stays disabled until all 3 are selected
+            // Button disabled if selection incomplete OR if API is loading
+            disabled={!isAllSelected || isLoading} 
             onClick={handleNext} 
           />
+          {/* Optional: Show simple loading text */}
+          {isLoading && <p style={{textAlign: 'center', fontSize: '12px', marginTop: '10px'}}>Saving your profile...</p>}
         </div>
 
       </div>
