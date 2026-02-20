@@ -88,6 +88,7 @@ import SharingSuccess from '../pages/SharingSuccess/SharingSuccess.jsx';
 import { Landingroutes } from '../pages/landingfront/landingroutes.jsx';
 import AskMobileNumber from '../pages/AskMobileNumber/AskMobileNumber.jsx';
 import AskEmail from '../pages/AskEmail/AskEmail.jsx';
+import Otp  from '../pages/Otpscreen/Otp.jsx';
 
 
 
@@ -99,6 +100,7 @@ const AppRoutes = () => {
         {/* Auth & Onboarding */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/AskMobileNumber" element={<AskMobileNumber />} />
+        <Route path="/Otp" element={<Otp />} />
         <Route path="/gmail" element={<AskEmail />} />
         <Route path="/preferences" element={<Preferences />} />
         <Route path="/appreciate" element={<Appreciate />} />

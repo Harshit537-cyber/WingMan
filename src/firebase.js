@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, isSupported } from "firebase/messaging";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+//import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBmgUscKRnBUw6Z4nIuKdQfbQTkwuPo8D0",

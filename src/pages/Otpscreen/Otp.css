@@ -1,0 +1,57 @@
+.otp-container {
+  height: 100%;
+  padding: 24px;
+  font-family: "Inter", sans-serif;
+  position: relative;
+}
+
+/* Back Arrow */
+.back-arrow {
+  font-size: 24px;
+  color: #6b4a73;
+  margin-bottom: 20px;
+}
+
+/* Title */
+.otp-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1f1f1f;
+  margin-bottom: 8px;
+}
+
+/* Subtitle */
+.otp-subtitle {
+  font-size: 14px;
+  color: #6f6f6f;
+  max-width: 260px;
+  line-height: 1.4;
+  margin-bottom: 30px;
+}
+
+/* Inputs */
+.otp-inputs {
+  display: flex;
+  gap: 14px;
+}
+
+.otp-inputs input {
+  width: 60px;
+  height: 48px;
+  border-radius: 10px;
+  border: 1.5px solid #7a4b8e;
+  background: #fff;
+  text-align: center;
+  font-size: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+
+
+/* Progress Button Wrapper */
+.progress-btn-wrapper {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
