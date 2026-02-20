@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Pages Imports
-import LandingPage from '../pages/landing/LandingPage';
+import LandingPage from '../pages/landing/LandingPage.jsx';
 import Appreciate from '../pages/Appreciate/Appreciate';
 import Interests from '../pages/Interests/Interests';
 import UploadPhoto from '../pages/UploadPhoto/UploadPhoto';
@@ -82,6 +82,14 @@ import AssessmentQuiz from '../pages/AssessmentQuiz/AssessmentQuiz.jsx';
 import GrowthReadiness from '../pages/GrowthReadiness/GrowthReadiness.jsx';
 import RelationshipLearning from '../pages/RelationshipLearning/RelationshipLearning.jsx';
 import ViewMatches from '../pages/ViewMatches/ViewMatches.jsx';
+import Upset from '../pages/Upset/Upset.jsx';
+import HonestySuccess from '../pages/HonestySuccess/HonestySuccess.jsx';
+import SharingSuccess from '../pages/SharingSuccess/SharingSuccess.jsx';
+
+import AskMobileNumber from '../pages/AskMobileNumber/AskMobileNumber.jsx';
+import AskEmail from '../pages/AskEmail/AskEmail.jsx';
+
+
 
 
 const AppRoutes = () => {
@@ -90,14 +98,18 @@ const AppRoutes = () => {
       <Routes>
         {/* Auth & Onboarding */}
         <Route path="/" element={<LandingPage />} />
-        <Route path="/preference" element={<Preferences />} />
+        <Route path="/AskMobileNumber" element={<AskMobileNumber />} />
+        <Route path="/gmail" element={<AskEmail />} />
+        <Route path="/preferences" element={<Preferences />} />
         <Route path="/appreciate" element={<Appreciate />} />
+        <Route path="/honestysuccess" element={<HonestySuccess />} />
         <Route path="/interests" element={<Interests />} />
         <Route path="/uploads" element={<UploadPhoto />} />
         <Route path="/gender" element={<Gender />} />
         <Route path="/askName" element={<AskName />} />
         <Route path="/hy" element={<SayHy />} />
         <Route path="/birthday" element={<Birthday />} />
+        <Route path="/sharingSuccess" element={<SharingSuccess />} />
 
         {/* <Route path="/hight" element={<AskHight />} /> */}
         <Route path="/celebration" element={<Celebration />} />
@@ -111,6 +123,7 @@ const AppRoutes = () => {
         <Route path='/topic-selector' element={<TopicSelector />} />
         <Route path='/emotional-quiz' element={<EmotionalQuiz />} />
         <Route path='/emotional-communication' element={<EmotionalCommunication />} />
+        <Route path='/upset' element={<Upset />} />
         <Route path='/relationship-quiz' element={<RelationshipInputQuiz />} />
         <Route path='/emotional-commQuiz' element={<EmotionalCommQuiz />} />
         <Route path='/pick-a-card' element={<PickACard />} />
@@ -123,7 +136,7 @@ const AppRoutes = () => {
         <Route path='/conflict-quiz' element={<ConflictQuiz />} />
         <Route path='/repair-patternQuiz' element={<RepairPatternQuiz />} />
         <Route path='/conflict-repair-Quiz' element={<ConflictRepairQuiz />} />
-        <Route path='/Choose-Focus' element={<ChooseFocus />} />
+        {/* <Route path='/Choose-Focus' element={<ChooseFocus />} /> */}
         <Route path='/assessment-quiz' element={<AssessmentQuiz />} />
 
         <Route path='/growth-readiness' element={<GrowthReadiness />} />
@@ -187,9 +200,14 @@ const AppRoutes = () => {
         <Route path="/date-preferences" element={<DatePreferences />} />
         <Route path="/date-requested" element={<DateRequested />} />
         <Route path="/call" element={<CallScreen />} />
+
       </Routes>
     </Router>
   );
 };
 
 export default AppRoutes;
+
+// CancelDate
+// ScheduleConfirmed
+// QuizPrompt
