@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Pages Imports
-import LandingPage from '../pages/landing/LandingPage';
+import LandingPage from '../pages/landing/LandingPage.jsx';
 import Appreciate from '../pages/Appreciate/Appreciate';
 import Interests from '../pages/Interests/Interests';
 import UploadPhoto from '../pages/UploadPhoto/UploadPhoto';
@@ -85,7 +85,7 @@ import ViewMatches from '../pages/ViewMatches/ViewMatches.jsx';
 import Upset from '../pages/Upset/Upset.jsx';
 import HonestySuccess from '../pages/HonestySuccess/HonestySuccess.jsx';
 import SharingSuccess from '../pages/SharingSuccess/SharingSuccess.jsx';
-import { Landingroutes } from '../pages/landingfront/landingroutes.jsx';
+
 import AskMobileNumber from '../pages/AskMobileNumber/AskMobileNumber.jsx';
 import AskEmail from '../pages/AskEmail/AskEmail.jsx';
 

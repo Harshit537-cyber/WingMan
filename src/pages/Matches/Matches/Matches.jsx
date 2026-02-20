@@ -1,13 +1,18 @@
-import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { 
-  ChevronLeft, Bell, AlignRight, Heart, 
-  MapPin, Phone, Target 
-} from 'lucide-react';
-import AppLayout from '../../../components/AppLayout/AppLayout';
-import BottomNav from '../../../components/BottomNav/BottomNav';
-import matchImg from '../../../assets/match-profile.jpg'; 
-import './Matches.css';
+import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  ChevronLeft,
+  Bell,
+  AlignRight,
+  Heart,
+  MapPin,
+  Phone,
+  Target,
+} from "lucide-react";
+import AppLayout from "../../../components/AppLayout/AppLayout";
+import BottomNav from "../../../components/BottomNav/BottomNav";
+import matchImg from "../../../assets/match-profile.jpg";
+import "./Matches.css";
 
 const Matches = () => {
   const navigate = useNavigate();
@@ -17,13 +22,11 @@ const Matches = () => {
 
   const [favorites, setFavorites] = useState({});
   const toggleFavorite = (id) => {
-  setFavorites(prev => ({
-    ...prev,
-    [id]: !prev[id],
-  }));
-};
-
-
+    setFavorites((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
   const profiles = [
     { id: 1, name: "Nikita", age: 28, city: "California", compat: "90%" },
@@ -45,13 +48,12 @@ const Matches = () => {
   return (
     <AppLayout>
       <div className="matches-main-container">
-        
         {/* DOTS PAGINATION */}
         <div className="pagination-dots-wrap">
           {profiles.map((_, idx) => (
-            <span 
-              key={idx} 
-              className={`dot-item ${activeIndex === idx ? 'dot-active' : ''}`}
+            <span
+              key={idx}
+              className={`dot-item ${activeIndex === idx ? "dot-active" : ""}`}
             ></span>
           ))}
         </div>
@@ -62,38 +64,39 @@ const Matches = () => {
             <ChevronLeft size={28} color="#5a3c6d" />
           </button>
           <div className="title-stack">
-             <h1 className="main-match-title">Matches</h1>
-             <p className="sub-match-title">Request a call and see where things go</p>
+            <h1 className="main-match-title">Matches</h1>
+            <p className="sub-match-title">
+              Request a call and see where things go
+            </p>
           </div>
           <div className="header-icons">
-              <div
-                className="bell-box"
-                onClick={() => navigate('/request')}
-                style={{ cursor: 'pointer' }}
-              >
-                <Bell size={26} color="#5a3c6d" />
-                <span className="dot"></span>
-              </div>
-              <button className="menu-btn" onClick={() => navigate('/settings')}>
-                <AlignRight size={28} color="#5a3c6d" />
-              </button>
+            <div
+              className="bell-box"
+              onClick={() => navigate("/request")}
+              style={{ cursor: "pointer" }}
+            >
+              <Bell size={26} color="#5a3c6d" />
+              <span className="dot"></span>
+            </div>
+            <button className="menu-btn" onClick={() => navigate("/settings")}>
+              <AlignRight size={28} color="#5a3c6d" />
+            </button>
           </div>
         </header>
 
         <div className="matches-body-content slide-up">
-          
           <div className="heading-group">
             <h2 className="title-day">Your profiles for the day</h2>
             <div className="note-row">
-               <Target size={16} color="#1a1a1a" />
-               <p>Favourites will stay while new matches roll in</p>
+              <Target size={16} color="#1a1a1a" />
+              <p>Favourites will stay while new matches roll in</p>
             </div>
           </div>
 
           {/* HORIZONTAL CAROUSEL */}
-          <div 
-            className="cards-carousel-container" 
-            ref={scrollRef} 
+          <div
+            className="cards-carousel-container"
+            ref={scrollRef}
             onScroll={handleScroll}
           >
             {profiles.map((profile, index) => {
@@ -101,108 +104,113 @@ const Matches = () => {
               let rotateValue = 0;
               let scaleValue = 1;
               if (index < activeIndex) {
-                 rotateValue = 6.75; 
-                 scaleValue = 0.9;
+                rotateValue = 6.75;
+                scaleValue = 0.9;
               } else if (index > activeIndex) {
-                 rotateValue = -6.75; 
-                 scaleValue = 0.9;
+                rotateValue = -6.75;
+                scaleValue = 0.9;
               }
 
               return (
-                <div 
-                  key={profile.id} 
+                <div
+                  key={profile.id}
                   className="card-anchor"
-                  onClick={() => navigate('/matches/profile-details')}
+                  onClick={() => navigate("/matches/profile-details")}
                   style={{
                     transform: `rotate(${rotateValue}deg) scale(${scaleValue})`,
-                    zIndex: activeIndex === index ? 10 : 1
+                    zIndex: activeIndex === index ? 10 : 1,
                   }}
                 >
                   <div className="actual-match-card">
-                      <img src={matchImg} alt={profile.name} className="match-img-bg" />
-                      
-                      <div className="card-top-ui">
-                         <div className="match-badge">{profile.compat} Compatible</div>
-                         <button
-  className="heart-icon-btn"
-  onClick={(e) => {
-    e.stopPropagation();
-    toggleFavorite(profile.id);
-  }}
->
-  <Heart
-    size={24}
-    strokeWidth={2.5}
-    color={favorites[profile.id] ? "#612E70" : "#fff"}
-    fill={favorites[profile.id] ? "#612E70" : "none"}
-  />
-</button>
+                    <img
+                      src={matchImg}
+                      alt={profile.name}
+                      className="match-img-bg"
+                    />
 
+                    <div className="card-top-ui">
+                      <div className="match-badge">
+                        {profile.compat} Compatible
+                      </div>
+                      <button
+                        className="heart-icon-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFavorite(profile.id);
+                        }}
+                      >
+                        <Heart
+                          size={24}
+                          strokeWidth={2.5}
+                          color={favorites[profile.id] ? "#612E70" : "#fff"}
+                          fill={favorites[profile.id] ? "#612E70" : "none"}
+                        />
+                      </button>
+                    </div>
+
+                    <div className="card-bottom-ui">
+                      <div className="info-wrap">
+                        <h3 className="name-label">
+                          {profile.name}, {profile.age}
+                        </h3>
+                        <div className="loc-wrap">
+                          <MapPin size={16} fill="#fff" color="#fff" />
+                          <span>{profile.city}</span>
+                        </div>
                       </div>
 
-                      <div className="card-bottom-ui">
-                         <div className="info-wrap">
-                            <h3 className="name-label">{profile.name}, {profile.age}</h3>
-                            <div className="loc-wrap">
-                               <MapPin size={16} fill="#fff" color="#fff" />
-                               <span>{profile.city}</span>
-                            </div>
-                         </div>
-                         
-                         <button
-  className="call-btn-fixed"
-  onClick={(e) => {
-    e.stopPropagation();
-    setShowCallPopup(true);
-  }}
->
-
-                            <Phone size={22} fill="#5a3c6d" color="#5a3c6d" />
-                         </button>
-                      </div>
+                      <button
+                        className="call-btn-fixed"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowCallPopup(true);
+                        }}
+                      >
+                        <Phone size={22} fill="#5a3c6d" color="#5a3c6d" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               );
             })}
             <div className="carousel-end-spacer"></div>
           </div>
-
         </div>
 
         {showCallPopup && (
-  <div className="call-popup-overlay" onClick={() => setShowCallPopup(false)}>
-    <div
-      className="call-popup-card"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <button
-        className="popup-close-btn"
-        onClick={() => setShowCallPopup(false)}
-      >
-        ✕
-      </button>
+          <div
+            className="call-popup-overlay"
+            onClick={() => setShowCallPopup(false)}
+          >
+            <div
+              className="call-popup-card"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="popup-close-btn"
+                onClick={() => setShowCallPopup(false)}
+              >
+                ✕
+              </button>
 
-      <div className="popup-icon">
-        
-      </div>
+              <div className="popup-icon"></div>
 
-      <h2 className="popup-title">Request for a call</h2>
+              <h2 className="popup-title">Request for a call</h2>
 
-      <p className="popup-desc">
-        For safety reasons we suggest not to share personal information too early.
-        Don't rush trust.
-      </p>
+              <p className="popup-desc">
+                For safety reasons we suggest not to share personal information
+                too early. Don't rush trust.
+              </p>
 
-      <button
-        className="popup-primary-btn"
-        onClick={() => setShowCallPopup(false)}
-      >
-        Send Request
-      </button>
-    </div>
-  </div>
-)}
-
+              <button
+                className="popup-primary-btn"
+                onClick={() => setShowCallPopup(false)}
+              >
+                Send Request
+              </button>
+            </div>
+          </div>
+        )}
 
         <BottomNav />
       </div>

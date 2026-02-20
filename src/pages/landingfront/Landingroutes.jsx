@@ -3,12 +3,14 @@ import Header from './header/header'
 import HeroSection from './hero/Hero'
 import { Whyhow } from './whyhow/Whyhow'
 
-export const Landingroutes = () => {
+const LandingRoutes = () => {
   return (
     <>
-    <Header/>
-    <HeroSection/>
-    <Whyhow/>
+      <Header />
+      <HeroSection />
+      <Whyhow />
     </>
-  )
-}
+  );
+};
+
+export default LandingRoutes;
