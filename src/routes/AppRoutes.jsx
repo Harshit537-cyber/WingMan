@@ -83,7 +83,7 @@ import GrowthReadiness from '../pages/GrowthReadiness/GrowthReadiness.jsx';
 import RelationshipLearning from '../pages/RelationshipLearning/RelationshipLearning.jsx';
 import ViewMatches from '../pages/ViewMatches/ViewMatches.jsx';
 import Upset from '../pages/Upset/Upset.jsx';
-import HonestySuccess from '../pages/HonestySuccess/HonestySuccess.jsx';
+import HonestySuccess from '../pages/HonestySuccess/HonestySuccess';
 import SharingSuccess from '../pages/SharingSuccess/SharingSuccess.jsx';
 
 import AskMobileNumber from '../pages/AskMobileNumber/AskMobileNumber.jsx';
