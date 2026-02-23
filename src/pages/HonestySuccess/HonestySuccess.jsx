@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AppLayout from '../../components/AppLayout/AppLayout';
-import confettiImg from '../../assets/confetti.png'; 
+import confettiImg from '../../assets/Confetti.png'; 
 import rightHandImg from '../../assets/wellcome/hand-right.svg';
 import leftHandImg from '../../assets/wellcome/hand-left.svg'; 
 import './HonestySuccess.css';
