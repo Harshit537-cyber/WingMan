@@ -8,9 +8,12 @@ import AppLayout from '../../../components/AppLayout/AppLayout';
 import BottomNav from '../../../components/BottomNav/BottomNav';
 import profileImg from '../../../assets/profile-user.png';
 import './Profile.css';
+import { useUser } from "../../../context/userinfo";
 // import ChatWidget from '../../ChatWidget';
 
 const Profile = () => {
+  const { user, loading } = useUser();
+
   const navigate = useNavigate();
   const [activeModal, setActiveModal] = useState(null);
 
@@ -100,8 +103,8 @@ const Profile = () => {
               </div>
             </div>
             <div className="user-meta">
-              <h2>GFXAgency</h2>
-              <p>UI UX DESIGN</p>
+              <h2>{user?.name}</h2>
+              <p>{user?.career_info}</p>
             </div>
           </div>
 

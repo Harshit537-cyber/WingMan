@@ -11,6 +11,7 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 const AskMobileNumber = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  console.log(location.state)
 
   // ✅ Start with 91
   const [mobile, setMobile] = useState("91");
@@ -41,7 +42,7 @@ const AskMobileNumber = () => {
   // 🔥 Send OTP
   const sendOTP = async (phoneNumber) => {
     try {
-      console.log("📞 Sending OTP to:", phoneNumber);
+      
 
       setupRecaptcha();
 

@@ -24,7 +24,10 @@ const Gender = () => {
 
     // 3. ✅ Pass the accumulated data to the next screen (NO API CALL)
     navigate("/askName", {
-      state: updatedData,
+      state: {
+     ...location.state, 
+    ...updatedData            
+  },
     });
   };
 

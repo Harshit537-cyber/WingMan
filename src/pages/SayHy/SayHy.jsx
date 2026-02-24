@@ -11,7 +11,7 @@ import femaleImg from '../../assets/female-wingman.svg';
 const SayHy = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
+  
   const name = location.state?.name || "User";
   const gender = location.state?.gender || "female";
 

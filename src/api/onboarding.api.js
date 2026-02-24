@@ -8,7 +8,7 @@ import { getToken } from "../utils/token";
  * @param {Object} payload
  */
 export const saveOnboardingData = (payload) => {
-  return axiosInstance.post("/api/userData/create", payload);
+  return axiosInstance.post("onboarding", payload);
 };
 
 /**
