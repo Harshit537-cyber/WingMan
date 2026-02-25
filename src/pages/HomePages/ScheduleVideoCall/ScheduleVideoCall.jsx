@@ -6,12 +6,15 @@ import './ScheduleVideoCall.css';
 const ScheduleVideoCall = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  console.log(location.state)
 
   // Dynamic Data from Previous Screen
-  const selectedDate = location.state?.date || 16;
-  const selectedMonth = location.state?.month || "January";
-  const selectedYear = location.state?.year || "2025";
-  const selectedTime = location.state?.time || "11:00 AM";
+  const selectedDate =  new Date(location.state.booking?.date).getDate()
+  const selectedMonth = location.state.booking?.month || "January";
+  const selectedYear = location.state.booking?.year || "2025";
+  const selectedTime = location.state?.time;
+  console.log('selectedTime',selectedTime)
+  const fromattedtimne = selectedTime?.split(" ")[0];
 
   // Calculate 30 min end time
   const getEndTime = (start) => {
@@ -39,12 +42,13 @@ const ScheduleVideoCall = () => {
                 </div>
                 <div className="calendar-header-strip"></div>
                 <div className="calendar-main-body">
-                  <span className="dynamic-day">{selectedDate}</span>
+                  <span className="dynamic-day">{fromattedtimne}</span>
                 </div>
               </div>
 
               <div className="booking-info">
                 <h2 className="display-date">{selectedMonth} {selectedDate}, {selectedYear}</h2>
+               
                 <p className="display-time">{selectedTime} - {getEndTime(selectedTime)}</p>
               </div>
             </div>

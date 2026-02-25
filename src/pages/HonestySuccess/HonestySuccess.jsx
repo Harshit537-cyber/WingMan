@@ -12,7 +12,7 @@ const HonestySuccess = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/login', { state: { ...location.state } });
+      navigate('/uploads', { state: { ...location.state } });
     }, 3500); 
     return () => clearTimeout(timer);
   }, [navigate, location.state]);
