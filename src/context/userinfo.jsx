@@ -12,6 +12,7 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [avator, setAvator] = useState([])
 
   // ✅ Fetch user
   const fetchUser = useCallback(async () => {
@@ -35,6 +36,8 @@ export const UserProvider = ({ children }) => {
 
       const res = await axiosInstance.get(`users/${user._id}`);
       setUser(res.data.user);
+      console.log(res.data)
+      setAvator(res.data.avatar)
 
       setUser(res.data.data);
     } catch (error) {
@@ -54,6 +57,7 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         user,
+        avator,
         setUser,
         fetchUser, // 👈 you can call this anywhere to re-fetch
         loading,

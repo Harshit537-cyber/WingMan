@@ -6,11 +6,13 @@ import { savePreferences } from "../../api/onboarding.api"; // ✅ Import API
 import "./Preferences.css";
 import { useLocation } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
+import { useUser } from '../../context/userinfo'
 const Preferences = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false); // ✅ Loading state
   const location = useLocation();
   const photos = location.state?.photos || {};
+  const { fetchUser } = useUser()
 
   // States for Sliders
   const [ageRange, setAgeRange] = useState({ min: 18, max: 50 });
@@ -20,69 +22,76 @@ const Preferences = () => {
   const [religion, setReligion] = useState("Hindu");
   const [ethnicity, setEthnicity] = useState("Tamil Nadu");
   const [language, setLanguage] = useState("Hindi");
+  
+const handleContinue = async () => {
+  setLoading(true);
 
-  const handleContinue = async () => {
-    setLoading(true);
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user._id;
 
-    try {
-      const user = JSON.parse(localStorage.getItem("user"));
-      console.log("user : ", user);
+    // Convert height to cm
+    const heightMinCm = Math.round(heightRange.min * 30.48);
+    const heightMaxCm = Math.round(heightRange.max * 30.48);
 
-      // Decode user ID
+    // Create FormData
+    const formData = new FormData();
 
-      const userId = user._id;
-      console.log("user Id : ", userId);
+    // Append photos
+    Object.values(photos).forEach((file) => {
+      formData.append("photos", file);
+    });
 
-      // Convert height to cm
-      const heightMinCm = Math.round(heightRange.min * 30.48);
-      const heightMaxCm = Math.round(heightRange.max * 30.48);
+    const preferences = {
+      age: {
+        min: ageRange.min,
+        max: ageRange.max,
+      },
+      height: {
+        min: heightMinCm,
+        max: heightMaxCm,
+      },
+      religion,
+      ethnicity,
+      spoken_language: [language],
+    };
 
-      // Create FormData
-      const formData = new FormData();
+    formData.append("preferences", JSON.stringify(preferences));
 
-      // ✅ Append photos
-      Object.values(photos).forEach((file) => {
-        formData.append("photos", file);
-      });
-
-      const preferences = {
-        age: {
-          min: ageRange.min,
-          max: ageRange.max,
+    // ✅ Create BOTH requests (parallel execution)
+    const uploadRequest = axiosInstance.post(
+      `/uploadPhotosAndPreferences/${userId}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
         },
-        height: {
-          min: heightMinCm,
-          max: heightMaxCm,
-        },
-        religion,
-        ethnicity,
-        spoken_language: [language], // match your required structure
-      };
+      }
+    );
 
-      formData.append("preferences", JSON.stringify(preferences));
+    const emailRequest = axiosInstance.post(
+      `/onboarding-email/${userId}`
+    );
 
-      const response = await axiosInstance.post(
-        `/uploadPhotosAndPreferences/${userId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        },
-      );
+    // ✅ Run simultaneously
+    const [uploadResponse, emailResponse] = await Promise.all([
+      uploadRequest,
+      emailRequest,
+    ]);
 
-      const data = await response.data;
+    console.log("Upload success:", uploadResponse.data);
+    console.log("Email sent:", emailResponse.data);
 
-     
-        navigate("/sharingSuccess");
-     
-    } catch (error) {
-      console.error("Upload error:", error);
-      alert("Something went wrong");
-    } finally {
-      setLoading(false);
-    }
-  };
+    fetchUser();
+    navigate("/sharingSuccess");
+
+  } catch (error) {
+    console.error("Upload error:", error);
+    alert("Something went wrong");
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Logic for Slider UI positioning
   const ageMinPercent = ((ageRange.min - 18) / (60 - 18)) * 100;

@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
   // https://api.wingmann.online/api
   // http://localhost:5000/api
   // ✅ Add /api at the end of the URL
-  baseURL: "https://api.wingmann.online/api", 
+  baseURL: "http://localhost:5000/api", 
   headers: {
     "Content-Type": "application/json",
   },

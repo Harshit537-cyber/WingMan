@@ -3,11 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import './VibeSurvey.css';
-
+import {useUser } from '../../../context/userinfo'
 const VibeSurvey = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const { avator, fetchUser } = useUser();
+  console.log(avator)
+
+
+
 
   // 6 Photos as per your requirement
   const photos = [
@@ -64,13 +69,13 @@ const VibeSurvey = () => {
           </div>
 
           <div className="vibe-photo-grid-fixed">
-            {photos.map((photo) => (
+            {avator.map((photo) => (
               <div 
                 key={photo.id} 
                 className={`vibe-image-card ${selectedPhoto === photo.id ? 'vibe-selected' : ''}`}
                 onClick={() => setSelectedPhoto(photo.id)}
               >
-                <img src={photo.url} alt="vibe-option" />
+                <img src={photo.imgUrl} alt="vibe-option" />
               </div>
             ))}
           </div>
