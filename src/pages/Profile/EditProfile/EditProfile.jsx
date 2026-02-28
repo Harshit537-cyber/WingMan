@@ -15,7 +15,9 @@ const EditProfile = () => {
   const [occupation, setOccupation] = useState("");
   const [location, setLocation] = useState("");
   const [interest, setInterest] = useState([]);
- 
+  const [photo, setPhoto] = useState([]);
+  const [about, setAbout] = useState([]);
+
 
   useEffect(() => {
     if (user) {
@@ -23,8 +25,22 @@ const EditProfile = () => {
       setOccupation(user?.career_info);
       setLocation(user?.location?.address);
       setInterest(user?.interest);
+      setPhoto(user?.photos);
+      setAbout(user?.preferences);
     }
   }, [user]);
+
+  const formatValue = (value) => {
+    if (Array.isArray(value)) {
+      return value.join(", ");
+    }
+
+    if (typeof value === "object" && value !== null) {
+      return `${value.min} - ${value.max}`;
+    }
+
+    return value;
+  };
 
   return (
     <AppLayout>
@@ -84,14 +100,17 @@ const EditProfile = () => {
             {/* About Me Section inside the same card */}
             <div className="ep-section-header">About me</div>
             <div className="ep-tags-grid">
-              <div className="ep-tag-chip">🌍 Bengaluru, India</div>
-              <div className="ep-tag-chip">Regularly 🏃‍♂️</div>
-              <div className="ep-tag-chip">Hindu</div>
+              {Object.entries(about).map(([key, value]) => (
+                <div key={key} className="ep-tag-chip">
+                  <span key={key} className="tag">
+                    {key}: {formatValue(value)}
+                    {/* {formatValue(value)} */}
+                  </span>
+                </div>
+              ))}
               <div className="ep-add-tag-circle">
                 <Plus size={18} color="#D1BBD8" strokeWidth={3} />
               </div>
-              <div className="ep-tag-chip">ocasionally 🍷</div>
-              <div className="ep-tag-chip">Rarely 🚬</div>
             </div>
           </div>
 
@@ -117,9 +136,9 @@ const EditProfile = () => {
           {/* --- PHOTO GRID CARD --- */}
           <div className="ep-main-card ep-photo-card">
             <div className="ep-photo-grid">
-              {[1, 2, 3, 4, 5].map((i) => (
+              {photo.map((value, i) => (
                 <div key={i} className="ep-photo-slot">
-                  <img src={userImg} alt="slot" />
+                  <img src={value} alt="slot" />
                 </div>
               ))}
               <div className="ep-photo-slot ep-add-slot">
