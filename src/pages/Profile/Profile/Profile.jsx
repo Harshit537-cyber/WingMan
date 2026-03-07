@@ -10,10 +10,10 @@ import profileImg from '../../../assets/profile-user.png';
 import './Profile.css';
 import { useUser } from "../../../context/userinfo";
 // import ChatWidget from '../../ChatWidget';
-
+import calculateProfileCompletion from '../../../utils/Homefunc'
 const Profile = () => {
   const { user, loading } = useUser();
-
+   const completion = calculateProfileCompletion(user);
   const navigate = useNavigate();
   const [activeModal, setActiveModal] = useState(null);
 
@@ -31,7 +31,7 @@ const Profile = () => {
 
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (75 / 100) * circumference;
+  const strokeDashoffset = circumference - (completion / 100) * circumference;
 
   // Updated Menu Items with specific routes
   const menuItems = [
@@ -89,7 +89,7 @@ const Profile = () => {
           {/* PROFILE RING SECTION */}
           <div className="profile-header-section slide-up">
             <div className="ring-box">
-              <span className="perc-label">75%</span>
+              <span className="perc-label">{completion}</span>
               <svg className="svg-ring" width="120" height="120">
                 <circle
                   className="ring-path"
@@ -99,12 +99,19 @@ const Profile = () => {
                 />
               </svg>
               <div className="user-avatar">
-                <img src={profileImg} alt="user" />
+                 <img
+                src={user?.profilephoto || "https://i.pravatar.cc/150?img=12"}
+                alt="user"
+                className="ep-main-i"
+                onError={(e) => {
+                  e.target.src = "https://i.pravatar.cc/150?img=12";
+                }}
+              />
               </div>
             </div>
             <div className="user-meta">
               <h2>{user?.name}</h2>
-              <p>{user?.career_info}</p>
+            {/* //  <p>{user?.story}</p> */}
             </div>
           </div>
 

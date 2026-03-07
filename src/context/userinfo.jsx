@@ -12,7 +12,8 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [avator, setAvator] = useState([])
+  const [avator, setAvator] = useState([]);
+  const [quiz, setQuiz] = useState(false)
 
   // ✅ Fetch user
   const fetchUser = useCallback(async () => {
@@ -38,7 +39,7 @@ export const UserProvider = ({ children }) => {
       setUser(res.data.user);
       console.log(res.data)
       setAvator(res.data.avatar)
-
+      setQuiz(res.data.quiz)
       setUser(res.data.data);
     } catch (error) {
       console.error("Fetch user error:", error);
@@ -59,6 +60,7 @@ export const UserProvider = ({ children }) => {
         user,
         avator,
         setUser,
+        quiz,
         fetchUser, // 👈 you can call this anywhere to re-fetch
         loading,
       }}

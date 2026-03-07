@@ -18,7 +18,6 @@ const EditProfile = () => {
   const [photo, setPhoto] = useState([]);
   const [about, setAbout] = useState([]);
 
-
   useEffect(() => {
     if (user) {
       setName(user.name);
@@ -52,7 +51,14 @@ const EditProfile = () => {
           {/* --- PROFILE HEADER --- */}
           <div className="ep-header">
             <div className="ep-avatar-box">
-              <img src={userImg} alt="user" className="ep-main-img" />
+              <img
+                src={user?.profilephoto || "https://i.pravatar.cc/150?img=12"}
+                alt="user"
+                className="ep-main-i"
+                onError={(e) => {
+                  e.target.src = "https://i.pravatar.cc/150?img=12";
+                }}
+              />
               <div className="ep-camera-btn">
                 <Camera size={22} color="white" fill="currentColor" />
               </div>

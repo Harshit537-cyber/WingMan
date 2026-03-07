@@ -11,7 +11,9 @@ const Home = () => {
   const navigate = useNavigate();
   const [isQuizSubmitted, setIsQuizSubmitted] = useState(false);
   const [userData, setUserData] = useState(null);
-  const { user, loading } = useUser();
+  const { user, loading, quiz } = useUser();
+  console.log("quiz : ", quiz);
+  console.log(user);
   const completion = calculateProfileCompletion(user);
 
   useEffect(() => {
@@ -106,11 +108,11 @@ const Home = () => {
               </div>
               <div className="dash-card">
                 <span>Compatibility Quiz</span>
-                <h3>{isQuizSubmitted ? "100%" : "10%"}</h3>
+                <h3>{quiz ? "100%" : "0%"}</h3>
                 <div className="progress-container">
                   <div
-                    className={`progress-bar ${isQuizSubmitted ? "filled" : "partial"}`}
-                    style={{ width: isQuizSubmitted ? "100%" : "10%" }}
+                    className={`progress-bar ${quiz ? "filled" : "partial"}`}
+                    style={{ width: quiz ? "100%" : "10%" }}
                   ></div>
                 </div>
               </div>
@@ -158,7 +160,11 @@ const Home = () => {
               <h2 className="section-title">Know Your Type</h2>
               <button
                 className="outline-purple-btn"
-                onClick={() => navigate("/quiz-world")}
+                onClick={() => {
+                  if (quiz) return; // stop navigation
+                  navigate("/quiz-world");
+                }}
+                disabled={quiz}
               >
                 Take A Quiz
               </button>

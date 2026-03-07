@@ -1,16 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { 
-  ChevronLeft, Heart, Phone, Globe, PersonStanding, 
-  Moon, Wine, Cigarette, Languages, Accessibility, 
-  Film, Coffee, X, PhoneCall 
-} from 'lucide-react';
-import AppLayout from '../../../components/AppLayout/AppLayout';
-import BottomNav from '../../../components/BottomNav/BottomNav';
-import profileHero from '../../../assets/match-profile.jpg'; 
-import './ProfileDetail.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import {
+  ChevronLeft,
+  Heart,
+  Phone,
+  Globe,
+  PersonStanding,
+  Moon,
+  Wine,
+  Cigarette,
+  Languages,
+  Accessibility,
+  Film,
+  Coffee,
+  X,
+  PhoneCall,
+} from "lucide-react";
+import AppLayout from "../../../components/AppLayout/AppLayout";
+import BottomNav from "../../../components/BottomNav/BottomNav";
+import profileHero from "../../../assets/match-profile.jpg";
+import "./ProfileDetail.css";
 
 const ProfileDetail = () => {
+  const location = useLocation();
+  const profile = location.state?.profile;
+  console.log(profile);
   const navigate = useNavigate();
   const [showCallModal, setShowCallModal] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false); // State for heart fill
@@ -18,16 +33,18 @@ const ProfileDetail = () => {
   // Background scroll lock logic
   useEffect(() => {
     if (showCallModal) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
-    return () => { document.body.style.overflow = 'unset'; };
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, [showCallModal]);
 
   const openModal = () => setShowCallModal(true);
   const closeModal = () => setShowCallModal(false);
-  const handleGalleryClick = () => navigate('/gallery');
+  const handleGalleryClick = () => navigate("/gallery");
   const toggleFavorite = (e) => {
     e.stopPropagation();
     setIsFavorite(!isFavorite);
@@ -35,32 +52,59 @@ const ProfileDetail = () => {
 
   const handleSendRequest = () => {
     closeModal();
-    navigate('/date-preferences');
+    navigate("/date-preferences");
   };
+
+  const formatValue = (value) => {
+    if (Array.isArray(value)) {
+      return value.join(", ");
+    }
+
+    if (typeof value === "object" && value !== null) {
+      return `${value.min} - ${value.max}`;
+    }
+
+    return value;
+  };
+
 
   return (
     <AppLayout>
       <div className="detail-main-container">
-        
         {/* Everything inside this div will scroll together */}
-        <div className={`detail-scroll-area ${showCallModal ? 'blur-content' : ''}`}>
-          
+        <div
+          className={`detail-scroll-area ${showCallModal ? "blur-content" : ""}`}
+        >
           {/* HERO SECTION - Now inside scroll area */}
           <div className="hero-section">
-            <img src={profileHero} alt="Jessica" className="hero-img animate-zoom" />
-            <button className="top-back-btn pop-in" onClick={() => navigate(-1)}>
+            {/* <img src={profileHero} alt="Jessica" className="hero-img animate-zoom" /> */}
+            <img
+              src={profile?.profilephoto || "https://i.pravatar.cc/150?img=12"}
+              alt="user"
+              className="hero-img animate-zoom"
+              onError={(e) => {
+                e.target.src = "https://i.pravatar.cc/150?img=12";
+              }}
+            />
+            <button
+              className="top-back-btn pop-in"
+              onClick={() => navigate(-1)}
+            >
               <ChevronLeft size={24} color="#5a3c6d" />
             </button>
-            
+
             {/* Heart Icon with Toggle Logic */}
-<button className="top-fav-heart pop-in-delay" onClick={toggleFavorite}>
-  <Heart 
-    size={28} 
-    color={isFavorite ? "rgb(90, 60, 109)" : "#fff"} 
-    fill={isFavorite ? "rgb(90, 60, 109)" : "none"} 
-    className={isFavorite ? "heart-pop" : ""}
-  />
-</button>
+            <button
+              className="top-fav-heart pop-in-delay"
+              onClick={toggleFavorite}
+            >
+              <Heart
+                size={28}
+                color={isFavorite ? "rgb(90, 60, 109)" : "#fff"}
+                fill={isFavorite ? "rgb(90, 60, 109)" : "none"}
+                className={isFavorite ? "heart-pop" : ""}
+              />
+            </button>
 
             <div className="hero-compat-badge slide-right">90% Compatible</div>
           </div>
@@ -69,10 +113,13 @@ const ProfileDetail = () => {
             {/* INTRO SECTION */}
             <div className="profile-intro-row slide-up staggered-1">
               <div className="intro-text">
-                <h1 className="user-name-age">Jessica Parker, 23</h1>
-                <p className="user-profession">Software Developer</p>
+                <h1 className="user-name-age">{profile?.name}</h1>
+                <p className="user-profession">{profile?.story}</p>
               </div>
-              <button className="call-action-square" onClick={() => navigate('/call')}>
+              <button
+                className="call-action-square"
+                onClick={() => navigate("/call")}
+              >
                 <Phone size={24} color="#5a3c6d" fill="#5a3c6d" />
               </button>
             </div>
@@ -83,19 +130,21 @@ const ProfileDetail = () => {
                 <h3 className="block-title">Location</h3>
                 <span className="dist-badge">1 km</span>
               </div>
-              <p className="block-desc">Chicago, IL United States</p>
+              <p className="block-desc">{profile?.state || 'Bihar'}</p>
             </div>
 
             {/* ABOUT ME */}
             <div className="info-block slide-up staggered-3">
               <h3 className="block-title">About me</h3>
               <div className="chips-grid">
-                <div className="info-chip"><Globe size={16} /> Bengaluru, India</div>
-                <div className="info-chip"><PersonStanding size={16} /> Regularly</div>
-                <div className="info-chip"><Moon size={16} /> Hindu</div>
-                <div className="info-chip"><Wine size={16} /> ocasionally</div>
-                <div className="info-chip"><Cigarette size={16} /> Rarely</div>
-                <div className="info-chip"><Languages size={16} /> English</div>
+               {Object.entries(profile?.preferences).map(([key, value]) => (
+                <div key={key} className="ep-tag-chip">
+                  <span key={key} className="tag">
+                    {key}: {formatValue(value)}
+                    {/* {formatValue(value)} */}
+                  </span>
+                </div>
+              ))}
               </div>
             </div>
 
@@ -103,7 +152,7 @@ const ProfileDetail = () => {
             <div className="info-block slide-up staggered-4">
               <h3 className="block-title">My Story</h3>
               <p className="story-text">
-                My name is Jessica Parker and I enjoy meeting new people and finding ways to help them have an uplifting experience. I enjoy reading..
+               {profile?.story}
                 <span className="read-more">Read more</span>
               </p>
             </div>
@@ -112,9 +161,15 @@ const ProfileDetail = () => {
             <div className="info-block slide-up staggered-5">
               <h3 className="block-title">Interests</h3>
               <div className="chips-grid">
-                <div className="interest-chip"><Accessibility size={16} color="#f1c40f" /> Yoga</div>
-                <div className="interest-chip"><Film size={16} /> Film lover</div>
-                <div className="interest-chip"><Coffee size={16} color="#d35400" /> Matcha</div>
+                <div className="interest-chip">
+                  <Accessibility size={16} color="#f1c40f" /> Yoga
+                </div>
+                <div className="interest-chip">
+                  <Film size={16} /> Film lover
+                </div>
+                <div className="interest-chip">
+                  <Coffee size={16} color="#d35400" /> Matcha
+                </div>
               </div>
             </div>
 
@@ -122,20 +177,43 @@ const ProfileDetail = () => {
             <div className="gallery-section slide-up staggered-6">
               <div className="block-header">
                 <h3 className="block-title">Gallery</h3>
-                <span className="see-all" onClick={handleGalleryClick}>See all</span>
+                <span className="see-all" onClick={handleGalleryClick}>
+                  See all
+                </span>
               </div>
               <div className="gallery-grid">
-                <div className="gal-big clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g1" /></div>
-                <div className="gal-big clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g2" /></div>
-                <div className="gal-small clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g3" /></div>
-                <div className="gal-small clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g4" /></div>
-                <div className="gal-small clickable" onClick={handleGalleryClick}><img src={profileHero} alt="g5" /></div>
+                <div className="gal-big clickable" onClick={handleGalleryClick}>
+                  <img src={profileHero} alt="g1" />
+                </div>
+                <div className="gal-big clickable" onClick={handleGalleryClick}>
+                  <img src={profileHero} alt="g2" />
+                </div>
+                <div
+                  className="gal-small clickable"
+                  onClick={handleGalleryClick}
+                >
+                  <img src={profileHero} alt="g3" />
+                </div>
+                <div
+                  className="gal-small clickable"
+                  onClick={handleGalleryClick}
+                >
+                  <img src={profileHero} alt="g4" />
+                </div>
+                <div
+                  className="gal-small clickable"
+                  onClick={handleGalleryClick}
+                >
+                  <img src={profileHero} alt="g5" />
+                </div>
               </div>
             </div>
 
             {/* REQUEST BUTTON */}
             <div className="request-btn-container slide-up staggered-7">
-              <button className="request-btn" onClick={openModal}>Request For Call</button>
+              <button className="request-btn" onClick={openModal}>
+                Request For Call
+              </button>
             </div>
 
             <div className="footer-spacer"></div>
@@ -147,19 +225,26 @@ const ProfileDetail = () => {
         {/* MODAL SECTION */}
         {showCallModal && (
           <div className="modal-overlay" onClick={closeModal}>
-            <div className="modal-content slide-up-modal" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="modal-content slide-up-modal"
+              onClick={(e) => e.stopPropagation()}
+            >
               <button className="modal-close-x" onClick={closeModal}>
                 <X size={24} color="#5a3c6d" />
               </button>
               <div className="modal-inner">
                 <div className="call-icon-illustration animate-pulse-slow">
-                   <PhoneCall size={60} color="#4A90E2" strokeWidth={1.5} />
+                  <PhoneCall size={60} color="#4A90E2" strokeWidth={1.5} />
                 </div>
                 <h2 className="modal-title">Request for a call</h2>
                 <p className="modal-subtitle">
-                  For safety reasons we suggest not to share personal information too early. Don't rush trust.
+                  For safety reasons we suggest not to share personal
+                  information too early. Don't rush trust.
                 </p>
-                <button className="modal-primary-btn" onClick={handleSendRequest}>
+                <button
+                  className="modal-primary-btn"
+                  onClick={handleSendRequest}
+                >
                   Send Request
                 </button>
               </div>

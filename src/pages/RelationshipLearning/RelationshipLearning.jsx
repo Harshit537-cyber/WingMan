@@ -4,6 +4,7 @@ import AppLayout from '../../components/AppLayout/AppLayout';
 import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
 import './RelationshipLearning.css';
 import { handleDynamicSubmit } from '../../utils/quizHelpers';
+import { useUser } from '../../context/userinfo'
 
 // Images Import
 import pastRelImg from '../../assets/img15/bro.png';
@@ -16,6 +17,7 @@ const RelationshipLearning = () => {
     const [selectedOption, setSelectedOption] = useState(null);
     const [loading, setLoading] = useState(false);
     const [showExitModal, setShowExitModal] = useState(false);
+    const {fetchUser} = useUser();
 
     // 🔥 ZARURI: Naam exactly wahi jo database accept karta hai
     const QUIZ_NAME = "Growth, Readiness & Emotional Maturity";
@@ -51,6 +53,7 @@ const RelationshipLearning = () => {
         localStorage.setItem("quiz_progress", JSON.stringify(progress));
 
         // 🔥 DYNAMIC CALL: Ye decide karega API call karni hai ya PickCard jana hai
+        fetchUser()
         await handleDynamicSubmit(progress, navigate, setLoading);
     };
 

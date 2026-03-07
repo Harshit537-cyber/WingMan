@@ -13,12 +13,14 @@ import AppLayout from "../../../components/AppLayout/AppLayout";
 import BottomNav from "../../../components/BottomNav/BottomNav";
 import matchImg from "../../../assets/match-profile.jpg";
 import "./Matches.css";
+import { useRecommendedProfiles } from '../../../context/userprofileRecomm'
 
 const Matches = () => {
   const navigate = useNavigate();
   const scrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showCallPopup, setShowCallPopup] = useState(false);
+  const { profiles } = useRecommendedProfiles()
 
   const [favorites, setFavorites] = useState({});
   const toggleFavorite = (id) => {
@@ -28,13 +30,13 @@ const Matches = () => {
     }));
   };
 
-  const profiles = [
-    { id: 1, name: "Nikita", age: 28, city: "California", compat: "90%" },
-    { id: 2, name: "Nikita", age: 28, city: "California", compat: "90%" },
-    { id: 3, name: "Nikita", age: 28, city: "California", compat: "90%" },
-    { id: 4, name: "Nikita", age: 28, city: "California", compat: "90%" },
-    { id: 5, name: "Nikita", age: 28, city: "California", compat: "90%" },
-  ];
+  // const profiles = [
+  //   { id: 1, name: "Nikita", age: 28, city: "California", compat: "90%" },
+  //   { id: 2, name: "Nikita", age: 28, city: "California", compat: "90%" },
+  //   { id: 3, name: "Nikita", age: 28, city: "California", compat: "90%" },
+  //   { id: 4, name: "Nikita", age: 28, city: "California", compat: "90%" },
+  //   { id: 5, name: "Nikita", age: 28, city: "California", compat: "90%" },
+  // ];
 
   const handleScroll = () => {
     if (scrollRef.current) {
@@ -115,18 +117,26 @@ const Matches = () => {
                 <div
                   key={profile.id}
                   className="card-anchor"
-                  onClick={() => navigate("/matches/profile-details")}
+                  onClick={() => navigate("/matches/profile-details", { state: { profile } })}
                   style={{
                     transform: `rotate(${rotateValue}deg) scale(${scaleValue})`,
                     zIndex: activeIndex === index ? 10 : 1,
                   }}
                 >
                   <div className="actual-match-card">
-                    <img
+                    {/* <img
                       src={matchImg}
                       alt={profile.name}
                       className="match-img-bg"
-                    />
+                    /> */}
+                     <img
+                src={profile?.profilephoto || "https://i.pravatar.cc/150?img=12"}
+                alt="profile"
+                 className="match-img-bg"
+                onError={(e) => {
+                  e.target.src = "https://i.pravatar.cc/150?img=12";
+                }}
+              />
 
                     <div className="card-top-ui">
                       <div className="match-badge">
