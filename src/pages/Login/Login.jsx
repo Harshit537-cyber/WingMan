@@ -86,7 +86,9 @@ const LoginPage = () => {
   return (
     <AppLayout>
       <div className="login-container">
+        <img src="https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-3530.jpg?semt=ais_rp_progressive&w=740&q=80" alt="" />
         <h1 className="login-title">Welcome Back</h1>
+        <h3 className="text-[#2D1B31] mb-10">Login to access more </h3>
 
         <form className="login-form" onSubmit={handleLogin}>
           <input
