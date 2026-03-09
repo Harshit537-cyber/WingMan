@@ -111,7 +111,7 @@ const Home = () => {
                 <h3>{quiz ? "100%" : "0%"}</h3>
                 <div className="progress-container">
                   <div
-                    className={`progress-bar ${quiz ? "filled" : "partial"}`}
+                    className={`progress-bar ${quiz ? "filled" : ""}`}
                     style={{ width: quiz ? "100%" : "0%" }}
                   ></div>
                 </div>
