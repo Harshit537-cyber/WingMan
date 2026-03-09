@@ -52,7 +52,9 @@ const ProfileDetail = () => {
 
   const handleSendRequest = () => {
     closeModal();
-    navigate("/date-preferences");
+    navigate("/date-preferences", {
+      state: { receiverId: profile?._id },
+    });
   };
 
   const formatValue = (value) => {
@@ -66,7 +68,6 @@ const ProfileDetail = () => {
 
     return value;
   };
-
 
   return (
     <AppLayout>
@@ -130,21 +131,21 @@ const ProfileDetail = () => {
                 <h3 className="block-title">Location</h3>
                 <span className="dist-badge">1 km</span>
               </div>
-              <p className="block-desc">{profile?.state || 'Bihar'}</p>
+              <p className="block-desc">{profile?.state || "Bihar"}</p>
             </div>
 
             {/* ABOUT ME */}
             <div className="info-block slide-up staggered-3">
               <h3 className="block-title">About me</h3>
               <div className="chips-grid">
-               {Object.entries(profile?.preferences).map(([key, value]) => (
-                <div key={key} className="ep-tag-chip">
-                  <span key={key} className="tag">
-                    {key}: {formatValue(value)}
-                    {/* {formatValue(value)} */}
-                  </span>
-                </div>
-              ))}
+                {Object.entries(profile?.preferences).map(([key, value]) => (
+                  <div key={key} className="ep-tag-chip">
+                    <span key={key} className="tag">
+                      {key}: {formatValue(value)}
+                      {/* {formatValue(value)} */}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -152,7 +153,7 @@ const ProfileDetail = () => {
             <div className="info-block slide-up staggered-4">
               <h3 className="block-title">My Story</h3>
               <p className="story-text">
-               {profile?.story}
+                {profile?.story}
                 <span className="read-more">Read more</span>
               </p>
             </div>
@@ -177,34 +178,25 @@ const ProfileDetail = () => {
             <div className="gallery-section slide-up staggered-6">
               <div className="block-header">
                 <h3 className="block-title">Gallery</h3>
-                <span className="see-all" onClick={handleGalleryClick}>
-                  See all
-                </span>
+
+                {profile?.photos?.length > 0 && (
+                  <span className="see-all" onClick={handleGalleryClick}>
+                    See all
+                  </span>
+                )}
               </div>
+
               <div className="gallery-grid">
-                <div className="gal-big clickable" onClick={handleGalleryClick}>
-                  <img src={profileHero} alt="g1" />
-                </div>
-                <div className="gal-big clickable" onClick={handleGalleryClick}>
-                  <img src={profileHero} alt="g2" />
-                </div>
-                <div
-                  className="gal-small clickable"
-                  onClick={handleGalleryClick}
-                >
-                  <img src={profileHero} alt="g3" />
-                </div>
-                <div
-                  className="gal-small clickable"
-                  onClick={handleGalleryClick}
-                >
-                  <img src={profileHero} alt="g4" />
-                </div>
-                <div
-                  className="gal-small clickable"
-                  onClick={handleGalleryClick}
-                >
-                  <img src={profileHero} alt="g5" />
+                <div className="gal-big clickable">
+                  {profile?.photos?.length > 0 ? (
+                    profile.photos.map((value, i) => (
+                      <div key={i} className="ep-photo-slot">
+                        <img src={value} alt="slot" />
+                      </div>
+                    ))
+                  ) : (
+                    <p>No photos available</p>
+                  )}
                 </div>
               </div>
             </div>

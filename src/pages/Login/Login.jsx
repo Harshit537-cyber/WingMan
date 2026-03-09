@@ -6,9 +6,13 @@ import "./Login.css";
 import axiosInstance from "../../api/axiosInstance";
 
 import { useUser } from "../../context/userinfo";
+import { useRecommendedProfiles} from '../../context/userprofileRecomm'
+import {useCallRequests} from '../../context/callanddate'
 const LoginPage = () => {
   const navigate = useNavigate();
   const { user, fetchUser } = useUser();
+  const {fetchRecommendedProfiles} = useRecommendedProfiles()
+  const {fetchCallRequests} = useCallRequests()
 
 
   const [formData, setFormData] = useState({
@@ -63,6 +67,8 @@ const LoginPage = () => {
         localStorage.setItem("user", JSON.stringify(loggedInUser));
 
         fetchUser();
+        fetchRecommendedProfiles();
+        fetchCallRequests()
 
         if (isProfileComplete(loggedInUser)) {
           navigate("/home");

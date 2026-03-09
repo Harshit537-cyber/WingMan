@@ -12,6 +12,7 @@ const ScheduleConfirmed = () => {
   const date = location.state?.date || 16;
   const month = location.state?.month || "Jan";
   const time = location.state?.time || "11:00AM";
+  const meetLink = location.state.meetLink
 
   return (
     <AppLayout>
@@ -53,7 +54,7 @@ const ScheduleConfirmed = () => {
         </div>
 
         <p className="google-meet-info fade-in-slow">
-          Google meet link : <span className="link-placeholder"></span>
+          Google meet link : <span className="link-placeholder text-blue-500">{meetLink}</span>
         </p>
 
         <div className="bottom-action-area">

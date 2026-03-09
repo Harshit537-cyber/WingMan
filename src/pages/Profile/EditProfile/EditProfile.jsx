@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Camera, Plus, MapPin, ChevronLeft } from "lucide-react";
 import AppLayout from "../../../components/AppLayout/AppLayout";
@@ -7,6 +7,7 @@ import "./EditProfile.css";
 import { useUser } from "../../../context/userinfo";
 // Dummy Image (Replace with your actual asset path)
 import userImg from "../../../assets/profile-user.png";
+import axiosInstance from "../../../api/axiosInstance";
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -14,10 +15,14 @@ const EditProfile = () => {
   const [name, setName] = useState("");
   const [occupation, setOccupation] = useState("");
   const [location, setLocation] = useState("");
+   console.log(name, location)
   const [interest, setInterest] = useState([]);
   const [photo, setPhoto] = useState([]);
   const [about, setAbout] = useState([]);
-
+  const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const fileInputRef = useRef(null);
   useEffect(() => {
     if (user) {
       setName(user.name);
@@ -27,7 +32,42 @@ const EditProfile = () => {
       setPhoto(user?.photos);
       setAbout(user?.preferences);
     }
+   
   }, [user]);
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
+
+    setFile(selectedFile);
+    setPreview(URL.createObjectURL(selectedFile));
+  };
+
+  const uploadUserImage = async () => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("profilephoto", file);
+
+    try {
+      const res = await axiosInstance.post(
+        `/user-profile-image/${user._id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
+
+      console.log(res.data);
+      if (res.data.success == true) {
+        setSuccess(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const formatValue = (value) => {
     if (Array.isArray(value)) {
@@ -52,20 +92,40 @@ const EditProfile = () => {
           <div className="ep-header">
             <div className="ep-avatar-box">
               <img
-                src={user?.profilephoto || "https://i.pravatar.cc/150?img=12"}
+                src={
+                  preview ||
+                  user?.profilephoto ||
+                  "https://i.pravatar.cc/150?img=12"
+                }
                 alt="user"
                 className="ep-main-i"
                 onError={(e) => {
                   e.target.src = "https://i.pravatar.cc/150?img=12";
                 }}
               />
-              <div className="ep-camera-btn">
+
+              <div
+                className="ep-camera-btn"
+                onClick={() => fileInputRef.current.click()}
+              >
                 <Camera size={22} color="white" fill="currentColor" />
               </div>
             </div>
-            <button className="ep-change-photo-text">
-              Change Profile Photo
-            </button>
+            {preview && (
+              <button
+                onClick={uploadUserImage}
+                className="ep-change-photo-text"
+              >
+                {success ? "Uploaded Successfully" : "Upload Image"}
+              </button>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
           </div>
 
           {/* --- MAIN INFO CARD --- */}
@@ -95,7 +155,7 @@ const EditProfile = () => {
                 <input
                   type="text"
                   value={location}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setLocation(e.target.value)}
                 />
                 <div className="ep-dist-tag">1km</div>
               </div>

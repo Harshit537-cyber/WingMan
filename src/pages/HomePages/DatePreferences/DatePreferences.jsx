@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronLeft, Bell, AlignRight } from 'lucide-react';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import BottomNav from '../../../components/BottomNav/BottomNav';
@@ -7,13 +7,22 @@ import './DatePreferences.css';
 
 const DatePreferences = () => {
   const navigate = useNavigate();
+  const location = useLocation()
+  const receiverId = location?.state?.receiverId
+  
   
   // States
   const [dateType, setDateType] = useState('Restaurant'); 
   const [selectedMoods, setSelectedMoods] = useState([]);
   const [payWay, setPayWay] = useState('Him');
   const [budget, setBudget] = useState({ min: 500, max: 1600 });
-
+   const payload ={
+   dateType,
+   selectedMoods,
+   payWay,
+   budget,
+   receiverId
+  }
   const moodData = {
     Restaurant: ['North- Indian', 'South- Indian', 'Fine dine', 'Thai', 'Italian', 'Sandwich/Wraps', 'Non-Veg', 'Chinese', 'Sea food', 'Rarely'],
     Cafe: ['Coffee', 'Fresh Juices', 'Cold Coffee', 'Pasta', 'Mocha', 'Italian', 'Sandwich/Wraps', 'Cakes', 'Grilled Cheese', 'Soup']
@@ -42,6 +51,7 @@ const DatePreferences = () => {
     const val = Math.max(parseInt(e.target.value), budget.min + 100);
     setBudget({ ...budget, max: val });
   };
+ 
 
   return (
     <AppLayout>
@@ -141,7 +151,11 @@ const DatePreferences = () => {
 
         {/* FIXED FOOTER ACTION - Above BottomNav */}
         <div className="pref-footer-sticky">
-          <button className="pref-continue-btn" onClick={() => navigate('/date-requested')}>
+          <button className="pref-continue-btn"  onClick={() =>
+    navigate("/date-requested", {
+      state: { payload: payload }
+    })
+  }>
             Continue
           </button>
         </div>

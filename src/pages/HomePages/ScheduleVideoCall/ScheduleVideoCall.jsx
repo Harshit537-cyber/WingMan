@@ -13,6 +13,7 @@ const ScheduleVideoCall = () => {
   const selectedMonth = location.state.booking?.month || "January";
   const selectedYear = location.state.booking?.year || "2025";
   const selectedTime = location.state?.time;
+  const meetLink = location?.state?.meetLink
   console.log('selectedTime',selectedTime)
   const fromattedtimne = selectedTime?.split(" ")[0];
 
@@ -66,7 +67,9 @@ const ScheduleVideoCall = () => {
                 A half an hour call to verify your profile and help us know you better.
               </p>
 
-              <button className="final-confirm-btn" onClick={() => navigate('/schedule-confirmed')}>
+              <button className="final-confirm-btn" onClick={() => navigate('/schedule-confirmed',{
+                state:{meetLink:meetLink}
+              })}>
                 Confirm Schedule
               </button>
             </div>

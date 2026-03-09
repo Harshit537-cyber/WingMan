@@ -112,7 +112,7 @@ const Home = () => {
                 <div className="progress-container">
                   <div
                     className={`progress-bar ${quiz ? "filled" : "partial"}`}
-                    style={{ width: quiz ? "100%" : "10%" }}
+                    style={{ width: quiz ? "100%" : "0%" }}
                   ></div>
                 </div>
               </div>
