@@ -174,6 +174,11 @@
   border: none; border-radius: 20px; font-size: 18px; font-weight: 800;
   cursor: pointer;
 }
+
+.request-btn:disabled {
+  background: #886c99;
+  cursor: not-allowed;
+}
 .footer-spacer { height: 110px; }
 .modal-content {
     width: 88%; max-width: 350px;

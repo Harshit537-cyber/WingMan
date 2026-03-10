@@ -13,7 +13,10 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [avator, setAvator] = useState([]);
-  const [quiz, setQuiz] = useState(false)
+  const [quiz, setQuiz] = useState(false);
+  const [callrequest, setcallsequest] = useState([])
+  const [daterequest, setDaterequest] = useState([])
+  console.log(daterequest)
 
   // ✅ Fetch user
   const fetchUser = useCallback(async () => {
@@ -40,7 +43,9 @@ export const UserProvider = ({ children }) => {
       console.log(res.data)
       setAvator(res.data.avatar)
       setQuiz(res.data.quiz)
-      setUser(res.data.data);
+      setUser(res?.data?.data);
+      setcallsequest(res?.data?.call_request);
+      setDaterequest(res?.data?.date_request)
     } catch (error) {
       console.error("Fetch user error:", error);
       setUser(null);
@@ -63,6 +68,8 @@ export const UserProvider = ({ children }) => {
         quiz,
         fetchUser, // 👈 you can call this anywhere to re-fetch
         loading,
+        callrequest,
+        daterequest
       }}
     >
       {children}

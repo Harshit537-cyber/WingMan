@@ -19,16 +19,30 @@ import {
 } from "lucide-react";
 import AppLayout from "../../../components/AppLayout/AppLayout";
 import BottomNav from "../../../components/BottomNav/BottomNav";
-import profileHero from "../../../assets/match-profile.jpg";
+import axiosInstance from "../../../api/axiosInstance";
 import "./ProfileDetail.css";
+import { useUser } from "../../../context/userinfo";
 
 const ProfileDetail = () => {
+  const { callrequest, fetchUser } = useUser();
+  console.log(callrequest);
   const location = useLocation();
   const profile = location.state?.profile;
   console.log(profile);
   const navigate = useNavigate();
   const [showCallModal, setShowCallModal] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false); // State for heart fill
+  const request = callrequest?.find(
+    (value) => value.receiverId?.toString() === profile?._id?.toString(),
+  );
+
+  const buttonText = !request
+    ? "Send Call Request"
+    : request.status === "accepted"
+      ? "Date Request"
+      : "Call Request Submitted";
+
+  const disabled = request && request.status !== "accepted";
 
   // Background scroll lock logic
   useEffect(() => {
@@ -50,12 +64,34 @@ const ProfileDetail = () => {
     setIsFavorite(!isFavorite);
   };
 
-  const handleSendRequest = () => {
-    closeModal();
-    navigate("/date-preferences", {
-      state: { receiverId: profile?._id },
-    });
+  const handleSendRequest = async () => {
+    // closeModal();
+    // navigate("/date-preferences", {
+    //   state: { receiverId: profile?._id },
+    // });
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (!user) {
+        alert("User not found. Please login again.");
+        return;
+      }
+      const payload = {
+        senderId: user._id,
+        receiverId: profile?._id,
+        requestType: "call request",
+      };
+      const res = await axiosInstance.post("/call-request/create", payload);
+      console.log(res.data);
+      closeModal();
+      fetchUser()
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+
+
 
   const formatValue = (value) => {
     if (Array.isArray(value)) {
@@ -117,12 +153,17 @@ const ProfileDetail = () => {
                 <h1 className="user-name-age">{profile?.name}</h1>
                 <p className="user-profession">{profile?.story}</p>
               </div>
-              <button
-                className="call-action-square"
-                onClick={() => navigate("/call")}
-              >
-                <Phone size={24} color="#5a3c6d" fill="#5a3c6d" />
-              </button>
+
+              <>
+                {request && request.status === "accepted" && (
+                  <button
+                    className="call-action-square"
+                    onClick={() => navigate("/call")}
+                  >
+                    <Phone size={24} color="#5a3c6d" fill="#5a3c6d" />
+                  </button>
+                )}
+              </>
             </div>
 
             {/* LOCATION */}
@@ -138,14 +179,16 @@ const ProfileDetail = () => {
             <div className="info-block slide-up staggered-3">
               <h3 className="block-title">About me</h3>
               <div className="chips-grid">
-                {Object.entries(profile?.preferences).map(([key, value]) => (
-                  <div key={key} className="ep-tag-chip">
-                    <span key={key} className="tag">
-                      {key}: {formatValue(value)}
-                      {/* {formatValue(value)} */}
-                    </span>
-                  </div>
-                ))}
+                {Object?.entries(profile?.preferences || {}).map(
+                  ([key, value]) => (
+                    <div key={key} className="ep-tag-chip">
+                      <span key={key} className="tag">
+                        {key}: {formatValue(value)}
+                        {/* {formatValue(value)} */}
+                      </span>
+                    </div>
+                  ),
+                )}
               </div>
             </div>
 
@@ -203,8 +246,19 @@ const ProfileDetail = () => {
 
             {/* REQUEST BUTTON */}
             <div className="request-btn-container slide-up staggered-7">
-              <button className="request-btn" onClick={openModal}>
-                Request For Call
+              <button
+                className="request-btn"
+                disabled={disabled}
+                onClick={
+                  buttonText === "Date Request"
+                    ? () =>
+                        navigate("/date-preferences", {
+                          state: { receiverId: profile?._id },
+                        })
+                    : openModal
+                }
+              >
+                {buttonText}
               </button>
             </div>
 

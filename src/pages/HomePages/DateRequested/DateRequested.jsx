@@ -87,7 +87,7 @@ console.log(dates);
           dateSlots: updatedPairs,
         };
 
-        const res = await axiosInstance.post("call-request/create", payload);
+        const res = await axiosInstance.post("date-request/create", payload);
 
         console.log(res.data);
 

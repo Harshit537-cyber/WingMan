@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronLeft, AlignRight } from 'lucide-react';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import BottomNav from '../../../components/BottomNav/BottomNav';
@@ -7,6 +7,9 @@ import './AskedOutList.css';
 
 const AskedOutList = () => {
   const navigate = useNavigate();
+  const location = useLocation()
+  const data = location?.state?.data
+  console.log(data)
 
   // Dummy data based on image
   const requests = [
@@ -31,34 +34,63 @@ const AskedOutList = () => {
           </button>
         </header>
 
-        {/* Scrollable List Content */}
         <div className="asked-out-scroll-body">
           <div className="request-list">
-            {requests.map((item, index) => (
+            {data?.map((value, index) => (
+                    <div key={index} className="request-item-card slide-in-right"
+                style={{ animationDelay: `${index * 0.1}s` }}>
+                      {/* <img
+                        src={
+                          value?.senderId?.profilephoto ||
+                          `https://randomuser.me/api/portraits/men/${index + 10}.jpg`
+                        }
+                        alt={value?.senderId?.name}
+                      /> */}
+                      <div className="user-avatar-box">
+                  <div className="avatar-ring">
+                    <img src={
+                          value?.senderId?.profilephoto ||
+                          `https://randomuser.me/api/portraits/men/${index + 10}.jpg`
+                        }
+                        alt={value?.senderId?.name} />
+                  </div>
+                </div>
+
+
+                 <div className="user-details-box">
+                  <h3 className="user-name">{value?.senderId?.name}</h3>
+                 
+                </div>
+
+                   <button className="view-plan-action-btn" onClick={() => navigate('/plan-details')}>
+                  View Plan
+                </button>
+                    </div>
+                  ))}
+            {/* {requests.map((item, index) => (
               <div 
                 key={item.id} 
                 className="request-item-card slide-in-right"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                {/* Avatar Section */}
+              
                 <div className="user-avatar-box">
                   <div className="avatar-ring">
                     <img src={item.img} alt={item.name} />
                   </div>
                 </div>
 
-                {/* Info Section */}
                 <div className="user-details-box">
                   <h3 className="user-name">{item.name}</h3>
                   <p className="user-distance">{item.distance}</p>
                 </div>
 
-                {/* Action Button */}
+        
                 <button className="view-plan-action-btn" onClick={() => navigate('/plan-details')}>
                   View Plan
                 </button>
               </div>
-            ))}
+            ))} */}
           </div>
           
           {/* Spacer for BottomNav */}

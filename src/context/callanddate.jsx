@@ -4,8 +4,9 @@ import axiosInstance from "../../src/api/axiosInstance";
 const CallRequestContext = createContext();
 
 export const CallRequestProvider = ({ children }) => {
-  const [requests, setRequests] = useState([]);
+  const [callRequests, setcallRequests] = useState([]);
   const [loading, setLoading] = useState(false);
+  
 
   const fetchCallRequests = useCallback(async () => {
     try {
@@ -18,7 +19,7 @@ export const CallRequestProvider = ({ children }) => {
 
       const res = await axiosInstance.get(`/call-request/reciever/${user._id}`);
 
-      setRequests(res.data?.data || []);
+      setcallRequests(res.data?.data || []);
       console.log(res.data?.data);
 
     } catch (error) {
@@ -36,7 +37,7 @@ export const CallRequestProvider = ({ children }) => {
   return (
     <CallRequestContext.Provider
       value={{
-        requests,
+        callRequests,
         loading,
         fetchCallRequests
       }}

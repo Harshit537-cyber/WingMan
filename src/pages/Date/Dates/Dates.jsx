@@ -1,19 +1,20 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Bell, AlignRight, Heart } from 'lucide-react';
-import AppLayout from '../../../components/AppLayout/AppLayout';
-import BottomNav from '../../../components/BottomNav/BottomNav';
-import './Dates.css';
-
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { ChevronLeft, Bell, AlignRight, Heart } from "lucide-react";
+import AppLayout from "../../../components/AppLayout/AppLayout";
+import BottomNav from "../../../components/BottomNav/BottomNav";
+import "./Dates.css";
+import { useUser } from "../../../context/userinfo";
 const userImg = "https://randomuser.me/api/portraits/women/44.jpg";
 
 const Dates = () => {
   const navigate = useNavigate();
+  const { daterequest } = useUser();
+  console.log("daterequest : ", daterequest);
 
   return (
     <AppLayout>
       <div className="dates-screen-container">
-        
         {/* --- HEADER --- */}
         <header className="dates-header">
           <button className="back-btn" onClick={() => navigate(-1)}>
@@ -21,16 +22,30 @@ const Dates = () => {
           </button>
           <h1 className="header-title">Dates</h1>
           <div className="header-right-icons">
-             <Bell size={26} color="#5a3c6d" onClick={() => navigate('/notifications')} style={{cursor: 'pointer'}} />
-             <AlignRight size={26} color="#5a3c6d" onClick={() => navigate('/settings')} style={{cursor: 'pointer'}} />
+            <Bell
+              size={26}
+              color="#5a3c6d"
+              onClick={() => navigate("/notifications")}
+              style={{ cursor: "pointer" }}
+            />
+            <AlignRight
+              size={26}
+              color="#5a3c6d"
+              onClick={() => navigate("/settings")}
+              style={{ cursor: "pointer" }}
+            />
           </div>
         </header>
 
         {/* --- SCROLLABLE CONTENT --- */}
         <div className="dates-content-scroll">
-          
           {/* Card 1: Someone asked you out -> Route to AskedOut page */}
-          <section className="dates-section fade-in" onClick={() => navigate('/asked-out')}>
+          <section
+            className="dates-section fade-in"
+            onClick={() => navigate("/asked-out", {
+              state:{data:daterequest}
+            })}
+          >
             <div className="horizontal-date-card">
               <div className="card-header-row">
                 <div className="title-with-heart">
@@ -39,35 +54,63 @@ const Dates = () => {
                 </div>
                 <span className="count-badge">3</span>
               </div>
-              <div className="avatar-row">
-                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
-                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
-                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
+              <div>
+                <div className="avatar-row">
+                  {daterequest?.map((value, index) => (
+                    <div key={index} className="avatar-circle">
+                      <img
+                        src={
+                          value?.senderId?.profilephoto ||
+                          `https://randomuser.me/api/portraits/men/${index + 10}.jpg`
+                        }
+                        alt={value?.senderId?.name}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
+              {/* <div className="avatar-row">
+                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
+                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
+                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
+              </div> */}
             </div>
           </section>
 
           {/* Grid Section: Planned & Proposed */}
           <section className="grid-section slide-up">
             {/* Planned Dates Card */}
-            <div className="vertical-date-card" onClick={() => navigate('/planned-dates')}>
-               <h3>Planned <br /> Dates</h3>
-               <div className="large-avatar">
-                  <img src={userImg} alt="user" />
-               </div>
+            <div
+              className="vertical-date-card"
+              onClick={() => navigate("/planned-dates")}
+            >
+              <h3>
+                Planned <br /> Dates
+              </h3>
+              <div className="large-avatar">
+                <img src={userImg} alt="user" />
+              </div>
             </div>
 
             {/* Proposed Dates Card */}
-            <div className="vertical-date-card" onClick={() => navigate('/proposed-dates')}>
-               <h3>Proposed <br /> dates</h3>
-               <div className="large-avatar">
-                  <img src={userImg} alt="user" />
-               </div>
+            <div
+              className="vertical-date-card"
+              onClick={() => navigate("/proposed-dates")}
+            >
+              <h3>
+                Proposed <br /> dates
+              </h3>
+              <div className="large-avatar">
+                <img src={userImg} alt="user" />
+              </div>
             </div>
           </section>
 
           {/* Card 4: Completed Dates -> Route to Completed page */}
-          <section className="dates-section slide-up delay-1" onClick={() => navigate('/completed-dates')}>
+          <section
+            className="dates-section slide-up delay-1"
+            onClick={() => navigate("/completed-dates")}
+          >
             <div className="horizontal-date-card">
               <div className="card-header-row">
                 <div className="title-with-heart">
@@ -77,9 +120,15 @@ const Dates = () => {
                 <span className="count-badge">3</span>
               </div>
               <div className="avatar-row">
-                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
-                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
-                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
+                <div className="avatar-circle">
+                  <img src={userImg} alt="user" />
+                </div>
+                <div className="avatar-circle">
+                  <img src={userImg} alt="user" />
+                </div>
+                <div className="avatar-circle">
+                  <img src={userImg} alt="user" />
+                </div>
               </div>
             </div>
           </section>
