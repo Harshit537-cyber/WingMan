@@ -15,7 +15,7 @@ const EditProfile = () => {
   const [name, setName] = useState("");
   const [occupation, setOccupation] = useState("");
   const [location, setLocation] = useState("");
-   console.log(name, location)
+  console.log(name, location);
   const [interest, setInterest] = useState([]);
   const [photo, setPhoto] = useState([]);
   const [about, setAbout] = useState([]);
@@ -26,13 +26,20 @@ const EditProfile = () => {
   useEffect(() => {
     if (user) {
       setName(user.name);
-      setOccupation(user?.career_info);
+      let occupation = "";
+
+      if (user?.work_info?.position) {
+        occupation = user.work_info.position;
+      } else if (user?.study_info?.course) {
+        occupation = `Student #${user.study_info.course}`;
+      }
+
+      setOccupation(occupation);
       setLocation(user?.location?.address);
       setInterest(user?.interest);
       setPhoto(user?.photos);
       setAbout(user?.preferences);
     }
-   
   }, [user]);
 
   const handleFileChange = (e) => {
@@ -135,8 +142,9 @@ const EditProfile = () => {
               <div className="ep-input-box">
                 <input
                   type="text"
-                  value={name}
+                  value={name?.charAt(0).toUpperCase() + name?.slice(1)}
                   onChange={(e) => setName(e.target.value)}
+                  defaultValue="Wingmann"
                 />
                 <span className="ep-age-val">23</span>
               </div>
@@ -145,7 +153,7 @@ const EditProfile = () => {
             <div className="ep-field-row">
               <div className="ep-label-box">Occupation</div>
               <div className="ep-input-box">
-                <input type="text" defaultValue="Software Devloper" />
+                <input type="text" value={occupation?.charAt(0).toUpperCase() + occupation?.slice(1)} defaultValue="Software Devloper" />
               </div>
             </div>
 
@@ -154,8 +162,9 @@ const EditProfile = () => {
               <div className="ep-input-box">
                 <input
                   type="text"
-                  value={location}
+                 value={location?.charAt(0).toUpperCase() + location?.slice(1)}
                   onChange={(e) => setLocation(e.target.value)}
+                  defaultValue="Dehradun"
                 />
                 <div className="ep-dist-tag">1km</div>
               </div>

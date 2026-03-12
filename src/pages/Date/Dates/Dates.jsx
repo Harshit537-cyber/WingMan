@@ -9,8 +9,8 @@ const userImg = "https://randomuser.me/api/portraits/women/44.jpg";
 
 const Dates = () => {
   const navigate = useNavigate();
-  const { daterequest } = useUser();
-  console.log("daterequest : ", daterequest);
+  const { requestedDateReq, dateaccepted } = useUser();
+  console.log("requestedDateReq : ", requestedDateReq);
 
   return (
     <AppLayout>
@@ -43,7 +43,7 @@ const Dates = () => {
           <section
             className="dates-section fade-in"
             onClick={() => navigate("/asked-out", {
-              state:{data:daterequest}
+              state:{data:requestedDateReq}
             })}
           >
             <div className="horizontal-date-card">
@@ -52,11 +52,11 @@ const Dates = () => {
                   <span>Someone asked you out</span>
                   <Heart size={18} fill="#5a3c6d" color="#5a3c6d" />
                 </div>
-                <span className="count-badge">3</span>
+                <span className="count-badge">{requestedDateReq.length || "" }</span>
               </div>
               <div>
                 <div className="avatar-row">
-                  {daterequest?.map((value, index) => (
+                  {requestedDateReq?.map((value, index) => (
                     <div key={index} className="avatar-circle">
                       <img
                         src={
@@ -82,18 +82,29 @@ const Dates = () => {
             {/* Planned Dates Card */}
             <div
               className="vertical-date-card"
-              onClick={() => navigate("/planned-dates")}
+              onClick={() => navigate("/planned-dates",{
+                state:{ date : dateaccepted}
+              })}
             >
               <h3>
                 Planned <br /> Dates
               </h3>
-              <div className="large-avatar">
-                <img src={userImg} alt="user" />
-              </div>
+              {
+                dateaccepted.map((value, index) => (
+                    <div key={index} className="large-avatar">
+                      <img
+                        src={
+                          value?.senderId?.profilephoto || `https://randomuser.me/api/portraits`
+                        }/>
+                      </div>
+                ))
+              }
+            
+            
             </div>
 
             {/* Proposed Dates Card */}
-            <div
+            {/* <div
               className="vertical-date-card"
               onClick={() => navigate("/proposed-dates")}
             >
@@ -103,7 +114,7 @@ const Dates = () => {
               <div className="large-avatar">
                 <img src={userImg} alt="user" />
               </div>
-            </div>
+            </div> */}
           </section>
 
           {/* Card 4: Completed Dates -> Route to Completed page */}

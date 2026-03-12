@@ -14,25 +14,29 @@ const DateRequested = () => {
 
   // Selection Logic States
   const [selectedDate, setSelectedDate] = useState(null);
+  const month = new Date().toLocaleString("default", { month: "short" });
+
+ const date=("date :", `${selectedDate} ${month}`);
+  console.log("date : ", date);
   const [completedPairs, setCompletedPairs] = useState([]);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-const getNextSevenDays = () => {
-  const today = new Date();
+  const getNextSevenDays = () => {
+    const today = new Date();
 
-  return Array.from({ length: 7 }, (_, i) => {
-    const currentDate = new Date();
-    currentDate.setDate(today.getDate() + i);
+    return Array.from({ length: 7 }, (_, i) => {
+      const currentDate = new Date();
+      currentDate.setDate(today.getDate() + i);
 
-    return {
-      day: currentDate.toLocaleDateString("en-US", { weekday: "short" }),
-      id: currentDate.getDate().toString(),
-    };
-  });
-};
+      return {
+        day: currentDate.toLocaleDateString("en-US", { weekday: "short" }),
+        id: currentDate.getDate().toString(),
+      };
+    });
+  };
 
-const dates = getNextSevenDays();
-console.log(dates);
+  const dates = getNextSevenDays();
+  console.log(dates);
   const timeSlots = [
     "10:00 AM",
     "11:00 AM",
@@ -57,13 +61,14 @@ console.log(dates);
     if (completedPairs.length >= 3) return;
 
     const newPair = {
-      date: selectedDate,
+      date: date,
       day: new Date(selectedDate).toLocaleDateString("en-US", {
         weekday: "long",
       }),
       time: time,
     };
     const updatedPairs = [...completedPairs, newPair];
+    console.log(updatedPairs);
     setCompletedPairs(updatedPairs);
     setSelectedDate(null);
 

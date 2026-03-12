@@ -1,28 +1,47 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { ChevronLeft, AlignRight } from 'lucide-react';
-import AppLayout from '../../../components/AppLayout/AppLayout';
-import BottomNav from '../../../components/BottomNav/BottomNav';
-import './AskedOutList.css';
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ChevronLeft, AlignRight } from "lucide-react";
+import AppLayout from "../../../components/AppLayout/AppLayout";
+import BottomNav from "../../../components/BottomNav/BottomNav";
+import "./AskedOutList.css";
 
 const AskedOutList = () => {
   const navigate = useNavigate();
-  const location = useLocation()
-  const data = location?.state?.data
-  console.log(data)
+  const location = useLocation();
+  const data = location?.state?.data;
+  console.log(data);
 
   // Dummy data based on image
   const requests = [
-    { id: 1, name: 'Emelie', distance: '10km away', img: "https://randomuser.me/api/portraits/women/44.jpg" },
-    { id: 2, name: 'Emelie', distance: '10km away', img: "https://randomuser.me/api/portraits/women/44.jpg" },
-    { id: 3, name: 'Emelie', distance: '10km away', img: "https://randomuser.me/api/portraits/women/44.jpg" },
-    { id: 4, name: 'Emelie', distance: '10km away', img: "https://randomuser.me/api/portraits/women/44.jpg" },
+    {
+      id: 1,
+      name: "Emelie",
+      distance: "10km away",
+      img: "https://randomuser.me/api/portraits/women/44.jpg",
+    },
+    {
+      id: 2,
+      name: "Emelie",
+      distance: "10km away",
+      img: "https://randomuser.me/api/portraits/women/44.jpg",
+    },
+    {
+      id: 3,
+      name: "Emelie",
+      distance: "10km away",
+      img: "https://randomuser.me/api/portraits/women/44.jpg",
+    },
+    {
+      id: 4,
+      name: "Emelie",
+      distance: "10km away",
+      img: "https://randomuser.me/api/portraits/women/44.jpg",
+    },
   ];
 
   return (
     <AppLayout>
       <div className="asked-out-container">
-        
         {/* Header Section */}
         <header className="asked-out-header">
           <button className="nav-back-btn" onClick={() => navigate(-1)}>
@@ -37,36 +56,47 @@ const AskedOutList = () => {
         <div className="asked-out-scroll-body">
           <div className="request-list">
             {data?.map((value, index) => (
-                    <div key={index} className="request-item-card slide-in-right"
-                style={{ animationDelay: `${index * 0.1}s` }}>
-                      {/* <img
+              <div
+                key={index}
+                className="request-item-card slide-in-right"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                {/* <img
                         src={
                           value?.senderId?.profilephoto ||
                           `https://randomuser.me/api/portraits/men/${index + 10}.jpg`
                         }
                         alt={value?.senderId?.name}
                       /> */}
-                      <div className="user-avatar-box">
+                <div className="user-avatar-box">
                   <div className="avatar-ring">
-                    <img src={
-                          value?.senderId?.profilephoto ||
-                          `https://randomuser.me/api/portraits/men/${index + 10}.jpg`
-                        }
-                        alt={value?.senderId?.name} />
+                    <img
+                      src={
+                        value?.senderId?.profilephoto ||
+                        `https://randomuser.me/api/portraits/men/${index + 10}.jpg`
+                      }
+                      alt={value?.senderId?.name}
+                    />
                   </div>
                 </div>
 
-
-                 <div className="user-details-box">
+                <div className="user-details-box">
                   <h3 className="user-name">{value?.senderId?.name}</h3>
-                 
+                  <h4 className="font-semibold text-gray-500 text-xs">
+                    {value?.senderId?.state}
+                  </h4>
                 </div>
 
-                   <button className="view-plan-action-btn" onClick={() => navigate('/plan-details')}>
+                <button
+                  className="view-plan-action-btn"
+                  onClick={() => navigate("/plan-details", {
+                    state:{id:value?.senderId?._id , name: value?.senderId?.name}
+                  })}
+                >
                   View Plan
                 </button>
-                    </div>
-                  ))}
+              </div>
+            ))}
             {/* {requests.map((item, index) => (
               <div 
                 key={item.id} 
@@ -92,7 +122,7 @@ const AskedOutList = () => {
               </div>
             ))} */}
           </div>
-          
+
           {/* Spacer for BottomNav */}
           <div className="bottom-nav-padding"></div>
         </div>

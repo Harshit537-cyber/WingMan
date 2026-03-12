@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import { ChevronLeft, AlignRight } from 'lucide-react';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import BottomNav from '../../../components/BottomNav/BottomNav';
@@ -7,14 +8,16 @@ import './PlanedDates.css';
 
 const PlanedDates = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const plannedList = location?.state?.date || [];
 
   // Dummy data (Same as image)
-  const plannedList = [
-    { id: 1, name: 'Emelie', distance: '10km away', img: "https://randomuser.me/api/portraits/women/44.jpg" },
-    { id: 2, name: 'Emelie', distance: '10km away', img: "https://randomuser.me/api/portraits/women/44.jpg" },
-    { id: 3, name: 'Emelie', distance: '10km away', img: "https://randomuser.me/api/portraits/women/44.jpg" },
-    { id: 4, name: 'Emelie', distance: '10km away', img: "https://randomuser.me/api/portraits/women/44.jpg" },
-  ];
+  // const plannedList = [
+  //   { id: 1, name: 'Emelie', distance: '10km away', img: "https://randomuser.me/api/portraits/women/44.jpg" },
+  //   { id: 2, name: 'Emelie', distance: '10km away', img: "https://randomuser.me/api/portraits/women/44.jpg" },
+  //   { id: 3, name: 'Emelie', distance: '10km away', img: "https://randomuser.me/api/portraits/women/44.jpg" },
+  //   { id: 4, name: 'Emelie', distance: '10km away', img: "https://randomuser.me/api/portraits/women/44.jpg" },
+  // ];
 
   return (
     <AppLayout>
@@ -36,27 +39,34 @@ const PlanedDates = () => {
           <div className="dates-list-wrapper">
             {plannedList.map((item, index) => (
               <div 
-                key={item.id} 
-                className="plan-item-card staggered-slide-in"
+                key={item._id} 
+                className="plan-item-card flex justify-between staggered-slide-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
+                <div className='flex items-center space-x-1'>
                 {/* Left Side: Avatar with Purple Border */}
                 <div className="avatar-outer">
                   <div className="avatar-inner-ring">
-                    <img src={item.img} alt={item.name} />
+                    <img src={item?.senderId?.profilephoto} alt={item?.senderId?.name} />
                   </div>
                 </div>
 
                 {/* Middle: Text Info */}
-                <div className="info-section">
-                  <h3 className="name-text">{item.name}</h3>
-                  <p className="dist-text">{item.distance}</p>
+                <div className="">
+                  <h3 className="name-text">{item?.senderId?.name}</h3>
+                  <p className="dist-text">{item?.distance}</p>
+                </div>
                 </div>
 
                 {/* Right Side: Action Button */}
-                <button className="view-btn" onClick={() => navigate('/date-planned')}>
-                  View Plan
-                </button>
+               <div className="flex justify-end">
+  <button
+    className="view-btn"
+    onClick={() => navigate("/date-planned")}
+  >
+    View Plan
+  </button>
+  </div>
               </div>
             ))}
           </div>

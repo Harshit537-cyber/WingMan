@@ -14,9 +14,10 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [avator, setAvator] = useState([]);
   const [quiz, setQuiz] = useState(false);
-  const [callrequest, setcallsequest] = useState([])
-  const [daterequest, setDaterequest] = useState([])
-  console.log(daterequest)
+  const [callrequest, setcallsequest] = useState([]);
+  const [dateaccepted, setDateAccepted] = useState([]);
+  console.log(dateaccepted);
+  const [requestedDateReq, setRequestedDateReq] = useState([]);
 
   // ✅ Fetch user
   const fetchUser = useCallback(async () => {
@@ -30,22 +31,23 @@ export const UserProvider = ({ children }) => {
       }
 
       setLoading(true);
-     
+
       const storedUser = localStorage.getItem("user");
 
       if (!storedUser) return;
 
       const user = JSON.parse(storedUser);
-   
 
       const res = await axiosInstance.get(`users/${user._id}`);
       setUser(res.data.user);
-      console.log(res.data)
-      setAvator(res.data.avatar)
-      setQuiz(res.data.quiz)
+      console.log(res.data);
+      setAvator(res.data.avatar);
+      setQuiz(res.data.quiz);
       setUser(res?.data?.data);
       setcallsequest(res?.data?.call_request);
-      setDaterequest(res?.data?.date_request)
+      setDateAccepted(res?.data?.date_accepted);
+    
+      setRequestedDateReq(res?.data?.date_requested);
     } catch (error) {
       console.error("Fetch user error:", error);
       setUser(null);
@@ -69,7 +71,8 @@ export const UserProvider = ({ children }) => {
         fetchUser, // 👈 you can call this anywhere to re-fetch
         loading,
         callrequest,
-        daterequest
+        dateaccepted,
+        requestedDateReq
       }}
     >
       {children}

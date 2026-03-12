@@ -1,19 +1,61 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, AlignRight, Calendar, Utensils, Banknote, CheckCircle2 } from 'lucide-react';
-import AppLayout from '../../../components/AppLayout/AppLayout';
-import BottomNav from '../../../components/BottomNav/BottomNav';
-import './PlanDetails.css';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  ChevronLeft,
+  AlignRight,
+  Calendar,
+  Utensils,
+  Banknote,
+  CheckCircle2,
+} from "lucide-react";
+import AppLayout from "../../../components/AppLayout/AppLayout";
+import BottomNav from "../../../components/BottomNav/BottomNav";
+import "./PlanDetails.css";
+import { fetchdateRequestdata, Confirmdate } from "./apicall";
+import { useUser } from "../../../context/userinfo";
 
 const PlanDetails = () => {
   const navigate = useNavigate();
-  const [selectedDate, setSelectedDate] = useState('12 JAN (Mon)');
-  const [selectedTime, setSelectedTime] = useState('1:00 PM');
+  const location = useLocation();
+  const { fetchUser } = useUser();
+  const id = location?.state?.id || [];
+  const [dateRequest, setDateRequest] = useState(null);
+  console.log(dateRequest);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const name = location?.state?.name || "";
+  console.log(name, id);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const receiverId = user?._id;
+
+  // const [selectedDate, setSelectedDate] = useState("12 JAN (Mon)");
+  // const [selectedTime, setSelectedTime] = useState("1:00 PM");
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      const data = await fetchdateRequestdata(id, receiverId);
+
+      console.log(data);
+      if (data?.data?.length) {
+        setDateRequest(data.data[0]);
+      }
+    };
+    fetchdata();
+  }, []);
+
+  const handleConfirmDate = async (dateRequestId, status) => {
+    console.log("Confirming date with ID:", dateRequestId);
+    const data = await Confirmdate(dateRequestId, status);
+    console.log("Date confirmation response:", data);
+    if (data.success == true) {
+      fetchUser();
+      navigate("/dates");
+    }
+  };
 
   return (
     <AppLayout>
       <div className="plan-page-container">
-
         {/* --- HEADER --- */}
         <header className="plan-header">
           <button className="back-btn" onClick={() => navigate(-1)}>
@@ -27,10 +69,13 @@ const PlanDetails = () => {
 
         {/* --- CONTENT --- */}
         <div className="plan-scroll-content">
-
           <div className="main-msg-section">
-            <h2 className="request-title">Rahul Has Requested A Date With You!</h2>
-            <p className="request-subtitle">Select One Option That Works Best For You.</p>
+            <h2 className="request-title">
+              {name} Has Requested A Date With You!
+            </h2>
+            <p className="request-subtitle">
+              Select One Option That Works Best For You.
+            </p>
           </div>
 
           {/* Date & Time Card */}
@@ -39,36 +84,53 @@ const PlanDetails = () => {
               <div className="icon-bg-purple">
                 <Calendar size={18} color="#fff" />
               </div>
+
               <div className="header-text-group">
-                <h3 className="card-title-text">Choose Preferred Date & Time</h3>
-                <p className="card-subtitle-text">Select One Options That Work Best For You</p>
+                <h3 className="card-title-text">
+                  Choose Preferred Date & Time
+                </h3>
+                <p className="card-subtitle-text">
+                  Select One Options That Work Best For You
+                </p>
               </div>
             </div>
 
             <div className="selection-area">
               <div className="dates-row">
-                {['12 JAN (Mon)', '13 JAN (Tue)', '14 JAN (Wed)'].map((date) => (
-                  <button
-                    key={date}
-                    className={`date-chip-box ${selectedDate === date ? 'active' : ''}`}
-                    onClick={() => setSelectedDate(date)}
-                  >
-                    <Calendar size={14} />
-                    <span>{date}</span>
-                  </button>
-                ))}
+                {dateRequest?.dateSlots?.map((slot) => {
+                  const dateLabel = `${slot.date} (${slot.day})`;
+
+                  return (
+                    <button
+                      key={slot._id}
+                      className={`date-chip-box ${
+                        selectedDate === slot._id ? "active" : ""
+                      }`}
+                      onClick={() => {
+                        setSelectedDate(slot._id);
+                        setSelectedTime(slot.time);
+                      }}
+                    >
+                      <Calendar size={14} />
+                      <span>{dateLabel}</span>
+                    </button>
+                  );
+                })}
               </div>
 
               <h4 className="slot-heading">Available Time Slot</h4>
+
               <div className="times-row">
-                {['11:00 AM', '1:00 PM', '07:00 PM'].map((time) => (
+                {dateRequest?.dateSlots?.map((slot) => (
                   <button
-                    key={time}
-                    className={`time-chip-pill ${selectedTime === time ? 'active' : ''}`}
-                    onClick={() => setSelectedTime(time)}
+                    key={slot._id}
+                    className={`time-chip-pill ${
+                      selectedTime === slot.time ? "active" : ""
+                    }`}
+                    onClick={() => setSelectedTime(slot.time)}
                   >
                     <CheckCircle2 size={14} />
-                    <span>{time}</span>
+                    <span>{slot.time}</span>
                   </button>
                 ))}
               </div>
@@ -82,14 +144,17 @@ const PlanDetails = () => {
             </div>
 
             <p className="fm-preference">
-              Preference - <span className="fm-purple-val">Restaurant</span>
+              Preference -{" "}
+              <span className="fm-purple-val">{dateRequest?.locationType}</span>
             </p>
-
             <div className="fm-chips-wrapper">
-              <div className="fm-chip-box">North - Indian</div>
-              <div className="fm-chip-box">🥣 Italian</div>
-              <div className="fm-chip-box">North - Indian</div>
-              <div className="fm-chip-box">Sea- Food</div>
+              {dateRequest?.mealType.map((value, index) => {
+                return (
+                  <div className="fm-chip-box" key={index}>
+                    {value}
+                  </div>
+                );
+              })}
             </div>
           </section>
 
@@ -104,24 +169,55 @@ const PlanDetails = () => {
             <div className="budget-info-rows">
               <div className="b-row">
                 <span className="b-label">Estimated Budget</span>
-                <span className="b-value">₹500 - 1600 / Person</span>
+                <span className="b-value">{dateRequest?.budget}/person</span>
               </div>
               <div className="b-row">
                 <span className="b-label">Preferred To Pay :</span>
-                <span className="pay-status-chip">He Will Pay</span>
+                <span className="pay-status-chip">
+                  {dateRequest?.payType == "him"
+                    ? "He Will Pay "
+                    : dateRequest?.payType == "her"
+                      ? "She Will Pay "
+                      : "Payment Split "}
+                </span>
               </div>
             </div>
           </section>
 
           <div className="bottom-padding"></div>
 
-          <div className="confirm-scroll-container">
-            <button className="confirm-plan-btn" onClick={() => navigate('/dates')}>
-              Confirm Plan
-            </button>
+          <div className="flex flex-col space-y-2 confirm-scroll-container">
+            {dateRequest?.status === "rejected" ? (
+              <button
+                disabled
+                className="bg-red-100 py-3.5 rounded-[14px] font-semibold text-lg text-red-600 cursor-not-allowed"
+              >
+                Rejected
+              </button>
+            ) : (
+              <>
+                <button
+                  className="confirm-plan-btn"
+                  onClick={() =>
+                    handleConfirmDate(dateRequest?._id, "accepted")
+                  }
+                >
+                  Confirm Plan
+                </button>
+
+                <button
+                  className="bg-red-100 py-3.5 rounded-[14px] font-semibold text-lg text-red-600"
+                  onClick={() =>
+                    handleConfirmDate(dateRequest?._id, "rejected")
+                  }
+                >
+                  Reject Plan
+                </button>
+              </>
+            )}
           </div>
 
-          <div className="bottom-padding"></div>      
+          <div className="bottom-padding"></div>
         </div>
         <BottomNav />
       </div>
