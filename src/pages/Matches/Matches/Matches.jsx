@@ -13,14 +13,32 @@ import AppLayout from "../../../components/AppLayout/AppLayout";
 import BottomNav from "../../../components/BottomNav/BottomNav";
 import matchImg from "../../../assets/match-profile.jpg";
 import "./Matches.css";
-import { useRecommendedProfiles } from '../../../context/userprofileRecomm'
+import { useRecommendedProfiles } from "../../../context/userprofileRecomm";
+import { useUser } from "../../../context/userinfo";
 
 const Matches = () => {
   const navigate = useNavigate();
   const scrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showCallPopup, setShowCallPopup] = useState(false);
-  const { profiles } = useRecommendedProfiles()
+  const { profiles } = useRecommendedProfiles();
+  console.log("profile matches : ", profiles);
+  const { callrequest } = useUser();
+  console.log("call request : ", callrequest);
+  const profilesWithCall = profiles.map((profile) => {
+    const request = callrequest?.find(
+      (value) =>
+        value.receiverId?.toString() === profile._id.toString() &&
+        value.status === "accepted",
+    );
+
+    return {
+      ...profile,
+      call: !!request,
+    };
+  });
+
+  console.log("profiles with call : ", profilesWithCall);
 
   const [favorites, setFavorites] = useState({});
   const toggleFavorite = (id) => {
@@ -101,7 +119,7 @@ const Matches = () => {
             ref={scrollRef}
             onScroll={handleScroll}
           >
-            {profiles.map((profile, index) => {
+            {profilesWithCall.map((profile, index) => {
               // Center card stays straight, side cards tilt away
               let rotateValue = 0;
               let scaleValue = 1;
@@ -117,7 +135,9 @@ const Matches = () => {
                 <div
                   key={profile.id}
                   className="card-anchor"
-                  onClick={() => navigate("/matches/profile-details", { state: { profile } })}
+                  onClick={() =>
+                    navigate("/matches/profile-details", { state: { profile } })
+                  }
                   style={{
                     transform: `rotate(${rotateValue}deg) scale(${scaleValue})`,
                     zIndex: activeIndex === index ? 10 : 1,
@@ -129,18 +149,21 @@ const Matches = () => {
                       alt={profile.name}
                       className="match-img-bg"
                     /> */}
-                     <img
-                src={profile?.profilephoto || "https://i.pravatar.cc/150?img=12"}
-                alt="profile"
-                 className="match-img-bg"
-                onError={(e) => {
-                  e.target.src = "https://i.pravatar.cc/150?img=12";
-                }}
-              />
+                    <img
+                      src={
+                        profile?.profilephoto ||
+                        "https://i.pravatar.cc/150?img=12"
+                      }
+                      alt="profile"
+                      className="match-img-bg"
+                      onError={(e) => {
+                        e.target.src = "https://i.pravatar.cc/150?img=12";
+                      }}
+                    />
 
                     <div className="card-top-ui">
                       <div className="match-badge">
-                        {profile.compat} Compatible
+                        {profile.matchCount * 20}% Compatible
                       </div>
                       <button
                         className="heart-icon-btn"
@@ -165,19 +188,23 @@ const Matches = () => {
                         </h3>
                         <div className="loc-wrap">
                           <MapPin size={16} fill="#fff" color="#fff" />
-                          <span>{profile.city}</span>
+                          <span>{profile?.state}</span>
                         </div>
                       </div>
 
-                      <button
-                        className="call-btn-fixed"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setShowCallPopup(true);
-                        }}
-                      >
-                        <Phone size={22} fill="#5a3c6d" color="#5a3c6d" />
-                      </button>
+                      {profile.call && (
+                        <>
+                          <button
+                            className="call-btn-fixed"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setShowCallPopup(true);
+                            }}
+                          >
+                            <Phone size={22} fill="#5a3c6d" color="#5a3c6d" />
+                          </button>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>

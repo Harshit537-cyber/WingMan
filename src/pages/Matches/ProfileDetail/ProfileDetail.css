@@ -192,9 +192,28 @@
 .modal-title { font-size: 26px; font-weight: 800; color: #000; margin: 0; }
 .modal-subtitle { font-size: 15px; color: #333; font-weight: 500; line-height: 1.5; }
 .modal-primary-btn {
-    width: 100%; background: #5a3c6d; color: white; border: none;
-    padding: 16px; border-radius: 18px; font-size: 18px; font-weight: 700;
+    width: 100%;
+    background: #5a3c6d;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 18px;
+    font-size: 18px;
+    font-weight: 700;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* hover effect */
+.modal-primary-btn:hover {
+    background: #4b2f5b;
+}
+
+/* disabled fade effect */
+.modal-primary-btn:disabled {
+    background: #b7a7c2;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 .slide-up-modal { animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; }
 

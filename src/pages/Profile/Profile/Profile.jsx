@@ -105,7 +105,7 @@ const Profile = () => {
               </svg>
               <div className="user-avatar">
                  <img
-                src={user?.profilephoto || "https://i.pravatar.cc/150?img=12"}
+                src={user?.profilephoto || "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg"}
                 alt="user"
                 className="ep-main-i"
                 onError={(e) => {

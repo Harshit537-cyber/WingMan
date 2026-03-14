@@ -24,11 +24,11 @@ import "./ProfileDetail.css";
 import { useUser } from "../../../context/userinfo";
 
 const ProfileDetail = () => {
-  const { callrequest, fetchUser } = useUser();
-  console.log(callrequest);
+  const { callrequest, fetchUser, requestedDateSend } = useUser();
+  console.log(requestedDateSend);
   const location = useLocation();
   const profile = location.state?.profile;
-  console.log(profile);
+
   const navigate = useNavigate();
   const [showCallModal, setShowCallModal] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false); // State for heart fill
@@ -36,10 +36,17 @@ const ProfileDetail = () => {
     (value) => value.receiverId?.toString() === profile?._id?.toString(),
   );
 
+   const user = JSON.parse(localStorage.getItem("user"));
+
+  const isRequestSend = requestedDateSend.some(
+    (value) => value.senderId?.toString() === user._id?.toString(),
+  );
+  console.log(isRequestSend);
+
   const buttonText = !request
     ? "Send Call Request"
     : request.status === "accepted"
-      ? "Date Request"
+      ? isRequestSend ? "Date Request Submitted" : "Send Date Request"
       : "Call Request Submitted";
 
   const disabled = request && request.status !== "accepted";
@@ -84,14 +91,11 @@ const ProfileDetail = () => {
       const res = await axiosInstance.post("/call-request/create", payload);
       console.log(res.data);
       closeModal();
-      fetchUser()
+      fetchUser();
     } catch (error) {
       console.log(error);
     }
   };
-
-
-
 
   const formatValue = (value) => {
     if (Array.isArray(value)) {
@@ -248,7 +252,7 @@ const ProfileDetail = () => {
             <div className="request-btn-container slide-up staggered-7">
               <button
                 className="request-btn"
-                disabled={disabled}
+                disabled={disabled || isRequestSend}
                 onClick={
                   buttonText === "Date Request"
                     ? () =>

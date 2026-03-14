@@ -80,6 +80,9 @@ const LandingPage = () => {
             {loading ? <span className="loader"></span> : "Continue to Google"}
           </button>
         </div>
+
+
+        <p>Have an Account <span className="text-[#5a2761] underline" onClick={() => navigate("/login")}>Login</span></p>
       </div>
     </AppLayout>
   );

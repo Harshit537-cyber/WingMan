@@ -40,33 +40,44 @@ const Dates = () => {
         {/* --- SCROLLABLE CONTENT --- */}
         <div className="dates-content-scroll">
           {/* Card 1: Someone asked you out -> Route to AskedOut page */}
-          <section
-            className="dates-section fade-in"
-            onClick={() => navigate("/asked-out", {
-              state:{data:requestedDateReq}
-            })}
-          >
+          <section className="dates-section fade-in">
             <div className="horizontal-date-card">
               <div className="card-header-row">
                 <div className="title-with-heart">
                   <span>Someone asked you out</span>
                   <Heart size={18} fill="#5a3c6d" color="#5a3c6d" />
                 </div>
-                <span className="count-badge">{requestedDateReq.length || "" }</span>
+                <span className="count-badge">
+                  {requestedDateReq.length || ""}
+                </span>
               </div>
               <div>
                 <div className="avatar-row">
-                  {requestedDateReq?.map((value, index) => (
-                    <div key={index} className="avatar-circle">
-                      <img
-                        src={
-                          value?.senderId?.profilephoto ||
-                          `https://randomuser.me/api/portraits/men/${index + 10}.jpg`
+                  {requestedDateReq.length > 0 ? (
+                    requestedDateReq?.map((value, index) => (
+                      <div
+                        key={index}
+                        onClick={() =>
+                          navigate("/asked-out", {
+                            state: { data: requestedDateReq },
+                          })
                         }
-                        alt={value?.senderId?.name}
-                      />
+                        className="avatar-circle"
+                      >
+                        <img
+                          src={
+                            value?.senderId?.profilephoto ||
+                            `https://randomuser.me/api/portraits/men/${index + 10}.jpg`
+                          }
+                          alt={value?.senderId?.name}
+                        />
+                      </div>
+                    ))
+                  ) : (
+                    <div className="no-requests-placeholder text-gray-400">
+                      No new date requests
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
               {/* <div className="avatar-row">
@@ -82,25 +93,28 @@ const Dates = () => {
             {/* Planned Dates Card */}
             <div
               className="vertical-date-card"
-              onClick={() => navigate("/planned-dates",{
-                state:{ date : dateaccepted}
-              })}
+              onClick={() =>
+                navigate("/planned-dates", {
+                  state: { date: dateaccepted },
+                })
+              }
             >
               <h3>
                 Planned <br /> Dates
               </h3>
-              {
-                dateaccepted.map((value, index) => (
-                    <div key={index} className="large-avatar">
-                      <img
-                        src={
-                          value?.senderId?.profilephoto || `https://randomuser.me/api/portraits`
-                        }/>
-                      </div>
-                ))
-              }
-            
-            
+              {dateaccepted.length >0 ? dateaccepted.map((value, index) => (
+                <div key={index} className="large-avatar">
+                  <img
+                    src={
+                      value?.senderId?.profilephoto ||
+                      `https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg`
+                    }
+                  />
+                </div>
+              )) : <div className="no-requests-placeholder text-gray-400">No planned dates</div>}
+             {/* <div className="large-avatar">
+                <img src={userImg} alt="user" />
+              </div> */}
             </div>
 
             {/* Proposed Dates Card */}
@@ -118,7 +132,7 @@ const Dates = () => {
           </section>
 
           {/* Card 4: Completed Dates -> Route to Completed page */}
-          <section
+          {/* <section
             className="dates-section slide-up delay-1"
             onClick={() => navigate("/completed-dates")}
           >
@@ -142,7 +156,7 @@ const Dates = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </section> */}
 
           <div className="bottom-spacing"></div>
         </div>

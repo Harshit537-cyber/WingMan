@@ -1,6 +1,34 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Camera, Plus, MapPin, ChevronLeft } from "lucide-react";
+import { Plus, Upload, CheckCircle } from "lucide-react";
+import {
+  Cake,
+  Ruler,
+  Heart,
+  Globe,
+  Languages,
+  Utensils,
+  PawPrint,
+  Music,
+  BookOpen,
+  CookingPot,
+  Plane,
+  Film,
+  Drama,
+  PartyPopper,
+  ShoppingBag,
+  Palette,
+  Mountain,
+  Music2,
+  Dumbbell,
+  Mic,
+  Gamepad2,
+  Flower,
+  Trophy,
+  HeartPulse,
+  Camera,
+  Sparkles,
+} from "lucide-react";
 import AppLayout from "../../../components/AppLayout/AppLayout";
 import BottomNav from "../../../components/BottomNav/BottomNav";
 import "./EditProfile.css";
@@ -13,8 +41,8 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const { user, loading } = useUser();
   const [name, setName] = useState("");
-  const [occupation, setOccupation] = useState("");
-  const [location, setLocation] = useState("");
+  const [occupation, setOccupation] = useState("Developer");
+  const [location, setLocation] = useState("Dehradun");
   console.log(name, location);
   const [interest, setInterest] = useState([]);
   const [photo, setPhoto] = useState([]);
@@ -42,13 +70,45 @@ const EditProfile = () => {
     }
   }, [user]);
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (!selectedFile) return;
-
-    setFile(selectedFile);
-    setPreview(URL.createObjectURL(selectedFile));
+  const iconMap = {
+    age: Cake,
+    height: Ruler,
+    religion: Heart,
+    ethnicity: Globe,
+    spoken_language: Languages,
   };
+
+  const interestIconMap = {
+    "Eating Out": Utensils,
+    Pets: PawPrint,
+    Music: Music,
+    Reading: BookOpen,
+    Cooking: CookingPot,
+    Travel: Plane,
+    Movies: Film,
+    Theatre: Drama,
+    Parting: PartyPopper,
+    Shopping: ShoppingBag,
+    "Art and Craft": Palette,
+    Adventure: Mountain,
+    Dancing: Music2,
+    Fitness: Dumbbell,
+    Singing: Mic,
+    "Video Games": Gamepad2,
+    Gardening: Flower,
+    Sports: Trophy,
+    Yoga: HeartPulse,
+    Photography: Camera,
+    Meditation: Sparkles,
+  };
+
+ const handleFileChange = (e) => {
+  const selectedFile = e.target.files[0];
+  if (!selectedFile) return;
+
+  setFile(selectedFile);
+  setPreview(URL.createObjectURL(selectedFile));
+};
 
   const uploadUserImage = async () => {
     if (!file) return;
@@ -70,6 +130,10 @@ const EditProfile = () => {
       console.log(res.data);
       if (res.data.success == true) {
         setSuccess(true);
+        setFile(null);
+        setPreview(null);
+
+        setTimeout(() => setSuccess(false), 2000);
       }
     } catch (error) {
       console.log(error);
@@ -96,44 +160,56 @@ const EditProfile = () => {
 
         <div className="ep-scroll-view">
           {/* --- PROFILE HEADER --- */}
-          <div className="ep-header">
-            <div className="ep-avatar-box">
-              <img
-                src={
-                  preview ||
-                  user?.profilephoto ||
-                  "https://i.pravatar.cc/150?img=12"
-                }
-                alt="user"
-                className="ep-main-i"
-                onError={(e) => {
-                  e.target.src = "https://i.pravatar.cc/150?img=12";
-                }}
-              />
+         <div className="ep-header">
+  <div className="ep-avatar-box">
+    <img
+      src={
+        preview ||
+        user?.profilephoto ||
+        "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg"
+      }
+      alt="user"
+      className="ep-main-i"
+      onError={(e) => {
+        e.target.src = "https://i.pravatar.cc/150?img=12";
+      }}
+    />
 
-              <div
-                className="ep-camera-btn"
-                onClick={() => fileInputRef.current.click()}
-              >
-                <Camera size={22} color="white" fill="currentColor" />
-              </div>
-            </div>
-            {preview && (
-              <button
-                onClick={uploadUserImage}
-                className="ep-change-photo-text"
-              >
-                {success ? "Uploaded Successfully" : "Upload Image"}
-              </button>
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              ref={fileInputRef}
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-            />
-          </div>
+    <div
+      className="ep-camera-btn"
+      onClick={() => fileInputRef.current.click()}
+    >
+      <Camera size={22} color="white" fill="currentColor" />
+    </div>
+  </div>
+
+  {preview && (
+    <button
+      onClick={uploadUserImage}
+      className="ep-change-photo-text flex items-center gap-2"
+    >
+      { success && preview != null ? (
+        <>
+          <CheckCircle size={16} className="text-green-500" />
+          Uploaded Successfully
+        </>
+      ) : (
+        <>
+          <Upload size={16} />
+          Upload Image
+        </>
+      )}
+    </button>
+  )}
+
+  <input
+    type="file"
+    accept="image/*"
+    ref={fileInputRef}
+    style={{ display: "none" }}
+    onChange={handleFileChange}
+  />
+</div>
 
           {/* --- MAIN INFO CARD --- */}
           <div className="ep-main-card">
@@ -146,14 +222,22 @@ const EditProfile = () => {
                   onChange={(e) => setName(e.target.value)}
                   defaultValue="Wingmann"
                 />
-                <span className="ep-age-val">23</span>
+                {/* <span className="ep-age-val">23</span> */}
               </div>
             </div>
 
             <div className="ep-field-row">
               <div className="ep-label-box">Occupation</div>
               <div className="ep-input-box">
-                <input type="text" value={occupation?.charAt(0).toUpperCase() + occupation?.slice(1)} defaultValue="Software Devloper" />
+                <input
+                  type="text"
+                  value={
+                    occupation
+                      ? occupation.charAt(0).toUpperCase() + occupation.slice(1)
+                      : "Software Developer"
+                  }
+                  defaultValue="Software Devloper"
+                />
               </div>
             </div>
 
@@ -162,11 +246,15 @@ const EditProfile = () => {
               <div className="ep-input-box">
                 <input
                   type="text"
-                 value={location?.charAt(0).toUpperCase() + location?.slice(1)}
+                  value={
+                    location
+                      ? location.charAt(0).toUpperCase() + location.slice(1)
+                      : "Dehradun"
+                  }
                   onChange={(e) => setLocation(e.target.value)}
                   defaultValue="Dehradun"
                 />
-                <div className="ep-dist-tag">1km</div>
+                {/* <div className="ep-dist-tag">1km</div> */}
               </div>
             </div>
 
@@ -175,17 +263,21 @@ const EditProfile = () => {
             {/* About Me Section inside the same card */}
             <div className="ep-section-header">About me</div>
             <div className="ep-tags-grid">
-              {Object.entries(about).map(([key, value]) => (
-                <div key={key} className="ep-tag-chip">
-                  <span key={key} className="tag">
-                    {key}: {formatValue(value)}
-                    {/* {formatValue(value)} */}
-                  </span>
-                </div>
-              ))}
-              <div className="ep-add-tag-circle">
+              {Object.entries(about).map(([key, value]) => {
+                const Icon = iconMap[key];
+
+                return (
+                  <div key={key} className="inline-flex m-1">
+                    <span className="flex items-center gap-2 bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
+                      {Icon && <Icon size={14} />}
+                      {formatValue(value)}
+                    </span>
+                  </div>
+                );
+              })}
+              {/* <div className="ep-add-tag-circle">
                 <Plus size={18} color="#D1BBD8" strokeWidth={3} />
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -193,19 +285,27 @@ const EditProfile = () => {
           <div className="ep-main-card">
             <div className="ep-section-header">Interests</div>
             <div className="ep-tags-grid">
-              {user?.interest?.map((item, index) => (
-                <div key={index} className="ep-tag-chip">
-                  {item}
-                </div>
-              ))}
+              {user?.interest?.map((item, index) => {
+                const Icon = interestIconMap[item];
+
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center gap-2 bg-purple-100 text-purple-800 px-3 py-1.5 rounded-full text-sm font-medium"
+                  >
+                    {Icon && <Icon size={14} />}
+                    {item}
+                  </div>
+                );
+              })}
 
               <div className="ep-add-tag-circle">
                 <Plus size={18} color="#D1BBD8" strokeWidth={3} />
               </div>
             </div>
-            <div className="ep-add-interest-btn">
+            {/* <div className="ep-add-interest-btn">
               <Plus size={16} /> ADD Interest
-            </div>
+            </div> */}
           </div>
 
           {/* --- PHOTO GRID CARD --- */}

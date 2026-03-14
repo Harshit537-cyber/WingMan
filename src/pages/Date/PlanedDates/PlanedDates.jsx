@@ -10,6 +10,7 @@ const PlanedDates = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const plannedList = location?.state?.date || [];
+  console.log(plannedList);
 
   // Dummy data (Same as image)
   // const plannedList = [
@@ -47,7 +48,7 @@ const PlanedDates = () => {
                 {/* Left Side: Avatar with Purple Border */}
                 <div className="avatar-outer">
                   <div className="avatar-inner-ring">
-                    <img src={item?.senderId?.profilephoto} alt={item?.senderId?.name} />
+                    <img src={item?.senderId?.profilephoto || 'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg'} alt={item?.senderId?.name} />
                   </div>
                 </div>
 
@@ -61,8 +62,10 @@ const PlanedDates = () => {
                 {/* Right Side: Action Button */}
                <div className="flex justify-end">
   <button
-    className="view-btn"
-    onClick={() => navigate("/date-planned")}
+    className="view-btn py-4"
+    onClick={() => navigate("/date-planned",{
+      state: { data: item },
+    })}
   >
     View Plan
   </button>

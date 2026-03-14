@@ -4,9 +4,15 @@ import { ChevronLeft, Bell, AlignRight, CircleDot, Store } from 'lucide-react';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import BottomNav from '../../../components/BottomNav/BottomNav';
 import './DatePlanned.css';
-
+import { useLocation } from 'react-router-dom';
 const DatePlanned = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+   const data = location?.state?.data || {};
+   console.log("Received data in DatePlanned:", data);
+
+   const slot = data?.dateSlots?.find(slot => slot.status === 'confirmed');
+   console.log("Confirmed slot:", slot);
 
   return (
     <AppLayout>
@@ -28,7 +34,7 @@ const DatePlanned = () => {
         <div className="content-scroll-view">
           
           <h2 className="main-status-text fade-in">
-            Your date with Ruhi is all set!
+            Your date with {data?.senderId?.name || 'someone'} is all set!
           </h2>
 
           {/* Info Grid (2x2) */}
@@ -36,19 +42,21 @@ const DatePlanned = () => {
             {/* Card 1: Date */}
             <div className="info-card dark-purple">
                <span className="card-label">Date</span>
-               <span className="card-value">10/10/25</span>
+               <span className="card-value">{slot?.date || 'N/A'}</span>
             </div>
 
             {/* Card 2: Time */}
             <div className="info-card light-purple">
                <span className="card-label">Time</span>
-               <span className="card-value">6:00 PM</span>
+               <span className="card-value">{
+                   slot?.time || 'N/A'
+}</span>
             </div>
 
             {/* Card 3: Location */}
             <div className="info-card light-purple">
                <span className="card-label">Location</span>
-               <span className="card-value purple-text">Cafe Mocha</span>
+               <span className="card-value purple-text">{data?.locationType || 'N/A'}</span>
             </div>
 
             {/* Card 4: Match Score */}
@@ -70,7 +78,9 @@ const DatePlanned = () => {
 
           {/* Action Links */}
           <div className="action-links-list slide-up delay-2">
-             <div className="link-item" onClick={() => navigate('/dos-donts')}>
+             <div className="link-item" onClick={() => navigate('/dos-donts',{
+               state:{slot, name: data?.senderId?.name, location: data?.locationType}
+             })}>
                 <CircleDot size={20} color="#333" />
                 <span>What to do, what to avoid</span>
              </div>

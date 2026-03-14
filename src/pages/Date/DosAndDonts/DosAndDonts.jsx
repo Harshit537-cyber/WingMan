@@ -4,11 +4,17 @@ import { ChevronLeft, Bell, AlignRight, CircleDot } from 'lucide-react';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import BottomNav from '../../../components/BottomNav/BottomNav';
 import './DosAndDonts.css';
+import { useLocation } from 'react-router-dom';
 
 const DosAndDonts = () => {
   const navigate = useNavigate();
   const [activeTab, setSelectedTab] = useState('dos');
-
+  const location = useLocation();
+  let data = location?.state?.slot || {};
+  const name = location?.state?.name || 'someone';
+  const locationType = location?.state?.location || 'a place';  
+  
+  console.log("Received slot data in DosAndDonts:", locationType);
   const dosData = [
     { title: "Be Yourself, Not Your Profile", desc: "Be genuine. people connect more with real energy than perfect stories." },
     { title: "Be On Time", desc: "Punctuality shows respect and sets the tone for a smooth start." },
@@ -35,21 +41,21 @@ const DosAndDonts = () => {
         </header>
 
         <div className="content-scrollable">
-          <h2 className="status-msg fade-in">Your date with Ruhi is all set!</h2>
+          <h2 className="status-msg fade-in">Your date with {name} is all set!</h2>
 
           {/* INFO GRID - MATCHED TO DATEPLANNED PAGE */}
           <div className="info-grid slide-up">
             <div className="info-card light-purple">
                <span className="card-label">Date</span>
-               <span className="card-value purple-text">10/10/25</span>
+               <span className="card-value purple-text">{data?.date || 'N/A'}</span>
             </div>
             <div className="info-card dark-purple">
                <span className="card-label">Time</span>
-               <span className="card-value">6:00 PM</span>
+               <span className="card-value">{data?.time || 'N/A'}</span>
             </div>
             <div className="info-card dark-purple">
                <span className="card-label">Location</span>
-               <span className="card-value">Cafe Mocha</span>
+               <span className="card-value text-white">{locationType || 'N/A'}</span>
             </div>
             <div className="info-card light-purple">
                <span className="card-label">Match Score</span>

@@ -27,12 +27,18 @@ const fetchdateRequestdata = async (senderId, receiverId) => {
   }
 };
 
-const Confirmdate = async (dateRequestId, status) => {
+const Confirmdate = async (dateRequestId, status, dateId) => {
   try {
 
-    const response = await axiosInstance.patch(
-      `date-request/update/${dateRequestId}`,
-      { status: status }
+    // const response = await axiosInstance.patch(
+    //   `date-request/update/${dateRequestId}`,
+    //   { status: status }
+    // );
+
+     const response = await axiosInstance.patch(
+      `date-request/update?id=${dateRequestId}&slotId=${dateId}`,
+      { status: status, slotStatus: "confirmed" }
+
     );
 
     return response.data;

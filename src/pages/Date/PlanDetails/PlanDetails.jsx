@@ -23,11 +23,14 @@ const PlanDetails = () => {
   console.log(dateRequest);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedDateId, setSelectedDateId] = useState(null);
+  console.log(selectedDateId);
   const name = location?.state?.name || "";
   console.log(name, id);
   const user = JSON.parse(localStorage.getItem("user"));
   const receiverId = user?._id;
-
+  const [selectedSlot, setSelectedSlot] = useState(null);
+  console.log(selectedSlot);
   // const [selectedDate, setSelectedDate] = useState("12 JAN (Mon)");
   // const [selectedTime, setSelectedTime] = useState("1:00 PM");
 
@@ -43,9 +46,9 @@ const PlanDetails = () => {
     fetchdata();
   }, []);
 
-  const handleConfirmDate = async (dateRequestId, status) => {
+  const handleConfirmDate = async (dateRequestId, status, dateId) => {
     console.log("Confirming date with ID:", dateRequestId);
-    const data = await Confirmdate(dateRequestId, status);
+    const data = await Confirmdate(dateRequestId, status, dateId);
     console.log("Date confirmation response:", data);
     if (data.success == true) {
       fetchUser();
@@ -98,21 +101,19 @@ const PlanDetails = () => {
             <div className="selection-area">
               <div className="dates-row">
                 {dateRequest?.dateSlots?.map((slot) => {
-                  const dateLabel = `${slot.date} (${slot.day})`;
-
                   return (
+                  
                     <button
                       key={slot._id}
                       className={`date-chip-box ${
-                        selectedDate === slot._id ? "active" : ""
+                        selectedDateId === slot._id ? "active" : ""
                       }`}
-                      onClick={() => {
-                        setSelectedDate(slot._id);
-                        setSelectedTime(slot.time);
-                      }}
+                      onClick={() => setSelectedDateId(slot._id)}
                     >
                       <Calendar size={14} />
-                      <span>{dateLabel}</span>
+                      <span>
+                        {`${slot.date}`} <br /> {` (${slot.day})`}
+                      </span>
                     </button>
                   );
                 })}
@@ -125,9 +126,9 @@ const PlanDetails = () => {
                   <button
                     key={slot._id}
                     className={`time-chip-pill ${
-                      selectedTime === slot.time ? "active" : ""
+                      selectedDateId === slot._id ? "active" : ""
                     }`}
-                    onClick={() => setSelectedTime(slot.time)}
+                    onClick={() => setSelectedDateId(slot._id)}
                   >
                     <CheckCircle2 size={14} />
                     <span>{slot.time}</span>
@@ -199,7 +200,7 @@ const PlanDetails = () => {
                 <button
                   className="confirm-plan-btn"
                   onClick={() =>
-                    handleConfirmDate(dateRequest?._id, "accepted")
+                    handleConfirmDate(dateRequest?._id, "accepted", selectedDateId)
                   }
                 >
                   Confirm Plan

@@ -106,7 +106,10 @@ const LoginPage = () => {
             {loading ? <span className="loader"></span> : "Login"}
           </button>
         </form>
+         <p className="mx-auto pt-3">Don't have an account? <span className="text-[#5a2761] underline" onClick={() => navigate("/")}>Sign up</span></p>
       </div>
+
+     
     </AppLayout>
   );
 };
