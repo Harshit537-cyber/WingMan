@@ -14,9 +14,10 @@ const DateRequested = () => {
 
   // Selection Logic States
   const [selectedDate, setSelectedDate] = useState(null);
+  console.log("selectedDate : ", selectedDate);
   const month = new Date().toLocaleString("default", { month: "short" });
 
- const date=("date :", `${selectedDate} ${month}`);
+  const date = ("date :", `${selectedDate} ${month}`);
   console.log("date : ", date);
   const [completedPairs, setCompletedPairs] = useState([]);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -59,10 +60,15 @@ const DateRequested = () => {
     }
 
     if (completedPairs.length >= 3) return;
-
+    const today = new Date();
+    const fullDate = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      selectedDate,
+    );
     const newPair = {
       date: date,
-      day: new Date(selectedDate).toLocaleDateString("en-US", {
+      day: fullDate.toLocaleDateString("en-US", {
         weekday: "long",
       }),
       time: time,

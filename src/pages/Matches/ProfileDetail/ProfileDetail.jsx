@@ -254,7 +254,7 @@ const ProfileDetail = () => {
                 className="request-btn"
                 disabled={disabled || isRequestSend}
                 onClick={
-                  buttonText === "Date Request"
+                  buttonText === "Send Date Request"
                     ? () =>
                         navigate("/date-preferences", {
                           state: { receiverId: profile?._id },
