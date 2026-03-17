@@ -81,7 +81,7 @@ const Profile = () => {
           </button>
           <h1 className="nav-title">{activeModal === 'invite' ? 'Invite Friends' : 'Profile'}</h1>
           <div className="nav-right">
-            <div className="bell-box" onClick={() => navigate('/request')}>
+            <div onClick={() => navigate('/notifications')} className="bell-box">
               <Bell size={26} color="#5a3c6d" />
               <span className="dot"></span>
             </div>

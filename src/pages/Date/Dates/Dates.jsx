@@ -67,7 +67,7 @@ const Dates = () => {
                         <img
                           src={
                             value?.senderId?.profilephoto ||
-                            `https://randomuser.me/api/portraits/men/${index + 10}.jpg`
+                            `https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg`
                           }
                           alt={value?.senderId?.name}
                         />

@@ -46,9 +46,9 @@ const PlanDetails = () => {
     fetchdata();
   }, []);
 
-  const handleConfirmDate = async (dateRequestId, status, dateId) => {
-    console.log("Confirming date with ID:", dateRequestId);
-    const data = await Confirmdate(dateRequestId, status, dateId);
+  const handleConfirmDate = async (dateRequestId, status, dateId, senderId, receiverId) => {
+    console.log("Confirming date with ID:", dateRequestId,dateId);
+    const data = await Confirmdate(dateRequestId, status, dateId, senderId, receiverId);
     console.log("Date confirmation response:", data);
     if (data.success == true) {
       fetchUser();
@@ -200,7 +200,7 @@ const PlanDetails = () => {
                 <button
                   className="confirm-plan-btn"
                   onClick={() =>
-                    handleConfirmDate(dateRequest?._id, "accepted", selectedDateId)
+                    handleConfirmDate(dateRequest?._id, "accepted", selectedDateId, id, receiverId)
                   }
                 >
                   Confirm Plan
@@ -209,7 +209,7 @@ const PlanDetails = () => {
                 <button
                   className="bg-red-100 py-3.5 rounded-[14px] font-semibold text-lg text-red-600"
                   onClick={() =>
-                    handleConfirmDate(dateRequest?._id, "rejected")
+                    handleConfirmDate(dateRequest?._id, "rejected", selectedDateId, id, receiverId)
                   }
                 >
                   Reject Plan

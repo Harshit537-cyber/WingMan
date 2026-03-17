@@ -41,6 +41,7 @@ const About = () => {
 
     // 2. Combine with previous state (Data from all previous screens)
     const email = localStorage.getItem("email");
+    const fcmToken = localStorage.getItem("fcmToken");
 
     const finalPayload = {
       email: email,
@@ -80,6 +81,7 @@ const About = () => {
       lifestyle: formattedLifestyle,
 
       isOnboarded: true,
+      fcmToken: fcmToken,
     };
 
    

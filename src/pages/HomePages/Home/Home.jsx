@@ -79,7 +79,7 @@ const Home = () => {
             <p>Let's find you a date!</p>
           </div>
           <div className="header-icons">
-            <div className="bell-box" onClick={() => navigate("/request")}>
+            <div className="bell-box" onClick={() => navigate("/notifications")}>
               <Bell size={26} color="#5a3c6d" />
               <span className="dot"></span>
             </div>

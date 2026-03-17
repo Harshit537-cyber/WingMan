@@ -19,6 +19,13 @@ export const UserProvider = ({ children }) => {
   console.log(dateaccepted);
   const [requestedDateReq, setRequestedDateReq] = useState([]);
   const [requestedDateSend, setRequestedDateSend] = useState([]);
+  const [notification, setNotification] = useState([]);
+  const [dateRequest_notifications, setDateRequest_notifications] = useState(
+    [],
+  );
+  const [callRequest_notifications, setCallRequest_notifications] = useState(
+    [],
+  );
 
   // ✅ Fetch user
   const fetchUser = useCallback(async () => {
@@ -47,9 +54,12 @@ export const UserProvider = ({ children }) => {
       setUser(res?.data?.data);
       setcallsequest(res?.data?.call_request);
       setDateAccepted(res?.data?.date_accepted);
-    
+
       setRequestedDateReq(res?.data?.date_requested);
       setRequestedDateSend(res?.data?.date_request_sent);
+      setNotification(res?.data?.notifications);
+      setDateRequest_notifications(res?.data?.dateRequest_notifications);
+      setCallRequest_notifications(res?.data?.callRequest_notifications);
     } catch (error) {
       console.error("Fetch user error:", error);
       setUser(null);
@@ -75,7 +85,10 @@ export const UserProvider = ({ children }) => {
         callrequest,
         dateaccepted,
         requestedDateReq,
-        requestedDateSend
+        requestedDateSend,
+        notification,
+        dateRequest_notifications,
+        callRequest_notifications,
       }}
     >
       {children}

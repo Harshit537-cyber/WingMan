@@ -24,7 +24,7 @@ const Request = () => {
         `/call-request/reciever/change-status?receiverId=${user._id}&senderId=${senderId}`,
         {
           status: status,
-          // senderFcmToken: fcmToken,
+        // senderFcmToken: fcmToken,
         },
       );
 
@@ -44,7 +44,7 @@ const Request = () => {
             <ChevronLeft size={28} color="#5a3c6d" />
           </button>
           <div className="right-nav-icons">
-            <button className="nav-icon-btn">
+            <button onClick={() => navigate('/notifications')} className="nav-icon-btn">
               <Bell size={24} color="#5a3c6d" />
             </button>
             <button className="nav-icon-btn">
@@ -83,7 +83,7 @@ const Request = () => {
                           <img
                             src={
                               value?.senderId?.profilephoto ||
-                              `https://randomuser.me/api/portraits/women/${40 + index}.jpg`
+                              `https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg`
                             }
                             alt="User"
                           />
@@ -144,7 +144,7 @@ const Request = () => {
                           <img
                             src={
                               value?.senderId?.profilephoto ||
-                              `https://randomuser.me/api/portraits/women/${40 + index}.jpg`
+                              `https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg`
                             }
                             alt="User"
                           />
