@@ -65,53 +65,60 @@ const Notifications = () => {
             </button>
           ))}
         </div>
-        {
-          activeTab === "All" &&(
-            <>
-             <div className="notif-content slide-up">
-          <div className="notif-stack">
-            {/* CARD 1: Nikita Asked Out (Large Confirm Button) */}
+        {activeTab === "All" && (
+          <>
+            <div className="notif-content slide-up">
+              <div className="notif-stack">
+                {/* CARD 1: Nikita Asked Out (Large Confirm Button) */}
 
-            {
-             notification.length === 0 ? (
-              <div className="no-notif-placeholder">
-                <p>No notifications yet</p>
-              </div>
-             ) :notification?.map((notif, index) => (
-              <>
-                <div key={index} className="figma-notif-card">
-                  <div className="card-main-row">
-                    <div className="user-info-side">
-                      <img
-                        src={notif.AcceptingPersonImage}
-                        className="avatar-50"
-                        alt="user"
-                      />
-                      <div className="text-side">
-                        <h4 className="user-name">
-                          {notif?.body?.trim()?.split(" ").pop()}
-                        </h4>
-                        <p className="notif-label">{notif?.title}</p>
-                      </div>
-                    </div>
-                    <div className="right-action-side">
-                      <span className="time-text">
-                        {getTimeAgo(notif.updatedAt)}
-                      </span>
-                      {/* <div className="btn-group-row">
-                    <button className="btn-confirm-78">Confirm</button>
-                    <button className="icon-x-btn"><X size={20} strokeWidth={3} color="#5a3c6d" /></button>
-                  </div> */}
-                    </div>
+                {notification.length === 0 ? (
+                  <div className="no-notif-placeholder">
+                    <p>No notifications yet</p>
                   </div>
-                </div>
-              </>
-            ))
-            }
-         
+                ) : (
+                  notification?.map((notif, index) => (
+                    <>
+                      <div key={index} className="figma-notif-card">
+                        <div className="card-main-row">
+                          <div className="user-info-side">
+                            <img
+                              src={notif.AcceptingPersonImage}
+                              className="avatar-50"
+                              alt="user"
+                            />
+                            <div className="text-side">
+                              <h4 className="user-name">
+                                {notif?.body?.trim()?.split(" ").pop()}
+                              </h4>
+                              <p className="notif-label">{notif?.body}</p>
+                            </div>
+                          </div>
+                          <div className="right-action-side">
+                            <span className="time-text">
+                              {getTimeAgo(notif.updatedAt)}
+                            </span>
+                            {notif?.type === "call request" && (
+                              <>
+                                <div  onClick={() =>
+                                  navigate("/matches/profile-details", {
+                                    state: { receverId: notif?.receiverId },
+                                  })
+                                } className="btn-group-row">
+                                  <button className="btn-confirm-78">
+                                    Confirm
+                                  </button>
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ))
+                )}
 
-            {/* CARD 2: Nikita Requested Call (Small Buttons) */}
-            {/* <div className="figma-notif-card">
+                {/* CARD 2: Nikita Requested Call (Small Buttons) */}
+                {/* <div className="figma-notif-card">
               <div className="card-main-row">
                 <div className="user-info-side">
                   <img src="https://randomuser.me/api/portraits/women/44.jpg" className="avatar-50" alt="user" />
@@ -130,8 +137,8 @@ const Notifications = () => {
               </div>
             </div> */}
 
-            {/* CARD 3: Alex Accepted Call */}
-            {/* <div className="figma-notif-card">
+                {/* CARD 3: Alex Accepted Call */}
+                {/* <div className="figma-notif-card">
               <div className="card-main-row">
                 <div className="user-info-side">
                   <img src="https://randomuser.me/api/portraits/men/32.jpg" className="avatar-50" alt="user" />
@@ -146,8 +153,8 @@ const Notifications = () => {
               </div>
             </div> */}
 
-            {/* CARD 4: Alex Date Planned (View Details) */}
-            {/* <div className="figma-notif-card height-auto">
+                {/* CARD 4: Alex Date Planned (View Details) */}
+                {/* <div className="figma-notif-card height-auto">
               <div className="card-main-row">
                 <div className="user-info-side">
                   <img src="https://randomuser.me/api/portraits/men/32.jpg" className="avatar-50" alt="user" />
@@ -166,62 +173,58 @@ const Notifications = () => {
                 </button>
               </div>
             </div> */}
-          </div>
-          <div className="notif-spacer"></div>
-        </div>
-            </>
-          )
-        }
+              </div>
+              <div className="notif-spacer"></div>
+            </div>
+          </>
+        )}
         {activeTab === "Dating" && (
           <>
             <div className="notif-content slide-up">
-          <div className="notif-stack">
-            {/* CARD 1: Nikita Asked Out (Large Confirm Button) */}
-            
-             { dateRequest_notifications.length === 0 ? (
-                <div className="no-notif-placeholder">
-                  <p>No dating notifications yet</p>
-                </div>):
-                dateRequest_notifications?.map((notif, index) => (
-           <div key={index} className="figma-notif-card">
-                  <div className="card-main-row">
-                    <div className="user-info-side">
-                      <img
-                        src={notif.AcceptingPersonImage}
-                        className="avatar-50"
-                        alt="user"
-                      />
-                      <div className="text-side">
-                        <h4 className="user-name">
-                          {notif?.body?.trim()?.split(" ").pop()}
-                        </h4>
-                        <p className="notif-label">{notif?.title}</p>
-                      </div>
-                    </div>
-                    <div className="right-action-side">
-                      <span className="time-text">
-                        {getTimeAgo(notif.updatedAt)}
-                      </span>
-                      {/* <div className="btn-group-row">
+              <div className="notif-stack">
+                {/* CARD 1: Nikita Asked Out (Large Confirm Button) */}
+
+                {dateRequest_notifications.length === 0 ? (
+                  <div className="no-notif-placeholder">
+                    <p>No dating notifications yet</p>
+                  </div>
+                ) : (
+                  dateRequest_notifications?.map((notif, index) => (
+                    <div key={index} className="figma-notif-card">
+                      <div className="card-main-row">
+                        <div className="user-info-side">
+                          <img
+                            src={notif.AcceptingPersonImage}
+                            className="avatar-50"
+                            alt="user"
+                          />
+                          <div className="text-side">
+                            <h4 className="user-name">
+                              {notif?.body?.trim()?.split(" ").pop()}
+                            </h4>
+                            <p className="notif-label">{notif?.body}</p>
+                          </div>
+                        </div>
+                        <div className="right-action-side">
+                          <span className="time-text">
+                            {getTimeAgo(notif.updatedAt)}
+                          </span>
+                          {/* <div className="btn-group-row">
                     <button className="btn-confirm-78">Confirm</button>
                     <button className="icon-x-btn"><X size={20} strokeWidth={3} color="#5a3c6d" /></button>
                   </div> */}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-        
-            ))}
-        
-            
-          </div>
-          </div>
+                  ))
+                )}
+              </div>
+            </div>
           </>
-            )
-            }
-        
+        )}
 
-            {/* CARD 2: Nikita Requested Call (Small Buttons) */}
-            {/* <div className="figma-notif-card">
+        {/* CARD 2: Nikita Requested Call (Small Buttons) */}
+        {/* <div className="figma-notif-card">
               <div className="card-main-row">
                 <div className="user-info-side">
                   <img src="https://randomuser.me/api/portraits/women/44.jpg" className="avatar-50" alt="user" />
@@ -240,8 +243,8 @@ const Notifications = () => {
               </div>
             </div> */}
 
-            {/* CARD 3: Alex Accepted Call */}
-            {/* <div className="figma-notif-card">
+        {/* CARD 3: Alex Accepted Call */}
+        {/* <div className="figma-notif-card">
               <div className="card-main-row">
                 <div className="user-info-side">
                   <img src="https://randomuser.me/api/portraits/men/32.jpg" className="avatar-50" alt="user" />
@@ -256,8 +259,8 @@ const Notifications = () => {
               </div>
             </div> */}
 
-            {/* CARD 4: Alex Date Planned (View Details) */}
-            {/* <div className="figma-notif-card height-auto">
+        {/* CARD 4: Alex Date Planned (View Details) */}
+        {/* <div className="figma-notif-card height-auto">
               <div className="card-main-row">
                 <div className="user-info-side">
                   <img src="https://randomuser.me/api/portraits/men/32.jpg" className="avatar-50" alt="user" />
@@ -276,54 +279,62 @@ const Notifications = () => {
                 </button>
               </div>
             </div> */}
-         
-        {
-          activeTab === "Calls" && (
-            <>
-              <div className="notif-content slide-up">
-          <div className="notif-stack">
-            {
-              callRequest_notifications.length === 0 ? (
-                <div className="no-notif-placeholder">
-                  <p>No calling notifications yet</p>
-                </div>):
+
+        {activeTab === "Calls" && (
+          <>
+            <div className="notif-content slide-up">
+              <div className="notif-stack">
+                {callRequest_notifications.length === 0 ? (
+                  <div className="no-notif-placeholder">
+                    <p>No calling notifications yet</p>
+                  </div>
+                ) : (
                   callRequest_notifications?.map((notif, index) => (
-              <>
-                <div key={index} className="figma-notif-card">
-                  <div className="card-main-row">
-                    <div className="user-info-side">
-                      <img
-                        src={notif.AcceptingPersonImage}
-                        className="avatar-50"
-                        alt="user"
-                      />
-                      <div className="text-side">
-                        <h4 className="user-name">
-                          {notif?.body?.trim()?.split(" ").pop()}
-                        </h4>
-                        <p className="notif-label">{notif?.title}</p>
+                    <>
+                      <div key={index} className="figma-notif-card">
+                        <div className="card-main-row">
+                          <div className="user-info-side">
+                            <img
+                              src={notif.AcceptingPersonImage}
+                              className="avatar-50"
+                              alt="user"
+                            />
+                            <div className="text-side">
+                              <h4 className="user-name">
+                                {notif?.body?.trim()?.split(" ").pop()}
+                              </h4>
+                              <div className="w-full">
+                                <p className="notif-label">{notif?.body}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="right-action-side">
+                            <span className="time-text line-clamp-1">
+                              {getTimeAgo(notif.updatedAt)}
+                            </span>
+                            <div className="btn-group-row">
+                              <button
+                                className="btn-confirm-78"
+                                onClick={() =>
+                                  navigate("/matches/profile-details", {
+                                    state: { receverId: notif?.receiverId },
+                                  })
+                                }
+                              >
+                                View Profile
+                              </button>
+                              {/* <button className="icon-x-btn"><X size={20} strokeWidth={3} color="#5a3c6d" /></button> */}
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="right-action-side">
-                      <span className="time-text">
-                        {getTimeAgo(notif.updatedAt)}
-                      </span>
-                      {/* <div className="btn-group-row">
-                    <button className="btn-confirm-78">Confirm</button>
-                    <button className="icon-x-btn"><X size={20} strokeWidth={3} color="#5a3c6d" /></button>
-                  </div> */}
-                    </div>
-                  </div>
-                </div>
-              </>
-            )
-                )
-            }
-            {/* CARD 1: Nikita Asked Out (Large Confirm Button) */}
-         
+                    </>
+                  ))
+                )}
+                {/* CARD 1: Nikita Asked Out (Large Confirm Button) */}
 
-            {/* CARD 2: Nikita Requested Call (Small Buttons) */}
-            {/* <div className="figma-notif-card">
+                {/* CARD 2: Nikita Requested Call (Small Buttons) */}
+                {/* <div className="figma-notif-card">
               <div className="card-main-row">
                 <div className="user-info-side">
                   <img src="https://randomuser.me/api/portraits/women/44.jpg" className="avatar-50" alt="user" />
@@ -342,8 +353,8 @@ const Notifications = () => {
               </div>
             </div> */}
 
-            {/* CARD 3: Alex Accepted Call */}
-            {/* <div className="figma-notif-card">
+                {/* CARD 3: Alex Accepted Call */}
+                {/* <div className="figma-notif-card">
               <div className="card-main-row">
                 <div className="user-info-side">
                   <img src="https://randomuser.me/api/portraits/men/32.jpg" className="avatar-50" alt="user" />
@@ -358,8 +369,8 @@ const Notifications = () => {
               </div>
             </div> */}
 
-            {/* CARD 4: Alex Date Planned (View Details) */}
-            {/* <div className="figma-notif-card height-auto">
+                {/* CARD 4: Alex Date Planned (View Details) */}
+                {/* <div className="figma-notif-card height-auto">
               <div className="card-main-row">
                 <div className="user-info-side">
                   <img src="https://randomuser.me/api/portraits/men/32.jpg" className="avatar-50" alt="user" />
@@ -378,13 +389,11 @@ const Notifications = () => {
                 </button>
               </div>
             </div> */}
-          </div>
-          <div className="notif-spacer"></div>
-        </div>
-            </>
-          )
-        }
-       
+              </div>
+              <div className="notif-spacer"></div>
+            </div>
+          </>
+        )}
 
         <BottomNav />
       </div>

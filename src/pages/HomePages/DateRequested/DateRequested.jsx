@@ -6,11 +6,12 @@ import BottomNav from "../../../components/BottomNav/BottomNav";
 import "./DateRequested.css";
 import { useLocation } from "react-router-dom";
 import axiosInstance from "../../../api/axiosInstance";
-
+import { useUser } from "../../../context/userinfo";
 const DateRequested = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state?.payload;
+  const { fetchUser } = useUser();
 
   // Selection Logic States
   const [selectedDate, setSelectedDate] = useState(null);
@@ -99,7 +100,7 @@ const DateRequested = () => {
         };
 
         const res = await axiosInstance.post("date-request/create", payload);
-
+        fetchUser();
         console.log(res.data);
 
         if (res.data) {

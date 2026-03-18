@@ -27,8 +27,9 @@ const ProfileDetail = () => {
   const { callrequest, fetchUser, requestedDateSend } = useUser();
   console.log(requestedDateSend);
   const location = useLocation();
-  const profile = location.state?.profile;
-
+  const [userdata, setUserdata] = useState(null);
+  const profile = location.state?.profile || userdata;
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [showCallModal, setShowCallModal] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false); // State for heart fill
@@ -36,17 +37,44 @@ const ProfileDetail = () => {
     (value) => value.receiverId?.toString() === profile?._id?.toString(),
   );
 
-   const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const isRequestSend = requestedDateSend.some(
     (value) => value.senderId?.toString() === user._id?.toString(),
   );
   console.log(isRequestSend);
 
+ useEffect(() => {
+  const profilecallId = location?.state?.receverId;
+  console.log("Profile Call ID:", profilecallId);
+
+  if (profilecallId) {
+    const fetchData = async () => {
+      try {
+        setLoading(true); // START LOADING
+
+        const res = await axiosInstance.get(
+          `/user-profile-for-notify/${profilecallId}`
+        );
+
+        setUserdata(res.data.data);
+      } catch (err) {
+        console.error("Error fetching user:", err);
+      } finally {
+        setLoading(false); // STOP LOADING
+      }
+    };
+
+    fetchData();
+  }
+}, [location?.state?.receverId]);
+
   const buttonText = !request
     ? "Send Call Request"
     : request.status === "accepted"
-      ? isRequestSend ? "Date Request Submitted" : "Send Date Request"
+      ? isRequestSend
+        ? "Date Request Submitted"
+        : "Send Date Request"
       : "Call Request Submitted";
 
   const disabled = request && request.status !== "accepted";
@@ -109,6 +137,17 @@ const ProfileDetail = () => {
     return value;
   };
 
+  if (loading || !profile) {
+    return (
+      <AppLayout>
+        <div className="loader-container">
+          <div className="loader"></div>
+          <p>Loading profile...</p>
+        </div>
+      </AppLayout>
+    );
+  }
+
   return (
     <AppLayout>
       <div className="detail-main-container">
@@ -120,7 +159,7 @@ const ProfileDetail = () => {
           <div className="hero-section">
             {/* <img src={profileHero} alt="Jessica" className="hero-img animate-zoom" /> */}
             <img
-              src={profile?.profilephoto || "https://i.pravatar.cc/150?img=12"}
+              src={profile?.profilephoto || "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg"}
               alt="user"
               className="hero-img animate-zoom"
               onError={(e) => {
