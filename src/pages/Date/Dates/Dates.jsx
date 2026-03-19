@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Bell, AlignRight, Heart } from "lucide-react";
 import AppLayout from "../../../components/AppLayout/AppLayout";
@@ -9,9 +9,14 @@ const userImg = "https://randomuser.me/api/portraits/women/44.jpg";
 
 const Dates = () => {
   const navigate = useNavigate();
-  const { requestedDateReq, dateaccepted } = useUser();
+  const { requestedDateReq, dateaccepted, fetchUser } = useUser();
   console.log("requestedDateReq : ", requestedDateReq);
   const currentUser = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(()=>{
+    fetchUser();
+  },[])
+
   return (
     <AppLayout>
       <div className="dates-screen-container">

@@ -48,7 +48,7 @@ export const UserProvider = ({ children }) => {
 
       const res = await axiosInstance.get(`users/${user._id}`);
       setUser(res.data.user);
-      console.log(res.data);
+      console.log('userConted caled : ',res.data);
       setAvator(res.data.avatar);
       setQuiz(res.data.quiz);
       setUser(res?.data?.data);

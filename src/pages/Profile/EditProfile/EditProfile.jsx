@@ -39,7 +39,7 @@ import axiosInstance from "../../../api/axiosInstance";
 
 const EditProfile = () => {
   const navigate = useNavigate();
-  const { user, loading } = useUser();
+  const { user, loading, fetchUser } = useUser();
   const [name, setName] = useState("");
   const [occupation, setOccupation] = useState("Developer");
   const [location, setLocation] = useState("Dehradun");
@@ -132,9 +132,11 @@ const EditProfile = () => {
         setSuccess(true);
         setFile(null);
         setPreview(null);
+        fetchUser()
 
         setTimeout(() => setSuccess(false), 2000);
       }
+
     } catch (error) {
       console.log(error);
     }

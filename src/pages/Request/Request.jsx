@@ -44,6 +44,11 @@ const Request = () => {
   }
 }, [location]);
 
+
+useEffect(()=>{
+  fetchUser();
+},[])
+
   return (
     <AppLayout>
       <div className="requests-page-main">

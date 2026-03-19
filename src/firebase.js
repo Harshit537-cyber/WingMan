@@ -1,8 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, isSupported } from "firebase/messaging";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import axiosInstance from "./api/axiosInstance";
 //import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyBmgUscKRnBUw6Z4nIuKdQfbQTkwuPo8D0",
@@ -11,7 +11,7 @@ const firebaseConfig = {
   storageBucket: "wingmann-authentication.firebasestorage.app",
   messagingSenderId: "66192972723",
   appId: "1:66192972723:web:0c7409473e55985e9189c6",
-  measurementId: "G-S5GW2R9FJH"
+  measurementId: "G-S5GW2R9FJH",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -25,8 +25,35 @@ export const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
 
-    console.log("✅ User:", result.user);
-    return result.user;
+    // console.log("✅ User:", result.user);
+    // return result.user;
+
+    const user = result.user;
+    const email = user.email;
+
+    // 🔥 Call backend to check if user already exists
+    const res = await axiosInstance.post("check", {
+      email,
+    });
+
+    const data = await res.data;
+    console.log("dta ", data);
+
+    if (!data.exists) {
+      // ❌ User not registered → block flow
+      // alert("User not registered. Please sign up first.");
+      console.log("✅ User:", user);
+      return user;
+
+      // Optional: logout from firebase
+      // await auth.signOut();
+
+      // return null;
+    }else{
+     alert("This Email is Already Registered, Please Login");
+    }
+
+    // ✅ User exists → continue
   } catch (error) {
     console.error("❌ Google Login Error:", error);
     return null;
@@ -51,7 +78,8 @@ export const getFCMToken = async () => {
     }
 
     const token = await getToken(messaging, {
-      vapidKey: "BE4pErl4UEULunN39fdmpJHldfhwslUGkBOG3nx4rxb0TcxLgfrcgilDiZNThepecdAGAFDigU-N55lfUBXd66A",
+      vapidKey:
+        "BE4pErl4UEULunN39fdmpJHldfhwslUGkBOG3nx4rxb0TcxLgfrcgilDiZNThepecdAGAFDigU-N55lfUBXd66A",
     });
 
     if (token) {

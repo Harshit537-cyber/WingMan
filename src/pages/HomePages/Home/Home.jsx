@@ -14,7 +14,7 @@ const Home = () => {
   const { unreadCount, notifications } = useNotification();
   console.log("unreadCount : ", unreadCount, notifications);
   const [userData, setUserData] = useState(null);
-  const { user, loading, quiz } = useUser();
+  const { user, loading, quiz, fetchUser } = useUser();
   console.log("quiz : ", quiz);
   console.log(user);
   const completion = calculateProfileCompletion(user);
@@ -71,6 +71,10 @@ const Home = () => {
     */
     // --- TESTING MODE END ---
   }, [navigate]);
+
+  useEffect(()=>{
+    fetchUser()
+  },[])
 
   return (
     <AppLayout>
