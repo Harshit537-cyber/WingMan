@@ -11,7 +11,7 @@ const Dates = () => {
   const navigate = useNavigate();
   const { requestedDateReq, dateaccepted } = useUser();
   console.log("requestedDateReq : ", requestedDateReq);
-
+  const currentUser = JSON.parse(localStorage.getItem("user"));
   return (
     <AppLayout>
       <div className="dates-screen-container">
@@ -62,7 +62,7 @@ const Dates = () => {
                             state: { data: requestedDateReq },
                           })
                         }
-                        className="avatar-circle"
+                        className="avatar-circle flex flex-col"
                       >
                         <img
                           src={
@@ -71,6 +71,7 @@ const Dates = () => {
                           }
                           alt={value?.senderId?.name}
                         />
+                        <p>{value?.senderId?.name}</p>
                       </div>
                     ))
                   ) : (
@@ -102,17 +103,36 @@ const Dates = () => {
               <h3>
                 Planned <br /> Dates
               </h3>
-              {dateaccepted.length >0 ? dateaccepted.map((value, index) => (
-                <div key={index} className="large-avatar">
-                  <img
-                    src={
-                      value?.senderId?.profilephoto ||
-                      `https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg`
-                    }
-                  />
+              {dateaccepted.length > 0 ? (
+                dateaccepted.map((value, index) => {
+                  const isSender = value?.senderId?._id === currentUser?._id;
+
+                  const otherUser = isSender
+                    ? value?.receiverId
+                    : value?.senderId;
+                  console.log("otherUser : ", otherUser);
+                  return (
+                    <>
+                    <div key={index} className="large-avatar flex flex-col items-center">
+                      <img
+                        src={
+                          otherUser?.profilephoto ||
+                          "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg"
+                        }
+                        alt="user"
+                      />
+                     
+                    </div>
+                     <p className="text-gray-400">{otherUser?.name}</p>
+                     </>
+                  );
+                })
+              ) : (
+                <div className="no-requests-placeholder text-gray-400">
+                  No planned dates
                 </div>
-              )) : <div className="no-requests-placeholder text-gray-400">No planned dates</div>}
-             {/* <div className="large-avatar">
+              )}
+              {/* <div className="large-avatar">
                 <img src={userImg} alt="user" />
               </div> */}
             </div>

@@ -7,9 +7,12 @@ import BottomNav from "../../../components/BottomNav/BottomNav";
 import "./Home.css";
 import { useUser } from "../../../context/userinfo";
 import calculateProfileCompletion from "../../../utils/Homefunc";
+import { useNotification } from "../../../context/notification.jsx";
 const Home = () => {
   const navigate = useNavigate();
   const [isQuizSubmitted, setIsQuizSubmitted] = useState(false);
+  const { unreadCount, notifications } = useNotification();
+  console.log("unreadCount : ", unreadCount, notifications);
   const [userData, setUserData] = useState(null);
   const { user, loading, quiz } = useUser();
   console.log("quiz : ", quiz);
@@ -79,9 +82,29 @@ const Home = () => {
             <p>Let's find you a date!</p>
           </div>
           <div className="header-icons">
-            <div className="bell-box" onClick={() => navigate("/notifications")}>
+            <div onClick={()=>navigate('/notifications')} style={{ position: "relative", display: "inline-block" }}>
               <Bell size={26} color="#5a3c6d" />
-              <span className="dot"></span>
+
+              {unreadCount > 0 && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "-6px",
+                    right: "-6px",
+                    background: "red",
+                    color: "white",
+                    borderRadius: "50%",
+                    padding: "2px 6px",
+                    fontSize: "10px",
+                    fontWeight: "bold",
+                    minWidth: "18px",
+                    textAlign: "center",
+                    cursor:"pointer"
+                  }}
+                >
+                  {unreadCount > 99 ? "99+" : unreadCount}
+                </span>
+              )}
             </div>
             <button className="menu-btn" onClick={() => navigate("/settings")}>
               <AlignRight size={28} color="#5a3c6d" />

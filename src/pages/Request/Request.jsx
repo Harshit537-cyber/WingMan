@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ChevronLeft, Bell, AlignRight, X } from "lucide-react";
 import AppLayout from "../../components/AppLayout/AppLayout";
 import BottomNav from "../../components/BottomNav/BottomNav";
@@ -9,7 +10,9 @@ import axiosInstance from "../../api/axiosInstance";
 import { useUser } from "../../context/userinfo";
 const Request = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState("Call");
+  console.log("activeTab : ", activeTab, location?.state?.activeTab);
   const { callRequests, loading, fetchCallRequests } = useCallRequests();
   const { requestedDateReq, fetchUser } = useUser();
   console.log(callRequests);
@@ -34,6 +37,12 @@ const Request = () => {
       console.log(error);
     }
   }, []);
+
+  useEffect(() => {
+  if (location?.state?.activeTab) {
+    setActiveTab(location.state.activeTab);
+  }
+}, [location]);
 
   return (
     <AppLayout>

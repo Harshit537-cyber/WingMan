@@ -30,25 +30,40 @@ const PlanDetails = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const receiverId = user?._id;
   const [selectedSlot, setSelectedSlot] = useState(null);
+  const [loading, setLoading] = useState(false);
   console.log(selectedSlot);
   // const [selectedDate, setSelectedDate] = useState("12 JAN (Mon)");
   // const [selectedTime, setSelectedTime] = useState("1:00 PM");
 
   useEffect(() => {
     const fetchdata = async () => {
+      setLoading(true);
       const data = await fetchdateRequestdata(id, receiverId);
 
       console.log(data);
       if (data?.data?.length) {
         setDateRequest(data.data[0]);
+        setLoading(false);
       }
     };
     fetchdata();
   }, []);
 
-  const handleConfirmDate = async (dateRequestId, status, dateId, senderId, receiverId) => {
-    console.log("Confirming date with ID:", dateRequestId,dateId);
-    const data = await Confirmdate(dateRequestId, status, dateId, senderId, receiverId);
+  const handleConfirmDate = async (
+    dateRequestId,
+    status,
+    dateId,
+    senderId,
+    receiverId,
+  ) => {
+    console.log("Confirming date with ID:", dateRequestId, dateId);
+    const data = await Confirmdate(
+      dateRequestId,
+      status,
+      dateId,
+      senderId,
+      receiverId,
+    );
     console.log("Date confirmation response:", data);
     if (data.success == true) {
       fetchUser();
@@ -99,25 +114,32 @@ const PlanDetails = () => {
             </div>
 
             <div className="selection-area">
-              <div className="dates-row">
-                {dateRequest?.dateSlots?.map((slot) => {
-                  return (
-                  
-                    <button
-                      key={slot._id}
-                      className={`date-chip-box ${
-                        selectedDateId === slot._id ? "active" : ""
-                      }`}
-                      onClick={() => setSelectedDateId(slot._id)}
-                    >
-                      <Calendar size={14} />
-                      <span>
-                        {`${slot.date}`} <br /> {` (${slot.day})`}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
+              {loading ? (
+                <div className="flex justify-center items-center">
+                  <div className="w-10 h-10 border-4 border-gray-300 border-t-purple-700 rounded-full animate-spin"></div>
+                </div>
+              ) : (
+                <>
+                  <div className="dates-row">
+                    {dateRequest?.dateSlots?.map((slot) => {
+                      return (
+                        <button
+                          key={slot._id}
+                          className={`date-chip-box ${
+                            selectedDateId === slot._id ? "active" : ""
+                          }`}
+                          onClick={() => setSelectedDateId(slot._id)}
+                        >
+                          <Calendar size={14} />
+                          <span>
+                            {`${slot.date}`} <br /> {` (${slot.day})`}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
 
               <h4 className="slot-heading">Available Time Slot</h4>
 
@@ -188,7 +210,15 @@ const PlanDetails = () => {
           <div className="bottom-padding"></div>
 
           <div className="flex flex-col space-y-2 confirm-scroll-container">
-            {dateRequest?.status === "rejected" ? (
+
+            {
+              loading ? (
+                <div className="flex justify-center items-center">
+                  <div className="w-10 h-10 border-4 border-gray-300 border-t-purple-700 rounded-full animate-spin"></div>
+                </div>
+              ) : (
+                <>
+                 {dateRequest?.status === "rejected" ? (
               <button
                 disabled
                 className="bg-red-100 py-3.5 rounded-[14px] font-semibold text-lg text-red-600 cursor-not-allowed"
@@ -200,7 +230,13 @@ const PlanDetails = () => {
                 <button
                   className="confirm-plan-btn"
                   onClick={() =>
-                    handleConfirmDate(dateRequest?._id, "accepted", selectedDateId, id, receiverId)
+                    handleConfirmDate(
+                      dateRequest?._id,
+                      "accepted",
+                      selectedDateId,
+                      id,
+                      receiverId,
+                    )
                   }
                 >
                   Confirm Plan
@@ -209,13 +245,23 @@ const PlanDetails = () => {
                 <button
                   className="bg-red-100 py-3.5 rounded-[14px] font-semibold text-lg text-red-600"
                   onClick={() =>
-                    handleConfirmDate(dateRequest?._id, "rejected", selectedDateId, id, receiverId)
+                    handleConfirmDate(
+                      dateRequest?._id,
+                      "rejected",
+                      selectedDateId,
+                      id,
+                      receiverId,
+                    )
                   }
                 >
                   Reject Plan
                 </button>
               </>
             )}
+                </>
+              )
+            }
+           
           </div>
 
           <div className="bottom-padding"></div>

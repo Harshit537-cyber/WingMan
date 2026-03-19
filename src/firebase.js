@@ -66,3 +66,4 @@ export const getFCMToken = async () => {
     return null;
   }
 };
+export const messaging = getMessaging(app);

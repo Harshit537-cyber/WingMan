@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronLeft, Bell, AlignRight } from 'lucide-react';
 import AppLayout from '../../../components/AppLayout/AppLayout';
@@ -9,6 +9,8 @@ const DatePreferences = () => {
   const navigate = useNavigate();
   const location = useLocation()
   const receiverId = location?.state?.receiverId
+  const [active, setActive] = useState(false);
+  console.log('active : ', active);
   
   
   // States
@@ -31,10 +33,15 @@ const DatePreferences = () => {
   const toggleMood = (mood) => {
     if (selectedMoods.includes(mood)) {
       setSelectedMoods(selectedMoods.filter(m => m !== mood));
+      
     } else {
       setSelectedMoods([...selectedMoods, mood]);
     }
   };
+
+  useEffect(() => {
+  setActive(selectedMoods.length > 0);
+}, [selectedMoods]);
 
   const handleDateTypeChange = (type) => {
     setDateType(type);
@@ -151,7 +158,7 @@ const DatePreferences = () => {
 
         {/* FIXED FOOTER ACTION - Above BottomNav */}
         <div className="pref-footer-sticky">
-          <button className="pref-continue-btn"  onClick={() =>
+          <button disabled={!active} className="pref-continue-btn"  onClick={() =>
     navigate("/date-requested", {
       state: { payload: payload }
     })

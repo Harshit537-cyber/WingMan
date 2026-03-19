@@ -1,22 +1,33 @@
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Bell, AlignRight, X, ChevronRight } from "lucide-react";
 import AppLayout from "../../../components/AppLayout/AppLayout";
 import BottomNav from "../../../components/BottomNav/BottomNav";
 import "./Notifications.css";
 import { useUser } from "../../../context/userinfo";
-
+import axiosInstance from "../../../api/axiosInstance";
+import { useNotification } from "../../../context/notification";
 const Notifications = () => {
   const navigate = useNavigate();
+  const { fetchUnReadNotifi } = useNotification();
   const [activeTab, setActiveTab] = useState("All");
-  const { notification, dateRequest_notifications, callRequest_notifications } =
+  const { notification, dateRequest_notifications, callRequest_notifications, fetchUser } =
     useUser();
+    const [notifications, setNotifications] = useState([]);
+    const [date_request_notifications, setDateRequestNotifications] = useState([]);
+    const [call_request_notifications, setCallRequestNotifications] = useState([]);
   console.log(
     "notification : ",
     notification,
     dateRequest_notifications,
     callRequest_notifications,
   );
+
+  useEffect(() => {
+    setNotifications(notification);
+    setDateRequestNotifications(dateRequest_notifications);
+    setCallRequestNotifications(callRequest_notifications);
+  }, [notification, dateRequest_notifications, callRequest_notifications]);
 
   const tabs = ["All", "Dating", "Calls"];
   const getTimeAgo = (date) => {
@@ -36,6 +47,62 @@ const Notifications = () => {
     const days = Math.floor(hours / 24);
     return `${days}d ago`;
   };
+
+  const handleNotificationClick = async (notif) => {
+    if (!notif?.isRead) {
+      await markAsRead(notif._id);
+    }
+
+    // 👉 navigation logic
+    if (notif?.type === "call request") {
+      if (notif.title === "New Call Request") {
+        navigate("/Request");
+      } else {
+        navigate("/matches/profile-details", {
+          state: { receverId: notif?.receiverId },
+        });
+      }
+    }
+
+    if (notif?.type === "date request") {
+      if (notif.title === "New Date Request") {
+        navigate("/Request", {
+          state: { activeTab: "Date" },
+        });
+      }else{
+        navigate("/dates", )
+      }
+    }
+  };
+
+ const markAsRead = async (doc_id) => {
+  try {
+    await axiosInstance.patch(`read-notification/${doc_id}`);
+    await fetchUser();
+    fetchUnReadNotifi();
+    // ✅ Update UI instantly
+    setNotifications((prev) =>
+      prev.map((item) =>
+        item._id === doc_id ? { ...item, isRead: true } : item
+      )
+    );
+    setDateRequestNotifications((prev) =>
+      prev.map((item) =>
+        item._id === doc_id ? { ...item, isRead: true } : item
+      )
+    );
+    setCallRequestNotifications((prev) =>
+      prev.map((item) =>
+        item._id === doc_id ? { ...item, isRead: true } : item
+      )
+    );
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+  useEffect(() => {}, []);
   return (
     <AppLayout>
       <div className="notif-wrapper">
@@ -71,14 +138,20 @@ const Notifications = () => {
               <div className="notif-stack">
                 {/* CARD 1: Nikita Asked Out (Large Confirm Button) */}
 
-                {notification.length === 0 ? (
+                {notifications.length === 0 ? (
                   <div className="no-notif-placeholder">
                     <p>No notifications yet</p>
                   </div>
                 ) : (
-                  notification?.map((notif, index) => (
+                  notifications?.map((notif, index) => (
                     <>
-                      <div key={index} className="figma-notif-card">
+                      <div
+                        onClick={() => handleNotificationClick(notif)}
+                        key={index}
+                        className={`figma-notif-card ${
+                          notif?.isRead ? "bg-white" : "bg-purple-200"
+                        }`}
+                      >
                         <div className="card-main-row">
                           <div className="user-info-side">
                             <img
@@ -99,15 +172,51 @@ const Notifications = () => {
                             </span>
                             {notif?.type === "call request" && (
                               <>
-                                <div  onClick={() =>
-                                  navigate("/matches/profile-details", {
-                                    state: { receverId: notif?.receiverId },
-                                  })
-                                } className="btn-group-row">
-                                  <button className="btn-confirm-78">
-                                    Confirm
-                                  </button>
-                                </div>
+                                {notif.title == "New Call Request" ? (
+                                  <>
+                                    <button
+                                      className="btn-confirm-78"
+                                      // onClick={() =>
+                                      //   navigate("/Request")
+                                      // }
+                                    >
+                                      View
+                                    </button>
+                                  </>
+                                ) : (
+                                  <>
+                                    <button
+                                      className="btn-confirm-78"
+                                      // onClick={() =>
+                                      //   navigate("/matches/profile-details", {
+                                      //     state: { receverId: notif?.receiverId },
+                                      //   })
+                                      // }
+                                    >
+                                      View Profile
+                                    </button>
+                                  </>
+                                )}
+                              </>
+                            )}
+                            {notif?.type === "date request" && (
+                              <>
+                                {notif.title == "New Date Request" ? (
+                                  <>
+                                    <button
+                                      className="btn-confirm-78"
+                                      onClick={() =>
+                                        navigate("/Request", {
+                                          state: { activeTab: "Date" },
+                                        })
+                                      }
+                                    >
+                                      View
+                                    </button>
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
                               </>
                             )}
                           </div>
@@ -184,13 +293,17 @@ const Notifications = () => {
               <div className="notif-stack">
                 {/* CARD 1: Nikita Asked Out (Large Confirm Button) */}
 
-                {dateRequest_notifications.length === 0 ? (
+                {date_request_notifications.length === 0 ? (
                   <div className="no-notif-placeholder">
                     <p>No dating notifications yet</p>
                   </div>
                 ) : (
-                  dateRequest_notifications?.map((notif, index) => (
-                    <div key={index} className="figma-notif-card">
+                  date_request_notifications?.map((notif, index) => (
+                    <div  onClick={() => handleNotificationClick(notif)}
+                        key={index}
+                        className={`figma-notif-card ${
+                          notif?.isRead ? "bg-white" : "bg-purple-200"
+                        }`}>
                       <div className="card-main-row">
                         <div className="user-info-side">
                           <img
@@ -291,7 +404,11 @@ const Notifications = () => {
                 ) : (
                   callRequest_notifications?.map((notif, index) => (
                     <>
-                      <div key={index} className="figma-notif-card">
+                      <div onClick={() => handleNotificationClick(notif)}
+                        key={index}
+                        className={`figma-notif-card ${
+                          notif?.isRead ? "bg-white" : "bg-purple-200"
+                        }`}>
                         <div className="card-main-row">
                           <div className="user-info-side">
                             <img
@@ -313,16 +430,30 @@ const Notifications = () => {
                               {getTimeAgo(notif.updatedAt)}
                             </span>
                             <div className="btn-group-row">
-                              <button
-                                className="btn-confirm-78"
-                                onClick={() =>
-                                  navigate("/matches/profile-details", {
-                                    state: { receverId: notif?.receiverId },
-                                  })
-                                }
-                              >
-                                View Profile
-                              </button>
+                              {notif.title == "New Call Request" ? (
+                                <>
+                                  <button
+                                    className="btn-confirm-78"
+                                    // onClick={() => navigate("/Request")}
+                                  >
+                                    View
+                                  </button>
+                                </>
+                              ) : (
+                                <>
+                                  {/* <button
+                                    className="btn-confirm-78"
+                                    // onClick={() =>
+                                    //   navigate("/matches/profile-details", {
+                                    //     state: { receverId: notif?.receiverId },
+                                    //   })
+                                    // }
+                                  >
+                                    View Profile
+                                  </button> */}
+                                </>
+                              )}
+
                               {/* <button className="icon-x-btn"><X size={20} strokeWidth={3} color="#5a3c6d" /></button> */}
                             </div>
                           </div>

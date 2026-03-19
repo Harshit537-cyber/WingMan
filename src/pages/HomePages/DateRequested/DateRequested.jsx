@@ -21,6 +21,7 @@ const DateRequested = () => {
   const date = ("date :", `${selectedDate} ${month}`);
   console.log("date : ", date);
   const [completedPairs, setCompletedPairs] = useState([]);
+  console.log("completedPairs : ", completedPairs);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const getNextSevenDays = () => {
@@ -138,6 +139,15 @@ const DateRequested = () => {
           <div className="req-scroll-body">
             <div className="selection-status">
               Selected: <span>{completedPairs.length} / 3 slots</span>
+            </div>
+            <div>
+              {
+                completedPairs.map((pair, index) => (
+                  <div key={index} className="selected-pair-item">
+                    <span>{index+1}.  {pair.day}, {pair.date} at {pair.time}</span>
+                  </div>
+                ))
+              }
             </div>
 
             {/* DATE SECTION */}
