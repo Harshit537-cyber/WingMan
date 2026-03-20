@@ -8,10 +8,12 @@ import "./Request.css";
 import { useCallRequests } from "../../context/callanddate";
 import axiosInstance from "../../api/axiosInstance";
 import { useUser } from "../../context/userinfo";
+import { useNotification } from "../../context/notification";
 const Request = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState("Call");
+  const {unreadCount,  fetchUnReadNotifi } = useNotification();
   console.log("activeTab : ", activeTab, location?.state?.activeTab);
   const { callRequests, loading, fetchCallRequests } = useCallRequests();
   const { requestedDateReq, fetchUser } = useUser();
@@ -21,13 +23,12 @@ const Request = () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
       const fcmToken = localStorage.getItem("fcmToken");
-      
 
       const res = await axiosInstance.post(
         `/call-request/reciever/change-status?receiverId=${user._id}&senderId=${senderId}`,
         {
           status: status,
-        // senderFcmToken: fcmToken,
+          // senderFcmToken: fcmToken,
         },
       );
 
@@ -38,16 +39,20 @@ const Request = () => {
     }
   }, []);
 
+  useEffect(()=>{
+    fetchUnReadNotifi();
+  },[])
+
+
   useEffect(() => {
-  if (location?.state?.activeTab) {
-    setActiveTab(location.state.activeTab);
-  }
-}, [location]);
+    if (location?.state?.activeTab) {
+      setActiveTab(location.state.activeTab);
+    }
+  }, [location]);
 
-
-useEffect(()=>{
-  fetchUser();
-},[])
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <AppLayout>
@@ -58,9 +63,30 @@ useEffect(()=>{
             <ChevronLeft size={28} color="#5a3c6d" />
           </button>
           <div className="right-nav-icons">
-            <button onClick={() => navigate('/notifications')} className="nav-icon-btn">
-              <Bell size={24} color="#5a3c6d" />
-            </button>
+            <div onClick={()=>navigate('/notifications')} style={{ position: "relative", display: "inline-block" }}>
+                         <Bell size={26} color="#5a3c6d" />
+           
+                         {unreadCount > 0 && (
+                           <span
+                             style={{
+                               position: "absolute",
+                               top: "-6px",
+                               right: "-6px",
+                               background: "red",
+                               color: "white",
+                               borderRadius: "50%",
+                               padding: "2px 6px",
+                               fontSize: "10px",
+                               fontWeight: "bold",
+                               minWidth: "18px",
+                               textAlign: "center",
+                               cursor:"pointer"
+                             }}
+                           >
+                             {unreadCount > 99 ? "99+" : unreadCount}
+                           </span>
+                         )}
+                       </div>
             <button className="nav-icon-btn">
               <AlignRight size={24} color="#5a3c6d" />
             </button>
@@ -146,14 +172,17 @@ useEffect(()=>{
               {requestedDateReq?.length > 0
                 ? requestedDateReq.map((value, index) => (
                     <div key={index} className="ui-request-card-item">
-                      <div  onClick={() =>
-                            navigate("/plan-details", {
-                              state: {
-                                id: value?.senderId?._id,
-                                name: value?.senderId?.name,
-                              },
-                            })
-                          } className="card-left-part">
+                      <div
+                        onClick={() =>
+                          navigate("/plan-details", {
+                            state: {
+                              id: value?.senderId?._id,
+                              name: value?.senderId?.name,
+                            },
+                          })
+                        }
+                        className="card-left-part"
+                      >
                         <div className="avatar-circle">
                           <img
                             src={

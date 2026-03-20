@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import AppLayout from "../../components/AppLayout/AppLayout";
-
+import OnboardingHeader from "../../components/OnboardingHeader/OnboardingHeader";
 const Otp = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,37 +39,47 @@ const Otp = () => {
 
   return (
     <AppLayout>
-      <div style={{ padding: 20 }}>
-        <h2>Enter OTP</h2>
+      <div className="m-auto" style={{ padding: 20 }}>
+         <div className="mobile-header-section pt-2 ">
+          <OnboardingHeader
+            title="Enter OTP"
+            description=""
+          />
+        </div>
 
         <input
           type="text"
           placeholder="Enter 6 digit OTP"
           value={otp}
-          onChange={(e) => setOtp(e.target.value)}
+          className="border border-gray-200 mx-5.5"
+          onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
           maxLength={6}
           style={{
             padding: 12,
             fontSize: 18,
-            width: "100%",
-            marginTop: 20,
+            width: "90%",
+            
           }}
         />
 
         <button
-          onClick={handleVerify}
-          style={{
-            marginTop: 20,
-            padding: 12,
-            width: "100%",
-            background: "#6c47ff",
-            color: "#fff",
-            border: "none",
-            borderRadius: 8,
-          }}
-        >
-          {loading ? "Verifying..." : "Verify OTP"}
-        </button>
+  onClick={handleVerify}
+  className="-mt-2  mx-5.5"
+  disabled={otp.length !== 6 || loading}
+  style={{
+    marginTop: 20,
+    padding: 12,
+    width: "90%",
+    background: otp.length === 6 ? "#5a3c6d" : "#8B6FA8", // faded color
+    color: "#fff",
+    border: "none",
+    borderRadius: 8,
+    cursor: otp.length === 6 ? "pointer" : "not-allowed",
+    opacity: otp.length === 6 ? 1 : 0.6,
+  }}
+>
+  {loading ? "Verifying..." : "Verify OTP"}
+</button>
       </div>
     </AppLayout>
   );

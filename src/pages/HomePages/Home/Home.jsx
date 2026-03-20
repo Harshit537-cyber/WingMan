@@ -11,7 +11,7 @@ import { useNotification } from "../../../context/notification.jsx";
 const Home = () => {
   const navigate = useNavigate();
   const [isQuizSubmitted, setIsQuizSubmitted] = useState(false);
-  const { unreadCount, notifications } = useNotification();
+  const { unreadCount, notifications, fetchUnReadNotifi } = useNotification();
   console.log("unreadCount : ", unreadCount, notifications);
   const [userData, setUserData] = useState(null);
   const { user, loading, quiz, fetchUser } = useUser();
@@ -73,7 +73,8 @@ const Home = () => {
   }, [navigate]);
 
   useEffect(()=>{
-    fetchUser()
+    fetchUser();
+    fetchUnReadNotifi();
   },[])
 
   return (

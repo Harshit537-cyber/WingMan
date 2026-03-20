@@ -1,21 +1,27 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import AppLayout from "../../../components/AppLayout/AppLayout";
 import BottomNav from "../../../components/BottomNav/BottomNav";
 import "./Schedule.css";
 import axiosInstance from "../../../api/axiosInstance";
+import { fetchdata } from "./getInterviewAPI";
+
 const Schedule = () => {
   const navigate = useNavigate();
 
-  // States for selection
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0],
   );
-  console.log("default date :", selectedDate);
-  const [selectedTime, setSelectedTime] = useState("11:00 AM");
+  const [selectedSlot, setSelectedSlot] = useState(null);
 
+  const [scheduleData, setScheduleData] = useState([]);
+  const [selectedTime, setSelectedTime] = useState("");
+  console.log(selectedTime);
+  const [selectedInterviewer, setSelectedInterviewer] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // 📅 Get next 7 days
   const getNextSevenDays = () => {
     const today = new Date();
     const daysArray = [];
@@ -25,7 +31,7 @@ const Schedule = () => {
       currentDate.setDate(today.getDate() + i);
 
       daysArray.push({
-        fullDate: currentDate.toISOString().split("T")[0], // YYYY-MM-DD
+        fullDate: currentDate.toISOString().split("T")[0],
         day: currentDate.toLocaleDateString("en-US", { weekday: "short" }),
         date: currentDate.getDate(),
         disabled: false,
@@ -36,44 +42,50 @@ const Schedule = () => {
   };
 
   const dates = getNextSevenDays();
-  console.log("date : ", dates);
 
-  // Dummy Data for Times
-  const timeSlots = [
-    { time: "10:00 AM", disabled: false },
-    { time: "11:00 AM", disabled: false },
-    { time: "12:00 PM", disabled: false },
-    { time: "01:00 PM", disabled: false },
-    { time: "02:00 PM", disabled: false },
-    { time: "03:00 PM", disabled: false },
-    { time: "04:00 PM", disabled: true }, // Disabled time
-    { time: "05:00 PM", disabled: false },
-    { time: "06:00 PM", disabled: false },
-    { time: "07:00 PM", disabled: false },
-    { time: "08:00 PM", disabled: false },
-    { time: "09:00 PM", disabled: false },
-  ];
+  // ✅ API CALL
+  useEffect(() => {
+    const getSchedule = async () => {
+      setLoading(true);
+      const data = await fetchdata(selectedDate);
+      setScheduleData(data || []);
+      setLoading(false);
+    };
 
+    if (selectedDate) {
+      getSchedule();
+    }
+  }, [selectedDate]);
+
+  // 🕒 Format Time
+  const formatTime = (time) => {
+    const [hour, min] = time.split(":");
+    const h = parseInt(hour);
+    const ampm = h >= 12 ? "PM" : "AM";
+    const formattedHour = h % 12 || 12;
+    return `${formattedHour}:${min} ${ampm}`;
+  };
+
+  // ✅ Confirm Booking
   const handleConfirmSchedule = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
       const userId = user._id;
 
-      // Convert selectedDate to ISO
       const formattedDate = new Date(selectedDate)
         .toISOString()
         .replace("Z", "+00:00");
+
       const payload = {
         userName: user.name,
         userEmail: user.email,
+        interviewerId: selectedInterviewer,
         day: new Date(selectedDate).toLocaleDateString("en-US", {
           weekday: "long",
         }),
-        // day:"Monday",
         date: formattedDate,
         time: selectedTime,
       };
-      console.log(payload);
 
       const response = await axiosInstance.post(
         `/book-slot/${userId}`,
@@ -81,8 +93,6 @@ const Schedule = () => {
       );
 
       if (response.data.success) {
-        console.log(selectedTime);
-        // Navigate after success
         navigate("/schedule-video-call", {
           state: {
             booking: response.data.data.booking,
@@ -93,15 +103,14 @@ const Schedule = () => {
         });
       }
     } catch (error) {
-      console.log("Booking error:", error.response?.data || error.message);
-      alert(error.response.data.message)
+      alert(error.response?.data?.message || "Booking failed");
     }
   };
 
   return (
     <AppLayout>
       <div className="schedule-container">
-        {/* Header Section */}
+        {/* Header */}
         <header className="schedule-header">
           <button className="back-btn" onClick={() => navigate(-1)}>
             <ChevronLeft size={28} />
@@ -112,56 +121,79 @@ const Schedule = () => {
         </header>
 
         <div className="schedule-content">
-          {/* Date Picker Section */}
-          <section className="date-section slide-up">
-            <h2 className="label-text">Select Date</h2>
+          {/* 📅 Date Section */}
+          <section className="date-section">
+            <h2>Select Date</h2>
+
             <div className="date-scroll-wrapper">
               {dates.map((item) => (
                 <div
                   key={item.fullDate}
-                  className={`date-card 
-      ${selectedDate === item.fullDate ? "active" : ""} 
-      ${item.disabled ? "disabled" : ""}`}
-                  onClick={() =>
-                    !item.disabled && setSelectedDate(item.fullDate)
-                  }
+                  className={`date-card ${
+                    selectedDate === item.fullDate ? "active" : ""
+                  }`}
+                  onClick={() => setSelectedDate(item.fullDate)}
                 >
-                  <span className="day">{item.day}</span>
-                  <span className="date-num">{item.date}</span>
-                  {selectedDate === item.fullDate && (
-                    <div className="active-line"></div>
-                  )}
+                  <span>{item.day}</span>
+                  <span>{item.date}</span>
                 </div>
               ))}
             </div>
           </section>
 
-          {/* Time Picker Section */}
-          <section className="time-section slide-up delay-1">
-            <h2 className="label-text">Choose Time</h2>
-            <p className="sub-label">Select at least 3 different time slots</p>
+          {/* 🕒 Time Section */}
+          <section className="time-section">
+            <h2>Available Slots</h2>
 
-            <div className="time-grid">
-              {timeSlots.map((item) => (
-                <button
-                  key={item.time}
-                  className={`time-slot ${selectedTime === item.time ? "selected" : ""} ${item.disabled ? "is-disabled" : ""}`}
-                  onClick={() => !item.disabled && setSelectedTime(item.time)}
-                  disabled={item.disabled}
-                >
-                  {item.time.split(" ")[0]} <br />
-                  <small>{item.time.split(" ")[1]}</small>
-                </button>
-              ))}
-            </div>
+            {loading ? (
+              <p>Loading...</p>
+            ) : scheduleData.length === 0 ? (
+              <p>No slots available</p>
+            ) : (
+              scheduleData.map((item, index) => (
+                <div key={index} className="interviewer-block">
+                  {/* 👤 Interviewer Name */}
+                  <h3 className="text-purple-700 font-semibold text-lg pt-4">
+                    {item.interviewerName}
+                  </h3>
+
+                  {/* ⏰ Slots */}
+                  <div className="time-grid">
+                    {item.times?.map((time, i) => (
+                      <button
+                        key={i}
+                        className={`time-slot ${
+                          selectedSlot?.time === time &&
+                          selectedSlot?.interviewerId === item.interviewerId
+                            ? "selected"
+                            : ""
+                        }`}
+                        onClick={() => {
+                          setSelectedSlot({
+                            time: time,
+                            interviewerId: item.interviewerId,
+                          });
+
+                          setSelectedTime(time);
+                          setSelectedInterviewer(item.interviewerId);
+                        }}
+                      >
+                        {formatTime(time)}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))
+            )}
           </section>
         </div>
 
-        {/* Action Button */}
-        <div className="confirm-btn-wrapper fade-in-up">
+        {/* ✅ Confirm Button */}
+        <div className="confirm-btn-wrapper">
           <button
             className="confirm-schedule-btn"
             onClick={handleConfirmSchedule}
+            disabled={!selectedTime}
           >
             Confirm Schedule
           </button>

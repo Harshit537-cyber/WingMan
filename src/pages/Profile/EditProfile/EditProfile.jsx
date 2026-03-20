@@ -270,7 +270,7 @@ const EditProfile = () => {
 
                 return (
                   <div key={key} className="inline-flex m-1">
-                    <span className="flex items-center gap-2 bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="flex items-center gap-1 bg-purple-100 text-purple-800 px-2.5 py-1 rounded-full text-sm font-medium">
                       {Icon && <Icon size={14} />}
                       {formatValue(value)}
                     </span>

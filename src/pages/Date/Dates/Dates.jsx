@@ -5,6 +5,7 @@ import AppLayout from "../../../components/AppLayout/AppLayout";
 import BottomNav from "../../../components/BottomNav/BottomNav";
 import "./Dates.css";
 import { useUser } from "../../../context/userinfo";
+import { useNotification } from "../../../context/notification.jsx";
 const userImg = "https://randomuser.me/api/portraits/women/44.jpg";
 
 const Dates = () => {
@@ -12,10 +13,12 @@ const Dates = () => {
   const { requestedDateReq, dateaccepted, fetchUser } = useUser();
   console.log("requestedDateReq : ", requestedDateReq);
   const currentUser = JSON.parse(localStorage.getItem("user"));
+  const { unreadCount, fetchUnReadNotifi } = useNotification();
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchUser();
-  },[])
+    fetchUnReadNotifi();
+  }, []);
 
   return (
     <AppLayout>
@@ -27,12 +30,33 @@ const Dates = () => {
           </button>
           <h1 className="header-title">Dates</h1>
           <div className="header-right-icons">
-            <Bell
-              size={26}
-              color="#5a3c6d"
+            <div
               onClick={() => navigate("/notifications")}
-              style={{ cursor: "pointer" }}
-            />
+              style={{ position: "relative", display: "inline-block" }}
+            >
+              <Bell size={26} color="#5a3c6d" />
+
+              {unreadCount > 0 && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "-6px",
+                    right: "-6px",
+                    background: "red",
+                    color: "white",
+                    borderRadius: "50%",
+                    padding: "2px 6px",
+                    fontSize: "10px",
+                    fontWeight: "bold",
+                    minWidth: "18px",
+                    textAlign: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  {unreadCount > 99 ? "99+" : unreadCount}
+                </span>
+              )}
+            </div>
             <AlignRight
               size={26}
               color="#5a3c6d"
@@ -118,18 +142,20 @@ const Dates = () => {
                   console.log("otherUser : ", otherUser);
                   return (
                     <>
-                    <div key={index} className="large-avatar flex flex-col items-center">
-                      <img
-                        src={
-                          otherUser?.profilephoto ||
-                          "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg"
-                        }
-                        alt="user"
-                      />
-                     
-                    </div>
-                     <p className="text-gray-400">{otherUser?.name}</p>
-                     </>
+                      <div
+                        key={index}
+                        className="large-avatar flex flex-col items-center"
+                      >
+                        <img
+                          src={
+                            otherUser?.profilephoto ||
+                            "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg"
+                          }
+                          alt="user"
+                        />
+                      </div>
+                      <p className="text-gray-400">{otherUser?.name}</p>
+                    </>
                   );
                 })
               ) : (

@@ -113,9 +113,7 @@ const Notifications = () => {
           </button>
           <h1 className="nav-title">Notifications</h1>
           <div className="header-right">
-            <div className="bell-icon-wrap">
-              <Bell size={26} color="#5a3c6d" />
-            </div>
+           
             <AlignRight size={26} color="#5a3c6d" />
           </div>
         </header>
@@ -161,9 +159,19 @@ const Notifications = () => {
                             />
                             <div className="text-side">
                               <h4 className="user-name">
-                                {notif?.body?.trim()?.split(" ").pop()}
+                                {
+                                  notif.title == 'Interview Update' ?( <>
+                                    {notif?.title}
+                                    
+                                    </>):(
+                                   <>
+
+                                    {notif?.body?.trim()?.split(" ").pop()}
+                                    </>
+                                  )
+                                }
                               </h4>
-                              <p className="notif-label">{notif?.body}</p>
+                              <p className="notif-label"> <p dangerouslySetInnerHTML={{ __html: notif.body }} /></p>
                             </div>
                           </div>
                           <div className="right-action-side">
