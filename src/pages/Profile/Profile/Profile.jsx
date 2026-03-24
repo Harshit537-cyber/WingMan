@@ -104,9 +104,11 @@ const Profile = () => {
     localStorage.removeItem("fcmToken");
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-
+    localStorage.removeItem("email");
     localStorage.removeItem("quiz_progress");
     localStorage.removeItem("all_quizzes_done");
+    localStorage.removeItem("uid");
+    
 
     // quiz_progress ko mat chhedo, taki agar koi beech mein logout kare toh uska kaam bacha rahe
 

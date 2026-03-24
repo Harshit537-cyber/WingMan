@@ -17,6 +17,7 @@ const Intrest = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selected, setSelected] = useState([]);
+  console.log(location.state)
 
   // Updated list to match the image items
   const interests = [

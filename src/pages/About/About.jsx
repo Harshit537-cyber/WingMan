@@ -9,6 +9,7 @@ import "./About.css";
 const About = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  console.log(location.state)
 
 
   // State for lifestyle choices
@@ -82,6 +83,7 @@ const About = () => {
 
       isOnboarded: true,
       fcmToken: fcmToken,
+      phonenumber:location.state.phonenumber
     };
 
    

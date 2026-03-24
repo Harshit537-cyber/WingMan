@@ -54,9 +54,64 @@
   cursor: not-allowed;
 }
 
+
+.google-login-btn {
+    width: 100%;
+    background-color: #5e3b63; 
+    color: white;
+    padding: 18px;
+    padding-inline: 30px;
+    border-radius: 50px; 
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 15px rgba(94, 59, 99, 0.3);
+}
+
+.Mobile-login-btn {
+    width: 100%;
+    background-color: white; 
+    color: #5e3b63;
+    padding: 18px;
+    padding-inline: 30px;
+    border-radius: 50px; 
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 15px rgba(94, 59, 99, 0.3);
+}
+
+.google-login-btn:active {
+    transform: scale(0.96);
+}
+
+/* --- Animations --- */
+.fade-in-down {
+    animation: fadeInDown 0.8s ease-out forwards;
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.fade-in-up-delay {
+    animation: fadeInUp 0.8s ease-out 0.3s forwards;
+    opacity: 0; 
+}
+
 .error-text {
   color: red;
   font-size: 14px;
+}
+
+.button-box {
+    width: 100%;
+    max-width: 320px;
+    padding-bottom: 5px; /* Bottom se thoda gap badhaya hai */
 }
 
 .loader {

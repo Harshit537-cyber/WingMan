@@ -85,7 +85,7 @@ import ViewMatches from '../pages/ViewMatches/ViewMatches.jsx';
 import Upset from '../pages/Upset/Upset.jsx';
 import HonestySuccess from '../pages/HonestySuccess/HonestySuccess';
 import SharingSuccess from '../pages/SharingSuccess/SharingSuccess.jsx';
-
+import MobileNo from '../pages/Login/MobileNo.jsx';
 import AskMobileNumber from '../pages/AskMobileNumber/AskMobileNumber.jsx';
 import AskEmail from '../pages/AskEmail/AskEmail.jsx';
 import Otp  from '../pages/Otpscreen/Otp.jsx';
@@ -102,6 +102,7 @@ const AppRoutes = () => {
          <Route path="/login" element={<LoginPage />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/AskMobileNumber" element={<AskMobileNumber />} />
+         <Route path="/login-AskMobileNumber" element={<MobileNo />} />
         <Route path="/Otp" element={<Otp />} />
         <Route path="/gmail" element={<AskEmail />} />
         <Route path="/preferences" element={<Preferences />} />

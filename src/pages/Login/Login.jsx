@@ -2,18 +2,21 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AppLayout from "../../components/AppLayout/AppLayout";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import "./Login.css";
 import axiosInstance from "../../api/axiosInstance";
-
+import { loginWithGoogle } from '../../firebase.js'
 import { useUser } from "../../context/userinfo";
-import { useRecommendedProfiles} from '../../context/userprofileRecomm'
-import {useCallRequests} from '../../context/callanddate'
+import { useRecommendedProfiles } from "../../context/userprofileRecomm";
+import { useCallRequests } from "../../context/callanddate";
+import { auth } from "../../firebase.js";
+import {  getFCMToken } from '../../firebase.js'
 const LoginPage = () => {
+
   const navigate = useNavigate();
   const { user, fetchUser } = useUser();
-  const {fetchRecommendedProfiles} = useRecommendedProfiles()
-  const {fetchCallRequests} = useCallRequests()
-
+  const { fetchRecommendedProfiles } = useRecommendedProfiles();
+  const { fetchCallRequests } = useCallRequests();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -46,51 +49,122 @@ const LoginPage = () => {
     if (prefs.ethnicity) filledCount++;
     if (prefs.spoken_language?.length > 0) filledCount++;
     const hasEnoughPreferences = filledCount >= 3;
- 
+
     return hasPhoto && hasEnoughPreferences;
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   setError("");
 
-    try {
-      const res = await axiosInstance.post("/user/login", {
-        email: formData.email,
-      });
+  //   try {
+  //     const res = await axiosInstance.post("/user/login", {
+  //       email: formData.email,
+  //     });
 
-      if (res.data.success) {
-        const loggedInUser = res.data.user;
+  //     if (res.data.success) {
+  //       const loggedInUser = res.data.user;
 
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("user", JSON.stringify(loggedInUser));
+  //       localStorage.setItem("token", res.data.token);
+  //       localStorage.setItem("user", JSON.stringify(loggedInUser));
 
-        fetchUser();
-        fetchRecommendedProfiles();
-        fetchCallRequests()
+  //       fetchUser();
+  //       fetchRecommendedProfiles();
+  //       fetchCallRequests();
 
-        if (isProfileComplete(loggedInUser)) {
-          navigate("/home");
-        } else {
-          navigate("/uploads");
-        }
-      }
-    } catch (err) {
-      setError(err.response?.data?.message || "Login failed. Try again.");
-    } finally {
-      setLoading(false);
+  //       if (isProfileComplete(loggedInUser)) {
+  //         navigate("/home");
+  //       } else {
+  //         navigate("/uploads");
+  //       }
+  //     }
+  //   } catch (err) {
+  //     setError(err.response?.data?.message || "Login failed. Try again.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+const handleGoogleLogin = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+
+    const user = result.user;
+    const email = user.email;
+
+    // 🔥 Call your existing login API directly
+    const res = await axiosInstance.post("/user/login", {
+      email,
+    });
+
+    if (!res.data.success) {
+      alert("User not registered. Please sign up first.");
+      await auth.signOut();
+      return;
     }
-  };
 
+    const loggedInUser = res.data.user;
+
+    // ✅ Save token + user
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("user", JSON.stringify(loggedInUser));
+    localStorage.setItem("userId", loggedInUser._id);
+
+    // 🔥 FCM token
+    const fcmToken = await getFCMToken();
+
+    if (fcmToken) {
+      localStorage.setItem("fcmToken", fcmToken);
+
+      try {
+        await saveFCMTokenAPI(loggedInUser._id, fcmToken);
+      } catch {
+        console.log("❌ Token save failed");
+      }
+    }
+
+    if (user.email) {
+      localStorage.setItem("email", user.email);
+    }
+
+    // ✅ Call your existing functions
+    await fetchUser();
+    await fetchRecommendedProfiles();
+    await fetchCallRequests();
+
+    // ✅ Navigation
+    if (isProfileComplete(loggedInUser)) {
+      navigate("/home");
+    } else {
+      navigate("/uploads");
+    }
+
+  } catch (error) {
+    console.error("❌ Google Login Error:", error);
+  } finally {
+    setLoading(false);
+  }
+};
+
+const handleMobileLogin = async (e)=>{
+ navigate('/login-AskMobileNumber');
+
+}
   return (
     <AppLayout>
       <div className="login-container">
-        <img src="https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-3530.jpg?semt=ais_rp_progressive&w=740&q=80" alt="" />
+        <img
+          src="https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-3530.jpg?semt=ais_rp_progressive&w=740&q=80"
+          alt=""
+        />
         <h1 className="login-title">Welcome Back</h1>
         <h3 className="text-[#2D1B31] mb-10">Login to access more </h3>
 
-        <form className="login-form" onSubmit={handleLogin}>
+        {/* <form className="login-form" onSubmit={handleLogin}>
           <input
             type="email"
             name="email"
@@ -105,11 +179,46 @@ const LoginPage = () => {
           <button type="submit" disabled={loading}>
             {loading ? <span className="loader"></span> : "Login"}
           </button>
-        </form>
-         <p className="mx-auto pt-3">Don't have an account? <span className="text-[#5a2761] underline" onClick={() => navigate("/")}>Sign up</span></p>
-      </div>
+        </form> */}
 
-     
+        <div className=" mx-auto ">
+          {/* Google Button */}
+          <div className="button-box fade-in-up ">
+            <button
+              className="google-login-btn px-4"
+              onClick={handleGoogleLogin}
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="loader"></span>
+              ) : (
+                "Continue with Google"
+              )}
+            </button>
+          </div>
+
+          {/* Divider */}
+          <div className="divider fade-in-up-delay">
+            <span>OR</span>
+          </div>
+
+          {/* Mobile Number Button */}
+          <div className="button-box fade-in-up-delay ">
+            <button className="Mobile-login-btn" onClick={handleMobileLogin}>
+              Continue with Mobile Number
+            </button>
+          </div>
+        </div>
+        <p className="mx-auto pt-3">
+          Don't have an account?{" "}
+          <span
+            className="text-[#5a2761] underline"
+            onClick={() => navigate("/")}
+          >
+            Sign up
+          </span>
+        </p>
+      </div>
     </AppLayout>
   );
 };

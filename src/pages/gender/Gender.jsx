@@ -15,6 +15,7 @@ const Gender = () => {
 
     // 1. Get existing data from previous screens (if any)
     const existingData = location.state || {};
+    console.log('exisitg data : ',existingData);
 
     // 2. Merge current screen data with existing data
     const updatedData = {

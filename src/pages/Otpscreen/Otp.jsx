@@ -1,20 +1,25 @@
 import React, { useState } from "react";
+import axiosInstance from "../../api/axiosInstance";
 import { useNavigate, useLocation } from "react-router-dom";
 import AppLayout from "../../components/AppLayout/AppLayout";
 import OnboardingHeader from "../../components/OnboardingHeader/OnboardingHeader";
+import { ChevronLeft } from 'lucide-react';
+import { useUser } from "../../context/userinfo";
+import { useRecommendedProfiles } from "../../context/userprofileRecomm";
+import { useCallRequests } from "../../context/callanddate";
+import loginImg from '../../assets/login.png'
 const Otp = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  console.log(location?.state.login);
+  const { fetchUser } = useUser();
+  const { fetchRecommendedProfiles } = useRecommendedProfiles();
+  const { fetchCallRequests } = useCallRequests();
 
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleVerify = async () => {
-    if (otp.length !== 6) {
-      alert("Enter valid OTP");
-      return;
-    }
-
     setLoading(true);
 
     try {
@@ -23,28 +28,59 @@ const Otp = () => {
 
       console.log("✅ OTP Verified User:", user);
 
-      // 👉 Save user id
-      localStorage.setItem("uid", user.uid);
+      if (location?.state?.login === "fromLogin") {
+        // 🔥 Call backend login/signup API
+        const res = await axiosInstance.post("/user/login-phoneNumber", {
+          phonenumber: user.phoneNumber,
+        });
 
-      // 👉 Next screen
-      navigate("/gender");
+        if (!res.data.success) {
+          alert("User not found");
+          return;
+        }
 
+        const loggedInUser = res.data.user;
+
+        // ✅ Save token like Google flow
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(loggedInUser));
+        localStorage.setItem("userId", loggedInUser._id);
+
+        // ✅ NOW APIs will work
+        await fetchUser();
+        await fetchRecommendedProfiles();
+        await fetchCallRequests();
+        navigate("/home");
+      } else {
+        const existingData = location.state || {};
+        console.log("exisitg data : ", existingData);
+        const updatedData = {
+          ...existingData,
+          phonenumber: user?.phoneNumber,
+        };
+
+        navigate("/gender", {
+          state: {
+            ...location.state,
+            ...updatedData,
+          },
+        });
+      }
     } catch (error) {
       console.error("❌ OTP verify error:", error);
-      alert("Invalid OTP");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
     <AppLayout>
       <div className="m-auto" style={{ padding: 20 }}>
-         <div className="mobile-header-section pt-2 ">
-          <OnboardingHeader
-            title="Enter OTP"
-            description=""
-          />
+        <div className="mobile-header-section pt-2 ">
+           <ChevronLeft onClick={()=>navigate(-1)} size={30} strokeWidth={2.5} className="text-[#523461] absolute mt-2 " />
+          <img src={loginImg} alt="" className="my-2" />
+          {/* <OnboardingHeader title="Enter OTP" description="" /> */}
+
         </div>
 
         <input
@@ -58,28 +94,27 @@ const Otp = () => {
             padding: 12,
             fontSize: 18,
             width: "90%",
-            
           }}
         />
 
         <button
-  onClick={handleVerify}
-  className="-mt-2  mx-5.5"
-  disabled={otp.length !== 6 || loading}
-  style={{
-    marginTop: 20,
-    padding: 12,
-    width: "90%",
-    background: otp.length === 6 ? "#5a3c6d" : "#8B6FA8", // faded color
-    color: "#fff",
-    border: "none",
-    borderRadius: 8,
-    cursor: otp.length === 6 ? "pointer" : "not-allowed",
-    opacity: otp.length === 6 ? 1 : 0.6,
-  }}
->
-  {loading ? "Verifying..." : "Verify OTP"}
-</button>
+          onClick={handleVerify}
+          className="-mt-2  mx-5.5"
+          disabled={otp.length !== 6 || loading}
+          style={{
+            marginTop: 20,
+            padding: 12,
+            width: "90%",
+            background: otp.length === 6 ? "#5a3c6d" : "#8B6FA8", // faded color
+            color: "#fff",
+            border: "none",
+            borderRadius: 8,
+            cursor: otp.length === 6 ? "pointer" : "not-allowed",
+            opacity: otp.length === 6 ? 1 : 0.6,
+          }}
+        >
+          {loading ? "Verifying..." : "Verify OTP"}
+        </button>
       </div>
     </AppLayout>
   );
