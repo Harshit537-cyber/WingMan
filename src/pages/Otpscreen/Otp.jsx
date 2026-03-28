@@ -11,7 +11,7 @@ import loginImg from '../../assets/login.png'
 const Otp = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location?.state.login);
+ 
   const { fetchUser } = useUser();
   const { fetchRecommendedProfiles } = useRecommendedProfiles();
   const { fetchCallRequests } = useCallRequests();
@@ -53,7 +53,7 @@ const Otp = () => {
         navigate("/home");
       } else {
         const existingData = location.state || {};
-        console.log("exisitg data : ", existingData);
+       
         const updatedData = {
           ...existingData,
           phonenumber: user?.phoneNumber,

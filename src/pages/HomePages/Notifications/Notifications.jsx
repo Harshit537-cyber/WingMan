@@ -7,26 +7,24 @@ import "./Notifications.css";
 import { useUser } from "../../../context/userinfo";
 import axiosInstance from "../../../api/axiosInstance";
 import { useNotification } from "../../../context/notification";
+import { useCallRequests } from '../../../context/callanddate'
 const Notifications = () => {
   const navigate = useNavigate();
   const { fetchUnReadNotifi } = useNotification();
+  const {fetchCallRequests} = useCallRequests();
   const [activeTab, setActiveTab] = useState("All");
   const { notification, dateRequest_notifications, callRequest_notifications, fetchUser } =
     useUser();
     const [notifications, setNotifications] = useState([]);
     const [date_request_notifications, setDateRequestNotifications] = useState([]);
     const [call_request_notifications, setCallRequestNotifications] = useState([]);
-  console.log(
-    "notification : ",
-    notification,
-    dateRequest_notifications,
-    callRequest_notifications,
-  );
+  
 
   useEffect(() => {
     setNotifications(notification);
     setDateRequestNotifications(dateRequest_notifications);
     setCallRequestNotifications(callRequest_notifications);
+    fetchCallRequests();
   }, [notification, dateRequest_notifications, callRequest_notifications]);
 
   const tabs = ["All", "Dating", "Calls"];

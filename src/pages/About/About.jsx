@@ -9,7 +9,7 @@ import "./About.css";
 const About = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state)
+
 
 
   // State for lifestyle choices

@@ -90,6 +90,7 @@ import AskMobileNumber from '../pages/AskMobileNumber/AskMobileNumber.jsx';
 import AskEmail from '../pages/AskEmail/AskEmail.jsx';
 import Otp  from '../pages/Otpscreen/Otp.jsx';
 import LoginPage from '../pages/Login/Login.jsx';
+import Call from '../pages/Call/Call.jsx';
 
 
 
@@ -204,7 +205,8 @@ const AppRoutes = () => {
         <Route path="/curate-vibe" element={<VibeSurvey />} />
         <Route path="/date-preferences" element={<DatePreferences />} />
         <Route path="/date-requested" element={<DateRequested />} />
-        <Route path="/call" element={<CallScreen />} />
+        {/* <Route path="/call" element={<CallScreen />} /> */}
+         <Route path="/call" element={<Call />} />
 
       </Routes>
     </Router>

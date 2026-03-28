@@ -25,7 +25,7 @@ import { useUser } from "../../../context/userinfo";
 
 const ProfileDetail = () => {
   const { callrequest, fetchUser, requestedDateSend } = useUser();
-  console.log(requestedDateSend);
+
   const location = useLocation();
   const [userdata, setUserdata] = useState(null);
   const profile = location.state?.profile || userdata;
@@ -40,34 +40,32 @@ const ProfileDetail = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const isRequestSend = requestedDateSend.some(
-    (value) => value.senderId?.toString() === user._id?.toString(),
+    (value) => value.receiverId?.toString() === user._id?.toString(),
   );
-  console.log(isRequestSend);
 
- useEffect(() => {
-  const profilecallId = location?.state?.receverId;
-  console.log("Profile Call ID:", profilecallId);
+  useEffect(() => {
+    const profilecallId = location?.state?.receverId;
 
-  if (profilecallId) {
-    const fetchData = async () => {
-      try {
-        setLoading(true); // START LOADING
+    if (profilecallId) {
+      const fetchData = async () => {
+        try {
+          setLoading(true); // START LOADING
 
-        const res = await axiosInstance.get(
-          `/user-profile-for-notify/${profilecallId}`
-        );
+          const res = await axiosInstance.get(
+            `/user-profile-for-notify/${profilecallId}`,
+          );
 
-        setUserdata(res.data.data);
-      } catch (err) {
-        console.error("Error fetching user:", err);
-      } finally {
-        setLoading(false); // STOP LOADING
-      }
-    };
+          setUserdata(res.data.data);
+        } catch (err) {
+          console.error("Error fetching user:", err);
+        } finally {
+          setLoading(false); // STOP LOADING
+        }
+      };
 
-    fetchData();
-  }
-}, [location?.state?.receverId]);
+      fetchData();
+    }
+  }, [location?.state?.receverId]);
 
   const buttonText = !request
     ? "Send Call Request"
@@ -117,7 +115,7 @@ const ProfileDetail = () => {
         requestType: "call request",
       };
       const res = await axiosInstance.post("/call-request/create", payload);
-      console.log(res.data);
+
       closeModal();
       fetchUser();
     } catch (error) {
@@ -148,6 +146,7 @@ const ProfileDetail = () => {
     );
   }
 
+ 
   return (
     <AppLayout>
       <div className="detail-main-container">
@@ -159,7 +158,10 @@ const ProfileDetail = () => {
           <div className="hero-section">
             {/* <img src={profileHero} alt="Jessica" className="hero-img animate-zoom" /> */}
             <img
-              src={profile?.profilephoto || "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg"}
+              src={
+                profile?.profilephoto ||
+                "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg"
+              }
               alt="user"
               className="hero-img animate-zoom"
               onError={(e) => {
@@ -201,7 +203,13 @@ const ProfileDetail = () => {
                 {request && request.status === "accepted" && (
                   <button
                     className="call-action-square"
-                    onClick={() => navigate("/call")}
+                    onClick={() =>
+                      navigate("/call", {
+                        state: {
+                          isCaller: true, // 👈 important
+                        },
+                      })
+                    }
                   >
                     <Phone size={24} color="#5a3c6d" fill="#5a3c6d" />
                   </button>

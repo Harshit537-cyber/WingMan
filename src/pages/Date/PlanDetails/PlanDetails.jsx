@@ -20,18 +20,18 @@ const PlanDetails = () => {
   const { fetchUser } = useUser();
   const id = location?.state?.id || [];
   const [dateRequest, setDateRequest] = useState(null);
-  console.log(dateRequest);
+
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedDateId, setSelectedDateId] = useState(null);
-  console.log(selectedDateId);
+
   const name = location?.state?.name || "";
-  console.log(name, id);
+ 
   const user = JSON.parse(localStorage.getItem("user"));
   const receiverId = user?._id;
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [loading, setLoading] = useState(false);
-  console.log(selectedSlot);
+ 
   // const [selectedDate, setSelectedDate] = useState("12 JAN (Mon)");
   // const [selectedTime, setSelectedTime] = useState("1:00 PM");
 
@@ -40,7 +40,7 @@ const PlanDetails = () => {
       setLoading(true);
       const data = await fetchdateRequestdata(id, receiverId);
 
-      console.log(data);
+     
       if (data?.data?.length) {
         setDateRequest(data.data[0]);
         setLoading(false);
@@ -56,7 +56,7 @@ const PlanDetails = () => {
     senderId,
     receiverId,
   ) => {
-    console.log("Confirming date with ID:", dateRequestId, dateId);
+    
     const data = await Confirmdate(
       dateRequestId,
       status,
@@ -64,7 +64,7 @@ const PlanDetails = () => {
       senderId,
       receiverId,
     );
-    console.log("Date confirmation response:", data);
+   
     if (data.success == true) {
       fetchUser();
       navigate("/dates");

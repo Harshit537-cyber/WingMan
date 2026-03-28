@@ -7,17 +7,19 @@ import "./Dates.css";
 import { useUser } from "../../../context/userinfo";
 import { useNotification } from "../../../context/notification.jsx";
 const userImg = "https://randomuser.me/api/portraits/women/44.jpg";
-
+import { useCallRequests } from '../../../context/callanddate.jsx'
 const Dates = () => {
   const navigate = useNavigate();
   const { requestedDateReq, dateaccepted, fetchUser } = useUser();
-  console.log("requestedDateReq : ", requestedDateReq);
+
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const { unreadCount, fetchUnReadNotifi } = useNotification();
+  const {fetchCallRequests} = useCallRequests()
 
   useEffect(() => {
     fetchUser();
     fetchUnReadNotifi();
+    fetchCallRequests();
   }, []);
 
   return (
@@ -119,67 +121,59 @@ const Dates = () => {
           </section>
 
           {/* Grid Section: Planned & Proposed */}
-          <section className="grid-section slide-up">
-            {/* Planned Dates Card */}
+          <section className=" slide-up w-full ">
             <div
-              className="vertical-date-card"
+              className="  p-4 rounded-xl"
               onClick={() =>
                 navigate("/planned-dates", {
                   state: { date: dateaccepted },
                 })
               }
             >
-              <h3>
-                Planned <br /> Dates
+              <h3 className="font-semibold text-lg">
+                Planned  Dates
               </h3>
-              {dateaccepted.length > 0 ? (
-                dateaccepted.map((value, index) => {
-                  const isSender = value?.senderId?._id === currentUser?._id;
 
-                  const otherUser = isSender
-                    ? value?.receiverId
-                    : value?.senderId;
-                  console.log("otherUser : ", otherUser);
-                  return (
-                    <>
+              {dateaccepted.length > 0 ? (
+                <div className="grid grid-cols-3 gap-3 mt-3">
+                  {dateaccepted.map((value) => {
+                    const isSender =
+                      value?.senderId?._id?.toString() ===
+                      currentUser?._id?.toString();
+
+                    const otherUser = isSender
+                      ? value?.receiverId
+                      : value?.senderId;
+
+                    return (
                       <div
-                        key={index}
-                        className="large-avatar flex flex-col items-center"
+                        key={value._id}
+                        className="flex flex-col items-center"
                       >
-                        <img
-                          src={
-                            otherUser?.profilephoto ||
-                            "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg"
-                          }
-                          alt="user"
-                        />
+                        <div className="large-avatar">
+                          <img
+                            src={
+                              otherUser?.profilephoto ||
+                              "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg"
+                            }
+                            alt="user"
+                            className="rounded-full w-16 h-16 object-cover"
+                          />
+                        </div>
+
+                        <p className="text-gray-600 text-sm text-center mt-1">
+                          {otherUser?.name}
+                        </p>
                       </div>
-                      <p className="text-gray-400">{otherUser?.name}</p>
-                    </>
-                  );
-                })
+                    );
+                  })}
+                </div>
               ) : (
-                <div className="no-requests-placeholder text-gray-400">
+                <div className="no-requests-placeholder text-gray-400 mt-3">
                   No planned dates
                 </div>
               )}
-              {/* <div className="large-avatar">
-                <img src={userImg} alt="user" />
-              </div> */}
             </div>
-
-            {/* Proposed Dates Card */}
-            {/* <div
-              className="vertical-date-card"
-              onClick={() => navigate("/proposed-dates")}
-            >
-              <h3>
-                Proposed <br /> dates
-              </h3>
-              <div className="large-avatar">
-                <img src={userImg} alt="user" />
-              </div>
-            </div> */}
           </section>
 
           {/* Card 4: Completed Dates -> Route to Completed page */}

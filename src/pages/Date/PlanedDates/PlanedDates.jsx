@@ -10,7 +10,7 @@ const PlanedDates = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const plannedList = location?.state?.date || [];
-  console.log(plannedList);
+
 
   // Dummy data (Same as image)
   // const plannedList = [

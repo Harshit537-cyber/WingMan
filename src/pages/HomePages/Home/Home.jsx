@@ -8,8 +8,10 @@ import "./Home.css";
 import { useUser } from "../../../context/userinfo";
 import calculateProfileCompletion from "../../../utils/Homefunc";
 import { useNotification } from "../../../context/notification.jsx";
+import { useCallRequests } from '../../../context/callanddate.jsx'
 const Home = () => {
   const navigate = useNavigate();
+  const {fetchCallRequests} = useCallRequests();
   const [isQuizSubmitted, setIsQuizSubmitted] = useState(false);
   const { unreadCount, notifications, fetchUnReadNotifi } = useNotification();
   console.log("unreadCount : ", unreadCount, notifications);
@@ -75,6 +77,7 @@ const Home = () => {
   useEffect(()=>{
     fetchUser();
     fetchUnReadNotifi();
+    fetchCallRequests()
   },[])
 
   return (
