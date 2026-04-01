@@ -167,8 +167,8 @@
 
 // export default UploadPhoto;
 
-import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Camera, Info, X, CheckCircle2 } from "lucide-react";
 import AppLayout from "../../components/AppLayout/AppLayout";
 import OnboardingHeader from "../../components/OnboardingHeader/OnboardingHeader";
@@ -180,6 +180,26 @@ const UploadPhoto = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalStep, setModalStep] = useState(1);
   const [photos, setPhotos] = useState({});
+
+  const location = useLocation();
+ const data = location.state;
+
+
+const user = JSON.parse(localStorage.getItem('user'))
+const userId = data?.userId || user?._id
+
+
+useEffect(() => {
+  if (location.state?.Photos?.length > 0) {
+    const existingPreviews = {};
+
+    location.state.Photos.forEach((url, index) => {
+      existingPreviews[index] = url; // directly assign URL
+    });
+
+    setPreviews(existingPreviews);
+  }
+}, [location.state]);
 
   // --- UPLOAD DISPLAY LOGIC ---
   const [previews, setPreviews] = useState({});
@@ -236,7 +256,7 @@ const UploadPhoto = () => {
 
     // API call hatakar direct navigate kar rahe hain
     // navigate("/preferences");
-     navigate('/preferences', { state: { photos } });
+     navigate('/preferences', { state: { photos, userId } });
   };
 
   // --- MODAL LOGIC (Existing) ---

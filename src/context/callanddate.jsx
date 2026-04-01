@@ -12,12 +12,13 @@ export const CallRequestProvider = ({ children }) => {
     try {
       setLoading(true);
 
-      const storedUser = localStorage.getItem("user");
-      if (!storedUser) return;
+      
+        const userId = localStorage.getItem("userId");
+     
 
       const user = JSON.parse(storedUser);
 
-      const res = await axiosInstance.get(`/call-request/reciever/${user._id}`);
+      const res = await axiosInstance.get(`/call-request/reciever/${userId}`);
 
       setcallRequests(res.data?.data || []);
       console.log(res.data?.data);

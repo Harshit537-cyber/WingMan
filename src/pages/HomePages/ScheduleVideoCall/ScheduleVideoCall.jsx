@@ -20,6 +20,8 @@ const ScheduleVideoCall = () => {
   const selectedTime = location.state?.time;
   const meetLink = location?.state?.meetLink;
   console.log("selectedTime", selectedTime);
+  const doc_id = location?.state?.doc_id;
+  console.log('doc _id :', doc_id)
 
   const formatTime = (time) => {
     const [hour, min] = time.split(":");
@@ -94,7 +96,8 @@ const ScheduleVideoCall = () => {
                 className="final-confirm-btn"
                 onClick={() =>
                   navigate("/schedule-confirmed", {
-                    state: { meetLink: meetLink },
+                    state: { meetLink: meetLink, doc_id:doc_id },
+
                   })
                 }
               >

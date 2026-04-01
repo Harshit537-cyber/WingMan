@@ -6,17 +6,25 @@ import {
   Utensils, PawPrint, Trophy, Shirt, Music2, Mic2, Activity,
   Theater, ShoppingCart, Compass, Leaf, Brush
 } from 'lucide-react';
-
+import { useUser } from '../../context/userinfo';
 import AppLayout from '../../components/AppLayout/AppLayout';
 import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
 import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
 
 import './Intrest.css';
+import axiosInstance from '../../api/axiosInstance';
 
 const Intrest = () => {
+  const { fetchUser} = useUser()
   const navigate = useNavigate();
   const location = useLocation();
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState(() => {
+  return location.state?.interest
+    ? location.state.interest.map(item =>
+        item.charAt(0).toUpperCase() + item.slice(1)
+      )
+    : [];
+});
   console.log(location.state)
 
   // Updated list to match the image items
@@ -65,6 +73,19 @@ const Intrest = () => {
     }
   };
 
+
+  const UpdateInterest = async ()=>{
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    const res = await axiosInstance.put(`/update-profile/${user._id}`,{
+      selected
+    })
+    if(res.status === 200){
+      navigate('/edit-profile')
+      fetchUser()
+    }
+  }
+
   return (
     <AppLayout>
       <div className="interest-screen-container">
@@ -105,12 +126,18 @@ const Intrest = () => {
         {/* Footer Section */}
         <div className="interest-footer-action">
           <div className="footer-wavy-decoration"></div>
-          <StepProgressButton
+          {
+            location.state.profile_edit ? <>
+            <button onClick={UpdateInterest} className='text-xl px-6 py-1.5 font-semibold rounded-lg border border-[#523461] text-[#523461]'>
+              Update
+            </button>
+            </>: <StepProgressButton
             currentStep={13}
             totalSteps={15}
             disabled={selected.length < 3}
             onClick={handleNext}
           />
+          }
         </div>
 
       </div>

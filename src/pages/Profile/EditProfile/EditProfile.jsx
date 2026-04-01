@@ -43,7 +43,6 @@ const EditProfile = () => {
   const [name, setName] = useState("");
   const [occupation, setOccupation] = useState("Developer");
   const [location, setLocation] = useState("Dehradun");
-  console.log(name, location);
   const [interest, setInterest] = useState([]);
   const [photo, setPhoto] = useState([]);
   const [about, setAbout] = useState([]);
@@ -51,18 +50,21 @@ const EditProfile = () => {
   const [preview, setPreview] = useState(null);
   const [success, setSuccess] = useState(false);
   const fileInputRef = useRef(null);
+  const [navigation, setNavigation] = useState("");
+  const [passdata, usePassData] = useState('')
   useEffect(() => {
     if (user) {
       setName(user.name);
-      let occupation = "";
 
       if (user?.work_info?.position) {
-        occupation = user.work_info.position;
+        setOccupation(user.work_info.position);
+        setNavigation("/Work");
+        usePassData(user.work_info)
       } else if (user?.study_info?.course) {
-        occupation = `Student #${user.study_info.course}`;
+        setOccupation(`Student ${user.study_info.course}`);
+        setNavigation("/Study");
+        usePassData(user.study_info)
       }
-
-      setOccupation(occupation);
       setLocation(user?.location?.address);
       setInterest(user?.interest);
       setPhoto(user?.photos);
@@ -102,13 +104,13 @@ const EditProfile = () => {
     Meditation: Sparkles,
   };
 
- const handleFileChange = (e) => {
-  const selectedFile = e.target.files[0];
-  if (!selectedFile) return;
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
 
-  setFile(selectedFile);
-  setPreview(URL.createObjectURL(selectedFile));
-};
+    setFile(selectedFile);
+    setPreview(URL.createObjectURL(selectedFile));
+  };
 
   const uploadUserImage = async () => {
     if (!file) return;
@@ -127,16 +129,14 @@ const EditProfile = () => {
         },
       );
 
-      console.log(res.data);
       if (res.data.success == true) {
         setSuccess(true);
         setFile(null);
         setPreview(null);
-        fetchUser()
+        fetchUser();
 
         setTimeout(() => setSuccess(false), 2000);
       }
-
     } catch (error) {
       console.log(error);
     }
@@ -162,56 +162,56 @@ const EditProfile = () => {
 
         <div className="ep-scroll-view">
           {/* --- PROFILE HEADER --- */}
-         <div className="ep-header">
-  <div className="ep-avatar-box">
-    <img
-      src={
-        preview ||
-        user?.profilephoto ||
-        "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg"
-      }
-      alt="user"
-      className="ep-main-i"
-      onError={(e) => {
-        e.target.src = "https://i.pravatar.cc/150?img=12";
-      }}
-    />
+          <div className="ep-header">
+            <div className="ep-avatar-box">
+              <img
+                src={
+                  preview ||
+                  user?.profilephoto ||
+                  "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg"
+                }
+                alt="user"
+                className="ep-main-i"
+                onError={(e) => {
+                  e.target.src = "https://i.pravatar.cc/150?img=12";
+                }}
+              />
 
-    <div
-      className="ep-camera-btn"
-      onClick={() => fileInputRef.current.click()}
-    >
-      <Camera size={22} color="white" fill="currentColor" />
-    </div>
-  </div>
+              <div
+                className="ep-camera-btn"
+                onClick={() => fileInputRef.current.click()}
+              >
+                <Camera size={22} color="white" fill="currentColor" />
+              </div>
+            </div>
 
-  {preview && (
-    <button
-      onClick={uploadUserImage}
-      className="ep-change-photo-text flex items-center gap-2"
-    >
-      { success && preview != null ? (
-        <>
-          <CheckCircle size={16} className="text-green-500" />
-          Uploaded Successfully
-        </>
-      ) : (
-        <>
-          <Upload size={16} />
-          Upload Image
-        </>
-      )}
-    </button>
-  )}
+            {preview && (
+              <button
+                onClick={uploadUserImage}
+                className="ep-change-photo-text flex items-center gap-2"
+              >
+                {success && preview != null ? (
+                  <>
+                    <CheckCircle size={16} className="text-green-500" />
+                    Uploaded Successfully
+                  </>
+                ) : (
+                  <>
+                    <Upload size={16} />
+                    Upload Image
+                  </>
+                )}
+              </button>
+            )}
 
-  <input
-    type="file"
-    accept="image/*"
-    ref={fileInputRef}
-    style={{ display: "none" }}
-    onChange={handleFileChange}
-  />
-</div>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
+          </div>
 
           {/* --- MAIN INFO CARD --- */}
           <div className="ep-main-card">
@@ -221,7 +221,12 @@ const EditProfile = () => {
                 <input
                   type="text"
                   value={name?.charAt(0).toUpperCase() + name?.slice(1)}
-                  onChange={(e) => setName(e.target.value)}
+                  // onChange={(e) => setName(e.target.value)}
+                  onClick={() =>
+                    navigate("/askName", {
+                      state: { profile_edit: "profile_edit", name: user?.name },
+                    })
+                  }
                   defaultValue="Wingmann"
                 />
                 {/* <span className="ep-age-val">23</span> */}
@@ -238,6 +243,18 @@ const EditProfile = () => {
                       ? occupation.charAt(0).toUpperCase() + occupation.slice(1)
                       : "Software Developer"
                   }
+                  // onChange={(e) => setOccupation(e.target.value)}
+                  // onClick={()=>navigate(navigation, {
+                  //     state: { profile_edit: "profile_edit", occupation: user?.name }
+                  // })}
+                  onClick={() => {
+                    navigate(navigation, {
+                      state: {
+                        profile_edit: "profile_edit",
+                        occupation: passdata, // ✅ correct value
+                      },
+                    });
+                  }}
                   defaultValue="Software Devloper"
                 />
               </div>
@@ -253,7 +270,8 @@ const EditProfile = () => {
                       ? location.charAt(0).toUpperCase() + location.slice(1)
                       : "Dehradun"
                   }
-                  onChange={(e) => setLocation(e.target.value)}
+                  // onChange={(e) => setLocation(e.target.value)}
+                  onClick={()=>navigate('/Acesslocation')}
                   defaultValue="Dehradun"
                 />
                 {/* <div className="ep-dist-tag">1km</div> */}
@@ -301,7 +319,17 @@ const EditProfile = () => {
                 );
               })}
 
-              <div className="ep-add-tag-circle">
+              <div
+                className="ep-add-tag-circle"
+                onClick={() =>
+                  navigate("/intrest", {
+                    state: {
+                      profile_edit: "profile_edit",
+                      interest: user?.interest,
+                    },
+                  })
+                }
+              >
                 <Plus size={18} color="#D1BBD8" strokeWidth={3} />
               </div>
             </div>
@@ -318,7 +346,17 @@ const EditProfile = () => {
                   <img src={value} alt="slot" />
                 </div>
               ))}
-              <div className="ep-photo-slot ep-add-slot">
+              <div
+                onClick={() =>
+                  navigate("/uploads", {
+                    state: {
+                      profile_edit: "profile_edit",
+                      Photos: user?.photos,
+                    },
+                  })
+                }
+                className="ep-photo-slot ep-add-slot"
+              >
                 <Plus size={32} color="#5D326F" strokeWidth={2.5} />
                 <span>Add Photo</span>
               </div>

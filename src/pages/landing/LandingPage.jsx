@@ -27,7 +27,7 @@ const LandingPage = () => {
 
 
       // userId save
-      localStorage.setItem("userId", user.uid);
+      // localStorage.setItem("userId", user.uid);
 
       // 🔥 FCM token
       const fcmToken = await getFCMToken();

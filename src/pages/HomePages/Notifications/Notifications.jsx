@@ -7,18 +7,25 @@ import "./Notifications.css";
 import { useUser } from "../../../context/userinfo";
 import axiosInstance from "../../../api/axiosInstance";
 import { useNotification } from "../../../context/notification";
-import { useCallRequests } from '../../../context/callanddate'
+import { useCallRequests } from "../../../context/callanddate";
 const Notifications = () => {
   const navigate = useNavigate();
   const { fetchUnReadNotifi } = useNotification();
-  const {fetchCallRequests} = useCallRequests();
+  const { fetchCallRequests } = useCallRequests();
   const [activeTab, setActiveTab] = useState("All");
-  const { notification, dateRequest_notifications, callRequest_notifications, fetchUser } =
-    useUser();
-    const [notifications, setNotifications] = useState([]);
-    const [date_request_notifications, setDateRequestNotifications] = useState([]);
-    const [call_request_notifications, setCallRequestNotifications] = useState([]);
-  
+  const {
+    notification,
+    dateRequest_notifications,
+    callRequest_notifications,
+    fetchUser,
+  } = useUser();
+  const [notifications, setNotifications] = useState([]);
+  const [date_request_notifications, setDateRequestNotifications] = useState(
+    [],
+  );
+  const [call_request_notifications, setCallRequestNotifications] = useState(
+    [],
+  );
 
   useEffect(() => {
     setNotifications(notification);
@@ -67,38 +74,37 @@ const Notifications = () => {
         navigate("/Request", {
           state: { activeTab: "Date" },
         });
-      }else{
-        navigate("/dates", )
+      } else {
+        navigate("/dates");
       }
     }
   };
 
- const markAsRead = async (doc_id) => {
-  try {
-    await axiosInstance.patch(`read-notification/${doc_id}`);
-    await fetchUser();
-    fetchUnReadNotifi();
-    // ✅ Update UI instantly
-    setNotifications((prev) =>
-      prev.map((item) =>
-        item._id === doc_id ? { ...item, isRead: true } : item
-      )
-    );
-    setDateRequestNotifications((prev) =>
-      prev.map((item) =>
-        item._id === doc_id ? { ...item, isRead: true } : item
-      )
-    );
-    setCallRequestNotifications((prev) =>
-      prev.map((item) =>
-        item._id === doc_id ? { ...item, isRead: true } : item
-      )
-    );
-
-  } catch (error) {
-    console.log(error);
-  }
-};
+  const markAsRead = async (doc_id) => {
+    try {
+      await axiosInstance.patch(`read-notification/${doc_id}`);
+      await fetchUser();
+      fetchUnReadNotifi();
+      // ✅ Update UI instantly
+      setNotifications((prev) =>
+        prev.map((item) =>
+          item._id === doc_id ? { ...item, isRead: true } : item,
+        ),
+      );
+      setDateRequestNotifications((prev) =>
+        prev.map((item) =>
+          item._id === doc_id ? { ...item, isRead: true } : item,
+        ),
+      );
+      setCallRequestNotifications((prev) =>
+        prev.map((item) =>
+          item._id === doc_id ? { ...item, isRead: true } : item,
+        ),
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {}, []);
   return (
@@ -111,7 +117,6 @@ const Notifications = () => {
           </button>
           <h1 className="nav-title">Notifications</h1>
           <div className="header-right">
-           
             <AlignRight size={26} color="#5a3c6d" />
           </div>
         </header>
@@ -157,19 +162,16 @@ const Notifications = () => {
                             />
                             <div className="text-side">
                               <h4 className="user-name">
-                                {
-                                  notif.title == 'Interview Update' ?( <>
-                                    {notif?.title}
-                                    
-                                    </>):(
-                                   <>
-
-                                    {notif?.body?.trim()?.split(" ").pop()}
-                                    </>
-                                  )
-                                }
+                                {notif.title == "Interview Schedule 🎉" ? (
+                                  <>{notif?.title}</>
+                                ) : (
+                                  <>{notif?.body?.trim()?.split(" ").pop()}</>
+                                )}
                               </h4>
-                              <p className="notif-label"> <p dangerouslySetInnerHTML={{ __html: notif.body }} /></p>
+                              <div
+                                className="notif-label"
+                                dangerouslySetInnerHTML={{ __html: notif.body }}
+                              />
                             </div>
                           </div>
                           <div className="right-action-side">
@@ -305,11 +307,13 @@ const Notifications = () => {
                   </div>
                 ) : (
                   date_request_notifications?.map((notif, index) => (
-                    <div  onClick={() => handleNotificationClick(notif)}
-                        key={index}
-                        className={`figma-notif-card ${
-                          notif?.isRead ? "bg-white" : "bg-purple-200"
-                        }`}>
+                    <div
+                      onClick={() => handleNotificationClick(notif)}
+                      key={index}
+                      className={`figma-notif-card ${
+                        notif?.isRead ? "bg-white" : "bg-purple-200"
+                      }`}
+                    >
                       <div className="card-main-row">
                         <div className="user-info-side">
                           <img
@@ -410,11 +414,13 @@ const Notifications = () => {
                 ) : (
                   callRequest_notifications?.map((notif, index) => (
                     <>
-                      <div onClick={() => handleNotificationClick(notif)}
+                      <div
+                        onClick={() => handleNotificationClick(notif)}
                         key={index}
                         className={`figma-notif-card ${
                           notif?.isRead ? "bg-white" : "bg-purple-200"
-                        }`}>
+                        }`}
+                      >
                         <div className="card-main-row">
                           <div className="user-info-side">
                             <img

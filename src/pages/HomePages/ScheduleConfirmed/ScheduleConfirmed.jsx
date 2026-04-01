@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import scheduledImg from '../../../assets/scheduled-illustration.png';
 import './ScheduleConfirmed.css';
-
+import axiosInstance from '../../../api/axiosInstance';
 const ScheduleConfirmed = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -13,6 +13,33 @@ const ScheduleConfirmed = () => {
   const month = location.state?.month || "Jan";
   const time = location.state?.time || "11:00AM";
   const meetLink = location.state.meetLink
+  const doc_id = location?.state?.doc_id;
+
+  
+
+
+  const Confirmstatus = async()=>{
+    const dates = `${date}-${month}`
+    const user = JSON.parse(localStorage.getItem('user'))
+    try{
+      const InterviewConfirm = await axiosInstance.patch(`/confirm-status/${doc_id}`,{
+        userId :user._id,
+        meetLink,
+        dates,
+        time
+
+      })
+      console.log(InterviewConfirm.data)
+      if(InterviewConfirm.data.success === true){
+        navigate('/verified')
+      }
+
+
+    }catch(error){
+      console.log(error.message)
+    }
+    
+  }
 
   return (
     <AppLayout>
@@ -60,7 +87,9 @@ const ScheduleConfirmed = () => {
         <div className="bottom-action-area">
   <button 
     className="status-scheduled-btn" 
-    onClick={() => navigate('/verified')} // Is line ko add karein
+
+    // onClick={() => navigate('/verified')} // Is line ko add karein
+    onClick={Confirmstatus}
   >
     Scheduled
   </button>

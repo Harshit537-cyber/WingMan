@@ -10,8 +10,6 @@ const About = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-
-
   // State for lifestyle choices
   const [choices, setChoices] = useState({
     drink: "",
@@ -83,10 +81,8 @@ const About = () => {
 
       isOnboarded: true,
       fcmToken: fcmToken,
-      phonenumber:location.state.phonenumber
+      phonenumber: location.state.phonenumber,
     };
-
-   
 
     try {
       setIsLoading(true); // Disable button while saving
@@ -94,11 +90,17 @@ const About = () => {
       // ✅ 3. Call the API function
       const response = await saveOnboardingData(finalPayload);
 
-
       if (response.status === 200 || response.status === 201) {
         // ✅ 4. Success: Move to the success screen
         // Passing finalPayload or response data if needed
-        navigate("/honestysuccess", { state: finalPayload });
+        console.log(response.data);
+        // navigate("/honestysuccess", { state: finalPayload, userId: response.data._id });
+        navigate("/honestysuccess", {
+          state: {
+            ...finalPayload,
+            userId: response.data._id,
+          },
+        });
       } else {
         alert("Something went wrong. Please try again.");
       }

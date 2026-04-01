@@ -1,19 +1,22 @@
-import React, { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import AppLayout from '../../components/AppLayout/AppLayout';
-import confettiImg from '../../assets/Confetti.png'; 
-import rightHandImg from '../../assets/wellcome/hand-right.svg';
-import leftHandImg from '../../assets/wellcome/hand-left.svg'; 
-import './HonestySuccess.css';
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import AppLayout from "../../components/AppLayout/AppLayout";
+import confettiImg from "../../assets/Confetti.png";
+import rightHandImg from "../../assets/wellcome/hand-right.svg";
+import leftHandImg from "../../assets/wellcome/hand-left.svg";
+import "./HonestySuccess.css";
 
 const HonestySuccess = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  console.log("HonestySuccess Data:", location.state);
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/login', { state: { ...location.state } });
-    }, 3500); 
+      navigate("/uploads", {
+        state: { ...location.state }, // includes userId too
+      });
+    }, 3500);
     return () => clearTimeout(timer);
   }, [navigate, location.state]);
 
@@ -22,10 +25,10 @@ const HonestySuccess = () => {
       <div className="honesty-success-wrapper">
         <div className="confetti-overlay">
           {[...Array(12)].map((_, i) => (
-            <img 
+            <img
               key={i}
-              src={confettiImg} 
-              className={`confetti-bit p${i}`} 
+              src={confettiImg}
+              className={`confetti-bit p${i}`}
               alt="confetti"
             />
           ))}
@@ -38,8 +41,12 @@ const HonestySuccess = () => {
         </div>
 
         <div className="handshake-container">
-            <img src={leftHandImg} alt="Left Hand" className="hand hand-left" />
-            <img src={rightHandImg} alt="Right Hand" className="hand hand-right" />
+          <img src={leftHandImg} alt="Left Hand" className="hand hand-left" />
+          <img
+            src={rightHandImg}
+            alt="Right Hand"
+            className="hand hand-right"
+          />
         </div>
       </div>
     </AppLayout>

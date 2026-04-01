@@ -65,19 +65,38 @@ const AskMobileNumber = () => {
   };
 
   // ✅ Handle input (keep starting 91)
-  const handleChange = (e) => {
-    const value = e.target.value.replace(/\D/g, "");
+   const handleChange = (e) => {
+  let value = e.target.value.replace(/\D/g, "");
 
-    // prevent removing 91
-    if (!value.startsWith("91")) return;
+  // Always ensure it starts with 91
+  if (!value.startsWith("91")) {
+    value = "91";
+  }
 
-    if (value.length <= 12) {
-      setMobile(value);
-    }
-  };
+  // Limit length (91 + 10 digits)
+  value = value.slice(0, 13);
+
+  // Format: 91 98765 43210
+  let formatted = value;
+
+  if (value.length > 2) {
+    formatted = value.slice(0, 2) + " " + value.slice(2);
+  }
+
+  if (value.length > 7) {
+    formatted =
+      value.slice(0, 2) +
+      " " +
+      value.slice(2, 7) +
+      " " +
+      value.slice(7);
+  }
+
+  setMobile(formatted);
+};
 
   const handleNext = async () => {
-    if (mobile.length === 12) {
+    if (mobile.length === 14) {
       const phoneNumber = `+${mobile}`;
 
       const success = await sendOTP(phoneNumber);
@@ -107,7 +126,7 @@ const AskMobileNumber = () => {
 
         <div className="mobile-body-content">
           <div className="mobile-input-box slide-up">
-            <input
+            {/* <input
               type="tel"
               inputMode="numeric"
               className="custom-mobile-field"
@@ -116,6 +135,16 @@ const AskMobileNumber = () => {
               onChange={handleChange}
               autoFocus
               maxLength={12}
+            /> */}
+              <input
+              type="tel"
+              inputMode="numeric"
+              className="custom-mobile-field"
+              placeholder="99999 99999"
+              value={mobile}
+              onChange={handleChange}
+              autoFocus
+              maxLength={14}
             />
           </div>
         </div>
@@ -126,7 +155,7 @@ const AskMobileNumber = () => {
           <StepProgressButton
             currentStep={3}
             totalSteps={20}
-            disabled={mobile.length !== 12}
+            disabled={mobile.length !== 14}
             onClick={handleNext}
           />
         </div>

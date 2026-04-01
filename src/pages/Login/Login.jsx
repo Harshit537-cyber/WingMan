@@ -25,13 +25,13 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
+  // };
 
   const isProfileComplete = (user) => {
     if (!user) return false;
@@ -182,7 +182,7 @@ const handleMobileLogin = async (e)=>{
         </form> */}
 
         <div className=" mx-auto ">
-          {/* Google Button */}
+         
           <div className="button-box fade-in-up ">
             <button
               className="google-login-btn px-4"
@@ -197,12 +197,12 @@ const handleMobileLogin = async (e)=>{
             </button>
           </div>
 
-          {/* Divider */}
+         
           <div className="divider fade-in-up-delay">
             <span>OR</span>
           </div>
 
-          {/* Mobile Number Button */}
+          
           <div className="button-box fade-in-up-delay ">
             <button className="Mobile-login-btn" onClick={handleMobileLogin}>
               Continue with Mobile Number

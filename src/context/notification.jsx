@@ -12,11 +12,12 @@ export const NotificationProvider = ({ children }) => {
   // ✅ fetch from backend
   const fetchUnReadNotifi = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem("user"));
+     
+      const userId = localStorage.getItem("userId");
 
-      if (!user?._id) return;
 
-      const res = await axiosInstance.get(`/get-Unread-Notfi/${user._id}`);
+
+      const res = await axiosInstance.get(`/get-Unread-Notfi/${userId}`);
       console.log("noti : ", res.data);
 
       setUnreadCount(res?.data?.count || 0);

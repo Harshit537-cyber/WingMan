@@ -12,7 +12,9 @@ const Preferences = () => {
   const [loading, setLoading] = useState(false); // ✅ Loading state
   const location = useLocation();
   const photos = location.state?.photos || {};
-  const { fetchUser } = useUser()
+  const userId = location?.state?.userId
+  const { fetchUser } = useUser();
+  
 
   // States for Sliders
   const [ageRange, setAgeRange] = useState({ min: 18, max: 50 });
@@ -25,10 +27,10 @@ const Preferences = () => {
   
 const handleContinue = async () => {
   setLoading(true);
+  localStorage.setItem('userId', userId);
 
   try {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user._id;
+
 
     // Convert height to cm
     const heightMinCm = Math.round(heightRange.min * 30.48);
@@ -78,9 +80,6 @@ const handleContinue = async () => {
       uploadRequest,
       emailRequest,
     ]);
-
-    console.log("Upload success:", uploadResponse.data);
-    console.log("Email sent:", emailResponse.data);
 
     fetchUser();
     navigate("/sharingSuccess");

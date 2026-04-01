@@ -99,6 +99,7 @@ const Schedule = () => {
             meetLink: response.data.data.meetLink,
             time: selectedTime,
             date: selectedDate,
+            doc_id : response.data.data.booking._id
           },
         });
       }

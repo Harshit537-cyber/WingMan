@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import AppLayout from '../../components/AppLayout/AppLayout';
 import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
 import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
+import axiosInstance from '../../api/axiosInstance';
 import './Work.css';
-
+import { useUser } from '../../context/userinfo';
 const Work = () => {
   const [company, setCompany] = useState('');
   const [position, setPosition] = useState('');
+  const { fetchUser} = useUser();
 
   const navigate = useNavigate();
   const location = useLocation();
+
+
+  useEffect(() => {
+  if (location.state?.occupation) {
+    setCompany(location.state.occupation.company || '');
+    setPosition(location.state.occupation.position || '');
+  }
+}, [location.state]);
 
   // Logic: Enable button only when both fields are filled
   const isFormValid = company.trim() !== '' && position.trim() !== '';
@@ -29,6 +39,20 @@ const Work = () => {
     }
   };
 
+
+  const UpdateOccupation = async ()=>{
+     const user = JSON.parse(localStorage.getItem('user'))
+
+    const res = await axiosInstance.put(`/update-profile/${user._id}`,{
+      occupationWork:{
+        company, position
+      }
+    })
+    if(res.status === 200){
+      navigate('/edit-profile')
+      fetchUser()
+    }
+  }
   return (
     <AppLayout>
       <div className="work-screen-container">
@@ -102,12 +126,25 @@ const Work = () => {
         {/* BOTTOM SECTION: Step Progress Button (Step 8) */}
         <div className="work-footer-action">
           <div className="footer-wavy-decoration"></div>
-          <StepProgressButton
+          {/* <StepProgressButton
+            currentStep={10}
+            totalSteps={15}
+            disabled={!isFormValid}
+            onClick={handleNext}
+          /> */}
+           {
+          location?.state?.profile_edit ? <>
+           <button onClick={UpdateOccupation} className='text-xl px-6 py-1.5 font-semibold rounded-lg border border-[#523461] text-[#523461]'>
+              Update
+            </button>
+          </> : <>
+           <StepProgressButton
             currentStep={10}
             totalSteps={15}
             disabled={!isFormValid}
             onClick={handleNext}
           />
+          </>}
         </div>
 
       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ChevronLeft,
@@ -21,7 +21,7 @@ const Matches = () => {
   const scrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showCallPopup, setShowCallPopup] = useState(false);
-  const { profiles } = useRecommendedProfiles();
+  const { profiles, fetchRecommendedProfiles } = useRecommendedProfiles();
   console.log("profile matches : ", profiles);
   const { callrequest } = useUser();
   console.log("call request : ", callrequest);
@@ -47,6 +47,10 @@ const Matches = () => {
       [id]: !prev[id],
     }));
   };
+
+  useEffect(()=>{
+    fetchRecommendedProfiles()
+  },[])
 
   // const profiles = [
   //   { id: 1, name: "Nikita", age: 28, city: "California", compat: "90%" },

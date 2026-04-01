@@ -11,13 +11,12 @@ export const RecommendedProfileProvider = ({ children }) => {
   try {
     setLoading(true);
 
-    const storedUser = localStorage.getItem("user");
-    if (!storedUser) return;
 
-    const user = JSON.parse(storedUser);
+     const userId = localStorage.getItem("userId");
+   
 
 
-    const res = await axiosInstance.get(`user-profile-recommendation/${user._id}`);
+    const res = await axiosInstance.get(`user-profile-recommendation/${userId}`);
     console.log(res.data)
 
     setProfiles(res.data.users || []);

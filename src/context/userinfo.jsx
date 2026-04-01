@@ -30,23 +30,10 @@ export const UserProvider = ({ children }) => {
   // ✅ Fetch user
   const fetchUser = useCallback(async () => {
     try {
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        setUser(null);
-        setLoading(false);
-        return;
-      }
-
+     
       setLoading(true);
-
-      const storedUser = localStorage.getItem("user");
-
-      if (!storedUser) return;
-
-      const user = JSON.parse(storedUser);
-
-      const res = await axiosInstance.get(`users/${user._id}`);
+      const userId = localStorage.getItem("userId");
+      const res = await axiosInstance.get(`users/${userId}`);
       setUser(res.data.user);
       console.log('userConted caled : ',res.data);
       setAvator(res.data.avatar);
