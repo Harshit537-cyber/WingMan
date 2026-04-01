@@ -45,6 +45,7 @@ const EditProfile = () => {
   const [location, setLocation] = useState("Dehradun");
   const [interest, setInterest] = useState([]);
   const [photo, setPhoto] = useState([]);
+  console.log(photo)
   const [about, setAbout] = useState([]);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);

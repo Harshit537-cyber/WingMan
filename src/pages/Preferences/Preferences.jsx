@@ -14,6 +14,7 @@ const Preferences = () => {
   const photos = location.state?.photos || {};
   const userId = location?.state?.userId
   const { fetchUser } = useUser();
+  console.log(location.state?.photos)
   
 
   // States for Sliders
@@ -30,19 +31,30 @@ const handleContinue = async () => {
   localStorage.setItem('userId', userId);
 
   try {
-
-
-    // Convert height to cm
     const heightMinCm = Math.round(heightRange.min * 30.48);
     const heightMaxCm = Math.round(heightRange.max * 30.48);
 
-    // Create FormData
     const formData = new FormData();
 
-    // Append photos
-    Object.values(photos).forEach((file) => {
+    const existingPhotos = [];
+    const newPhotos = [];
+
+    // ✅ Separate files and URLs
+    Object.values(photos).forEach((item) => {
+      if (item instanceof File) {
+        newPhotos.push(item);
+      } else if (typeof item === "string") {
+        existingPhotos.push(item);
+      }
+    });
+
+    // ✅ Append only NEW files
+    newPhotos.forEach((file) => {
       formData.append("photos", file);
     });
+
+    // ✅ Send existing URLs separately
+    formData.append("existingPhotos", JSON.stringify(existingPhotos));
 
     const preferences = {
       age: {
@@ -60,7 +72,6 @@ const handleContinue = async () => {
 
     formData.append("preferences", JSON.stringify(preferences));
 
-    // ✅ Create BOTH requests (parallel execution)
     const uploadRequest = axiosInstance.post(
       `/uploadPhotosAndPreferences/${userId}`,
       formData,
@@ -75,11 +86,7 @@ const handleContinue = async () => {
       `/onboarding-email/${userId}`
     );
 
-    // ✅ Run simultaneously
-    const [uploadResponse, emailResponse] = await Promise.all([
-      uploadRequest,
-      emailRequest,
-    ]);
+    await Promise.all([uploadRequest, emailRequest]);
 
     fetchUser();
     navigate("/sharingSuccess");
