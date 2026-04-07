@@ -78,6 +78,8 @@ const About = () => {
 
     if (response.status === 200 || response.status === 201) {
       const userId = response.data._id;
+      localStorage.setItem("userId", userId);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
 
       // ✅ Fire & forget email API (non-blocking)
       axiosInstance
