@@ -19,7 +19,7 @@ const RelationshipInputQuiz = () => {
 
     try {
         const currentAnswer = {
-          question: "What’s one thing that really matters to you in a relationship?",
+          question: 5,
           selectedOption: answer.trim()
         };
 
@@ -37,7 +37,7 @@ const RelationshipInputQuiz = () => {
           }
         } else {
           progress.push({
-            quizName: QUIZ_NAME,
+            quizName: 4,
             answers: [currentAnswer]
           });
         }

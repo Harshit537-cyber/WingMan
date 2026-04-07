@@ -21,9 +21,9 @@ const FinanceQuiz = () => {
         if (!selectedOption) return;
 
         // 1. Current answer ka data
-        const selectedText = options.find(opt => opt.id === selectedOption).text;
+        const selectedText = options.find(opt => opt.id === selectedOption).id;
         const currentAnswer = {
-            question: "When it comes to managing money as a couple, I prefer:",
+            question: 2,
             selectedOption: selectedText
         };
 

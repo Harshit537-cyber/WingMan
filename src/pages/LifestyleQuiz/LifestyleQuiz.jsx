@@ -21,14 +21,14 @@ const LifestyleQuiz = () => {
         if (!selectedOption) return;
 
         // 1. Pehle selected option ka text nikal lo
-        const selectedText = options.find(opt => opt.id === selectedOption).text;
+        const selectedText = options.find(opt => opt.id === selectedOption).id;
 
         // 2. Quiz ka data object banao (Quiz name wahi rakhna jo PickCard mein hai)
         const quizData = {
             quizName: "Lifestyle & Value",
             answers: [
                 {
-                    question: "How do you usually like to spend your weekends?",
+                    question: 1,
                     selectedOption: selectedText
                 }
             ]

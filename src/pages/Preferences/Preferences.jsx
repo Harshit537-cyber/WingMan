@@ -39,7 +39,6 @@ const handleContinue = async () => {
     const existingPhotos = [];
     const newPhotos = [];
 
-    // ✅ Separate files and URLs
     Object.values(photos).forEach((item) => {
       if (item instanceof File) {
         newPhotos.push(item);
@@ -48,12 +47,10 @@ const handleContinue = async () => {
       }
     });
 
-    // ✅ Append only NEW files
     newPhotos.forEach((file) => {
       formData.append("photos", file);
     });
 
-    // ✅ Send existing URLs separately
     formData.append("existingPhotos", JSON.stringify(existingPhotos));
 
     const preferences = {
@@ -72,7 +69,8 @@ const handleContinue = async () => {
 
     formData.append("preferences", JSON.stringify(preferences));
 
-    const uploadRequest = axiosInstance.post(
+    // ✅ ONLY this API now
+    await axiosInstance.post(
       `/uploadPhotosAndPreferences/${userId}`,
       formData,
       {
@@ -81,12 +79,6 @@ const handleContinue = async () => {
         },
       }
     );
-
-    const emailRequest = axiosInstance.post(
-      `/onboarding-email/${userId}`
-    );
-
-    await Promise.all([uploadRequest, emailRequest]);
 
     fetchUser();
     navigate("/sharingSuccess");

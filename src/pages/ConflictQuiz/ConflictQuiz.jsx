@@ -37,11 +37,11 @@ const ConflictQuiz = () => {
   const [selected, setSelected] = useState(null);
 
   const options = [
-    { id: "sa", label: "Strongly agree", bg: "#432C51", stroke: "#FFFFFF" },
-    { id: "swa", label: "Somewhat agree", bg: "#9E6CAD", stroke: "#FFFFFF" },
-    { id: "n", label: "Neutral", bg: "#D4B3E0", stroke: "#1A1A1A" },
-    { id: "oo", label: "Okay- okay", bg: "#F2E4F4", stroke: "#1A1A1A" },
-    { id: "sd", label: "Strongly disagree", bg: "#FFFFFF", stroke: "#1A1A1A" },
+    { id: 5, label: "Strongly agree", bg: "#432C51", stroke: "#FFFFFF" },
+    { id: 4, label: "Somewhat agree", bg: "#9E6CAD", stroke: "#FFFFFF" },
+    { id: 3, label: "Neutral", bg: "#D4B3E0", stroke: "#1A1A1A" },
+    { id: 2, label: "Okay- okay", bg: "#F2E4F4", stroke: "#1A1A1A" },
+    { id: 1, label: "Strongly disagree", bg: "#FFFFFF", stroke: "#1A1A1A" },
   ];
 
   // 🔥 SETTINGS
@@ -52,7 +52,7 @@ const ConflictQuiz = () => {
     if (!selected) return;
 
     // 1. Data Prepare
-    const selectedText = options.find(opt => opt.id === selected).label;
+    const selectedText = options.find(opt => opt.id === selected).id;
     const currentQuestion = "After a disagreement, I’m usually the one to take the first step toward making things right.";
     
     // 2. Local Storage Logic
@@ -61,7 +61,7 @@ const ConflictQuiz = () => {
     let quizIndex = progress.findIndex(q => q.quizName === quizName);
 
     const newAnswer = { 
-        question: currentQuestion, 
+        question: 17, 
         selectedOption: selectedText 
     };
 

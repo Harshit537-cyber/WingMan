@@ -13,15 +13,11 @@ export const CallRequestProvider = ({ children }) => {
       setLoading(true);
 
       
-        const userId = localStorage.getItem("userId");
-     
-
-      const user = JSON.parse(storedUser);
-
+      const userId = localStorage.getItem("userId");
       const res = await axiosInstance.get(`/call-request/reciever/${userId}`);
 
       setcallRequests(res.data?.data || []);
-      console.log(res.data?.data);
+      console.log('call and date context called : ',res.data?.data);
 
     } catch (error) {
       console.log(error.response?.data || error.message);

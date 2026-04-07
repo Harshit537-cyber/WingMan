@@ -20,10 +20,10 @@ const LifestyleAndValue = () => {
     const QUIZ_NAME = "Lifestyle & Value";
 
     const options = [
-        { id: 'calm', text: 'Calm — they’re probably busy', image: characterCalm },
-        { id: 'anxious', text: 'Anxious — did I say something wrong?', image: characterAnxious },
-        { id: 'unbothered', text: 'Unbothered — I’ll reply later too', image: characterUnbothered },
-        { id: 'irritated', text: 'Irritated — communication should be consistent', image: characterIrritated }
+        { id: 1, text: 'Calm — they’re probably busy', image: characterCalm },
+        { id: 2, text: 'Anxious — did I say something wrong?', image: characterAnxious },
+        { id: 3, text: 'Unbothered — I’ll reply later too', image: characterUnbothered },
+        { id: 4, text: 'Irritated — communication should be consistent', image: characterIrritated }
     ];
 
     const handleExit = () => {
@@ -38,14 +38,14 @@ const LifestyleAndValue = () => {
         setLoading(true); // 🔥 API call start
 
         try {
-            const selectedText = options.find(opt => opt.id === selectedOption).text;
+            const selectedText = options.find(opt => opt.id === selectedOption).id;
             const currentQuestion = "If someone you’re dating doesn’t text back for hours, what’s your first reaction?";
 
             const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
             let quizIndex = progress.findIndex(q => q.quizName === QUIZ_NAME);
 
             const newAnswer = {
-                question: currentQuestion,
+                question: 15,
                 selectedOption: selectedText
             };
 

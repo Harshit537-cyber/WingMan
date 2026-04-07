@@ -37,16 +37,16 @@ const ConflictRepairQuiz = () => {
   const QUIZ_NAME = "Conflict & Repair Patterns";
 
   const questions = [
-    { id: 1, title: "I often focus more on being right than on being understood." },
-    { id: 2, title: "I find it difficult to stay calm when I feel misunderstood." }
+    { id: 19, title: "I often focus more on being right than on being understood." },
+    { id: 20, title: "I find it difficult to stay calm when I feel misunderstood." }
   ];
 
   const options = [
-    { id: 'sa', type: 'sa', text: "Strongly agree", bgColor: "#4D2C5A" },
-    { id: 'swa', type: 'swa', text: "Somewhat agree", bgColor: "#9C6DA8" },
-    { id: 'n', type: 'n', text: "Neutral", bgColor: "#CAA7D2" },
-    { id: 'oo', type: 'oo', text: "Okay- okay", bgColor: "#E6D4EB" },
-    { id: 'sd', type: 'sd', text: "Strongly disagree", bgColor: "#F5EBF7" }
+    { id: 5, type: 'sa', text: "Strongly agree", bgColor: "#4D2C5A" },
+    { id: 4, type: 'swa', text: "Somewhat agree", bgColor: "#9C6DA8" },
+    { id:3 , type: 'n', text: "Neutral", bgColor: "#CAA7D2" },
+    { id: 2, type: 'oo', text: "Okay- okay", bgColor: "#E6D4EB" },
+    { id: 1, type: 'sd', text: "Strongly disagree", bgColor: "#F5EBF7" }
   ];
 
   const CURRENT_STEP = 3 + currentIndex; // Step 1 & 2 were in prev files
@@ -62,8 +62,8 @@ const ConflictRepairQuiz = () => {
   const handleNext = async () => {
     if (!selectedOption || loading) return;
 
-    const currentQuestionText = questions[currentIndex].title;
-    const selectedText = options.find(opt => opt.id === selectedOption).text;
+    const currentQuestionText = questions[currentIndex].id;
+    const selectedText = options.find(opt => opt.id === selectedOption).id;
     
     const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
     let quizIndex = progress.findIndex(q => q.quizName === QUIZ_NAME);

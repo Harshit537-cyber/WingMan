@@ -3,15 +3,16 @@ import axiosInstance from "../../api/axiosInstance";
 import { useNavigate, useLocation } from "react-router-dom";
 import AppLayout from "../../components/AppLayout/AppLayout";
 import OnboardingHeader from "../../components/OnboardingHeader/OnboardingHeader";
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft } from "lucide-react";
 import { useUser } from "../../context/userinfo";
 import { useRecommendedProfiles } from "../../context/userprofileRecomm";
 import { useCallRequests } from "../../context/callanddate";
-import loginImg from '../../assets/login.png'
+import loginImg from "../../assets/login.png";
+import {  getFCMToken } from '../../firebase.js'
 const Otp = () => {
   const navigate = useNavigate();
   const location = useLocation();
- 
+
   const { fetchUser } = useUser();
   const { fetchRecommendedProfiles } = useRecommendedProfiles();
   const { fetchCallRequests } = useCallRequests();
@@ -29,7 +30,6 @@ const Otp = () => {
       console.log("✅ OTP Verified User:", user);
 
       if (location?.state?.login === "fromLogin") {
-        // 🔥 Call backend login/signup API
         const res = await axiosInstance.post("/user/login-phoneNumber", {
           phonenumber: user.phoneNumber,
         });
@@ -41,19 +41,42 @@ const Otp = () => {
 
         const loggedInUser = res.data.user;
 
-        // ✅ Save token like Google flow
+        // ✅ Save auth data
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(loggedInUser));
         localStorage.setItem("userId", loggedInUser._id);
 
-        // ✅ NOW APIs will work
+        // 🔥🔥 ADD THIS BLOCK (FCM TOKEN)
+        try {
+          const fcmToken = await getFCMToken();
+
+          if (fcmToken) {
+            const oldToken = localStorage.getItem("fcmToken");
+
+            // ✅ update only if changed
+            if (oldToken !== fcmToken) {
+              console.log("📲 Updating FCM Token:", fcmToken);
+
+              await axiosInstance.put(`/update-fcm-token/${loggedInUser._id}`, {
+                fcmToken,
+              });
+
+              localStorage.setItem("fcmToken", fcmToken);
+            }
+          }
+        } catch (err) {
+          console.log("❌ FCM Error:", err.message);
+        }
+
+        // ✅ Load data
         await fetchUser();
         await fetchRecommendedProfiles();
         await fetchCallRequests();
+
         navigate("/home");
       } else {
         const existingData = location.state || {};
-       
+
         const updatedData = {
           ...existingData,
           phonenumber: user?.phoneNumber,
@@ -77,10 +100,14 @@ const Otp = () => {
     <AppLayout>
       <div className="m-auto" style={{ padding: 20 }}>
         <div className="mobile-header-section pt-2 ">
-           <ChevronLeft onClick={()=>navigate(-1)} size={30} strokeWidth={2.5} className="text-[#523461] absolute mt-2 " />
+          <ChevronLeft
+            onClick={() => navigate(-1)}
+            size={30}
+            strokeWidth={2.5}
+            className="text-[#523461] absolute mt-2 "
+          />
           <img src={loginImg} alt="" className="my-2" />
           {/* <OnboardingHeader title="Enter OTP" description="" /> */}
-
         </div>
 
         <input

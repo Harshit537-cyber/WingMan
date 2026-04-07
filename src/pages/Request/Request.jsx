@@ -17,15 +17,16 @@ const Request = () => {
   console.log("activeTab : ", activeTab, location?.state?.activeTab);
   const { callRequests, loading, fetchCallRequests } = useCallRequests();
   const { requestedDateReq, fetchUser } = useUser();
-  console.log(callRequests);
+  console.log('call Request Data : ',callRequests);
 
   const handleChangeStatus = useCallback(async (status, senderId) => {
+    console.log('sendre Id :', senderId)
     try {
-      const user = JSON.parse(localStorage.getItem("user"));
+      const userId = (localStorage.getItem("userId"));
       const fcmToken = localStorage.getItem("fcmToken");
 
       const res = await axiosInstance.post(
-        `/call-request/reciever/change-status?receiverId=${user._id}&senderId=${senderId}`,
+        `/call-request/reciever/change-status?receiverId=${userId}&senderId=${senderId}`,
         {
           status: status,
           // senderFcmToken: fcmToken,

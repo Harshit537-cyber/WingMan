@@ -15,10 +15,10 @@ const ConflictRepairQuiz = () => {
   const [selectedId, setSelectedId] = useState(null);
 
   const quizOptions = [
-    { id: "opt1", text: "Avoid it until things calm down", image: imgAvoid },
-    { id: "opt2", text: "Address it right away", image: imgAddress },
-    { id: "opt3", text: "Compromise quickly to move on", image: imgCompromise },
-    { id: "opt4", text: "Reflect before bringing it up", image: imgReflect },
+    { id: "1", text: "Avoid it until things calm down", image: imgAvoid },
+    { id: "2", text: "Address it right away", image: imgAddress },
+    { id: "3", text: "Compromise quickly to move on", image: imgCompromise },
+    { id: "4", text: "Reflect before bringing it up", image: imgReflect },
   ];
 
   // 🔥 SETTINGS
@@ -28,14 +28,14 @@ const ConflictRepairQuiz = () => {
   const handleNext = () => {
     if (!selectedId) return;
 
-    const selectedText = quizOptions.find(opt => opt.id === selectedId).text;
+    const selectedText = quizOptions.find(opt => opt.id === selectedId).id;
     const currentQuestion = "When conflict arises, I tend to:";
     
     const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
     const quizName = "Conflict & Repair Patterns"; 
     let quizIndex = progress.findIndex(q => q.quizName === quizName);
 
-    const newAnswer = { question: currentQuestion, selectedOption: selectedText };
+    const newAnswer = { question: 18, selectedOption: selectedText };
 
     if (quizIndex !== -1) {
         const answerIndex = progress[quizIndex].answers.findIndex(a => a.question === currentQuestion);

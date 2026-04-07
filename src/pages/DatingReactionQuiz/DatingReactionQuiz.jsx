@@ -29,7 +29,7 @@ const DatingReactionQuiz = () => {
     if (!selectedOption) return;
 
     // 1. Selected text nikal lo
-    const selectedText = options.find(opt => opt.id === selectedOption).text;
+    const selectedText = options.find(opt => opt.id === selectedOption).id;
     const currentQuestion = "When I feel overwhelmed, I usually:";
 
     // 2. Local Storage se data fetch karo
@@ -40,7 +40,7 @@ const DatingReactionQuiz = () => {
     let quizIndex = progress.findIndex(q => q.quizName === quizName);
 
     const newAnswer = {
-      question: currentQuestion,
+      question: 14,
       selectedOption: selectedText
     };
 

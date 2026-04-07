@@ -8,17 +8,17 @@ const AssessmentQuiz = () => {
     const navigate = useNavigate();
     
     const questions = [
-        { id: 1, title: "I believe relationships help both people grow." },
-        { id: 2, title: "When I realise I’ve hurt someone, I try to take responsibility and reconnect." },
-        { id: 3, title: "I rarely talk about your feelings and emotions." },
+        { id: 21, title: "I believe relationships help both people grow." },
+        { id: 22, title: "When I realise I’ve hurt someone, I try to take responsibility and reconnect." },
+        { id: 23, title: "I rarely talk about your feelings and emotions." },
     ];
 
     const options = [
-        { id: 'sa', text: "Strongly agree", icon: "☻" },
-        { id: 'swa', text: "Somewhat agree", icon: "☺" },
-        { id: 'n', text: "Neutral", icon: "☺" },
-        { id: 'oo', text: "Okay- okay", icon: "☹" },
-        { id: 'sd', text: "Strongly disagree", icon: "☹" }
+        { id: 5, text: "Strongly agree", icon: "☻" },
+        { id: 4, text: "Somewhat agree", icon: "☺" },
+        { id: 3, text: "Neutral", icon: "☺" },
+        { id: 2, text: "Okay- okay", icon: "☹" },
+        { id: 1, text: "Strongly disagree", icon: "☹" }
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -33,8 +33,8 @@ const AssessmentQuiz = () => {
         if (!selectedOption) return;
 
         // 1. Data Prepare
-        const currentQuestionText = questions[currentIndex].title;
-        const selectedText = options.find(opt => opt.id === selectedOption).text;
+        const currentQuestionText = questions[currentIndex].id;
+        const selectedText = options.find(opt => opt.id === selectedOption).id;
         
         // 2. Local Storage Logic
         const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];

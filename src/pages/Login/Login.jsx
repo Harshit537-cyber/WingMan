@@ -96,10 +96,8 @@ const handleGoogleLogin = async (e) => {
     const user = result.user;
     const email = user.email;
 
-    // 🔥 Call your existing login API directly
-    const res = await axiosInstance.post("/user/login", {
-      email,
-    });
+    // 🔐 Backend login
+    const res = await axiosInstance.post("/user/login", { email });
 
     if (!res.data.success) {
       alert("User not registered. Please sign up first.");
@@ -109,29 +107,37 @@ const handleGoogleLogin = async (e) => {
 
     const loggedInUser = res.data.user;
 
-    // ✅ Save token + user
+    // ✅ Save auth data
     localStorage.setItem("token", res.data.token);
     localStorage.setItem("user", JSON.stringify(loggedInUser));
     localStorage.setItem("userId", loggedInUser._id);
 
-    // 🔥 FCM token
-    const fcmToken = await getFCMToken();
+    // 🔥 FCM TOKEN (multi-device safe)
+    try {
+      const fcmToken = await getFCMToken();
 
-    if (fcmToken) {
-      localStorage.setItem("fcmToken", fcmToken);
+      if (fcmToken) {
+        console.log("🔥 FCM Token:", fcmToken);
 
-      try {
-        await saveFCMTokenAPI(loggedInUser._id, fcmToken);
-      } catch {
-        console.log("❌ Token save failed");
+        const oldToken = localStorage.getItem("fcmToken");
+
+        // ✅ Only update if changed
+        if (oldToken !== fcmToken) {
+          await axiosInstance.put(`/update-fcm-token/${res.data.user._id}`, { fcmToken });
+
+          localStorage.setItem("fcmToken", fcmToken);
+        }
       }
+    } catch (err) {
+      console.log("❌ FCM Error:", err.message);
     }
 
+    // ✅ Optional email
     if (user.email) {
       localStorage.setItem("email", user.email);
     }
 
-    // ✅ Call your existing functions
+    // ✅ Load app data
     await fetchUser();
     await fetchRecommendedProfiles();
     await fetchCallRequests();

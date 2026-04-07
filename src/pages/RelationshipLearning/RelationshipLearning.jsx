@@ -23,22 +23,22 @@ const RelationshipLearning = () => {
     const QUIZ_NAME = "Growth, Readiness & Emotional Maturity";
 
     const options = [
-        { id: 'past', text: 'My past relationships', image: pastRelImg },
-        { id: 'family', text: 'Watching family or friends', image: familyImg },
-        { id: 'growth', text: 'Personal growth and self-reflection', image: growthImg },
-        { id: 'media', text: 'Movies, books, or social media', image: mediaImg }
+        { id: 1, text: 'My past relationships', image: pastRelImg },
+        { id: 2, text: 'Watching family or friends', image: familyImg },
+        { id: 3, text: 'Personal growth and self-reflection', image: growthImg },
+        { id: 4, text: 'Movies, books, or social media', image: mediaImg }
     ];
 
     const handleSubmit = async () => {
         if (!selectedOption) return;
         setLoading(true);
 
-        const selectedText = options.find(opt => opt.id === selectedOption).text;
+        const selectedText = options.find(opt => opt.id === selectedOption).id;
         const currentQuestion = "I’ve learned the most about relationships from...";
         const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
 
         let quizIndex = progress.findIndex(q => q.quizName === QUIZ_NAME);
-        const finalAnswer = { question: currentQuestion, selectedOption: selectedText };
+        const finalAnswer = { question: 25, selectedOption: selectedText };
 
         if (quizIndex !== -1) {
             // Check to avoid duplicates if user goes back and forth

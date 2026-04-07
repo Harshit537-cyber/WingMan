@@ -10,28 +10,28 @@ const AttachmentQuiz = () => {
   // Multi-question data array
   const questions = [
     {
-      id: 1,
+      id: 11,
       title:
         "I sometimes worry that my partner might lose interest or drift away.",
     },
     {
-      id: 2,
+      id: 12,
       title:
         "I love emotional closeness, but too much of it can make me want space.",
     },
     {
-      id: 2,
+      id: 13,
       title:
         "Even with someone I trust, I sometimes hold back my true feelings.",
     },
   ];
 
   const options = [
-    { id: "sa", text: "Strongly agree", icon: "☻" },
-    { id: "swa", text: "Somewhat agree", icon: "☺" },
-    { id: "n", text: "Neutral", icon: "☺" },
-    { id: "oo", text: "Okay- okay", icon: "☹" },
-    { id: "sd", text: "Strongly disagree", icon: "☹" },
+    { id: 1, text: "Strongly agree", icon: "☻" },
+    { id: 2, text: "Somewhat agree", icon: "☺" },
+    { id: 3, text: "Neutral", icon: "☺" },
+    { id: 4, text: "Okay- okay", icon: "☹" },
+    { id: 5, text: "Strongly disagree", icon: "☹" },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -46,8 +46,8 @@ const AttachmentQuiz = () => {
     if (!selectedOption) return;
 
     // 1. Current Question aur selected Text nikal lo
-    const currentQuestionText = questions[currentIndex].title;
-    const selectedText = options.find(opt => opt.id === selectedOption).text;
+    const currentQuestionText = questions[currentIndex].id;
+    const selectedText = options.find(opt => opt.id === selectedOption).id;
 
     // 2. Local Storage se data fetch karo
     const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];

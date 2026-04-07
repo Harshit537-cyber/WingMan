@@ -29,7 +29,7 @@ const Upset = () => {
         if (!selectedOption) return;
 
         // 1. Data Prepare
-        const selectedText = options.find(opt => opt.id === selectedOption).text;
+        const selectedText = options.find(opt => opt.id === selectedOption).id;
         const currentQuestion = "When I’m upset, I tend to:";
         
         // 2. Local Storage Logic
@@ -53,8 +53,8 @@ const Upset = () => {
         } else {
             // Naya entry create karna
             progress.push({
-                quizName: quizName,
-                answers: [newAnswer]
+                quizName: 6,
+                answers: selectedText
             });
         }
 

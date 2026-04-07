@@ -15,10 +15,10 @@ const GrowthReadiness = () => {
     const [selectedOption, setSelectedOption] = useState(null);
 
     const options = [
-        { id: 'ready', text: 'Ready to build something meaningful', image: buildingImg },
-        { id: 'cautious', text: 'Open but cautious', image: cautionImg },
-        { id: 'exploring', text: 'Still exploring what I really want', image: exploringImg },
-        { id: 'healing', text: 'Healing and taking things slow', image: healingImg }
+        { id: 1, text: 'Ready to build something meaningful', image: buildingImg },
+        { id: 2, text: 'Open but cautious', image: cautionImg },
+        { id: 3, text: 'Still exploring what I really want', image: exploringImg },
+        { id: 4, text: 'Healing and taking things slow', image: healingImg }
     ];
 
     // 🔥 SETTINGS
@@ -29,7 +29,7 @@ const GrowthReadiness = () => {
         if (!selectedOption) return;
 
         // 1. Data Prepare
-        const selectedText = options.find(opt => opt.id === selectedOption).text;
+        const selectedText = options.find(opt => opt.id === selectedOption).id;
         const currentQuestion = "Which best describes how you feel about relationships right now?";
         
         // 2. Local Storage Logic
@@ -38,7 +38,7 @@ const GrowthReadiness = () => {
         let quizIndex = progress.findIndex(q => q.quizName === quizName);
 
         const newAnswer = { 
-            question: currentQuestion, 
+            question: 24, 
             selectedOption: selectedText 
         };
 

@@ -5,7 +5,7 @@ import OnboardingHeader from "../../components/OnboardingHeader/OnboardingHeader
 import StepProgressButton from "../../components/StepProgressButton/StepProgressButton";
 import { saveOnboardingData } from "../../api/onboarding.api"; // ✅ Import API function
 import "./About.css";
-
+import axiosInstance from "../../api/axiosInstance";
 const About = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,88 +31,80 @@ const About = () => {
   };
 
   const handleNext = async () => {
-    // 1. Format lifestyle data
-    const formattedLifestyle = {
-      drink: choices.drink === "Never" ? "no" : "yes",
-      smoke: choices.smoke === "Never" ? "no" : "yes",
-      exercise: choices.exercise === "Never" ? "no" : "weekly",
-    };
-
-    // 2. Combine with previous state (Data from all previous screens)
-    const email = localStorage.getItem("email");
-    const fcmToken = localStorage.getItem("fcmToken");
-
-    const finalPayload = {
-      email: email,
-
-      gender: location.state.gender,
-      name: location.state.name,
-      DOB: location.state.dob,
-      height: location.state.height,
-
-      state: location.state.state,
-      story: location.state.story,
-
-      eat_type: location.state.habits,
-
-      interest: location.state.interests,
-
-      religon: location.state.religion, // match your schema spelling
-
-      qualification_info: location.state.education,
-
-      study_info: {
-        collage: location.state.college,
-        course: location.state.course,
-      },
-
-      work_info: {
-        company: location.state.company,
-        position: location.state.position,
-      },
-
-      location: {
-        address: location.state.location?.address,
-        lat: location.state.location?.coordinates?.lat,
-        lng: location.state.location?.coordinates?.lng,
-      },
-
-      lifestyle: formattedLifestyle,
-
-      isOnboarded: true,
-      fcmToken: fcmToken,
-      phonenumber: location.state.phonenumber,
-    };
-
-    try {
-      setIsLoading(true); // Disable button while saving
-
-      // ✅ 3. Call the API function
-      const response = await saveOnboardingData(finalPayload);
-
-      if (response.status === 200 || response.status === 201) {
-        // ✅ 4. Success: Move to the success screen
-        // Passing finalPayload or response data if needed
-        console.log(response.data);
-        // navigate("/honestysuccess", { state: finalPayload, userId: response.data._id });
-        navigate("/honestysuccess", {
-          state: {
-            ...finalPayload,
-            userId: response.data._id,
-          },
-        });
-      } else {
-        alert("Something went wrong. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error saving data:", error);
-      alert(
-        "Failed to save data. Check your internet connection or try again.",
-      );
-    } finally {
-      setIsLoading(false); // Re-enable button
-    }
+  const formattedLifestyle = {
+    drink: choices.drink === "Never" ? "no" : "yes",
+    smoke: choices.smoke === "Never" ? "no" : "yes",
+    exercise: choices.exercise === "Never" ? "no" : "weekly",
   };
+
+  const email = localStorage.getItem("email");
+  const fcmToken = localStorage.getItem("fcmToken");
+
+  const finalPayload = {
+    email: email,
+    gender: location.state.gender,
+    name: location.state.name,
+    DOB: location.state.dob,
+    height: location.state.height,
+    state: location.state.state,
+    story: location.state.story,
+    eat_type: location.state.habits,
+    interest: location.state.interests,
+    religon: location.state.religion,
+    qualification_info: location.state.education,
+    study_info: {
+      collage: location.state.college,
+      course: location.state.course,
+    },
+    work_info: {
+      company: location.state.company,
+      position: location.state.position,
+    },
+    location: {
+      address: location.state.location?.address,
+      lat: location.state.location?.coordinates?.lat,
+      lng: location.state.location?.coordinates?.lng,
+    },
+    lifestyle: formattedLifestyle,
+    isOnboarded: true,
+    fcmToken: fcmToken,
+    phonenumber: location.state.phonenumber,
+  };
+
+  try {
+    setIsLoading(true);
+
+    const response = await saveOnboardingData(finalPayload);
+
+    if (response.status === 200 || response.status === 201) {
+      const userId = response.data._id;
+
+      // ✅ Fire & forget email API (non-blocking)
+      axiosInstance
+        .post(`/onboarding-email/${userId}`)
+        .catch((err) => {
+          console.log("Email failed (ignored):", err);
+        });
+
+      // ✅ Always navigate (even if email fails)
+      navigate("/honestysuccess", {
+        state: {
+          ...finalPayload,
+          userId: userId,
+        },
+      });
+
+    } else {
+      alert("Something went wrong. Please try again.");
+    }
+
+  } catch (error) {
+    console.error("Error saving data:", error);
+    alert("Failed to save data. Check your internet connection or try again.");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <AppLayout>

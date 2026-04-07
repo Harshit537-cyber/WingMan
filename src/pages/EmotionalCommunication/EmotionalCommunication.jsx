@@ -29,7 +29,7 @@ const EmotionalCommunication = () => {
         if (!selectedOption) return;
 
         // 1. Data Prepare
-        const selectedText = options.find(opt => opt.id === selectedOption).text;
+        const selectedText = options.find(opt => opt.id === selectedOption).id;
         const currentQuestion = "When you care about someone, you usually show it through...";
         
         // 2. Local Storage Logic
@@ -53,8 +53,8 @@ const EmotionalCommunication = () => {
         } else {
             // Safety fallback
             progress.push({
-                quizName: quizName,
-                answers: [newAnswer]
+                quizName: 7,
+                answers: selectedText
             });
         }
 

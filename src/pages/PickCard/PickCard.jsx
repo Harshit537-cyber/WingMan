@@ -24,12 +24,33 @@ const PickCard = () => {
   ];
 
   // 1. Check LocalStorage on Mount
-  useEffect(() => {
-    const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
-    // Hum sirf quiz titles nikal rahe hain jo already store hain
-    const completedNames = progress.map((item) => item.quizName);
-    setCompletedQuizzes(completedNames);
-  }, []);
+ useEffect(() => {
+  const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+
+  // ✅ Get quizNames (valid ones only)
+  const completedNames = progress
+    .filter(item => typeof item.quizName === "string")
+    .map(item => item.quizName);
+
+  // ✅ Extract question IDs
+  const answeredQuestions = progress
+    .filter(item => item.question)
+    .map(item => item.question);
+
+  // ✅ Check Emotional Communication completion (8,9,10)
+  const emotionalQuestions = [8, 9, 10];
+
+  const isEmotionalCompleted = emotionalQuestions.every(q =>
+    answeredQuestions.includes(q)
+  );
+
+  if (isEmotionalCompleted) {
+    completedNames.push("Emotional Communication");
+  }
+
+  setCompletedQuizzes(completedNames);
+
+}, []);
 
   const handleScroll = () => {
     if (scrollRef.current) {
