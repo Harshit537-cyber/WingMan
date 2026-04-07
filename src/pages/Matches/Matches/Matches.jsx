@@ -123,7 +123,7 @@ const Matches = () => {
             ref={scrollRef}
             onScroll={handleScroll}
           >
-            {profilesWithCall.map((profile, index) => {
+            {profiles?.map((profile, index) => {
               // Center card stays straight, side cards tilt away
               let rotateValue = 0;
               let scaleValue = 1;
@@ -167,7 +167,7 @@ const Matches = () => {
 
                     <div className="card-top-ui">
                       <div className="match-badge">
-                        {profile.matchCount * 20}% Compatible
+                        {profile?.score}% Compatible
                       </div>
                       <button
                         className="heart-icon-btn"
@@ -188,7 +188,7 @@ const Matches = () => {
                     <div className="card-bottom-ui">
                       <div className="info-wrap">
                         <h3 className="name-label">
-                          {profile.name}, {profile.age}
+                          {profile?.user2?.name}, {profile.age}
                         </h3>
                         <div className="loc-wrap">
                           <MapPin size={16} fill="#fff" color="#fff" />
