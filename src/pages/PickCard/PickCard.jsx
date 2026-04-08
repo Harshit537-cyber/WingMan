@@ -24,20 +24,45 @@ const PickCard = () => {
   ];
 
   // 1. Check LocalStorage on Mount
- useEffect(() => {
+//  useEffect(() => {
+//   const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+
+//   // ✅ Get quizNames (valid ones only)
+//   const completedNames = progress
+//     .filter(item => typeof item.quizName === "string")
+//     .map(item => item.quizName);
+
+//   // ✅ Extract question IDs
+//   const answeredQuestions = progress
+//     .filter(item => item.question)
+//     .map(item => item.question);
+
+//   // ✅ Check Emotional Communication completion (8,9,10)
+//   const emotionalQuestions = [8, 9, 10];
+
+//   const isEmotionalCompleted = emotionalQuestions.every(q =>
+//     answeredQuestions.includes(q)
+//   );
+
+//   if (isEmotionalCompleted) {
+//     completedNames.push("Emotional Communication");
+//   }
+
+//   setCompletedQuizzes(completedNames);
+
+// }, []);
+
+useEffect(() => {
   const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
 
-  // ✅ Get quizNames (valid ones only)
   const completedNames = progress
     .filter(item => typeof item.quizName === "string")
     .map(item => item.quizName);
 
-  // ✅ Extract question IDs
   const answeredQuestions = progress
     .filter(item => item.question)
     .map(item => item.question);
 
-  // ✅ Check Emotional Communication completion (8,9,10)
   const emotionalQuestions = [8, 9, 10];
 
   const isEmotionalCompleted = emotionalQuestions.every(q =>
@@ -50,7 +75,35 @@ const PickCard = () => {
 
   setCompletedQuizzes(completedNames);
 
+  // ✅ AUTO MOVE TO NEXT INCOMPLETE CARD
+  const nextIndex = cardsData.findIndex(
+    card => !completedNames.includes(card.title)
+  );
+
+  if (nextIndex !== -1) {
+    setActiveCard(nextIndex);
+    setTimeout(() => {
+      scrollToCard(nextIndex);
+    }, 200); // small delay for DOM render
+  }
+
 }, []);
+
+const scrollToCard = (index) => {
+  if (scrollRef.current) {
+    const container = scrollRef.current;
+    const cardElement = container.querySelector(".card-wrapper");
+
+    if (cardElement) {
+      const cardWidth = cardElement.offsetWidth + 15;
+
+      container.scrollTo({
+        left: index * cardWidth,
+        behavior: "smooth",
+      });
+    }
+  }
+};
 
   const handleScroll = () => {
     if (scrollRef.current) {
@@ -68,15 +121,23 @@ const PickCard = () => {
   };
 
   const handleContinue = () => {
-    const selectedCard = cardsData[activeCard];
-    // Agar quiz completed hai toh aage nahi jane dena
-    if (completedQuizzes.includes(selectedCard.title)) {
-      return; 
+  const selectedCard = cardsData[activeCard];
+
+  if (completedQuizzes.includes(selectedCard.title)) {
+    // ✅ move to next instead of doing nothing
+    const nextIndex = activeCard + 1;
+
+    if (nextIndex < cardsData.length) {
+      setActiveCard(nextIndex);
+      scrollToCard(nextIndex);
     }
-    if (selectedCard?.route) {
-      navigate(selectedCard.route);
-    }
-  };
+    return;
+  }
+
+  if (selectedCard?.route) {
+    navigate(selectedCard.route);
+  }
+}
 
   // Check if current active card is completed
   const isCurrentCardCompleted = completedQuizzes.includes(cardsData[activeCard]?.title);
