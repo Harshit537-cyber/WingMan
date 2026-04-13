@@ -19,6 +19,7 @@ export const UserProvider = ({ children }) => {
   console.log(dateaccepted);
   const [requestedDateReq, setRequestedDateReq] = useState([]);
   const [requestedDateSend, setRequestedDateSend] = useState([]);
+  const [profileStatus, setProfileStatus] = useState('')
   const [notification, setNotification] = useState([]);
   const [dateRequest_notifications, setDateRequest_notifications] = useState(
     [],
@@ -47,6 +48,7 @@ export const UserProvider = ({ children }) => {
       setNotification(res?.data?.notifications);
       setDateRequest_notifications(res?.data?.dateRequest_notifications);
       setCallRequest_notifications(res?.data?.callRequest_notifications);
+      setProfileStatus(res?.data?.profileStatus);
     } catch (error) {
       console.error("Fetch user error:", error);
       setUser(null);
@@ -76,6 +78,7 @@ export const UserProvider = ({ children }) => {
         notification,
         dateRequest_notifications,
         callRequest_notifications,
+        profileStatus
       }}
     >
       {children}

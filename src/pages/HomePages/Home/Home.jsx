@@ -8,15 +8,15 @@ import "./Home.css";
 import { useUser } from "../../../context/userinfo";
 import calculateProfileCompletion from "../../../utils/Homefunc";
 import { useNotification } from "../../../context/notification.jsx";
-import { useCallRequests } from '../../../context/callanddate.jsx'
+import { useCallRequests } from "../../../context/callanddate.jsx";
 const Home = () => {
   const navigate = useNavigate();
-  const {fetchCallRequests} = useCallRequests();
+  const { fetchCallRequests } = useCallRequests();
   const [isQuizSubmitted, setIsQuizSubmitted] = useState(false);
   const { unreadCount, notifications, fetchUnReadNotifi } = useNotification();
   console.log("unreadCount : ", unreadCount, notifications);
   const [userData, setUserData] = useState(null);
-  const { user, loading, quiz, fetchUser } = useUser();
+  const { user, loading, quiz, fetchUser, profileStatus } = useUser();
   console.log("quiz : ", quiz);
   console.log(user);
   const completion = calculateProfileCompletion(user);
@@ -74,11 +74,11 @@ const Home = () => {
     // --- TESTING MODE END ---
   }, [navigate]);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchUser();
     fetchUnReadNotifi();
-    fetchCallRequests()
-  },[])
+    fetchCallRequests();
+  }, []);
 
   return (
     <AppLayout>
@@ -90,7 +90,10 @@ const Home = () => {
             <p>Let's find you a date!</p>
           </div>
           <div className="header-icons">
-            <div onClick={()=>navigate('/notifications')} style={{ position: "relative", display: "inline-block" }}>
+            <div
+              onClick={() => navigate("/notifications")}
+              style={{ position: "relative", display: "inline-block" }}
+            >
               <Bell size={26} color="#5a3c6d" />
 
               {unreadCount > 0 && (
@@ -107,7 +110,7 @@ const Home = () => {
                     fontWeight: "bold",
                     minWidth: "18px",
                     textAlign: "center",
-                    cursor:"pointer"
+                    cursor: "pointer",
                   }}
                 >
                   {unreadCount > 99 ? "99+" : unreadCount}
@@ -176,7 +179,16 @@ const Home = () => {
                   </ul>
                   <button
                     className="action-purple-btn"
-                    onClick={() => navigate("/verify-profile")}
+                    // onClick={() => navigate("/verify-profile")}
+                    onClick={() => {
+                      if (profileStatus === "") {
+                        navigate("/verify-profile");
+                      } else if (profileStatus === "submitted") {
+                        navigate("/profile");
+                      } else if (profileStatus === "accepted") {
+                        navigate("/profile");
+                      }
+                    }}
                   >
                     Take Action
                   </button>

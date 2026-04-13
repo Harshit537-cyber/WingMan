@@ -96,13 +96,21 @@ const handleGoogleLogin = async (e) => {
     const user = result.user;
     const email = user.email;
 
-    // 🔐 Backend login
-    const res = await axiosInstance.post("/user/login", { email });
+    let res;
 
-    if (!res.data.success) {
-      alert("User not registered. Please sign up first.");
-      await auth.signOut();
-      return;
+    try {
+      // 🔐 Backend login
+      res = await axiosInstance.post("/user/login", { email });
+    } catch (err) {
+      // ✅ HANDLE 401 HERE
+      if (err.response?.status === 401) {
+        alert("User not registered. Please sign up first.");
+        navigate('/')
+        await auth.signOut();
+        return;
+      } else {
+        throw err;
+      }
     }
 
     const loggedInUser = res.data.user;
@@ -112,18 +120,18 @@ const handleGoogleLogin = async (e) => {
     localStorage.setItem("user", JSON.stringify(loggedInUser));
     localStorage.setItem("userId", loggedInUser._id);
 
-    // 🔥 FCM TOKEN (multi-device safe)
+    // 🔥 FCM TOKEN
     try {
       const fcmToken = await getFCMToken();
 
       if (fcmToken) {
-        console.log("🔥 FCM Token:", fcmToken);
-
         const oldToken = localStorage.getItem("fcmToken");
 
-        // ✅ Only update if changed
         if (oldToken !== fcmToken) {
-          await axiosInstance.put(`/update-fcm-token/${res.data.user._id}`, { fcmToken });
+          await axiosInstance.put(
+            `/update-fcm-token/${loggedInUser._id}`,
+            { fcmToken }
+          );
 
           localStorage.setItem("fcmToken", fcmToken);
         }
@@ -132,12 +140,12 @@ const handleGoogleLogin = async (e) => {
       console.log("❌ FCM Error:", err.message);
     }
 
-    // ✅ Optional email
+    // ✅ Save email
     if (user.email) {
       localStorage.setItem("email", user.email);
     }
 
-    // ✅ Load app data
+    // ✅ Load data
     await fetchUser();
     await fetchRecommendedProfiles();
     await fetchCallRequests();
@@ -151,6 +159,7 @@ const handleGoogleLogin = async (e) => {
 
   } catch (error) {
     console.error("❌ Google Login Error:", error);
+    alert("Something went wrong during login");
   } finally {
     setLoading(false);
   }

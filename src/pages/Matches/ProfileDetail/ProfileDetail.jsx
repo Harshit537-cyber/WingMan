@@ -28,7 +28,7 @@ const ProfileDetail = () => {
 
   const location = useLocation();
   const [userdata, setUserdata] = useState(null);
-  const profile = location.state?.profile || userdata;
+  const profile = location.state?.profile  || userdata;
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [showCallModal, setShowCallModal] = useState(false);

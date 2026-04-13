@@ -238,6 +238,7 @@ const PlanDetails = () => {
                       receiverId,
                     )
                   }
+                  disabled={selectedDateId== null}
                 >
                   Confirm Plan
                 </button>

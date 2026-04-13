@@ -23,13 +23,13 @@ const Matches = () => {
   const [showCallPopup, setShowCallPopup] = useState(false);
   const { profiles, fetchRecommendedProfiles, quizComplete } =
     useRecommendedProfiles();
-  console.log("profile matches : ", profiles);
+  console.log("profile matches : ", profiles, quizComplete);
   const { callrequest } = useUser();
   console.log("call request : ", callrequest);
   const profilesWithCall = profiles.map((profile) => {
     const request = callrequest?.find(
       (value) =>
-        value.receiverId?.toString() === profile._id.toString() &&
+        value.receiverId?.toString() === profile?._id?.toString() &&
         value.status === "accepted",
     );
 
@@ -110,7 +110,7 @@ const Matches = () => {
         </header>
 
         <div className="matches-body-content slide-up">
-          <div className="heading-group">
+          <div className="heading-group ">
             <h2 className="title-day">Your profiles for the day</h2>
             <div className="note-row">
               <Target size={16} color="#1a1a1a" />
@@ -120,108 +120,128 @@ const Matches = () => {
 
           {/* HORIZONTAL CAROUSEL */}
           <div
-            className="cards-carousel-container"
+            className="cards-carousel-container "
             ref={scrollRef}
             onScroll={handleScroll}
           >
-            {quizComplete == true &&
-              profiles?.map((profile, index) => {
-                // Center card stays straight, side cards tilt away
-                let rotateValue = 0;
-                let scaleValue = 1;
-                if (index < activeIndex) {
-                  rotateValue = 6.75;
-                  scaleValue = 0.9;
-                } else if (index > activeIndex) {
-                  rotateValue = -6.75;
-                  scaleValue = 0.9;
-                }
+            {quizComplete &&
+              (profiles?.length > 0 ? (
+                <>
+                {
+                    profiles?.map((profile, index) => {
+                      // Center card stays straight, side cards tilt away
+                      let rotateValue = 0;
+                      let scaleValue = 1;
+                      if (index < activeIndex) {
+                        rotateValue = 6.75;
+                        scaleValue = 0.9;
+                      } else if (index > activeIndex) {
+                        rotateValue = -6.75;
+                        scaleValue = 0.9;
+                      }
 
-                return (
-                  <div
-                    key={profile.id}
-                    className="card-anchor"
-                    onClick={() =>
-                      navigate("/matches/profile-details", {
-                        state: { profile : profile?.userInfo },
-                      })
-                    }
-                    style={{
-                      transform: `rotate(${rotateValue}deg) scale(${scaleValue})`,
-                      zIndex: activeIndex === index ? 10 : 1,
-                    }}
-                  >
-                    <div className="actual-match-card">
-                      {/* <img
+                      return (
+                        <div
+                          key={profile.id}
+                          className="card-anchor"
+                          onClick={() =>
+                            navigate("/matches/profile-details", {
+                              state: { profile: profile?.userInfo },
+                            })
+                          }
+                          style={{
+                            transform: `rotate(${rotateValue}deg) scale(${scaleValue})`,
+                            zIndex: activeIndex === index ? 10 : 1,
+                          }}
+                        >
+                          <div className="actual-match-card">
+                            {/* <img
                       src={matchImg}
                       alt={profile.name}
                       className="match-img-bg"
                     /> */}
-                      <img
-                        src={
-                          profile?.userInfo?.profilephoto ||
-                          "https://i.pravatar.cc/150?img=12"
-                        }
-                        alt="profile"
-                        className="match-img-bg"
-                        onError={(e) => {
-                          e.target.src = "https://i.pravatar.cc/150?img=12";
-                        }}
-                      />
+                            <img
+                              src={
+                                profile?.userInfo?.profilephoto ||
+                                "https://i.pravatar.cc/150?img=12"
+                              }
+                              alt="profile"
+                              className="match-img-bg"
+                              onError={(e) => {
+                                e.target.src =
+                                  "https://i.pravatar.cc/150?img=12";
+                              }}
+                            />
 
-                      <div className="card-top-ui">
-                        <div className="match-badge">
-                          {profile?.score}% Compatible
-                        </div>
-                        <button
-                          className="heart-icon-btn"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleFavorite(profile.id);
-                          }}
-                        >
-                          <Heart
-                            size={24}
-                            strokeWidth={2.5}
-                            color={favorites[profile.id] ? "#612E70" : "#fff"}
-                            fill={favorites[profile.id] ? "#612E70" : "none"}
-                          />
-                        </button>
-                      </div>
+                            <div className="card-top-ui">
+                              <div className="match-badge">
+                                {profile?.score}% Compatible
+                              </div>
+                              <button
+                                className="heart-icon-btn"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  toggleFavorite(profile.id);
+                                }}
+                              >
+                                <Heart
+                                  size={24}
+                                  strokeWidth={2.5}
+                                  color={
+                                    favorites[profile.id] ? "#612E70" : "#fff"
+                                  }
+                                  fill={
+                                    favorites[profile.id] ? "#612E70" : "none"
+                                  }
+                                />
+                              </button>
+                            </div>
 
-                      <div className="card-bottom-ui">
-                        <div className="info-wrap">
-                          <h3 className="name-label">
-                            {profile?.name}, {profile.age}
-                          </h3>
-                          <div className="loc-wrap">
-                            <MapPin size={16} fill="#fff" color="#fff" />
-                            <span>{profile?.userInfo?.state}</span>
+                            <div className="card-bottom-ui">
+                              <div className="info-wrap">
+                                <h3 className="name-label">
+                                  {profile?.name}, {profile.age}
+                                </h3>
+                                <div className="loc-wrap">
+                                  <MapPin size={16} fill="#fff" color="#fff" />
+                                  <span>{profile?.userInfo?.state}</span>
+                                </div>
+                              </div>
+
+                              {profile.call && (
+                                <>
+                                  <button
+                                    className="call-btn-fixed"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setShowCallPopup(true);
+                                    }}
+                                  >
+                                    <Phone
+                                      size={22}
+                                      fill="#5a3c6d"
+                                      color="#5a3c6d"
+                                    />
+                                  </button>
+                                </>
+                              )}
+                            </div>
                           </div>
                         </div>
+                      );
+                    })
+                  }
+                </>
+              ) : (
+                <p style={{ textAlign: "center", marginTop: "20px" }}>
+                  No profile to recommend. Please wait some time.
+                </p>
+              ))}
 
-                        {profile.call && (
-                          <>
-                            <button
-                              className="call-btn-fixed"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setShowCallPopup(true);
-                              }}
-                            >
-                              <Phone size={22} fill="#5a3c6d" color="#5a3c6d" />
-                            </button>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
             {!quizComplete && (
-              <div className="flex justify-center items-center mt-6">
-                <div className="bg-white shadow-lg rounded-2xl p-6 text-center max-w-md w-full ">
-                  <h2 className="text-lg font-semibold text-gray-800 mb-2">
+              <div className="flex my-auto -ml-3 justify-center w-full  pl-8 items-center mt-6">
+                <div className="  rounded-2xl p-3 text-center max-w-xl w-full ">
+                  <h2 className="text-lg font-semibold text-gray-800 mb-0.5">
                     Complete Your Quiz
                   </h2>
 
@@ -232,7 +252,7 @@ const Matches = () => {
 
                   <button
                     onClick={() => navigate("/quiz-world")}
-                    className="bg-violet-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition duration-200"
+                    className="bg-[#5A3C6D] hover:bg-[#5A3C6D] text-white px-5 py-2 rounded-lg transition duration-200"
                   >
                     Start Quiz
                   </button>
