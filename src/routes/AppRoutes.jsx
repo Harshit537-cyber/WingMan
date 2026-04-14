@@ -91,15 +91,19 @@ import AskEmail from '../pages/AskEmail/AskEmail.jsx';
 import Otp  from '../pages/Otpscreen/Otp.jsx';
 import LoginPage from '../pages/Login/Login.jsx';
 import Call from '../pages/Call/Call.jsx';
-
+import ProfileReqSubmitted from '../pages/HomePages/ProfileVerified/ProfileReqSubmitted.jsx';
+import AgoraCall from '../pages/AgoraCall.jsx';
+import { SocketProvider } from '../context/SocketContext.jsx'
 
 
 
 const AppRoutes = () => {
   return (
     <Router>
+       <SocketProvider>
       <Routes>
         {/* Auth & Onboarding */}
+       
          <Route path="/login" element={<LoginPage />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/AskMobileNumber" element={<AskMobileNumber />} />
@@ -172,6 +176,7 @@ const AppRoutes = () => {
         <Route path="/schedule-video-call" element={<ScheduleVideoCall />} />
         <Route path="/schedule-confirmed" element={<ScheduleConfirmed />} />
         <Route path="/verified" element={<ProfileVerified />} />
+        <Route path="/profile-request-sumitted" element={<ProfileReqSubmitted/>} />
         
         {/* Dates Section */}
         <Route path="/dates" element={<Dates />} />
@@ -206,9 +211,11 @@ const AppRoutes = () => {
         <Route path="/date-preferences" element={<DatePreferences />} />
         <Route path="/date-requested" element={<DateRequested />} />
         {/* <Route path="/call" element={<CallScreen />} /> */}
-         <Route path="/call" element={<Call />} />
+         <Route path="/call" element={<AgoraCall/>} />
+       
 
       </Routes>
+       </SocketProvider>
     </Router>
   );
 };

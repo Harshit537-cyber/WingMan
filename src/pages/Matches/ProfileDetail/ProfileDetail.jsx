@@ -42,6 +42,7 @@ const ProfileDetail = () => {
   const isRequestSend = requestedDateSend.some(
     (value) => value.receiverId?.toString() === user._id?.toString(),
   );
+  console.log('profile : ', profile)
 
   useEffect(() => {
     const profilecallId = location?.state?.receverId;
@@ -207,6 +208,7 @@ const ProfileDetail = () => {
                       navigate("/call", {
                         state: {
                           isCaller: true, // 👈 important
+                          userId:profile?._id
                         },
                       })
                     }

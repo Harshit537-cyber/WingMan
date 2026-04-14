@@ -48,7 +48,7 @@ export const UserProvider = ({ children }) => {
       setNotification(res?.data?.notifications);
       setDateRequest_notifications(res?.data?.dateRequest_notifications);
       setCallRequest_notifications(res?.data?.callRequest_notifications);
-      setProfileStatus(res?.data?.profileStatus);
+      setProfileStatus(res?.data?.data?.isprofileVerified);
     } catch (error) {
       console.error("Fetch user error:", error);
       setUser(null);
