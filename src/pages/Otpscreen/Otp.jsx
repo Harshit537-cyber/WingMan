@@ -27,7 +27,7 @@ const Otp = () => {
       const result = await window.confirmationResult.confirm(otp);
       const user = result.user;
 
-      console.log("✅ OTP Verified User:", user);
+   
 
       if (location?.state?.login === "fromLogin") {
         const res = await axiosInstance.post("/user/login-phoneNumber", {

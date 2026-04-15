@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SplashScreen from './components/SplashScreen/SplashScreen';
 import AppRoutes from './routes/AppRoutes'; 
-
+import ProtectedRoute from './pages/ProtectedRoute'
 function App() {
   const [loading, setLoading] = useState(true);
 

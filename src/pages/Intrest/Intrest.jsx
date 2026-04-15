@@ -25,7 +25,7 @@ const Intrest = () => {
       )
     : [];
 });
-  console.log(location.state)
+ 
 
   // Updated list to match the image items
   const interests = [

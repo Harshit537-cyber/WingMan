@@ -6,7 +6,7 @@ import "./ScheduleVideoCall.css";
 const ScheduleVideoCall = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location.state);
+
 
   // Dynamic Data from Previous Screen
   const selectedDate = new Date(location.state?.date).getDate();
@@ -15,13 +15,13 @@ const ScheduleVideoCall = () => {
   const selectedMonth = bookingDate
     ? new Date(bookingDate).toLocaleString("en-US", { month: "long" })
     : "January";
-  console.log(selectedMonth);
+
   const selectedYear = location.state.booking?.year || "2026";
   const selectedTime = location.state?.time;
   const meetLink = location?.state?.meetLink;
-  console.log("selectedTime", selectedTime);
+
   const doc_id = location?.state?.doc_id;
-  console.log('doc _id :', doc_id)
+  
 
   const formatTime = (time) => {
     const [hour, min] = time.split(":");

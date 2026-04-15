@@ -23,7 +23,7 @@ export const RecommendedProfileProvider = ({ children }) => {
       const res = await axiosInstance.get(
         `user-profile-recommendation/${userId}`,
       );
-      console.log(res.data);
+    
 
       setProfiles(res.data.profile || []);
       setQuizComplete(res.data.quizComplete);

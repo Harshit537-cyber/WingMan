@@ -9,7 +9,7 @@ const AskedOutList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const data = location?.state?.data;
-  console.log(data);
+
 
   // Dummy data based on image
   const requests = [

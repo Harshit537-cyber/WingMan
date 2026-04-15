@@ -31,7 +31,7 @@ const ScheduleConfirmed = () => {
         time
 
       })
-      console.log(InterviewConfirm.data)
+  
       if(InterviewConfirm.data.success === true){
         // navigate('/verified')
         setShow(true);

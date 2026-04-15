@@ -23,9 +23,9 @@ const Matches = () => {
   const [showCallPopup, setShowCallPopup] = useState(false);
   const { profiles, fetchRecommendedProfiles, quizComplete } =
     useRecommendedProfiles();
-  console.log("profile matches : ", profiles, quizComplete);
+  
   const { callrequest } = useUser();
-  console.log("call request : ", callrequest);
+
   const profilesWithCall = profiles.map((profile) => {
     const request = callrequest?.find(
       (value) =>
@@ -39,7 +39,7 @@ const Matches = () => {
     };
   });
 
-  console.log("profiles with call : ", profilesWithCall);
+  
 
   const [favorites, setFavorites] = useState({});
   const toggleFavorite = (id) => {

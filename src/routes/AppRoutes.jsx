@@ -94,6 +94,7 @@ import Call from '../pages/Call/Call.jsx';
 import ProfileReqSubmitted from '../pages/HomePages/ProfileVerified/ProfileReqSubmitted.jsx';
 import AgoraCall from '../pages/AgoraCall.jsx';
 import { SocketProvider } from '../context/SocketContext.jsx'
+import ProtectedRoute from '../pages/ProtectedRoute.jsx';
 
 
 
@@ -120,9 +121,29 @@ const AppRoutes = () => {
         <Route path="/hy" element={<SayHy />} />
         <Route path="/birthday" element={<Birthday />} />
         <Route path="/sharingSuccess" element={<SharingSuccess />} />
-
-        {/* <Route path="/hight" element={<AskHight />} /> */}
+         {/* <Route path="/hight" element={<AskHight />} /> */}
         <Route path="/celebration" element={<Celebration />} />
+
+
+          {/* Profile Details & Location */}
+        <Route path="/hight" element={<Hight />} />
+        <Route path="/intrest" element={<Intrest />} />
+        <Route path="/Acesslocation" element={<AccessLocation />} />
+        <Route path="/Native" element={<Native />} />
+        <Route path="/About" element={<About />} />
+        <Route path="/Habit" element={<Habit />} />
+        <Route path="/Story" element={<Story />} />
+        <Route path="/Working" element={<Working />} />
+        <Route path="/Study" element={<Study />} />
+        <Route path="/Work" element={<Work />} />
+        <Route path="/Education" element={<Education />} />
+        <Route path="/Religion" element={<Religion />} />
+        <Route path="/ManualLocation" element={<ManualLocation />} />
+        <Route path="/LocationSuccess" element={<LocationSuccess />} />
+        <Route element={<ProtectedRoute/>}>
+        
+
+       
 
         {/* Quizzes & Selection */}
         <Route path="/quiz-world" element={<QuizPrompt />} />
@@ -153,21 +174,7 @@ const AppRoutes = () => {
         <Route path='/relationship-learning' element={<RelationshipLearning />} />
         <Route path='/view-matches' element={<ViewMatches />} />
 
-        {/* Profile Details & Location */}
-        <Route path="/hight" element={<Hight />} />
-        <Route path="/intrest" element={<Intrest />} />
-        <Route path="/Acesslocation" element={<AccessLocation />} />
-        <Route path="/Native" element={<Native />} />
-        <Route path="/About" element={<About />} />
-        <Route path="/Habit" element={<Habit />} />
-        <Route path="/Story" element={<Story />} />
-        <Route path="/Working" element={<Working />} />
-        <Route path="/Study" element={<Study />} />
-        <Route path="/Work" element={<Work />} />
-        <Route path="/Education" element={<Education />} />
-        <Route path="/Religion" element={<Religion />} />
-        <Route path="/ManualLocation" element={<ManualLocation />} />
-        <Route path="/LocationSuccess" element={<LocationSuccess />} />
+      
 
         {/* Home & Core App Features */}
         <Route path="/home" element={<Home />} />
@@ -213,7 +220,7 @@ const AppRoutes = () => {
         {/* <Route path="/call" element={<CallScreen />} /> */}
          <Route path="/call" element={<AgoraCall/>} />
        
-
+    </Route>
       </Routes>
        </SocketProvider>
     </Router>

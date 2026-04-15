@@ -55,36 +55,36 @@ const Profile = () => {
       icon: <Pencil size={22} />,
       action: () => navigate("/edit-profile"),
     },
-    {
-      id: 2,
-      label: "Invite Friends",
-      icon: <UserPlus size={22} />,
-      action: () => setActiveModal("invite"),
-    },
+    // {
+    //   id: 2,
+    //   label: "Invite Friends",
+    //   icon: <UserPlus size={22} />,
+    //   action: () => setActiveModal("invite"),
+    // },
     {
       id: 3,
       label: "Preferences",
       icon: <Settings2 size={22} />,
       action: () => navigate("/preferences"),
     },
-    {
-      id: 4,
-      label: "Settings",
-      icon: <Settings size={22} />,
-      action: () => navigate("/settings"),
-    },
+    // {
+    //   id: 4,
+    //   label: "Settings",
+    //   icon: <Settings size={22} />,
+    //   action: () => navigate("/settings"),
+    // },
     {
       id: 5,
       label: "Support / Feedback",
       icon: <LifeBuoy size={22} />,
       action: () => navigate("/feedback"),
     },
-    {
-      id: 6,
-      label: "Delete Account",
-      icon: <Trash2 size={22} />,
-      action: () => setActiveModal("delete"),
-    },
+    // {
+    //   id: 6,
+    //   label: "Delete Account",
+    //   icon: <Trash2 size={22} />,
+    //   action: () => setActiveModal("delete"),
+    // },
   ];
 
   const closeModal = () => setActiveModal(null);
@@ -116,6 +116,36 @@ const Profile = () => {
     navigate("/", { replace: true });
   };
 
+
+  useEffect(() => {
+  let timeout;
+
+  const resetTimer = () => {
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+      alert("You will be logged out due to inactivity");
+      handleConfirmLogout(); // logout after 10 min idle
+    }, 10 * 60 * 1000);
+  };
+
+  // Events to track activity
+  window.addEventListener("mousemove", resetTimer);
+  window.addEventListener("keydown", resetTimer);
+  window.addEventListener("click", resetTimer);
+  window.addEventListener("scroll", resetTimer);
+
+  // Start timer initially
+  resetTimer();
+
+  return () => {
+    clearTimeout(timeout);
+    window.removeEventListener("mousemove", resetTimer);
+    window.removeEventListener("keydown", resetTimer);
+    window.removeEventListener("click", resetTimer);
+    window.removeEventListener("scroll", resetTimer);
+  };
+}, []);
   return (
     <AppLayout>
       <div className="profile-main-container">

@@ -17,8 +17,7 @@ export const CallRequestProvider = ({ children }) => {
       const res = await axiosInstance.get(`/call-request/reciever/${userId}`);
 
       setcallRequests(res.data?.data || []);
-      console.log('call and date context called : ',res.data?.data);
-
+   
     } catch (error) {
       console.log(error.response?.data || error.message);
     } finally {

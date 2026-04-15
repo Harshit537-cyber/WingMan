@@ -14,11 +14,10 @@ const Home = () => {
   const { fetchCallRequests } = useCallRequests();
   const [isQuizSubmitted, setIsQuizSubmitted] = useState(false);
   const { unreadCount, notifications, fetchUnReadNotifi } = useNotification();
-  console.log("unreadCount : ", unreadCount, notifications);
+  
   const [userData, setUserData] = useState(null);
   const { user, loading, quiz, fetchUser, profileStatus } = useUser();
-  console.log("quiz : ", quiz);
-  console.log(user);
+ 
   const completion = calculateProfileCompletion(user);
 
   useEffect(() => {

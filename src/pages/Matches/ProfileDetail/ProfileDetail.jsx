@@ -34,15 +34,17 @@ const ProfileDetail = () => {
   const [showCallModal, setShowCallModal] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false); // State for heart fill
   const request = callrequest?.find(
-    (value) => value.receiverId?.toString() === profile?._id?.toString(),
-  );
+  (value) =>
+    value.receiverId?.toString() === profile?._id?.toString() ||
+    value.senderId?.toString() === profile?._id?.toString()
+);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
   const isRequestSend = requestedDateSend.some(
     (value) => value.receiverId?.toString() === user._id?.toString(),
   );
-  console.log('profile : ', profile)
+
 
   useEffect(() => {
     const profilecallId = location?.state?.receverId;
@@ -208,7 +210,9 @@ const ProfileDetail = () => {
                       navigate("/call", {
                         state: {
                           isCaller: true, // 👈 important
-                          userId:profile?._id
+                          userId:profile?._id,
+                          photo:profile?.profilephoto,
+                          name:profile?.name
                         },
                       })
                     }

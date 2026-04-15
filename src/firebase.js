@@ -37,12 +37,12 @@ export const signInWithGoogle = async () => {
     });
 
     const data = await res.data;
-    console.log("dta ", data);
+  
 
     if (!data.exists) {
       // ❌ User not registered → block flow
       // alert("User not registered. Please sign up first.");
-      console.log("✅ User:", user);
+     
       return user;
 
       // Optional: logout from firebase
@@ -73,7 +73,7 @@ export const getFCMToken = async () => {
 
     const permission = await Notification.requestPermission();
     if (permission !== "granted") {
-      console.warn("❌ Notification permission denied.");
+    
       return null;
     }
 
@@ -83,7 +83,7 @@ export const getFCMToken = async () => {
     });
 
     if (token) {
-      console.log("✅ FCM TOKEN:", token);
+    
       return token;
     } else {
       console.warn("❌ No registration token available.");
@@ -115,7 +115,7 @@ export const loginWithGoogle = async ({
     const data = checkRes.data;
 
     if (data.exists) {
-      console.log("✅ User exists, logging in...");
+   
 
       // 🔥 Step 2: Call your existing login API
       const res = await axiosInstance.post("/user/login", {

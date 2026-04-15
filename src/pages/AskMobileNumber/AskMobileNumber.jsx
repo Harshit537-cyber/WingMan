@@ -22,7 +22,7 @@ const AskMobileNumber = () => {
       window.recaptchaVerifier = null;
     }
 
-    console.log("🔧 Creating NEW RecaptchaVerifier");
+
 
     window.recaptchaVerifier = new RecaptchaVerifier(
       auth,
@@ -30,7 +30,7 @@ const AskMobileNumber = () => {
       {
         size: "invisible",
         callback: () => {
-          console.log("✅ Recaptcha verified");
+       
         },
         "expired-callback": () => {
           console.log("⚠️ Recaptcha expired");
@@ -54,7 +54,7 @@ const AskMobileNumber = () => {
 
       window.confirmationResult = confirmationResult;
 
-      console.log("✅ OTP sent successfully");
+     
       return true;
     } catch (error) {
       console.error("❌ OTP error:", error);

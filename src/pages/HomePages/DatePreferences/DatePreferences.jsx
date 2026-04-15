@@ -10,7 +10,7 @@ const DatePreferences = () => {
   const location = useLocation()
   const receiverId = location?.state?.receiverId
   const [active, setActive] = useState(false);
-  console.log('active : ', active);
+ 
   
   
   // States

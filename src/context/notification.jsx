@@ -18,7 +18,7 @@ export const NotificationProvider = ({ children }) => {
 
 
       const res = await axiosInstance.get(`/get-Unread-Notfi/${userId}`);
-      console.log("noti : ", res.data);
+    
 
       setUnreadCount(res?.data?.count || 0);
       setNotifications(res?.data?.notifications || []);
@@ -28,15 +28,15 @@ export const NotificationProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("⏳ Timer started");
+
 
     const timer = setTimeout(() => {
-      console.log("🔥 Timer executed");
+   
       fetchUnReadNotifi();
     }, 5000);
 
     const unsubscribe = onMessage(messaging, (payload) => {
-      console.log("📩 Notification received:", payload);
+    
 
       const newNotification = {
         _id: payload?.data?.notificationId || Date.now(),
