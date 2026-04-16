@@ -107,7 +107,7 @@ const AppRoutes = () => {
        
          <Route path="/login" element={<LoginPage />} />
         <Route path="/" element={<LandingPage />} />
-        <Route path="/AskMobileNumber" element={<AskMobileNumber />} />
+        <Route path="/AskMobileNumber" element={<AskMschedule-confirmedobileNumber />} />
          <Route path="/login-AskMobileNumber" element={<MobileNo />} />
         <Route path="/Otp" element={<Otp />} />
         <Route path="/gmail" element={<AskEmail />} />
