@@ -180,13 +180,13 @@ const Home = () => {
                     className="action-purple-btn"
                     // onClick={() => navigate("/verify-profile")}
                     onClick={() => {
-                      if (profileStatus === "pending") {
+                      // if (profileStatus === "pending") {
                         navigate("/verify-profile");
-                      } else if (profileStatus === "submitted") {
-                        navigate("/profile-request-sumitted");
-                      } else if (profileStatus === "verified") {
-                        navigate("/verified");
-                      }
+                      // } else if (profileStatus === "submitted") {
+                      //   navigate("/profile-request-sumitted");
+                      // } else if (profileStatus === "verified") {
+                      //   navigate("/verified");
+                      // }
                     }}
                   >
                     Take Action

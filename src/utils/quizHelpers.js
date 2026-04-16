@@ -81,8 +81,7 @@ export const handleDynamicSubmit = async (progress, navigate, setLoading) => {
     completedNames.includes(name)
   );
 
-  console.log("✅ Clean Progress:", cleanProgress);
-  console.log("📊 Completed:", completedNames);
+
 
   try {
     if (isAllQuizzesDone) {

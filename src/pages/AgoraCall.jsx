@@ -221,6 +221,7 @@ export default function AgoraCall() {
       setScreen("ringing");
     }
   }, [incomingCall]);
+  
 
   useEffect(() => {
     const onCallReady = ({ token, channelName, appId }) => {

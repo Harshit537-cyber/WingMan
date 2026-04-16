@@ -162,7 +162,10 @@ const Notifications = () => {
                             />
                             <div className="text-side">
                               <h4 className="user-name">
-                                {notif.title == "Interview Schedule 🎉" ? (
+                                {[
+                                  "Interview Schedule 🎉",
+                                  "Profile Update",
+                                ].includes(notif.title) ? (
                                   <>{notif?.title}</>
                                 ) : (
                                   <>{notif?.body?.trim()?.split(" ").pop()}</>
