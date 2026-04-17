@@ -11,15 +11,46 @@
   overflow: hidden;
 }
 
-/* --- HERO ANIMATIONS --- */
+/* --- COMPLETE SCROLL LOGIC --- */
+.detail-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.detail-scroll-area::-webkit-scrollbar {
+  display: none;
+}
+
+.detail-content-padding {
+  padding: 25px 20px;
+}
+
+/* --- HERO SECTION --- */
 .hero-section {
   width: 100%;
   height: 480px;
   position: relative;
   overflow: hidden;
   border-radius: 0 0 40px 40px;
+  flex-shrink: 0;
 }
 
+.hero-img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Heart Fill Animation */
+.heart-pop {
+  animation: heartPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* --- HERO ANIMATIONS --- */
 .animate-zoom {
     animation: zoomEffect 10s ease-in-out infinite alternate;
 }
@@ -28,8 +59,6 @@
     from { transform: scale(1); }
     to { transform: scale(1.1); }
 }
-
-.hero-img { width: 100%; height: 100%; object-fit: cover; }
 
 .pop-in { animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
 .pop-in-delay { animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both; }
@@ -46,10 +75,6 @@
 }
 
 /* --- SCROLL CONTENT ANIMATIONS --- */
-.detail-scroll-content { flex: 1; overflow-y: auto; padding: 25px 20px; scrollbar-width: none; }
-.detail-scroll-content::-webkit-scrollbar { display: none; }
-
-/* Global Slide Up */
 .slide-up {
     opacity: 0;
     animation: slideUp 0.7s ease-out forwards;
@@ -60,7 +85,6 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Staggered Delays */
 .staggered-1 { animation-delay: 0.1s; }
 .staggered-2 { animation-delay: 0.2s; }
 .staggered-3 { animation-delay: 0.3s; }
@@ -100,15 +124,20 @@
     transition: filter 0.4s ease; 
 }
 
-/* --- REST OF THE CSS (STAY UNCHANGED) --- */
+/* UI Elements */
 .top-back-btn {
   position: absolute; top: 50px; left: 20px;
   width: 45px; height: 45px;
   background: rgba(255,255,255,0.4); backdrop-filter: blur(10px);
   border: none; border-radius: 50%;
   display: flex; justify-content: center; align-items: center;
+  z-index: 10;
 }
-.top-fav-heart { position: absolute; top: 50px; right: 20px; background: none; border: none; }
+.top-fav-heart { 
+  position: absolute; top: 50px; right: 20px; 
+  background: none; border: none; z-index: 10;
+  cursor: pointer;
+}
 .hero-compat-badge {
   position: absolute; bottom: 25px; left: 20px;
   background: #fff; padding: 8px 18px; border-radius: 12px;
@@ -145,6 +174,11 @@
   border: none; border-radius: 20px; font-size: 18px; font-weight: 800;
   cursor: pointer;
 }
+
+.request-btn:disabled {
+  background: #886c99;
+  cursor: not-allowed;
+}
 .footer-spacer { height: 110px; }
 .modal-content {
     width: 88%; max-width: 350px;
@@ -158,8 +192,56 @@
 .modal-title { font-size: 26px; font-weight: 800; color: #000; margin: 0; }
 .modal-subtitle { font-size: 15px; color: #333; font-weight: 500; line-height: 1.5; }
 .modal-primary-btn {
-    width: 100%; background: #5a3c6d; color: white; border: none;
-    padding: 16px; border-radius: 18px; font-size: 18px; font-weight: 700;
+    width: 100%;
+    background: #5a3c6d;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 18px;
+    font-size: 18px;
+    font-weight: 700;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* hover effect */
+.modal-primary-btn:hover {
+    background: #4b2f5b;
+}
+
+/* disabled fade effect */
+.modal-primary-btn:disabled {
+    background: #b7a7c2;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 .slide-up-modal { animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; }
+
+.top-fav-heart svg {
+  transition: all 0.3s ease;
+}
+
+
+.loader-container {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #5a3c6d;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #ddd;
+  border-top: 4px solid #5a3c6d;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

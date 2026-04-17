@@ -85,20 +85,31 @@ import ViewMatches from '../pages/ViewMatches/ViewMatches.jsx';
 import Upset from '../pages/Upset/Upset.jsx';
 import HonestySuccess from '../pages/HonestySuccess/HonestySuccess';
 import SharingSuccess from '../pages/SharingSuccess/SharingSuccess.jsx';
-
+import MobileNo from '../pages/Login/MobileNo.jsx';
 import AskMobileNumber from '../pages/AskMobileNumber/AskMobileNumber.jsx';
 import AskEmail from '../pages/AskEmail/AskEmail.jsx';
-
+import Otp  from '../pages/Otpscreen/Otp.jsx';
+import LoginPage from '../pages/Login/Login.jsx';
+import Call from '../pages/Call/Call.jsx';
+import ProfileReqSubmitted from '../pages/HomePages/ProfileVerified/ProfileReqSubmitted.jsx';
+import AgoraCall from '../pages/AgoraCall.jsx';
+import { SocketProvider } from '../context/SocketContext.jsx'
+import ProtectedRoute from '../pages/ProtectedRoute.jsx';
 
 
 
 const AppRoutes = () => {
   return (
     <Router>
+       <SocketProvider>
       <Routes>
         {/* Auth & Onboarding */}
+       
+         <Route path="/login" element={<LoginPage />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/AskMobileNumber" element={<AskMobileNumber />} />
+         <Route path="/login-AskMobileNumber" element={<MobileNo />} />
+        <Route path="/Otp" element={<Otp />} />
         <Route path="/gmail" element={<AskEmail />} />
         <Route path="/preferences" element={<Preferences />} />
         <Route path="/appreciate" element={<Appreciate />} />
@@ -110,9 +121,29 @@ const AppRoutes = () => {
         <Route path="/hy" element={<SayHy />} />
         <Route path="/birthday" element={<Birthday />} />
         <Route path="/sharingSuccess" element={<SharingSuccess />} />
-
-        {/* <Route path="/hight" element={<AskHight />} /> */}
+         {/* <Route path="/hight" element={<AskHight />} /> */}
         <Route path="/celebration" element={<Celebration />} />
+
+
+          {/* Profile Details & Location */}
+        <Route path="/hight" element={<Hight />} />
+        <Route path="/intrest" element={<Intrest />} />
+        <Route path="/Acesslocation" element={<AccessLocation />} />
+        <Route path="/Native" element={<Native />} />
+        <Route path="/About" element={<About />} />
+        <Route path="/Habit" element={<Habit />} />
+        <Route path="/Story" element={<Story />} />
+        <Route path="/Working" element={<Working />} />
+        <Route path="/Study" element={<Study />} />
+        <Route path="/Work" element={<Work />} />
+        <Route path="/Education" element={<Education />} />
+        <Route path="/Religion" element={<Religion />} />
+        <Route path="/ManualLocation" element={<ManualLocation />} />
+        <Route path="/LocationSuccess" element={<LocationSuccess />} />
+        <Route element={<ProtectedRoute/>}>
+        
+
+       
 
         {/* Quizzes & Selection */}
         <Route path="/quiz-world" element={<QuizPrompt />} />
@@ -143,21 +174,7 @@ const AppRoutes = () => {
         <Route path='/relationship-learning' element={<RelationshipLearning />} />
         <Route path='/view-matches' element={<ViewMatches />} />
 
-        {/* Profile Details & Location */}
-        <Route path="/hight" element={<Hight />} />
-        <Route path="/intrest" element={<Intrest />} />
-        <Route path="/Acesslocation" element={<AccessLocation />} />
-        <Route path="/Native" element={<Native />} />
-        <Route path="/About" element={<About />} />
-        <Route path="/Habit" element={<Habit />} />
-        <Route path="/Story" element={<Story />} />
-        <Route path="/Working" element={<Working />} />
-        <Route path="/Study" element={<Study />} />
-        <Route path="/Work" element={<Work />} />
-        <Route path="/Education" element={<Education />} />
-        <Route path="/Religion" element={<Religion />} />
-        <Route path="/ManualLocation" element={<ManualLocation />} />
-        <Route path="/LocationSuccess" element={<LocationSuccess />} />
+      
 
         {/* Home & Core App Features */}
         <Route path="/home" element={<Home />} />
@@ -166,6 +183,7 @@ const AppRoutes = () => {
         <Route path="/schedule-video-call" element={<ScheduleVideoCall />} />
         <Route path="/schedule-confirmed" element={<ScheduleConfirmed />} />
         <Route path="/verified" element={<ProfileVerified />} />
+        <Route path="/profile-request-sumitted" element={<ProfileReqSubmitted/>} />
         
         {/* Dates Section */}
         <Route path="/dates" element={<Dates />} />
@@ -199,9 +217,12 @@ const AppRoutes = () => {
         <Route path="/curate-vibe" element={<VibeSurvey />} />
         <Route path="/date-preferences" element={<DatePreferences />} />
         <Route path="/date-requested" element={<DateRequested />} />
-        <Route path="/call" element={<CallScreen />} />
-
+        {/* <Route path="/call" element={<CallScreen />} /> */}
+         <Route path="/call" element={<AgoraCall/>} />
+       
+    </Route>
       </Routes>
+       </SocketProvider>
     </Router>
   );
 };

@@ -3,7 +3,7 @@
 .onboarding-header-container {
   width: 100%;
   padding-top: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   font-family: 'Outfit', sans-serif;
 }
 
@@ -45,11 +45,12 @@
 }
 
 .header-title {
-  font-size: 30px;
+  font-size: 23px;
   font-weight: 800;
   color: #1a1a1a;
   line-height: 1.2;
   margin: 0;
+  text-align: left;
 }
 
 .header-description {
@@ -78,3 +79,4 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+

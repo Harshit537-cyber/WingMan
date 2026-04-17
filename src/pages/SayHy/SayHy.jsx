@@ -4,14 +4,14 @@ import AppLayout from '../../components/AppLayout/AppLayout';
 import './SayHy.css';
 
 // Images import
-import confettiImg from '../../assets/confetti.png'; 
-import maleImg from '../../assets/male-wingman.png'; 
-import femaleImg from '../../assets/female-wingman.png';
+import confettiImg from '../../assets/Confetti.png'; 
+import maleImg from '../../assets/male-wingman.svg'; 
+import femaleImg from '../../assets/female-wingman.svg';
 
 const SayHy = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
+  
   const name = location.state?.name || "User";
   const gender = location.state?.gender || "female";
 

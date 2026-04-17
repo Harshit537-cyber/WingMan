@@ -1,20 +1,33 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
-// Icons ke naam update kiye hain jo stable hain
-import { 
-  ArrowLeft, Book, Camera, Gamepad2, Music, Plane, 
-  Palette, Gavel, Heart, Utensils, PawPrint, Trophy, Shirt 
+// Updated icons to match the image variety
+import {
+  Book, Camera, Gamepad2, Music, Plane, Palette, Gavel, Heart,
+  Utensils, PawPrint, Trophy, Shirt, Music2, Mic2, Activity,
+  Theater, ShoppingCart, Compass, Leaf, Brush
 } from 'lucide-react';
+import { useUser } from '../../context/userinfo';
+import AppLayout from '../../components/AppLayout/AppLayout';
+import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
 import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
+
 import './Intrest.css';
+import axiosInstance from '../../api/axiosInstance';
 
 const Intrest = () => {
+  const { fetchUser} = useUser()
   const navigate = useNavigate();
   const location = useLocation();
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState(() => {
+  return location.state?.interest
+    ? location.state.interest.map(item =>
+        item.charAt(0).toUpperCase() + item.slice(1)
+      )
+    : [];
+});
+ 
 
-  // Icons list updated
+  // Updated list to match the image items
   const interests = [
     { id: 1, label: 'Reading', icon: <Book size={18} /> },
     { id: 2, label: 'Photography', icon: <Camera size={18} /> },
@@ -22,66 +35,113 @@ const Intrest = () => {
     { id: 4, label: 'Music', icon: <Music size={18} /> },
     { id: 5, label: 'Travel', icon: <Plane size={18} /> },
     { id: 6, label: 'Painting', icon: <Palette size={18} /> },
-    { id: 7, label: 'Politics', icon: <Gavel size={18} /> }, // Scale ki jagah Gavel
+    { id: 7, label: 'Politics', icon: <Gavel size={18} /> },
     { id: 8, label: 'Charity', icon: <Heart size={18} /> },
     { id: 9, label: 'Cooking', icon: <Utensils size={18} /> },
     { id: 10, label: 'Pets', icon: <PawPrint size={18} /> },
-    { id: 11, label: 'Sports', icon: <Trophy size={18} /> }, // Basketball ki jagah Trophy
+    { id: 11, label: 'Sports', icon: <Trophy size={18} /> },
     { id: 12, label: 'Fashion', icon: <Shirt size={18} /> },
+    { id: 13, label: 'Dancing', icon: <Activity size={18} /> },
+    { id: 14, label: 'Singing', icon: <Mic2 size={18} /> },
+    { id: 15, label: 'Yoga', icon: <Activity size={18} /> },
+    { id: 16, label: 'Fitness', icon: <Activity size={18} /> },
+    { id: 17, label: 'Theatre', icon: <Theater size={18} /> },
+    { id: 18, label: 'Shopping', icon: <ShoppingCart size={18} /> },
+    { id: 19, label: 'Adventure', icon: <Compass size={18} /> },
+    { id: 20, label: 'Gardening', icon: <Leaf size={18} /> },
+    { id: 21, label: 'Arts & craft', icon: <Brush size={18} /> },
   ];
 
   const toggleInterest = (label) => {
     if (selected.includes(label)) {
       setSelected(selected.filter(item => item !== label));
     } else {
-      // Limit to 3 only
-      if (selected.length < 3) {
-        setSelected([...selected, label]);
-      }
+      setSelected([...selected, label]);
     }
   };
 
   const handleNext = () => {
-    navigate('/Acesslocation', { 
-      state: { ...location.state, interests: selected } 
-    });
+    // Ensuring we have at least 3 interests selected
+    if (selected.length >= 3) {
+      navigate('/About', {
+        state: {
+          ...location.state,
+          // ✅ Converting to lowercase to match your target JSON example exactly
+          interests: selected.map(item => item.toLowerCase())
+        }
+      });
+    }
   };
 
+
+  const UpdateInterest = async ()=>{
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    const res = await axiosInstance.put(`/update-profile/${user._id}`,{
+      selected
+    })
+    if(res.status === 200){
+      navigate('/edit-profile')
+      fetchUser()
+    }
+  }
+
   return (
-    <div className="interest-container">
-      <div className="header">
-        <button className="back-btn" onClick={() => navigate(-1)}>
-          <ChevronLeft size={28} />
-        </button>
-      </div>
+    <AppLayout>
+      <div className="interest-screen-container">
 
-      <div className="content-wrapper">
-        <h1 className="title slide-in-top">Select Up To 3 Interest</h1>
-        <p className="subtitle fade-in">Tell us what piques your curiosity and passions</p>
-
-        <div className="interests-grid">
-          {interests.map((item, index) => (
-            <div 
-              key={item.id}
-              className={`interest-chip pop-in ${selected.includes(item.label) ? 'selected' : ''}`}
-              onClick={() => toggleInterest(item.label)}
-              style={{ animationDelay: `${index * 0.05}s` }}
-            >
-              <span className="chip-icon">{item.icon}</span>
-              <span className="chip-label">{item.label}</span>
-            </div>
-          ))}
+        {/* Background Animation Graphic */}
+        <div className="bg-line-animation">
+          <svg viewBox="0 0 400 600" fill="none">
+            <path d="M-50,550 C100,500 350,500 350,350 C350,200 100,200 100,350 C100,450 250,500 450,450"
+              stroke="#E2D8E8" strokeWidth="2" strokeDasharray="8 8" />
+          </svg>
         </div>
-      </div>
 
-      {/* Button Step 5 of 20 */}
-      <StepProgressButton 
-        currentStep={5} 
-        totalSteps={20} 
-        disabled={selected.length < 3} 
-        onClick={handleNext} 
-      />
-    </div>
+        <div className="interest-content-wrapper">
+          {/* Centered Header Section */}
+          <div className="centered-header">
+            <OnboardingHeader
+              title="Select Up To 3 Interest"
+              description="Tell us what piques your curiosity and passions"
+            />
+          </div>
+
+          {/* Centered Interests Grid */}
+          <div className="interests-grid slide-up-delay">
+            {interests.map((item, index) => (
+              <div
+                key={item.id}
+                className={`interest-chip ${selected.includes(item.label) ? 'selected' : ''}`}
+                onClick={() => toggleInterest(item.label)}
+                style={{ animationDelay: `${index * 0.03}s` }}
+              >
+                <span className="chip-icon">{item.icon}</span>
+                <span className="chip-label">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer Section */}
+        <div className="interest-footer-action">
+          <div className="footer-wavy-decoration"></div>
+          {
+            location.state.profile_edit ? <>
+            <button onClick={UpdateInterest} className='text-xl px-6 py-1.5 font-semibold rounded-lg border border-[#523461] text-[#523461]'>
+              Update
+            </button>
+            </>: <StepProgressButton
+            currentStep={13}
+            totalSteps={15}
+            disabled={selected.length < 3}
+            onClick={handleNext}
+          />
+          }
+        </div>
+
+      </div>
+    </AppLayout>
   );
 };
 

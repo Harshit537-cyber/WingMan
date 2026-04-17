@@ -1,54 +1,59 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import AppLayout from './../../components/AppLayout/AppLayout.jsx';
 import './QuizPrompt.css';
-import illustrationImg from '../../assets/Frame.png';
+import illustrationImg from '../../assets/Frame.svg'; // Path check kar lena bhai
 
 const QuizPrompt = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="quiz-web-wrapper">
-      <div className="quiz-card-container">
+    <AppLayout>
+      <div className="quiz-screen-container">
         
-        <div className="quiz-illustration-section">
+        {/* Top Illustration Area */}
+        <div className="quiz-img-wrapper">
           <img 
             src={illustrationImg} 
-            alt="Quiz Illustration" 
-            className="main-quiz-img" 
+            alt="Quiz UI Illustration" 
+            className="quiz-hero-vector" 
           />
         </div>
 
-        <div className="quiz-text-section">
-          <h1 className="quiz-title">
+        {/* Text Area */}
+        <div className="quiz-info-section">
+          <h1 className="quiz-main-headline">
             Take our quick quiz to <br /> complete your profile
           </h1>
-          <p className="quiz-subtitle">
+          <p className="quiz-sub-headline">
             Get a great profile in just a few minutes!
           </p>
         </div>
 
-        <div className="quiz-action-section">
-          <button className="quiz-continue-btn" onClick={() => navigate('/next')}>
+        {/* Bottom Button Area */}
+        <div className="quiz-buttons-section">
+          <button className="btn-primary-quiz" onClick={() => navigate('/pick-card')}>
             Continue
           </button>
-          <button className="quiz-later-btn" onClick={() => navigate('/dashboard')}>
+          <button className="btn-secondary-quiz" onClick={() => navigate('/home')}>
             Maybe Later
           </button>
         </div>
 
-        <div className="bottom-curve-pattern">
-          <svg viewBox="0 0 400 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Background Dashed Curve (Perfectly matched to Image) */}
+        <div className="footer-curve-svg">
+          <svg viewBox="0 0 400 150" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
             <path 
-              d="M0 50C100 150 300 0 400 100" 
-              stroke="#D1C4D6" 
-              strokeWidth="2" 
-              strokeDasharray="6 6"
+              d="M-20,40 Q110,180 210,80 T440,120" 
+              stroke="#E2D1E8" 
+              strokeWidth="2.5" 
+              strokeDasharray="8 8"
             />
           </svg>
         </div>
 
       </div>
-    </div>
+    </AppLayout>
   );
 };
 

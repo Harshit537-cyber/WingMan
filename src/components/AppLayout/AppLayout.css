@@ -41,3 +41,44 @@
     box-shadow: none;
   }
 }
+
+/* ===== Root Wrapper ===== */
+.app-viewport-wrapper {
+  width: 100%;
+  min-height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f3f3f3; /* Desktop Background */
+}
+
+/* ===== Main App Container ===== */
+.mobile-container-main {
+  width: 100%;
+  max-width: 420px;
+  height: 100svh;
+  background-color: #FFF9FB; /* Exact Image Background */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+
+  /* Desktop look settings */
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ===== Mobile Devices View ===== */
+@media (max-width: 768px) {
+  .app-viewport-wrapper {
+    align-items: stretch;
+  }
+
+  .mobile-container-main {
+    max-width: 100%;
+    height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}

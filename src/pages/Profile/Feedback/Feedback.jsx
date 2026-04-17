@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { 
-  ChevronLeft, AlignRight, Smile, Frown, Meh, 
-  SmilePlus, Angry, Mail 
-} from 'lucide-react';
-import AppLayout from '../../../components/AppLayout/AppLayout';
-import BottomNav from '../../../components/BottomNav/BottomNav';
-import './Feedback.css';
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  ChevronLeft,
+  AlignRight,
+  Smile,
+  Frown,
+  Meh,
+  SmilePlus,
+  Angry,
+  Mail,
+} from "lucide-react";
+import AppLayout from "../../../components/AppLayout/AppLayout";
+import BottomNav from "../../../components/BottomNav/BottomNav";
+import "./Feedback.css";
+import  { submitFeedback } from '../../../api/feedback'
 const Feedback = () => {
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const [selectedRating, setSelectedRating] = useState(null);
+ 
 
   // Emojis data for feedback
   const ratings = [
@@ -21,10 +29,44 @@ const Feedback = () => {
     { id: 5, icon: <Angry size={32} /> },
   ];
 
+  const ratingMap = {
+    1: "very_good",
+    2: "good",
+    3: "average",
+    4: "bad",
+    5: "very_bad",
+  };
+
+
+ const handleSubmit = async () => {
+  if (!selectedRating) {
+    alert("Please select a rating");
+    return;
+  }
+
+  const payload = {
+    userDataId: JSON.parse(localStorage.getItem("user"))?._id,
+    type: ratingMap[selectedRating],
+    message,
+  };
+
+  console.log("📦 Payload:", payload);
+
+  const res = await submitFeedback(payload);
+
+  if (res?.success) {
+    alert("✅ Feedback submitted successfully");
+    setSelectedRating(null);
+    setMessage("");
+    navigate('/profile')
+  } else {
+    alert(res?.message || "❌ Something went wrong");
+  }
+};
+
   return (
     <AppLayout>
       <div className="feedback-main-container">
-        
         {/* HEADER */}
         <header className="feedback-top-nav">
           <button className="nav-back-circle" onClick={() => navigate(-1)}>
@@ -32,15 +74,16 @@ const Feedback = () => {
           </button>
           <h1 className="feedback-nav-title">Feedback</h1>
           <div className="nav-right-box">
-             <AlignRight size={26} color="#5a3c6d" />
+            <AlignRight size={26} color="#5a3c6d" />
           </div>
         </header>
 
         <div className="feedback-scroll-content slide-up-animation">
-          
           {/* TEXT SECTION */}
           <div className="feedback-header-text">
-            <h1 className="feedback-heading">How's your experience with Wingmann?</h1>
+            <h1 className="feedback-heading">
+              How's your experience with Wingmann?
+            </h1>
             <p className="feedback-subtext">
               You'r genuine feedback will help us to serve you better.
             </p>
@@ -49,9 +92,9 @@ const Feedback = () => {
           {/* REACTION EMOJIS */}
           <div className="reactions-row">
             {ratings.map((rate) => (
-              <div 
-                key={rate.id} 
-                className={`reaction-circle ${selectedRating === rate.id ? 'active' : ''}`}
+              <div
+                key={rate.id}
+                className={`reaction-circle ${selectedRating === rate.id ? "active" : ""}`}
                 onClick={() => setSelectedRating(rate.id)}
               >
                 {rate.icon}
@@ -61,24 +104,26 @@ const Feedback = () => {
 
           {/* MESSAGE BOX */}
           <div className="feedback-input-container">
-            <textarea 
-               className="feedback-textarea" 
-               placeholder="Write Message......"
-               rows="8"
+            <textarea
+              className="feedback-textarea"
+              placeholder="Write Message......"
+              rows="8"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
             ></textarea>
           </div>
 
           {/* CONTACT INFO */}
           <div className="feedback-contact-info">
-             <Mail size={18} color="#666" />
-             <p>Feel free to reach out us <span>hello@wingmann.in</span></p>
+            <Mail size={18} color="#666" />
+            <p>
+              Feel free to reach out us <span>hello@wingmann.in</span>
+            </p>
           </div>
 
           {/* SEND BUTTON */}
-          <div className="feedback-action-box">
-             <button className="feedback-send-btn">
-               Send
-             </button>
+          <div className="feedback-action-box" onClick={handleSubmit}>
+            <button className="feedback-send-btn">Send</button>
           </div>
 
           <div className="footer-spacer"></div>

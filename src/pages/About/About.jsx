@@ -1,102 +1,193 @@
-import React, { useState } from 'react';
-import './About.css';
-
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import AppLayout from "../../components/AppLayout/AppLayout";
+import OnboardingHeader from "../../components/OnboardingHeader/OnboardingHeader";
+import StepProgressButton from "../../components/StepProgressButton/StepProgressButton";
+import { saveOnboardingData } from "../../api/onboarding.api"; // ✅ Import API function
+import "./About.css";
+import axiosInstance from "../../api/axiosInstance";
 const About = () => {
-  // Har question ke liye state banayi hai
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // State for lifestyle choices
   const [choices, setChoices] = useState({
-    drink: 'Regularly',
-    smoke: 'Occasionally',
-    exercise: 'Regularly',
+    drink: "",
+    smoke: "",
+    exercise: "",
   });
 
-  const options = ['Regularly', 'Occasionally', 'Never'];
+  // State to handle API loading status
+  const [isLoading, setIsLoading] = useState(false);
+
+  const options = ["Regularly", "Occasionally", "Never"];
+
+  // Check if all 3 selections are made
+  const isAllSelected =
+    choices.drink !== "" && choices.smoke !== "" && choices.exercise !== "";
 
   const handleSelect = (category, value) => {
     setChoices((prev) => ({ ...prev, [category]: value }));
   };
 
+  const handleNext = async () => {
+  const formattedLifestyle = {
+    drink: choices.drink === "Never" ? "no" : "yes",
+    smoke: choices.smoke === "Never" ? "no" : "yes",
+    exercise: choices.exercise === "Never" ? "no" : "weekly",
+  };
+
+  const email = localStorage.getItem("email");
+  const fcmToken = localStorage.getItem("fcmToken");
+
+  const finalPayload = {
+    email: email,
+    gender: location.state.gender,
+    name: location.state.name,
+    DOB: location.state.dob,
+    height: location.state.height,
+    state: location.state.state,
+    story: location.state.story,
+    eat_type: location.state.habits,
+    interest: location.state.interests,
+    religon: location.state.religion,
+    qualification_info: location.state.education,
+    study_info: {
+      collage: location.state.college,
+      course: location.state.course,
+    },
+    work_info: {
+      company: location.state.company,
+      position: location.state.position,
+    },
+    location: {
+      address: location.state.location?.address,
+      lat: location.state.location?.coordinates?.lat,
+      lng: location.state.location?.coordinates?.lng,
+    },
+    lifestyle: formattedLifestyle,
+    isOnboarded: true,
+    fcmToken: fcmToken,
+    phonenumber: location.state.phonenumber,
+  };
+
+  try {
+    setIsLoading(true);
+
+    const response = await saveOnboardingData(finalPayload);
+
+    if (response.status === 200 || response.status === 201) {
+      const userId = response.data._id;
+      localStorage.setItem("userId", userId);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      // ✅ Fire & forget email API (non-blocking)
+      axiosInstance
+        .post(`/onboarding-email/${userId}`)
+        .catch((err) => {
+          console.log("Email failed (ignored):", err);
+        });
+
+      // ✅ Always navigate (even if email fails)
+      navigate("/honestysuccess", {
+        state: {
+          ...finalPayload,
+          userId: userId,
+        },
+      });
+
+    } else {
+      alert("Something went wrong. Please try again.");
+    }
+
+  } catch (error) {
+    console.error("Error saving data:", error);
+    alert("Failed to save data. Check your internet connection or try again.");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
   return (
-    <div className="lifestyle-screen">
-      {/* Top Status Bar */}
-      <div className="status-bar">
-        
-      </div>
+    <AppLayout>
+      <div className="lifestyle-screen">
+        <div className="native-header-section">
+          <OnboardingHeader
+            title="Let’s talk about lifestyle"
+            description="You can answer honestly — we all have our quirks"
+          />
+        </div>
 
-      {/* Back Button */}
-      <div className="nav-header">
-        <button className="back-btn">⟨</button>
-      </div>
+        <div className="cards-container slide-up-delay">
+          <div className="lifestyle-card">
+            <h2 className="card-question">Do You Drink?</h2>
+            <div className="options-row">
+              {options.map((opt) => (
+                <button
+                  key={opt}
+                  className={`option-pill ${choices.drink === opt ? "active" : ""}`}
+                  onClick={() => handleSelect("drink", opt)}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+          </div>
 
-      {/* Main Heading Section */}
-      <div className="header-text">
-        <h1 className="main-title">Let’s talk about lifestyle</h1>
-        <p className="sub-title">
-          You can answer honestly — we all have our quirks
-        </p>
-      </div>
+          <div className="lifestyle-card">
+            <h2 className="card-question">Do You Smoke?</h2>
+            <div className="options-row">
+              {options.map((opt) => (
+                <button
+                  key={opt}
+                  className={`option-pill ${choices.smoke === opt ? "active" : ""}`}
+                  onClick={() => handleSelect("smoke", opt)}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+          </div>
 
-      {/* Question Cards Container */}
-      <div className="cards-container">
-        {/* Drink Card */}
-        <div className="lifestyle-card">
-          <h2 className="card-question">Do You Drink?</h2>
-          <div className="options-row">
-            {options.map((opt) => (
-              <button
-                key={opt}
-                className={`option-pill ${choices.drink === opt ? 'active' : ''}`}
-                onClick={() => handleSelect('drink', opt)}
-              >
-                {opt}
-              </button>
-            ))}
+          <div className="lifestyle-card">
+            <h2 className="card-question">Do You Excercise?</h2>
+            <div className="options-row">
+              {options.map((opt) => (
+                <button
+                  key={opt}
+                  className={`option-pill ${choices.exercise === opt ? "active" : ""}`}
+                  onClick={() => handleSelect("exercise", opt)}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Smoke Card */}
-        <div className="lifestyle-card">
-          <h2 className="card-question">Do You Smoke?</h2>
-          <div className="options-row">
-            {options.map((opt) => (
-              <button
-                key={opt}
-                className={`option-pill ${choices.smoke === opt ? 'active' : ''}`}
-                onClick={() => handleSelect('smoke', opt)}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Exercise Card (Spelling as per image: Excercise) */}
-        <div className="lifestyle-card">
-          <h2 className="card-question">Do You Excercise?</h2>
-          <div className="options-row">
-            {options.map((opt) => (
-              <button
-                key={opt}
-                className={`option-pill ${choices.exercise === opt ? 'active' : ''}`}
-                onClick={() => handleSelect('exercise', opt)}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
+        <div className="lifestyle-footer-action">
+          <StepProgressButton
+            currentStep={14}
+            totalSteps={15}
+            // Button disabled if selection incomplete OR if API is loading
+            disabled={!isAllSelected || isLoading}
+            onClick={handleNext}
+          />
+          {/* Optional: Show simple loading text */}
+          {isLoading && (
+            <p
+              style={{
+                textAlign: "center",
+                fontSize: "12px",
+                marginTop: "10px",
+              }}
+            >
+              Saving your profile...
+            </p>
+          )}
         </div>
       </div>
-
-      {/* Footer Navigation Button */}
-      <div className="footer-nav">
-        <div className="progress-circle-wrapper">
-          <svg className="svg-progress" viewBox="0 0 100 100">
-            <circle className="circle-bg" cx="50" cy="50" r="45" />
-            <circle className="circle-active" cx="50" cy="50" r="45" />
-          </svg>
-          <button className="next-circle-button">→</button>
-        </div>
-      </div>
-    </div>
+    </AppLayout>
   );
 };
 

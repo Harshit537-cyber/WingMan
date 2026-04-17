@@ -63,7 +63,7 @@
 .figma-notif-card {
   width: 345px;
   min-height: 59px;
-  background-color: #ffffff;
+
   border-radius: 18px;
   padding: 8px 12px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
@@ -117,6 +117,8 @@
   flex-direction: column;
   align-items: flex-end;
   height: 100%;
+  width: 80px;
+ 
 }
 
 .time-text {

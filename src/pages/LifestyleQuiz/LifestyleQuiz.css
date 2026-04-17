@@ -208,3 +208,33 @@
   .opt-main-img { max-height: 85px; }
   .quiz-opt-card { padding: 12px; }
 }
+
+.quiz-screen-container {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: #FFF9FB;
+}
+
+/* Body scrollable */
+.quiz-body-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 20px;
+  scrollbar-width: none;
+}
+.quiz-body-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Footer sticky */
+.quiz-footer-action {
+  padding: 10px 25px 40px;
+  display: flex;
+  justify-content: center;
+  background: #FFF9FB;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}

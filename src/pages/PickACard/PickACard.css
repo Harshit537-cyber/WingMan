@@ -1,26 +1,33 @@
-/* Wrapper and Layout */
-.pick-card-wrapper {
-    width: 100%;
-    height: 100vh;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Inter', sans-serif;
-    overflow: hidden;
-    position: relative;
+/* Puray page ki scrolling lock karne ke liye */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* Screen se bahar scroll nahi hoga */
 }
 
-/* Header */
-.pick-card-header {
-    padding: 20px;
+.main-container-fixed {
+    width: 100%;
+    height: 100vh; /* Mobile browser height fix */
+    height: 100dvh; 
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Header fix height */
+.fixed-header {
+    flex-shrink: 0; /* Isko dabne mat dena */
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    margin-top: 10px;
+    padding-top: 20px;
 }
 
-.back-btn {
+.back-btn-icon {
     position: absolute;
     left: 20px;
     background: none;
@@ -28,134 +35,111 @@
     cursor: pointer;
 }
 
-.header-title {
+.title-text {
     font-size: 18px;
     font-weight: 700;
     color: #1A1A1A;
 }
 
-/* Horizontal Slider */
-.cards-slider-container {
-    flex: 1;
+/* Cards Slider Section - Yeh akela scroll hoga */
+.horizontal-scroll-section {
+    flex: 1; /* Baki bachi hui space ye lega */
     display: flex;
     align-items: center;
     overflow-x: auto;
-    padding: 0 40px;
-    gap: 20px;
+    overflow-y: hidden; /* Vertical scroll bilkul band */
+    padding: 0 10%;
+    gap: 15px;
     scroll-snap-type: x mandatory;
-    scrollbar-width: none; /* Hide scrollbar Firefox */
+    -webkit-overflow-scrolling: touch; /* Smooth mobile scroll */
 }
 
-.cards-slider-container::-webkit-scrollbar {
-    display: none; /* Hide scrollbar Chrome/Safari */
+.horizontal-scroll-section::-webkit-scrollbar {
+    display: none; /* Scrollbar chhupa di */
 }
 
-/* Individual Card */
-.card-item {
+.card-wrapper {
     min-width: 80%;
-    height: 70%;
-    max-height: 500px;
-    background-color: #EEDFF2; /* Light Purple like image 4 */
-    border-radius: 30px;
+    height: 80%; /* Height adjust kari taaki footer ke liye space bache */
+    max-height: 520px;
     scroll-snap-align: center;
     transition: transform 0.3s ease, opacity 0.3s ease;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    justify-content: center;
 }
 
-/* Active card effect */
-.card-item:not(.active) {
+.inactive-card {
     transform: scale(0.9);
-    opacity: 0.6;
+    opacity: 0.5;
 }
 
-.card-inner-content {
-    padding: 40px 20px;
+.card-content-box {
+    width: 100%;
     height: 100%;
+    background-color: #EEDFF2; /* Lavender color */
+    border-radius: 32px;
+    padding: 35px 25px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     text-align: center;
+    box-sizing: border-box;
 }
 
-.card-text-section {
-    margin-bottom: 30px;
-}
-
-.card-title {
-    font-size: 22px;
+.card-heading {
+    font-size: 24px;
     font-weight: 800;
     color: #1A1A1A;
     margin-bottom: 12px;
 }
 
-.card-desc {
-    font-size: 14px;
-    color: #4A4A4A;
-    line-height: 1.5;
-    max-width: 200px;
-    margin: 0 auto;
+.card-subtext {
+    font-size: 15px;
+    color: #333;
+    line-height: 1.4;
 }
 
-/* Image Fit */
-.card-image-wrapper {
+.image-area {
     flex: 1;
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 20px;
 }
 
-.card-main-img {
-    max-width: 90%;
-    max-height: 220px;
+.illustration {
+    max-width: 100%;
+    max-height: 90%;
     object-fit: contain;
 }
 
-/* Footer Button */
-.pick-card-footer {
-    padding: 30px 24px;
+/* Footer fix height */
+.fixed-footer {
+    flex-shrink: 0;
+    padding: 20px 24px 40px;
     display: flex;
     justify-content: center;
+    background: #fff;
 }
 
-.continue-btn {
+.cta-button {
     width: 100%;
     max-width: 350px;
     height: 60px;
-    background-color: #5D326F; /* Deep Purple */
+    background-color: #5D326F;
     color: white;
     border: none;
     border-radius: 20px;
     font-size: 18px;
     font-weight: 700;
     cursor: pointer;
-    transition: 0.3s;
 }
 
-.continue-btn:active {
-    transform: scale(0.98);
-}
-
-/* Responsiveness */
-@media (max-width: 400px) {
-    .card-item {
-        min-width: 85%;
-    }
-    .card-title {
-        font-size: 18px;
-    }
-}
-
-@media (min-width: 768px) {
-    .pick-card-wrapper {
-        max-width: 450px;
+/* For Desktop scaling */
+@media (min-width: 500px) {
+    .main-container-fixed {
+        max-width: 400px;
         margin: 0 auto;
-        border: 1px solid #eee;
-        height: 90vh;
-        border-radius: 30px;
-        margin-top: 5vh;
+        border: 1px solid #FFF8FB;
+        border-radius: 40px;
     }
 }

@@ -1,220 +1,182 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-
-/* --- 1. SCREEN WRAPPER (No Scroll, Perfect Fit) --- */
 .learning-screen-wrapper {
     width: 100%;
-    height: 100vh;
-    height: 100dvh; /* Mobile fix */
-    background-color: #F8F9FA;
+    height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    font-family: 'Inter', sans-serif;
+    background-color: #FFF9FB;
     overflow: hidden;
 }
 
 .learning-container {
     width: 100%;
-    max-width: 430px;
+    max-width: 450px;
     height: 100%;
-    background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    padding: 16px 24px; /* Thodi zyada horizontal padding screenshot jaisi */
+    padding: 30px 24px;
     box-sizing: border-box;
-    position: relative;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
 }
 
-/* --- 2. HEADER --- */
 .learning-header {
-    flex: 0 0 auto;
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: 50px;
-    margin-bottom: 10px;
-    text-align: center;
-    position: relative;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
-.learning-back-btn {
-    position: absolute;
-    left: -8px; /* Alignment fix to left align with text */
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    display: flex;
-    align-items: center;
+.learning-back-btn { background: none; border: none; cursor: pointer; padding: 0; }
+.learning-category-title { font-size: 18px; font-weight: 700; color: #1A1A1A; }
+
+.learning-question-text {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1A1A1A;
+    line-height: 1.25;
+    margin-bottom: 25px;
 }
 
-.learning-category-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: #1a1a1a;
-    width: 80%;
-    line-height: 1.2;
-}
-
-/* --- 3. MAIN CONTENT --- */
 .learning-main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    min-height: 0;
 }
 
-.learning-question-text {
-    flex: 0 0 auto;
-    font-size: 21px; /* Screenshot match */
-    line-height: 1.3;
-    font-weight: 800;
-    color: #000000;
-    margin-bottom: 25px;
-    text-align: left;
-    letter-spacing: -0.5px;
-}
-
-/* --- 4. GRID LAYOUT --- */
 .learning-options-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* 2 Columns */
-    gap: 15px; /* Screenshot match gap */
-    flex: 1; /* Take remaining space */
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    flex: 1;
     min-height: 0;
-    /* Card height limit to make them look like squares/rectangles */
-    max-height: 520px; 
+    padding-bottom: 40px; /* Tick space */
 }
 
-/* --- CARD STYLING (The Core Fix) --- */
+/* Card Styling - No dark background on click */
 .learning-card {
-    border: 2px solid #725188; /* Purple Outline */
-    border-radius: 20px;
-    background-color: #fff;
+    position: relative;
+    background: #ffffff;
+    border: 2px solid #5d326f15;
+    border-radius: 24px;
     padding: 16px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Text Top, Image Bottom */
     cursor: pointer;
-    position: relative;
-    transition: all 0.2s ease;
-    height: 100%; /* Fill grid cell */
-    box-sizing: border-box;
+    transition: all 0.25s ease;
 }
 
 .learning-card.is-selected {
-    border-color: #432C51;
-    border-width: 3px;
-    background-color: #F9F4FA;
-    transform: translateY(-3px);
+    border-color: #5D326F;
+    background-color: #fbf7fd; /* Light background only */
+    transform: translateY(-2px);
 }
 
 .learning-card-label {
     font-size: 14px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #1A1A1A;
+    margin-bottom: 10px;
     line-height: 1.3;
-    margin: 0;
-    text-align: left;
-    z-index: 1;
 }
 
-/* Image Container - Pushes image to bottom */
 .learning-image-holder {
     flex: 1;
     display: flex;
-    align-items: flex-end; /* Bottom align */
-    justify-content: center; /* Center align */
-    margin-top: 10px;
-    width: 100%;
-    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
 }
 
 .learning-illustration {
-    width: 100%;
-    height: auto;
-    max-height: 110px; /* Controls image size perfectly */
+    max-width: 100%;
+    max-height: 110px;
     object-fit: contain;
-    transition: transform 0.3s ease;
-    display: block;
 }
 
-/* --- 5. FOOTER --- */
-.learning-footer {
-    flex: 0 0 auto;
+/* 🔥 TICK DESIGN STYLES */
+.selection-tick-wrapper {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 44px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    justify-content: center;
+    z-index: 10;
+    pointer-events: none;
 }
 
-.learning-fab-container {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.learning-ring-svg {
+.horizontal-line-divider {
     position: absolute;
     width: 100%;
-    height: 100%;
-    transform: rotate(-90deg);
+    height: 2px;
+    background-color: #5D326F;
+    z-index: 1;
 }
 
-.learning-ring-track {
-    fill: none;
-    stroke: #F2EEF4;
-    stroke-width: 4;
-}
-
-.learning-ring-fill {
-    fill: none;
-    stroke: #432C51;
-    stroke-width: 4;
-    stroke-linecap: round;
-    stroke-dasharray: 239;
-    transition: stroke-dashoffset 0.6s ease;
-}
-
-.learning-next-btn {
-    width: 60px;
-    height: 60px;
-    background-color: #432C51;
-    border-radius: 50%;
-    border: none;
+.complex-tick-container {
+    position: relative;
+    width: 44px;
+    height: 44px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    cursor: pointer;
+    justify-content: center;
+    background-color: #FFF9FB;
+    border-radius: 50%;
     z-index: 2;
-    opacity: 0.4;
-    transition: 0.3s ease;
 }
 
-.learning-next-btn.is-ready {
-    opacity: 1;
-    box-shadow: 0 8px 20px rgba(67, 44, 81, 0.25);
+.inner-tick-circle {
+    width: 30px; height: 30px;
+    background-color: #5D326F;
+    border-radius: 50%;
+    display: flex;
+    align-items: center; justify-content: center;
+    z-index: 3;
 }
 
-/* --- RESPONSIVE TWEAKS FOR SMALL PHONES --- */
-@media (max-height: 700px) {
-    .learning-container { padding: 12px 20px; }
-    .learning-header { height: 40px; }
-    .learning-category-title { font-size: 13px; }
-    .learning-question-text { font-size: 18px; margin-bottom: 15px; }
-    
-    .learning-options-grid { gap: 10px; }
-    .learning-card { padding: 12px; border-radius: 16px; }
-    .learning-card-label { font-size: 12px; }
-    
-    /* Small screen image size */
-    .learning-illustration { max-height: 85px; }
+.tick-progress-ring { position: absolute; transform: rotate(-90deg); }
 
-    .learning-fab-container { width: 70px; height: 70px; }
-    .learning-next-btn { width: 50px; height: 50px; }
+.learning-footer { margin-top: auto; padding: 10px 0; display: flex; justify-content: center; }
+
+@media (max-height: 720px) {
+    .learning-question-text { font-size: 20px; margin-bottom: 15px; }
+    .learning-illustration { max-height: 80px; }
+    .learning-card { padding: 12px; }
 }
+
+/* EXIT MODAL STYLES */
+.exit-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999;
+}
+
+.exit-modal-box {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 350px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.modal-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.confirm-btn {
+    background: #5D326F; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer;
+}
+
+.cancel-btn {
+    background: #f0f0f0; color: #333; border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer;
+}
+
+.blur-bg { filter: blur(4px); pointer-events: none; }

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AppLayout from '../../components/AppLayout/AppLayout';
+import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
 import './LifestyleQuiz.css';
 
 // Assets according to your folder structure
@@ -12,6 +14,39 @@ const LifestyleQuiz = () => {
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState(null);
 
+    const CURRENT_STEP = 1;
+    const TOTAL_STEPS = 5;
+
+    const handleNext = () => {
+        if (!selectedOption) return;
+
+        // 1. Pehle selected option ka text nikal lo
+        const selectedText = options.find(opt => opt.id === selectedOption).id;
+
+        // 2. Quiz ka data object banao (Quiz name wahi rakhna jo PickCard mein hai)
+        const quizData = {
+            quizName: "Lifestyle & Value",
+            answers: [
+                {
+                    question: 1,
+                    selectedOption: selectedText
+                }
+            ]
+        };
+
+        // 3. Local storage se purana data nikal kar naya add karo
+        const existingProgress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+
+        // Purane data mein se agar ye quiz pehle se hai toh use hata do (duplicate na ho)
+        const updatedProgress = existingProgress.filter(q => q.quizName !== quizData.quizName);
+        updatedProgress.push(quizData);
+
+        localStorage.setItem("quiz_progress", JSON.stringify(updatedProgress));
+
+        // 4. Agle page par jao
+        navigate('/finance-quiz', { replace: true });
+    };
+
     const options = [
         { id: 1, text: "Relaxing at home", img: relaxingImg },
         { id: 2, text: "Going out, exploring places.", img: goingOutImg },
@@ -20,92 +55,78 @@ const LifestyleQuiz = () => {
     ];
 
     return (
-        <div className="quiz-web-wrapper">
-            <div className="quiz-card-container">
+        <AppLayout>
+            <div className="quiz-web-wrapper">
+                <div className="quiz-card-container">
 
-                <div className="quiz-header-section">
-                    <button className="back-btn-quiz" onClick={() => navigate(-1)}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5D326F" strokeWidth="2.5">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                    </button>
-                    <h2 className="header-title-quiz">Lifestyle And Value</h2>
-                </div>
-
-                <div className="quiz-content-main">
-                    <h1 className="question-text-main">
-                        How do you usually like to spend your weekends?
-                    </h1>
-
-                    <div className="options-grid-layout">
-                        {options.map((opt, index) => (
-                            <div
-                                key={opt.id}
-                                className={`quiz-opt-card ${selectedOption === opt.id ? 'selected' : ''}`}
-                                onClick={() => setSelectedOption(opt.id)}
-                                style={{ animationDelay: `${index * 0.1}s` }}
-                            >
-                                <p className="opt-card-label">{opt.text}</p>
-                                <div className="opt-img-wrapper">
-                                    <img src={opt.img} alt={opt.text} className="opt-main-img" />
-                                </div>            
-                                
-                                {/* 2nd Image Style Tick Implementation */}
-                                {selectedOption === opt.id && (
-                                    <div className="selection-tick-wrapper">
-                                        <div className="horizontal-line-divider"></div>
-                                        <div className="complex-tick-container">
-                                            <svg className="tick-progress-ring" width="44" height="44">
-                                                <circle
-                                                    cx="22" cy="22" r="19"
-                                                    stroke="#5D326F" strokeWidth="2"
-                                                    fill="none"
-                                                    strokeDasharray="120" strokeDashoffset="40"
-                                                    strokeLinecap="round"
-                                                />
-                                            </svg>
-                                            <div className="inner-tick-circle">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4">
-                                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                <div className="quiz-footer-action">
-                    <div className="progress-ring-box">
-                        <svg className="svg-ring" width="80" height="80">
-                            <circle
-                                className="ring-bg"
-                                cx="40" cy="40" r="36"
-                                stroke="#5d326f15" strokeWidth="3" fill="none"
-                            />
-                            <circle
-                                className="ring-bar"
-                                cx="40" cy="40" r="36"
-                                stroke="#5D326F" strokeWidth="3" fill="none"
-                                style={{ strokeDashoffset: selectedOption ? 100 : 226 }}
-                            />
-                        </svg>
-                        <button
-                            className={`nav-next-btn ${selectedOption ? 'ready' : ''}`}
-                            onClick={() => selectedOption && navigate('/next-page')}
-                        >
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
+                    <div className="quiz-header-section">
+                        <button className="back-btn-quiz" onClick={() => navigate(-1)}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5D326F" strokeWidth="2.5">
+                                <polyline points="15 18 9 12 15 6"></polyline>
                             </svg>
                         </button>
+                        <h2 className="header-title-quiz">Lifestyle And Value</h2>
                     </div>
-                </div>
 
+                    <div className="quiz-content-main">
+                        <h1 className="question-text-main">
+                            How do you usually like to spend your weekends?
+                        </h1>
+
+                        <div className="options-grid-layout">
+                            {options.map((opt, index) => (
+                                <div
+                                    key={opt.id}
+                                    className={`quiz-opt-card ${selectedOption === opt.id ? 'selected' : ''}`}
+                                    onClick={() => setSelectedOption(opt.id)}
+                                    style={{ animationDelay: `${index * 0.1}s` }}
+                                >
+                                    <p className="opt-card-label">{opt.text}</p>
+                                    <div className="opt-img-wrapper">
+                                        <img src={opt.img} alt={opt.text} className="opt-main-img" />
+                                    </div>
+
+                                    {/* 2nd Image Style Tick Implementation */}
+                                    {selectedOption === opt.id && (
+                                        <div className="selection-tick-wrapper">
+                                            <div className="horizontal-line-divider"></div>
+                                            <div className="complex-tick-container">
+                                                <svg className="tick-progress-ring" width="44" height="44">
+                                                    <circle
+                                                        cx="22" cy="22" r="19"
+                                                        stroke="#5D326F" strokeWidth="2"
+                                                        fill="none"
+                                                        strokeDasharray="120" strokeDashoffset="40"
+                                                        strokeLinecap="round"
+                                                    />
+                                                </svg>
+                                                <div className="inner-tick-circle">
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="quiz-footer-action">
+                        <div className="step-btn-wrapper">
+                            <StepProgressButton
+                                currentStep={CURRENT_STEP}
+                                totalSteps={TOTAL_STEPS}
+                                disabled={!selectedOption}
+                                onClick={handleNext}
+                            />
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
+        </AppLayout>
     );
 };
 

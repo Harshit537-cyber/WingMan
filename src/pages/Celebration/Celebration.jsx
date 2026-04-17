@@ -1,7 +1,7 @@
 import React from 'react';
 import './Celebration.css';
 import trumpetImg from '../../assets/trumpet.png'; 
-import confettiImg from '../../assets/confetti.png';
+import confettiImg from '../../assets/Confetti.png';
 
 const Celebration = ({ userName = "User" }) => {
   return (

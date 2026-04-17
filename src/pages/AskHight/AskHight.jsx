@@ -6,23 +6,30 @@ import StepProgressButton from '../../components/StepProgressButton/StepProgress
 import './AskHight.css';
 
 // Images Import
-import maleImg from '../../assets/male-hight.png';
-import femaleImg from '../../assets/female-hight.png';
+import maleImg from '../../assets/male-hight.svg';
+import femaleImg from '../../assets/female-hight.svg';
 
 const AskHight = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  
-  const gender = location.state?.gender || 'male'; 
-  const heights = Array.from({ length: 31 }, (_, i) => (7.0 - i * 0.1).toFixed(1));
-  
+
+  const gender = location.state?.gender || 'male';
+  const heights = [];
+
+  for (let ft = 7; ft >= 4; ft--) {
+    for (let inch = 11; inch >= 0; inch--) {
+      heights.push(`${ft}.${inch}`);
+    }
+  }
+
+
   const [selectedHeight, setSelectedHeight] = useState('5.3');
   const scrollRef = useRef(null);
 
   const onScroll = () => {
     if (scrollRef.current) {
       const scrollTop = scrollRef.current.scrollTop;
-      const itemHeight = 40; 
+      const itemHeight = 40;
       const index = Math.round(scrollTop / itemHeight);
       if (heights[index]) {
         setSelectedHeight(heights[index]);
@@ -39,43 +46,56 @@ const AskHight = () => {
 
   const calculateScale = (height) => {
     const val = parseFloat(height);
-    const baseScale = 0.8; 
-    const factor = (val - 4.0) / 3; 
-    return baseScale + (factor * 0.4); 
+    const baseScale = 0.7; // Thoda kam kiya mobile ke liye
+    const factor = (val - 4.0) / 3;
+    return baseScale + (factor * 0.4);
+  };
+
+  const handleNext = () => {
+    // 1. Convert "5.3" string to total inches, then to cm
+    const [ft, inch] = selectedHeight.split('.').map(Number);
+    const totalInches = (ft * 12) + (inch || 0);
+    const heightInCm = Math.round(totalInches * 2.54);
+
+    // 2. Pass the number to the next screen to match your JSON format
+    navigate('/Acesslocation', {
+      state: {
+        ...location.state,
+        height: heightInCm // ✅ This saves it as 160 (number) instead of "5.3"
+      }
+    });
   };
 
   return (
-    <AppLayout> 
+    <AppLayout>
       <div className="hight-screen-container">
-        
-        {/* TOP SECTION: Left Aligned Header */}
+
         <div className="hight-header-section">
-          <OnboardingHeader 
-            title="Now tell me, how tall are you?" 
-            description="How tall are you?"
+          <OnboardingHeader
+            title="Now tell me, how tall are you?"
+            description="I'll use this to calculate your BMI."
           />
         </div>
 
-        {/* MIDDLE SECTION: Vertical Centered Content */}
         <div className="hight-body-content">
           <div className="selector-main-area">
-            
-            {/* Illustration Section */}
+
+            {/* Character Illustration */}
             <div className="illustration-wrapper slide-in-left">
               <div className="character-bg-box">
-                <img 
-                  src={gender === 'male' ? maleImg : femaleImg} 
-                  alt="Character" 
-                  className="character-img" 
-                  style={{ 
+                <img
+                  src={gender === 'male' ? maleImg : femaleImg}
+                  alt="Character"
+                  className="character-img"
+                  style={{
                     transform: `translateX(-50%) scale(${calculateScale(selectedHeight)})`,
-                    transformOrigin: 'bottom center' 
+                    transformOrigin: 'bottom center'
                   }}
                 />
               </div>
             </div>
 
-            {/* Ruler Section */}
+            {/* Ruler Picker */}
             <div className="ruler-wrapper fade-in-right">
               <div className="ruler-scroll" ref={scrollRef} onScroll={onScroll}>
                 <div className="ruler-spacer"></div>
@@ -89,7 +109,7 @@ const AskHight = () => {
               </div>
             </div>
 
-            {/* Display Box */}
+            {/* Height Display Card */}
             <div className="height-display-box bounce-in">
               <span className="unit-label">Inch</span>
               <div className="value-card">
@@ -100,13 +120,12 @@ const AskHight = () => {
           </div>
         </div>
 
-        {/* BOTTOM SECTION: Fixed Footer */}
         <div className="hight-footer-action">
           <div className="footer-wavy-decoration"></div>
-          <StepProgressButton 
-            currentStep={4} 
-            totalSteps={20} 
-            onClick={() => navigate('/Acesslocation', { state: { ...location.state, height: selectedHeight } })} 
+          <StepProgressButton
+            currentStep={4}
+            totalSteps={15}
+            onClick={handleNext}
           />
         </div>
 

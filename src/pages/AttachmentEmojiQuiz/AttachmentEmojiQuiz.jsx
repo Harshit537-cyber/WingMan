@@ -94,6 +94,7 @@ const AttachmentEmojiQuiz = () => {
                         <button 
                             className={`next-fab ${selected ? 'ready' : ''}`}
                             disabled={!selected}
+                            onClick={() => navigate('/completions')}
                         >
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                                 <line x1="5" y1="12" x2="19" y2="12"></line>

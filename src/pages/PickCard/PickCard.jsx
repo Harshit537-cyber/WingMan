@@ -1,83 +1,197 @@
-import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './PickCard.css';
-import cardImg from '../../assets/Group 163041.png';
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./PickCard.css";
+
+// Assets
+import attachmentImg from "../../assets/lifestyle.svg";
+import growthImg from "../../assets/growth.svg";
+import AttachmentImg from "../../assets/bro.svg";
+import emotionalImg from "../../assets/emotional.svg";
+import ConflictImg from "../../assets/Conflict.svg";
 
 const PickCard = () => {
   const navigate = useNavigate();
+  const [activeCard, setActiveCard] = useState(0);
+  const [completedQuizzes, setCompletedQuizzes] = useState([]); // Store completed quiz names
   const scrollRef = useRef(null);
-  const [isDown, setIsDown] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
 
-  const cards = [
-    { id: 1, title: "Lifestyle & Value", subtitle: "Consistency, priorities, family-career balance", image: cardImg },
-    { id: 2, title: "Health & Fitness", subtitle: "Daily routines, diet, and mental well-being", image: cardImg },
-    { id: 3, title: "Travel & Hobbies", subtitle: "Adventure, exploring, and creative passions", image: cardImg }
+  const cardsData = [
+    { id: 1, title: "Lifestyle & Value", description: "Consistency, priorities, family–career balance", img: attachmentImg, route: "/lifestyle-quiz" },
+    { id: 2, title: "Attachment & Comfort Zone", description: "Emotional availability, reassurance, independence, fear of closeness", img: AttachmentImg, route: "/attachment" },
+    { id: 3, title: "Emotional Communication", description: "Responsiveness, vulnerability, expression styles", img: emotionalImg, route: "/upset" },
+    { id: 4, title: "Conflict & Repair Patterns", description: "Handling disagreements, emotional regulation, recovery", img: ConflictImg, route: "/conflict-quiz" },
+    { id: 5, title: "Growth, Readiness & Emotional Maturity", description: "Reflection, accountability, long-term mindset", img: growthImg, route: "/assessment-quiz" },
   ];
 
-  // Mouse Drag Logic
-  const handleMouseDown = (e) => {
-    setIsDown(true);
-    setStartX(e.pageX - scrollRef.current.offsetLeft);
-    setScrollLeft(scrollRef.current.scrollLeft);
+  // 1. Check LocalStorage on Mount
+//  useEffect(() => {
+//   const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+
+//   // ✅ Get quizNames (valid ones only)
+//   const completedNames = progress
+//     .filter(item => typeof item.quizName === "string")
+//     .map(item => item.quizName);
+
+//   // ✅ Extract question IDs
+//   const answeredQuestions = progress
+//     .filter(item => item.question)
+//     .map(item => item.question);
+
+//   // ✅ Check Emotional Communication completion (8,9,10)
+//   const emotionalQuestions = [8, 9, 10];
+
+//   const isEmotionalCompleted = emotionalQuestions.every(q =>
+//     answeredQuestions.includes(q)
+//   );
+
+//   if (isEmotionalCompleted) {
+//     completedNames.push("Emotional Communication");
+//   }
+
+//   setCompletedQuizzes(completedNames);
+
+// }, []);
+
+useEffect(() => {
+  const progress = JSON.parse(localStorage.getItem("quiz_progress")) || [];
+
+  const completedNames = progress
+    .filter(item => typeof item.quizName === "string")
+    .map(item => item.quizName);
+
+  const answeredQuestions = progress
+    .filter(item => item.question)
+    .map(item => item.question);
+
+  const emotionalQuestions = [8, 9, 10];
+
+  const isEmotionalCompleted = emotionalQuestions.every(q =>
+    answeredQuestions.includes(q)
+  );
+
+  if (isEmotionalCompleted) {
+    completedNames.push("Emotional Communication");
+  }
+
+  setCompletedQuizzes(completedNames);
+
+  // ✅ AUTO MOVE TO NEXT INCOMPLETE CARD
+  const nextIndex = cardsData.findIndex(
+    card => !completedNames.includes(card.title)
+  );
+
+  if (nextIndex !== -1) {
+    setActiveCard(nextIndex);
+    setTimeout(() => {
+      scrollToCard(nextIndex);
+    }, 200); // small delay for DOM render
+  }
+
+}, []);
+
+const scrollToCard = (index) => {
+  if (scrollRef.current) {
+    const container = scrollRef.current;
+    const cardElement = container.querySelector(".card-wrapper");
+
+    if (cardElement) {
+      const cardWidth = cardElement.offsetWidth + 15;
+
+      container.scrollTo({
+        left: index * cardWidth,
+        behavior: "smooth",
+      });
+    }
+  }
+};
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const container = scrollRef.current;
+      const scrollLeft = container.scrollLeft;
+      const cardElement = container.querySelector(".card-wrapper");
+      if (cardElement) {
+        const cardWidth = cardElement.offsetWidth + 15;
+        const index = Math.round(scrollLeft / cardWidth);
+        if (index >= 0 && index < cardsData.length) {
+          setActiveCard(index);
+        }
+      }
+    }
   };
 
-  const handleMouseLeave = () => setIsDown(false);
-  const handleMouseUp = () => setIsDown(false);
+  const handleContinue = () => {
+  const selectedCard = cardsData[activeCard];
 
-  const handleMouseMove = (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // Scroll speed
-    scrollRef.current.scrollLeft = scrollLeft - walk;
-  };
+  if (completedQuizzes.includes(selectedCard.title)) {
+    // ✅ move to next instead of doing nothing
+    const nextIndex = activeCard + 1;
+
+    if (nextIndex < cardsData.length) {
+      setActiveCard(nextIndex);
+      scrollToCard(nextIndex);
+    }
+    return;
+  }
+
+  if (selectedCard?.route) {
+    navigate(selectedCard.route);
+  }
+}
+
+  // Check if current active card is completed
+  const isCurrentCardCompleted = completedQuizzes.includes(cardsData[activeCard]?.title);
 
   return (
-    <div className="pick-card-web-container">
-      <div className="pick-card-screen">
-        
-        <div className="pick-card-header">
-          <button className="back-btn" onClick={() => navigate(-1)}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5D326F" strokeWidth="2.5">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </button>
-          <h2 className="header-title">Pick A Card</h2>
-          <div style={{ width: 24 }}></div>
-        </div>
+    <div className="main-container-fixed">
+      <header className="fixed-header">
+        <button className="back-btn-icon" onClick={() => navigate(-1)}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5D326F" strokeWidth="2.5">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <h1 className="title-text">Pick A Card</h1>
+      </header>
 
-        <div className="card-carousel-wrapper">
-          <div 
-            className={`card-carousel ${isDown ? 'active' : ''}`}
-            ref={scrollRef}
-            onMouseDown={handleMouseDown}
-            onMouseLeave={handleMouseLeave}
-            onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
-          >
-            {cards.map((card) => (
-              <div className="card-item" key={card.id}>
-                <div className="card-content">
-                  <h3 className="card-title">{card.title}</h3>
-                  <p className="card-subtitle">{card.subtitle}</p>
-                  <div className="card-illustration">
-                    <img src={card.image} alt={card.title} draggable="false" />
+      <div className="horizontal-scroll-section" ref={scrollRef} onScroll={handleScroll}>
+        {cardsData.map((card, index) => {
+          const isDone = completedQuizzes.includes(card.title);
+          return (
+            <div key={card.id} className={`card-wrapper ${activeCard === index ? "active-card" : "inactive-card"}`}>
+              <div className={`card-content-box ${isDone ? "disabled-card" : ""}`}>
+                
+                {/* 2. Checkmark Icon Logic */}
+                {isDone && (
+                  <div className="completion-badge">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#5D326F">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                    </svg>
                   </div>
+                )}
+
+                <div className="text-area">
+                  <h2 className="card-heading">{card.title}</h2>
+                  <p className="card-subtext">{card.description}</p>
+                </div>
+                <div className="image-area">
+                  <img src={card.img} alt={card.title} className="illustration" />
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="pick-card-footer">
-          <button className="continue-btn" onClick={() => navigate('/next')}>
-            Continue
-          </button>
-        </div>
-
+            </div>
+          );
+        })}
+        <div className="scroll-end-spacer"></div>
       </div>
+
+      <footer className="fixed-footer">
+        <button 
+          className={`cta-button ${isCurrentCardCompleted ? "btn-disabled" : ""}`} 
+          onClick={handleContinue}
+          disabled={isCurrentCardCompleted}
+        >
+          {isCurrentCardCompleted ? "Already Completed" : "Continue"}
+        </button>
+      </footer>
     </div>
   );
 };

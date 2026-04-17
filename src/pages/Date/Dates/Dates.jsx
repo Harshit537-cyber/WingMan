@@ -1,19 +1,30 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Bell, AlignRight, Heart } from 'lucide-react';
-import AppLayout from '../../../components/AppLayout/AppLayout';
-import BottomNav from '../../../components/BottomNav/BottomNav';
-import './Dates.css';
-
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { ChevronLeft, Bell, AlignRight, Heart } from "lucide-react";
+import AppLayout from "../../../components/AppLayout/AppLayout";
+import BottomNav from "../../../components/BottomNav/BottomNav";
+import "./Dates.css";
+import { useUser } from "../../../context/userinfo";
+import { useNotification } from "../../../context/notification.jsx";
 const userImg = "https://randomuser.me/api/portraits/women/44.jpg";
-
+import { useCallRequests } from '../../../context/callanddate.jsx'
 const Dates = () => {
   const navigate = useNavigate();
+  const { requestedDateReq, dateaccepted, fetchUser } = useUser();
+
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const { unreadCount, fetchUnReadNotifi } = useNotification();
+  const {fetchCallRequests} = useCallRequests()
+
+  useEffect(() => {
+    fetchUser();
+    fetchUnReadNotifi();
+    fetchCallRequests();
+  }, []);
 
   return (
     <AppLayout>
       <div className="dates-screen-container">
-        
         {/* --- HEADER --- */}
         <header className="dates-header">
           <button className="back-btn" onClick={() => navigate(-1)}>
@@ -21,53 +32,155 @@ const Dates = () => {
           </button>
           <h1 className="header-title">Dates</h1>
           <div className="header-right-icons">
-             <Bell size={26} color="#5a3c6d" onClick={() => navigate('/notifications')} style={{cursor: 'pointer'}} />
-             <AlignRight size={26} color="#5a3c6d" onClick={() => navigate('/settings')} style={{cursor: 'pointer'}} />
+            <div
+              onClick={() => navigate("/notifications")}
+              style={{ position: "relative", display: "inline-block" }}
+            >
+              <Bell size={26} color="#5a3c6d" />
+
+              {unreadCount > 0 && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "-6px",
+                    right: "-6px",
+                    background: "red",
+                    color: "white",
+                    borderRadius: "50%",
+                    padding: "2px 6px",
+                    fontSize: "10px",
+                    fontWeight: "bold",
+                    minWidth: "18px",
+                    textAlign: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  {unreadCount > 99 ? "99+" : unreadCount}
+                </span>
+              )}
+            </div>
+            <AlignRight
+              size={26}
+              color="#5a3c6d"
+              onClick={() => navigate("/settings")}
+              style={{ cursor: "pointer" }}
+            />
           </div>
         </header>
 
         {/* --- SCROLLABLE CONTENT --- */}
         <div className="dates-content-scroll">
-          
           {/* Card 1: Someone asked you out -> Route to AskedOut page */}
-          <section className="dates-section fade-in" onClick={() => navigate('/asked-out')}>
+          <section className="dates-section fade-in">
             <div className="horizontal-date-card">
               <div className="card-header-row">
                 <div className="title-with-heart">
                   <span>Someone asked you out</span>
                   <Heart size={18} fill="#5a3c6d" color="#5a3c6d" />
                 </div>
-                <span className="count-badge">3</span>
+                <span className="count-badge">
+                  {requestedDateReq.length || ""}
+                </span>
               </div>
-              <div className="avatar-row">
-                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
-                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
-                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
+              <div>
+                <div className="avatar-row">
+                  {requestedDateReq.length > 0 ? (
+                    requestedDateReq?.map((value, index) => (
+                      <div
+                        key={index}
+                        onClick={() =>
+                          navigate("/asked-out", {
+                            state: { data: requestedDateReq },
+                          })
+                        }
+                        className="avatar-circle flex flex-col"
+                      >
+                        <img
+                          src={
+                            value?.senderId?.profilephoto ||
+                            `https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg`
+                          }
+                          alt={value?.senderId?.name}
+                        />
+                        <p>{value?.senderId?.name}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="no-requests-placeholder text-gray-400">
+                      No new date requests
+                    </div>
+                  )}
+                </div>
               </div>
+              {/* <div className="avatar-row">
+                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
+                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
+                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
+              </div> */}
             </div>
           </section>
 
           {/* Grid Section: Planned & Proposed */}
-          <section className="grid-section slide-up">
-            {/* Planned Dates Card */}
-            <div className="vertical-date-card" onClick={() => navigate('/planned-dates')}>
-               <h3>Planned <br /> Dates</h3>
-               <div className="large-avatar">
-                  <img src={userImg} alt="user" />
-               </div>
-            </div>
+          <section className=" slide-up w-full ">
+            <div
+              className="  p-4 rounded-xl"
+              onClick={() =>
+                navigate("/planned-dates", {
+                  state: { date: dateaccepted },
+                })
+              }
+            >
+              <h3 className="font-semibold text-lg">
+                Planned  Dates
+              </h3>
 
-            {/* Proposed Dates Card */}
-            <div className="vertical-date-card" onClick={() => navigate('/proposed-dates')}>
-               <h3>Proposed <br /> dates</h3>
-               <div className="large-avatar">
-                  <img src={userImg} alt="user" />
-               </div>
+              {dateaccepted.length > 0 ? (
+                <div className="grid grid-cols-3 gap-3 mt-3">
+                  {dateaccepted.map((value) => {
+                    const isSender =
+                      value?.senderId?._id?.toString() ===
+                      currentUser?._id?.toString();
+
+                    const otherUser = isSender
+                      ? value?.receiverId
+                      : value?.senderId;
+
+                    return (
+                      <div
+                        key={value._id}
+                        className="flex flex-col items-center"
+                      >
+                        <div className="large-avatar">
+                          <img
+                            src={
+                              otherUser?.profilephoto ||
+                              "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg"
+                            }
+                            alt="user"
+                            className="rounded-full w-16 h-16 object-cover"
+                          />
+                        </div>
+
+                        <p className="text-gray-600 text-sm text-center mt-1">
+                          {otherUser?.name}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="no-requests-placeholder text-gray-400 mt-3">
+                  No planned dates
+                </div>
+              )}
             </div>
           </section>
 
           {/* Card 4: Completed Dates -> Route to Completed page */}
-          <section className="dates-section slide-up delay-1" onClick={() => navigate('/completed-dates')}>
+          {/* <section
+            className="dates-section slide-up delay-1"
+            onClick={() => navigate("/completed-dates")}
+          >
             <div className="horizontal-date-card">
               <div className="card-header-row">
                 <div className="title-with-heart">
@@ -77,12 +190,18 @@ const Dates = () => {
                 <span className="count-badge">3</span>
               </div>
               <div className="avatar-row">
-                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
-                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
-                <div className="avatar-circle"><img src={userImg} alt="user" /></div>
+                <div className="avatar-circle">
+                  <img src={userImg} alt="user" />
+                </div>
+                <div className="avatar-circle">
+                  <img src={userImg} alt="user" />
+                </div>
+                <div className="avatar-circle">
+                  <img src={userImg} alt="user" />
+                </div>
               </div>
             </div>
-          </section>
+          </section> */}
 
           <div className="bottom-spacing"></div>
         </div>

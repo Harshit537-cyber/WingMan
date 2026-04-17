@@ -13,7 +13,7 @@
 
 .quiz-header-section { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
 .back-btn-quiz { background: none; border: none; cursor: pointer; padding: 0; }
-.header-title-quiz { font-size: 18px; font-weight: 700; color: #1A1A1A; }
+.header-title-quiz { font-size: 18px; font-weight: 700; color: #1A1A1A; text-align: center; }
 
 .quiz-content-main { flex: 1; display: flex; flex-direction: column; animation: slideUpContent 0.8s ease-out; }
 .question-text-main { font-size: 24px; font-weight: 800; color: #1A1A1A; line-height: 1.25; margin-bottom: 25px; }
@@ -69,3 +69,4 @@
 
 @media (max-width: 640px) { .quiz-card-container { max-width: 100%; max-height: 100vh; border-radius: 0; } }
 @media (max-height: 720px) { .question-text-main { font-size: 20px; margin-bottom: 15px; } .opt-main-img { max-height: 85px; } .quiz-opt-card { padding: 12px; min-height: 150px;} }
+

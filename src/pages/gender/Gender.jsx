@@ -1,38 +1,56 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AppLayout from '../../components/AppLayout/AppLayout';
-import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
-import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
-import './Gender.css';
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom"; // ✅ Added useLocation
+import AppLayout from "../../components/AppLayout/AppLayout";
+import OnboardingHeader from "../../components/OnboardingHeader/OnboardingHeader";
+import StepProgressButton from "../../components/StepProgressButton/StepProgressButton";
+import "./Gender.css";
 
 const Gender = () => {
   const [selectedGender, setSelectedGender] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation(); // ✅ To catch data if user comes back/forward
 
   const handleNext = () => {
-    if (selectedGender) {
-      navigate('/askName', { state: { gender: selectedGender } });
-    }
+    if (!selectedGender) return;
+
+    // 1. Get existing data from previous screens (if any)
+    const existingData = location.state || {};
+    console.log('exisitg data : ',existingData);
+
+    // 2. Merge current screen data with existing data
+    const updatedData = {
+      ...existingData,
+      gender: selectedGender,
+    };
+
+    // 3. ✅ Pass the accumulated data to the next screen (NO API CALL)
+    navigate("/askName", {
+      state: {
+     ...location.state, 
+    ...updatedData            
+  },
+    });
   };
 
   return (
-    <AppLayout> 
+    <AppLayout>
       <div className="gender-screen-container">
-        
-        {/* TOP SECTION: Header (Back Button + Title) */}
+
+        {/* Header */}
         <div className="gender-header-section">
-          <OnboardingHeader 
-            title="Let’s start by choosing your gender!" 
-            // description="Apna gender select karein" // Agar description ho toh yahan add kar sakte ho
-          />
+          <OnboardingHeader title="Let’s start by choosing your gender!" />
         </div>
 
-        {/* MIDDLE SECTION: Gender Selection (Centered & Non-scrollable) */}
+        {/* Gender Selection */}
         <div className="gender-selection-body">
           <div className="gender-chips-stack">
-            <div 
-              className={`gender-select-card slide-up-1 ${selectedGender === 'male' ? 'is-selected' : ''}`}
-              onClick={() => setSelectedGender('male')}
+
+            {/* Male */}
+            <div
+              className={`gender-select-card slide-up-1 ${
+                selectedGender === "male" ? "is-selected" : ""
+              }`}
+              onClick={() => setSelectedGender("male")}
             >
               <div className="gender-icon-svg">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -43,9 +61,12 @@ const Gender = () => {
               <span className="gender-label-text">Male</span>
             </div>
 
-            <div 
-              className={`gender-select-card slide-up-2 ${selectedGender === 'female' ? 'is-selected' : ''}`}
-              onClick={() => setSelectedGender('female')}
+            {/* Female */}
+            <div
+              className={`gender-select-card slide-up-2 ${
+                selectedGender === "female" ? "is-selected" : ""
+              }`}
+              onClick={() => setSelectedGender("female")}
             >
               <div className="gender-icon-svg">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -55,17 +76,19 @@ const Gender = () => {
               </div>
               <span className="gender-label-text">Female</span>
             </div>
+
           </div>
         </div>
 
-        {/* BOTTOM SECTION: Footer (Fixed at bottom) */}
+        {/* Footer */}
         <div className="gender-footer-action">
           <div className="wavy-bg-decoration"></div>
-          <StepProgressButton 
-            currentStep={1} 
-            totalSteps={20} 
-            disabled={!selectedGender} 
-            onClick={handleNext} 
+
+          <StepProgressButton
+            currentStep={1}
+            totalSteps={15}
+            disabled={!selectedGender}
+            onClick={handleNext}
           />
         </div>
 
