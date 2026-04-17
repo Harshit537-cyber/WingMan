@@ -1043,6 +1043,7 @@ function CallRoom({ callConfig, onLeave, remoteUserName }) {
               style={{
                 width:   "100%",
                 height:  "100%",
+                
                 opacity: remoteUsers.length > 0 ? remoteOpacity : 0,
                 transform: `scale(${remoteUsers.length > 0 ? remoteScale : 1})`,
                 transition: "transform 80ms ease-out, opacity 80ms ease-out",
