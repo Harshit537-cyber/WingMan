@@ -55,36 +55,36 @@ const Profile = () => {
       icon: <Pencil size={22} />,
       action: () => navigate("/edit-profile"),
     },
-    {
-      id: 2,
-      label: "Invite Friends",
-      icon: <UserPlus size={22} />,
-      action: () => setActiveModal("invite"),
-    },
+    // {
+    //   id: 2,
+    //   label: "Invite Friends",
+    //   icon: <UserPlus size={22} />,
+    //   action: () => setActiveModal("invite"),
+    // },
     {
       id: 3,
       label: "Preferences",
       icon: <Settings2 size={22} />,
       action: () => navigate("/preferences"),
     },
-    {
-      id: 4,
-      label: "Settings",
-      icon: <Settings size={22} />,
-      action: () => navigate("/settings"),
-    },
+    // {
+    //   id: 4,
+    //   label: "Settings",
+    //   icon: <Settings size={22} />,
+    //   action: () => navigate("/settings"),
+    // },
     {
       id: 5,
       label: "Support / Feedback",
       icon: <LifeBuoy size={22} />,
       action: () => navigate("/feedback"),
     },
-    {
-      id: 6,
-      label: "Delete Account",
-      icon: <Trash2 size={22} />,
-      action: () => setActiveModal("delete"),
-    },
+    // {
+    //   id: 6,
+    //   label: "Delete Account",
+    //   icon: <Trash2 size={22} />,
+    //   action: () => setActiveModal("delete"),
+    // },
   ];
 
   const closeModal = () => setActiveModal(null);

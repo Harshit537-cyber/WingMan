@@ -114,7 +114,7 @@ const Otp = () => {
           type="text"
           placeholder="Enter 6 digit OTP"
           value={otp}
-          className="border border-gray-200 mx-5.5"
+          className="custom-mobile-field border border-gray-200 mx-5.5"
           onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
           maxLength={6}
           style={{
@@ -132,7 +132,7 @@ const Otp = () => {
             marginTop: 20,
             padding: 12,
             width: "90%",
-            background: otp.length === 6 ? "#5a3c6d" : "#8B6FA8", // faded color
+            background: otp.length === 6 ? "#5B3765" : "#664270", // faded color
             color: "#fff",
             border: "none",
             borderRadius: 8,

@@ -7,6 +7,7 @@ import "./AskMobileNumber.css";
 
 import { auth } from "../../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import axiosInstance from "../../api/axiosInstance";
 
 const AskMobileNumber = () => {
   const location = useLocation();
@@ -89,10 +90,32 @@ const AskMobileNumber = () => {
     setMobile(formatted);
   };
 
+
+  const checkUserExists = async (phoneNumber) => {
+    try {
+      const res = await axiosInstance.post("/user/login-phoneNumber", { phoneNumber });
+  
+      const data = await res.data
+      console.log("✅ User exists check:", data);
+      return data.exists;
+    } catch (err) {
+      console.error("❌ Error checking user:", err);
+      return false;
+    }
+  };
+
   const handleNext = async () => {
     if (mobile.length === 14) {
       setLoading(true);
       const phoneNumber = `+${mobile}`;
+      // ✅ 1. Check DB first
+      const userExists = await checkUserExists(phoneNumber);
+
+      if (userExists) {
+        alert("this mobile number is already registered");
+        setLoading(false);
+        return;
+      }
 
       const success = await sendOTP(phoneNumber);
 

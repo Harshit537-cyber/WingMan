@@ -23,9 +23,9 @@ export const RecommendedProfileProvider = ({ children }) => {
       const res = await axiosInstance.get(
         `user-profile-recommendation/${userId}`,
       );
-      console.log(res.data);
+      console.log('profile Rec : ', res.data);
 
-      setProfiles(res.data.profile || []);
+      setProfiles(res.data.users   || []);
       setQuizComplete(res.data.quizComplete);
     } catch (error) {
       console.error("Error fetching recommended profiles", error);

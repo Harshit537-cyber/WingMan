@@ -18,20 +18,38 @@ const Birthday = () => {
   const [selectedYear, setSelectedYear] = useState('2005');
 
   const handleNext = () => {
-    // 1. Convert month name to number (January -> 01)
     const monthMap = {
       "January": "01", "February": "02", "March": "03", "April": "04", "May": "05", "June": "06",
       "July": "07", "August": "08", "September": "09", "October": "10", "November": "11", "December": "12"
     };
-    
-    // 2. Format as YYYY-MM-DD to match your target JSON key 'dob'
+  
     const formattedDob = `${selectedYear}-${monthMap[selectedMonth]}-${selectedDay}`;
-
-    // 3. Pass everything forward
+  
+    // ✅ Calculate Age
+    const today = new Date();
+    const birthDate = new Date(formattedDob);
+  
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+  
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+  
+    // ❌ Block if under 18
+    if (age < 18) {
+      alert("You must be at least 18 years old to continue");
+      return;
+    }
+  
+    // ✅ Continue if valid
     navigate('/hight', { 
       state: { 
         ...location.state, 
-        dob: formattedDob // ✅ Changed key to 'dob' and format to YYYY-MM-DD
+        dob: formattedDob
       } 
     });
   };

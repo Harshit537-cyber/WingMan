@@ -15,7 +15,7 @@ const Preferences = () => {
   const userId = location?.state?.userId
   const { fetchUser } = useUser();
   console.log(location.state?.photos)
-  
+
 
   // States for Sliders
   const [ageRange, setAgeRange] = useState({ min: 18, max: 50 });
@@ -25,71 +25,71 @@ const Preferences = () => {
   const [religion, setReligion] = useState("Hindu");
   const [ethnicity, setEthnicity] = useState("Tamil Nadu");
   const [language, setLanguage] = useState("Hindi");
-  
-const handleContinue = async () => {
-  setLoading(true);
-  localStorage.setItem('userId', userId);
 
-  try {
-    const heightMinCm = Math.round(heightRange.min * 30.48);
-    const heightMaxCm = Math.round(heightRange.max * 30.48);
+  const handleContinue = async () => {
+    setLoading(true);
+    localStorage.setItem('userId', userId);
 
-    const formData = new FormData();
+    try {
+      const heightMinCm = Math.round(heightRange.min * 30.48);
+      const heightMaxCm = Math.round(heightRange.max * 30.48);
 
-    const existingPhotos = [];
-    const newPhotos = [];
+      const formData = new FormData();
 
-    Object.values(photos).forEach((item) => {
-      if (item instanceof File) {
-        newPhotos.push(item);
-      } else if (typeof item === "string") {
-        existingPhotos.push(item);
-      }
-    });
+      const existingPhotos = [];
+      const newPhotos = [];
 
-    newPhotos.forEach((file) => {
-      formData.append("photos", file);
-    });
+      Object.values(photos).forEach((item) => {
+        if (item instanceof File) {
+          newPhotos.push(item);
+        } else if (typeof item === "string") {
+          existingPhotos.push(item);
+        }
+      });
 
-    formData.append("existingPhotos", JSON.stringify(existingPhotos));
+      newPhotos.forEach((file) => {
+        formData.append("photos", file);
+      });
 
-    const preferences = {
-      age: {
-        min: ageRange.min,
-        max: ageRange.max,
-      },
-      height: {
-        min: heightMinCm,
-        max: heightMaxCm,
-      },
-      religion,
-      ethnicity,
-      spoken_language: [language],
-    };
+      formData.append("existingPhotos", JSON.stringify(existingPhotos));
 
-    formData.append("preferences", JSON.stringify(preferences));
-
-    // ✅ ONLY this API now
-    await axiosInstance.post(
-      `/uploadPhotosAndPreferences/${userId}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      const preferences = {
+        age: {
+          min: ageRange.min,
+          max: ageRange.max,
         },
-      }
-    );
+        height: {
+          min: heightMinCm,
+          max: heightMaxCm,
+        },
+        religion,
+        ethnicity,
+        spoken_language: [language],
+      };
 
-    fetchUser();
-    navigate("/sharingSuccess");
+      formData.append("preferences", JSON.stringify(preferences));
 
-  } catch (error) {
-    console.error("Upload error:", error);
-    alert("Something went wrong");
-  } finally {
-    setLoading(false);
-  }
-};
+      // ✅ ONLY this API now
+      await axiosInstance.post(
+        `/uploadPhotosAndPreferences/${userId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      fetchUser();
+      navigate("/sharingSuccess");
+
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Logic for Slider UI positioning
   const ageMinPercent = ((ageRange.min - 18) / (60 - 18)) * 100;
@@ -257,10 +257,15 @@ const handleContinue = async () => {
                   value={religion}
                   onChange={(e) => setReligion(e.target.value)}
                 >
-                  <option>Hindu</option>
-                  <option>Muslim</option>
-                  <option>Sikh</option>
-                  <option>Christian</option>
+                  <option value="Hinduism">Hinduism</option>
+                  <option value="Islam">Islam</option>
+                  <option value="Sikhism">Sikhism</option>
+                  <option value="Christianity">Christianity</option>
+                  <option value="Jainism">Jainism</option>
+                  <option value="Buddhism">Buddhism</option>
+                  <option value="Judaism">Judaism</option>
+                  <option value="Other">Other</option>
+                  <option value="Prefer not to say">Prefer not to say</option>
                 </select>
                 <span className="pref-arrow">
                   <svg
@@ -284,10 +289,36 @@ const handleContinue = async () => {
                   value={ethnicity}
                   onChange={(e) => setEthnicity(e.target.value)}
                 >
-                  <option>Tamil Nadu</option>
-                  <option>Punjab</option>
-                  <option>Maharashtra</option>
+                  <option value="">Select State</option>
+
+                  <option>Andhra Pradesh</option>
+                  <option>Arunachal Pradesh</option>
+                  <option>Assam</option>
+                  <option>Bihar</option>
+                  <option>Chhattisgarh</option>
+                  <option>Goa</option>
                   <option>Gujarat</option>
+                  <option>Haryana</option>
+                  <option>Himachal Pradesh</option>
+                  <option>Jharkhand</option>
+                  <option>Karnataka</option>
+                  <option>Kerala</option>
+                  <option>Madhya Pradesh</option>
+                  <option>Maharashtra</option>
+                  <option>Manipur</option>
+                  <option>Meghalaya</option>
+                  <option>Mizoram</option>
+                  <option>Nagaland</option>
+                  <option>Odisha</option>
+                  <option>Punjab</option>
+                  <option>Rajasthan</option>
+                  <option>Sikkim</option>
+                  <option>Tamil Nadu</option>
+                  <option>Telangana</option>
+                  <option>Tripura</option>
+                  <option>Uttar Pradesh</option>
+                  <option>Uttarakhand</option>
+                  <option>West Bengal</option>
                 </select>
                 <span className="pref-arrow">
                   <svg
@@ -311,10 +342,23 @@ const handleContinue = async () => {
                   value={language}
                   onChange={(e) => setLanguage(e.target.value)}
                 >
+                  <option value="">Select Language</option>
+
                   <option>Hindi</option>
                   <option>English</option>
                   <option>Tamil</option>
+                  <option>Telugu</option>
+                  <option>Marathi</option>
+                  <option>Gujarati</option>
                   <option>Punjabi</option>
+                  <option>Bengali</option>
+                  <option>Kannada</option>
+                  <option>Malayalam</option>
+                  <option>Odia</option>
+                  <option>Assamese</option>
+                  <option>Urdu</option>
+                  <option>Other</option>
+                  <option>Prefer not to say</option>
                 </select>
                 <span className="pref-arrow">
                   <svg

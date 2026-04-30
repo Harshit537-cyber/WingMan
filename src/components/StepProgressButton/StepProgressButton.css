@@ -9,8 +9,8 @@
 /* Is class ki wajah se pura area dhundhla dikh raha hai */
 .btn-disabled {
     opacity: 0.6; 
-    pointer-events: none;
-    background: transparent !important;
+    /* pointer-events: none;
+    background: transparent !important; */
 }
 
 .outer-card-wrapper {
@@ -20,7 +20,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: transparent !important; /* 🔥 Square box hatane ke liye */
+    background: transparent !important; 
+    /* 🔥 Square box hatane ke liye */
 }
 
 /* Baki styles same rahenge... */
@@ -38,7 +39,7 @@
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: #5B3765;
+    background-color: #664270;
     border: none;
     cursor: pointer;
     display: flex;

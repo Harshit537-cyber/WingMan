@@ -15,11 +15,12 @@ const SharingSuccess = () => {
 
     useEffect(() => {
         // 1. Play Audio Logic
-        const audio = new Audio(successAudio);
-        audio.volume = 0.6; // Adjust volume (0.0 to 1.0)
+        // const audio = new Audio(successAudio);
+        // audio.volume = 0.6; 
+        // Adjust volume (0.0 to 1.0)
         
         // Browsers allow autoplay if user has interacted with the site (which they did by typing their name)
-        audio.play().catch(err => console.log("Playback interaction required", err));
+        // audio.play().catch(err => console.log("Playback interaction required", err));
 
         // 2. Navigation Logic
         const timer = setTimeout(() => {
@@ -27,11 +28,11 @@ const SharingSuccess = () => {
         }, 4000); // Increased slightly so audio can finish
 
         // Cleanup: stop audio if user leaves page early
-        return () => {
-            audio.pause();
-            audio.currentTime = 0;
-            clearTimeout(timer);
-        };
+        // return () => {
+        //     audio.pause();
+        //     audio.currentTime = 0;
+        //     clearTimeout(timer);
+        // };
     }, [navigate, location.state]);
 
     return (

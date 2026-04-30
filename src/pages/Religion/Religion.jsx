@@ -6,7 +6,7 @@ import StepProgressButton from '../../components/StepProgressButton/StepProgress
 import './Religion.css';
 
 const Religion = () => {
-  const [selectedReligion, setSelectedReligion] = useState("Hinduism");
+  const [selectedReligion, setSelectedReligion] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -17,37 +17,50 @@ const Religion = () => {
     "Sikhism",
     "Jainism",
     "Buddhism",
-    "Not Belive",
+    "Judaism",
+    "Other",
+    "Prefer not to say",
+    
+ 
   ];
 
-const handleNext = () => {
+  const handleNext = () => {
     // ✅ No changes needed here, it's already correct.
     // ✅ Carrying forward: gender, name, dob, height, location, state, story, type, [work/study info], education
     // ✅ Adding: religion
-    navigate('/Habit', { 
-      state: { 
-        ...location.state, 
-        religion: selectedReligion 
-      } 
+    navigate('/Habit', {
+      state: {
+        ...location.state,
+        religion: selectedReligion
+      }
+    });
+  };
+
+  const handleSkip = () => {
+    navigate('/Habit', {
+      state: {
+        ...location.state,
+        religion: "Prefer not to say" 
+      }
     });
   };
 
   return (
     <AppLayout>
       <div className="religion-screen-container">
-        
+
         {/* Background Animation Graphics */}
         <div className="bg-line-animation">
           <svg viewBox="0 0 400 600" fill="none" className="dashed-svg">
-            <path d="M-50,550 C100,500 350,500 350,350 C350,200 100,200 100,350 C100,450 250,500 450,450" 
-                  stroke="#E2D8E8" strokeWidth="2" strokeDasharray="8 8" />
+            <path d="M-50,550 C100,500 350,500 350,350 C350,200 100,200 100,350 C100,450 250,500 450,450"
+              stroke="#E2D8E8" strokeWidth="2" strokeDasharray="8 8" />
           </svg>
         </div>
 
         {/* TOP SECTION: Shared Header */}
         <div className="native-header-section">
-          <OnboardingHeader 
-            title="Do you follow any particular religion?" 
+          <OnboardingHeader
+            title="Do you follow any particular religion?"
             description="You can totally skip it if you'd like."
           />
         </div>
@@ -55,7 +68,7 @@ const handleNext = () => {
         {/* MIDDLE SECTION: Selection Area */}
         <div className="religion-body-content">
           <div className="selection-wrapper slide-up-delay">
-            
+
             {/* Display Box */}
             <div className="religion-display-box">
               <span>{selectedReligion || "Select Religion"}</span>
@@ -84,12 +97,18 @@ const handleNext = () => {
 
         <div className="religion-footer-action">
           <div className="footer-wavy-decoration"></div>
-          <StepProgressButton 
-            currentStep={12} 
-            totalSteps={15} 
-            disabled={!selectedReligion} 
-            onClick={handleNext} 
-          />
+          <div className="religion-actions flex-row-reverse  space-x-3.5">
+            <button className="skip-btn" onClick={handleSkip}>
+              Skip for now
+            </button>
+
+            <StepProgressButton
+              currentStep={12}
+              totalSteps={15}
+              disabled={!selectedReligion}
+              onClick={handleNext}
+            />
+          </div>
         </div>
 
       </div>

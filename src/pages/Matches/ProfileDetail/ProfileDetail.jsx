@@ -29,6 +29,7 @@ const ProfileDetail = () => {
   const location = useLocation();
   const [userdata, setUserdata] = useState(null);
   const profile = location.state?.profile  || userdata;
+  console.log('profile ; ', profile)
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [showCallModal, setShowCallModal] = useState(false);
@@ -189,7 +190,7 @@ const ProfileDetail = () => {
               />
             </button>
 
-            <div className="hero-compat-badge slide-right">90% Compatible</div>
+            <div className="hero-compat-badge slide-right">{profile?.score || profile?.matchCount*10  }% Compatible</div>
           </div>
 
           <div className="detail-content-padding">
@@ -223,7 +224,7 @@ const ProfileDetail = () => {
             <div className="info-block slide-up staggered-2">
               <div className="block-header">
                 <h3 className="block-title">Location</h3>
-                <span className="dist-badge">1 km</span>
+                {/* <span className="dist-badge">1 km</span> */}
               </div>
               <p className="block-desc">{profile?.state || "Bihar"}</p>
             </div>
@@ -258,15 +259,25 @@ const ProfileDetail = () => {
             <div className="info-block slide-up staggered-5">
               <h3 className="block-title">Interests</h3>
               <div className="chips-grid">
-                <div className="interest-chip">
+                {/* <div className="interest-chip">
                   <Accessibility size={16} color="#f1c40f" /> Yoga
                 </div>
                 <div className="interest-chip">
                   <Film size={16} /> Film lover
-                </div>
-                <div className="interest-chip">
+                </div> */}
+                {
+                  profile?.interest
+                  ?.map((interest, i) => (
+                    <div key={i} className="interest-chip"> 
+                      {/* {interest === "Yoga" && <Accessibility size={16} color="#f1c40f" />} 
+                      {interest === "Film lover" && <Film size={16} />} 
+                      {interest === "Coffee" && <Coffee size={16} color="#d35400" />}  */}
+                      {interest}
+                    </div>))
+                }
+                {/* <div className="interest-chip">
                   <Coffee size={16} color="#d35400" /> Matcha
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -275,11 +286,11 @@ const ProfileDetail = () => {
               <div className="block-header">
                 <h3 className="block-title">Gallery</h3>
 
-                {profile?.photos?.length > 0 && (
+                {/* {profile?.photos?.length > 0 && (
                   <span className="see-all" onClick={handleGalleryClick}>
                     See all
                   </span>
-                )}
+                )} */}
               </div>
 
               <div className="gallery-grid">

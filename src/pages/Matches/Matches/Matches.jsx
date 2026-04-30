@@ -124,7 +124,7 @@ const Matches = () => {
             ref={scrollRef}
             onScroll={handleScroll}
           >
-            {quizComplete &&
+            {
               (profiles?.length > 0 ? (
                 <>
                 {
@@ -146,7 +146,7 @@ const Matches = () => {
                           className="card-anchor"
                           onClick={() =>
                             navigate("/matches/profile-details", {
-                              state: { profile: profile?.userInfo },
+                              state: { profile: profile?.userInfo || profile },
                             })
                           }
                           style={{
@@ -162,7 +162,7 @@ const Matches = () => {
                     /> */}
                             <img
                               src={
-                                profile?.userInfo?.profilephoto ||
+                                profile?.userInfo?.profilephoto || profile?.profilephoto ||
                                 "https://i.pravatar.cc/150?img=12"
                               }
                               alt="profile"
@@ -175,7 +175,7 @@ const Matches = () => {
 
                             <div className="card-top-ui">
                               <div className="match-badge">
-                                {profile?.score}% Compatible
+                                {profile?.score || profile?.matchCount*10  }% Compatible
                               </div>
                               <button
                                 className="heart-icon-btn"
@@ -204,7 +204,7 @@ const Matches = () => {
                                 </h3>
                                 <div className="loc-wrap">
                                   <MapPin size={16} fill="#fff" color="#fff" />
-                                  <span>{profile?.userInfo?.state}</span>
+                                  <span>{profile?.userInfo?.state || profile?.state}</span>
                                 </div>
                               </div>
 
@@ -238,7 +238,7 @@ const Matches = () => {
                 </p>
               ))}
 
-            {!quizComplete && (
+            {/* {!quizComplete && (
               <div className="flex my-auto -ml-3 justify-center w-full  pl-8 items-center mt-6">
                 <div className="  rounded-2xl p-3 text-center max-w-xl w-full ">
                   <h2 className="text-lg font-semibold text-gray-800 mb-0.5">
@@ -258,7 +258,7 @@ const Matches = () => {
                   </button>
                 </div>
               </div>
-            )}
+            )} */}
             <div className="carousel-end-spacer"></div>
           </div>
         </div>

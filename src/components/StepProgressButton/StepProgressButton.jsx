@@ -12,13 +12,18 @@ const StepProgressButton = ({
 
   const progressPercent = (currentStep / totalSteps) * 100;
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (disabled || hasClicked) return;
 
     setHasClicked(true);
-    onClick();
-  };
 
+    try {
+      await onClick();
+    } finally {
+      setHasClicked(false); // ✅ allow re-click
+      console.log("✅ Button clicked, executing onClick handler");
+    }
+  };
   // 🔥 RESET button when question changes
   useEffect(() => {
     setHasClicked(false);
@@ -37,7 +42,7 @@ const StepProgressButton = ({
   }, [hasClicked, disabled]);
 
   return (
-    <div className={`step-btn-container ${disabled ? "btn-disabled" : ""}`}>
+    <div className={`step-btn-container ${disabled ? "opacity-50" : ""}`}>
       <div className="outer-card-wrapper">
         <svg className="progress-svg" viewBox="0 0 65.45 65.45">
           <circle
