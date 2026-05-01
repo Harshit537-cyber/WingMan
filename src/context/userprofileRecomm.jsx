@@ -25,7 +25,7 @@ export const RecommendedProfileProvider = ({ children }) => {
       );
       console.log('profile Rec : ', res.data);
 
-      setProfiles(res.data.users   || []);
+      setProfiles(res.data.profile   || []);
       setQuizComplete(res.data.quizComplete);
     } catch (error) {
       console.error("Error fetching recommended profiles", error);
