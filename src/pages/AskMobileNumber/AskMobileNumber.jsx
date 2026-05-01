@@ -23,7 +23,7 @@ const AskMobileNumber = () => {
       window.recaptchaVerifier = null;
     }
 
-    console.log("🔧 Creating NEW RecaptchaVerifier");
+  
 
     window.recaptchaVerifier = new RecaptchaVerifier(
       auth,

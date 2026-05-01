@@ -21,7 +21,7 @@ const StepProgressButton = ({
       await onClick();
     } finally {
       setHasClicked(false); // ✅ allow re-click
-      console.log("✅ Button clicked, executing onClick handler");
+    
     }
   };
   // 🔥 RESET button when question changes

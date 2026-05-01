@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
   const [quiz, setQuiz] = useState(false);
   const [callrequest, setcallsequest] = useState([]);
   const [dateaccepted, setDateAccepted] = useState([]);
-  console.log(dateaccepted);
+ 
   const [requestedDateReq, setRequestedDateReq] = useState([]);
   const [requestedDateSend, setRequestedDateSend] = useState([]);
   const [profileStatus, setProfileStatus] = useState('')
@@ -36,7 +36,7 @@ export const UserProvider = ({ children }) => {
       const userId = localStorage.getItem("userId");
       const res = await axiosInstance.get(`users/${userId}`);
       setUser(res.data.user);
-      console.log('userConted caled : ',res.data);
+     
       setAvator(res.data.avatar);
       setQuiz(res.data.quiz);
       setUser(res?.data?.data);

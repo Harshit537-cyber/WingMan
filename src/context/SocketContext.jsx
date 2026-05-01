@@ -15,17 +15,17 @@ export function SocketProvider({ children }) {
 
     // Register immediately when app loads (not just on /call page)
     socket.emit("register", myUserId);
-    console.log("📡 Registered:", myUserId);
+  
 
     // Re-register if socket reconnects
     const onConnect = () => {
-      console.log("🔄 Reconnected, re-registering:", myUserId);
+    
       socket.emit("register", myUserId);
     };
 
     // This fires on ANY page — receiver will always catch this
     const onIncomingCall = ({ fromUserId, channelName }) => {
-      console.log("📞 Incoming call from:", fromUserId);
+    
       setIncomingCall({ fromUserId, channelName });
       navigate("/call"); // bring receiver to call page
     };

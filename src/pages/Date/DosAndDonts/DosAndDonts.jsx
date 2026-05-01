@@ -14,7 +14,7 @@ const DosAndDonts = () => {
   const name = location?.state?.name || 'someone';
   const locationType = location?.state?.location || 'a place';  
   
-  console.log("Received slot data in DosAndDonts:", locationType);
+
   const dosData = [
     { title: "Be Yourself, Not Your Profile", desc: "Be genuine. people connect more with real energy than perfect stories." },
     { title: "Be On Time", desc: "Punctuality shows respect and sets the tone for a smooth start." },

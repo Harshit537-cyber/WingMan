@@ -48,7 +48,7 @@ export default function Call() {
         const res = await axiosInstance.post("/token", {
           channelName,
         });
-        console.log(res.data);
+      
 
         const { token: agoraToken, uid } = res.data;
 
@@ -66,7 +66,7 @@ export default function Call() {
 
         await client.join(APP_ID, channelName, agoraToken, uid || null);
 
-        console.log("Joined channel ✅");
+     
 
         // 🔥 3. CHECK DEVICES
         const devices = await AgoraRTC.getDevices();
@@ -94,7 +94,7 @@ export default function Call() {
         // 🔥 5. PUBLISH IF TRACKS EXIST
         if (tracks.length > 0) {
           await client.publish(tracks);
-          console.log("Published tracks ✅");
+       
         }
 
         // 🔥 6. HANDLE REMOTE USERS

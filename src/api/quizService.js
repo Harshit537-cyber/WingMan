@@ -7,7 +7,7 @@ export const submitAllQuizzes = async (quizData) => {
     const user = JSON.parse(localStorage.getItem('user'));
     const userId = user?._id
 
-    console.log('called Quiz api', quizData)
+   
 
     const response = await axios.post(
         `${API_URL}/submit/${userId}`,

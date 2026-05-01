@@ -128,7 +128,12 @@ const ScheduleConfirmed = () => {
               <p><strong>📅 Date:</strong> {dates}</p>
               <p><strong>⏰ Time:</strong> {time}</p>
               <p>
-                <strong className='text-lg text-red-500'>Be there Join on ime</strong>{" "}
+                <strong className='text-lg text-red-500'>Be there Join on time 
+                  <br />
+                 <span style={{ marginBottom: "1px", color: "#28a745" }}>
+                 check our email for details
+                 </span>
+                  </strong>{" "}
                
               </p>
             </div>

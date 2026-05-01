@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ChevronLeft,
@@ -27,6 +27,40 @@ const Profile = () => {
   const navigate = useNavigate();
   const [activeModal, setActiveModal] = useState(null);
   const { unreadCount, fetchUnReadNotifi } = useNotification();
+
+  const logoutTimer = useRef(null);
+
+  const resetTimer = () => {
+    if (logoutTimer.current) clearTimeout(logoutTimer.current);
+
+    logoutTimer.current = setTimeout(() => {
+      handleConfirmLogout(); // 🔥 auto logout function
+    }, 1 * 60 * 1000); // ⏱️ 10 minutes inactivity (change as needed)
+  };
+
+
+  useEffect(() => {
+    const events = ["mousemove", "keydown", "click", "scroll", "touchstart"];
+  
+    const handleActivity = () => {
+      resetTimer();
+    };
+  
+    events.forEach((event) =>
+      window.addEventListener(event, handleActivity)
+    );
+  
+    // start timer initially
+    resetTimer();
+  
+    return () => {
+      events.forEach((event) =>
+        window.removeEventListener(event, handleActivity)
+      );
+  
+      if (logoutTimer.current) clearTimeout(logoutTimer.current);
+    };
+  }, []);
   // Prevent background scroll when modal is active
   useEffect(() => {
     if (activeModal) {
@@ -108,7 +142,7 @@ const Profile = () => {
     localStorage.removeItem("quiz_progress");
     localStorage.removeItem("all_quizzes_done");
     localStorage.removeItem("uid");
-    
+
 
     // quiz_progress ko mat chhedo, taki agar koi beech mein logout kare toh uska kaam bacha rahe
 

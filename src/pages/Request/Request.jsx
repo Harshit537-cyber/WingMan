@@ -14,13 +14,13 @@ const Request = () => {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState("Call");
   const {unreadCount,  fetchUnReadNotifi } = useNotification();
-  console.log("activeTab : ", activeTab, location?.state?.activeTab);
+ 
   const { callRequests, loading, fetchCallRequests } = useCallRequests();
   const { requestedDateReq, fetchUser } = useUser();
-  console.log('call Request Data : ',callRequests);
+
 
   const handleChangeStatus = useCallback(async (status, senderId) => {
-    console.log('sendre Id :', senderId)
+    
     try {
       const userId = (localStorage.getItem("userId"));
       const fcmToken = localStorage.getItem("fcmToken");

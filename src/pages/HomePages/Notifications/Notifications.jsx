@@ -106,7 +106,7 @@ const Notifications = () => {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
   return (
     <AppLayout>
       <div className="notif-wrapper">
@@ -149,9 +149,8 @@ const Notifications = () => {
                       <div
                         onClick={() => handleNotificationClick(notif)}
                         key={index}
-                        className={`figma-notif-card ${
-                          notif?.isRead ? "bg-white" : "bg-purple-200"
-                        }`}
+                        className={`figma-notif-card ${notif?.isRead ? "bg-white" : "bg-purple-200"
+                          }`}
                       >
                         <div className="card-main-row">
                           <div className="user-info-side">
@@ -162,8 +161,10 @@ const Notifications = () => {
                             />
                             <div className="text-side">
                               <h4 className="user-name">
-                                {notif.title == "Interview Schedule 🎉" ? (
+                                {notif.title === "Interview Schedule 🎉" ? (
                                   <>{notif?.title}</>
+                                ) : notif.title === "Profile Update" && notif.type === "interview_status" ? (
+                                  <>Profile Accepted ✅</>
                                 ) : (
                                   <>{notif?.body?.trim()?.split(" ").pop()}</>
                                 )}
@@ -184,9 +185,9 @@ const Notifications = () => {
                                   <>
                                     <button
                                       className="btn-confirm-78"
-                                      // onClick={() =>
-                                      //   navigate("/Request")
-                                      // }
+                                    // onClick={() =>
+                                    //   navigate("/Request")
+                                    // }
                                     >
                                       View
                                     </button>
@@ -195,11 +196,11 @@ const Notifications = () => {
                                   <>
                                     <button
                                       className="btn-confirm-78"
-                                      // onClick={() =>
-                                      //   navigate("/matches/profile-details", {
-                                      //     state: { receverId: notif?.receiverId },
-                                      //   })
-                                      // }
+                                    // onClick={() =>
+                                    //   navigate("/matches/profile-details", {
+                                    //     state: { receverId: notif?.receiverId },
+                                    //   })
+                                    // }
                                     >
                                       View Profile
                                     </button>
@@ -310,9 +311,8 @@ const Notifications = () => {
                     <div
                       onClick={() => handleNotificationClick(notif)}
                       key={index}
-                      className={`figma-notif-card ${
-                        notif?.isRead ? "bg-white" : "bg-purple-200"
-                      }`}
+                      className={`figma-notif-card ${notif?.isRead ? "bg-white" : "bg-purple-200"
+                        }`}
                     >
                       <div className="card-main-row">
                         <div className="user-info-side">
@@ -417,9 +417,8 @@ const Notifications = () => {
                       <div
                         onClick={() => handleNotificationClick(notif)}
                         key={index}
-                        className={`figma-notif-card ${
-                          notif?.isRead ? "bg-white" : "bg-purple-200"
-                        }`}
+                        className={`figma-notif-card ${notif?.isRead ? "bg-white" : "bg-purple-200"
+                          }`}
                       >
                         <div className="card-main-row">
                           <div className="user-info-side">
@@ -446,7 +445,7 @@ const Notifications = () => {
                                 <>
                                   <button
                                     className="btn-confirm-78"
-                                    // onClick={() => navigate("/Request")}
+                                  // onClick={() => navigate("/Request")}
                                   >
                                     View
                                   </button>

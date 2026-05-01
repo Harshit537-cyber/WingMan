@@ -9,7 +9,7 @@ const VibeSurvey = () => {
   const [step, setStep] = useState(1);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const { avator, fetchUser } = useUser();
-  console.log(avator);
+
 
   const handleNext = () => {
     if (step < 3) {

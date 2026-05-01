@@ -15,13 +15,13 @@ const DateRequested = () => {
 
   // Selection Logic States
   const [selectedDate, setSelectedDate] = useState(null);
-  console.log("selectedDate : ", selectedDate);
+
   const month = new Date().toLocaleString("default", { month: "short" });
 
   const date = ("date :", `${selectedDate} ${month}`);
-  console.log("date : ", date);
+
   const [completedPairs, setCompletedPairs] = useState([]);
-  console.log("completedPairs : ", completedPairs);
+ 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const getNextSevenDays = () => {
@@ -39,7 +39,7 @@ const DateRequested = () => {
   };
 
   const dates = getNextSevenDays();
-  console.log(dates);
+
   const timeSlots = [
     "10:00 AM",
     "11:00 AM",
@@ -76,7 +76,7 @@ const DateRequested = () => {
       time: time,
     };
     const updatedPairs = [...completedPairs, newPair];
-    console.log(updatedPairs);
+  
     setCompletedPairs(updatedPairs);
     setSelectedDate(null);
 
@@ -102,7 +102,7 @@ const DateRequested = () => {
 
         const res = await axiosInstance.post("date-request/create", payload);
         fetchUser();
-        console.log(res.data);
+      
 
         if (res.data) {
           setShowSuccessModal(true);

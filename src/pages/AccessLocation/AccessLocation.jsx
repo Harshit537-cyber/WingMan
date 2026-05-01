@@ -37,7 +37,6 @@ const AccessLocation = () => {
               readableAddress = city;
             }
 
-            console.log("Location Access Granted:", readableAddress);
 
             // ✅ Navigate with real address and coordinates
             navigate('/LocationSuccess', {
