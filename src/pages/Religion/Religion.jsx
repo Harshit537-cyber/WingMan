@@ -6,7 +6,7 @@ import StepProgressButton from '../../components/StepProgressButton/StepProgress
 import './Religion.css';
 
 const Religion = () => {
-  const [selectedReligion, setSelectedReligion] = useState("");
+  const [selectedReligion, setSelectedReligion] = useState("Hinduism");
   const navigate = useNavigate();
   const location = useLocation();
 

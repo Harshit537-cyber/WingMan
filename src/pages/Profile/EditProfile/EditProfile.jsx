@@ -65,6 +65,10 @@ const EditProfile = () => {
         setOccupation(`Student ${user.study_info.course}`);
         setNavigation("/Study");
         usePassData(user.study_info)
+      }else if(user?.location?.address){
+        setLocation(user?.location);
+        setNavigation("/ManualLocation");
+        usePassData(user.location)
       }
       setLocation(user?.location?.address);
       setInterest(user?.interest);
@@ -272,7 +276,13 @@ const EditProfile = () => {
                       : "Dehradun"
                   }
                   // onChange={(e) => setLocation(e.target.value)}
-                  onClick={()=>navigate('/Acesslocation')}
+                
+                  onClick={() =>
+                    navigate("/ManualLocation", {
+                      state: { location_edit: "location_edit", location: location.charAt(0).toUpperCase() + location.slice(1) },
+                    })
+                  }
+
                   defaultValue="Dehradun"
                 />
                 {/* <div className="ep-dist-tag">1km</div> */}

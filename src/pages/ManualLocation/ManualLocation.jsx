@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axiosInstance from '../../api/axiosInstance';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AppLayout from '../../components/AppLayout/AppLayout';
 import OnboardingHeader from '../../components/OnboardingHeader/OnboardingHeader';
 import StepProgressButton from '../../components/StepProgressButton/StepProgressButton';
 import './ManualLocation.css';
+import { useUser } from '../../context/userinfo';
 
 const ManualLocation = () => {
   const [address, setAddress] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
+  const { fetchUser } = useUser();
+
+ 
           
   const handleNext = () => {
     if (address.trim()) {
@@ -24,6 +29,23 @@ const ManualLocation = () => {
       });
     }
   };
+
+    useEffect(()=>{
+      setAddress(location.state.location)
+    },[location?.state]);
+
+
+    const Updatelocaion =async ()=>{
+      const user = JSON.parse(localStorage.getItem('user'))
+ 
+     const res = await axiosInstance.put(`/update-profile/${user._id}`,{
+       location: address
+     })
+     if(res.status === 200){
+       navigate('/edit-profile')
+       fetchUser()
+     }
+   }
 
   return (
     <AppLayout>
@@ -69,12 +91,26 @@ const ManualLocation = () => {
               - totalSteps={15} (Pehle screens ke hisab se total 15 steps)
               - disabled={!address.trim()} (Jab tak address fill nahi hoga tab tak disabled)
           */}
-          <StepProgressButton
+           {
+          location?.state?.location_edit ? <>
+           <button onClick={Updatelocaion} className='text-xl px-6 py-1.5 font-semibold rounded-lg border border-[#523461] text-[#523461]'>
+              Update
+            </button>
+          </> : <>
+           <StepProgressButton 
+            currentStep={5} 
+            totalSteps={15} 
+            disabled={!address.trim()}
+            onClick={handleNext} 
+          />
+          </>
+         }
+          {/* <StepProgressButton
             currentStep={5}
             totalSteps={15}
             disabled={!address.trim()}
             onClick={handleNext}
-          />
+          /> */}
         </div>
 
       </div>
