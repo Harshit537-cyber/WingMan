@@ -100,7 +100,7 @@ const ManualLocation = () => {
            <StepProgressButton 
             currentStep={5} 
             totalSteps={15} 
-            disabled={!address.trim()}
+            disabled={!address?.trim()}
             onClick={handleNext} 
           />
           </>

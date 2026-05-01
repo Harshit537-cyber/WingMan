@@ -375,9 +375,9 @@ const EditProfile = () => {
           </div>
 
           {/* --- UPDATE BUTTON --- */}
-          <div className="ep-action-container">
+          {/* <div className="ep-action-container">
             <button className="ep-update-btn">Update Profile</button>
-          </div>
+          </div> */}
 
           <div className="ep-bottom-padding"></div>
         </div>
