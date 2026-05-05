@@ -45,6 +45,8 @@ const currentUser = JSON.parse(localStorage.getItem("user"));
     ? item?.receiverId
     : item?.senderId;
 
+ 
+
   return (
     <div
       key={item._id}
@@ -69,7 +71,7 @@ const currentUser = JSON.parse(localStorage.getItem("user"));
         {/* Info */}
         <div>
           <h3 className="name-text">{otherUser?.name}</h3>
-          <p className="dist-text">{item?.distance || "—"}</p>
+          <p className="dist-text">{otherUser?.state || "—"}</p>
         </div>
       </div>
 

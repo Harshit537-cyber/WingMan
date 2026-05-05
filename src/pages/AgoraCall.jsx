@@ -1,6 +1,6 @@
 // import { useState, useEffect } from "react";
  import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSocket } from "../context/SocketContext";
 import AgoraRTC, {
   AgoraRTCProvider,
@@ -208,6 +208,7 @@ export default function AgoraCall() {
   const location = useLocation();
   const friendUserId = location?.state?.userId;
   const isCaller = location?.state?.isCaller;
+  const navigate = useNavigate();
 
   const [screen, setScreen] = useState("home");
   const [callConfig, setCallConfig] = useState(null);
@@ -354,18 +355,12 @@ export default function AgoraCall() {
         <p className="text-gray-400 text-sm mb-6">
           Your ID: <span className="text-blue-400 font-mono text-xs break-all">{myUserId}</span>
         </p>
-        <input
-          type="text"
-          placeholder="Enter friend's user ID..."
-          value={calleeId}
-          onChange={(e) => setCalleeId(e.target.value)}
-          className="w-full bg-gray-800 border border-gray-700 text-white rounded-xl px-4 py-3 mb-4 outline-none focus:border-blue-500 transition-colors"
-        />
+       
         <button
-          onClick={() => startCall(calleeId)}
+          onClick={() => navigate('/matches')}
           className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2"
         >
-          🎙️ Start Audio Call
+          back
         </button>
       </div>
     </div>

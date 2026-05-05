@@ -16,7 +16,7 @@ const MobileNo = () => {
 
   // ✅ Start with 91
   const [mobile, setMobile] = useState("91 ");
-  console.log(mobile.length)
+ 
 
   const setupRecaptcha = () => {
     if (window.recaptchaVerifier) {

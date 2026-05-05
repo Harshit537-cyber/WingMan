@@ -9,10 +9,10 @@ const DatePlanned = () => {
   const navigate = useNavigate();
   const location = useLocation();
    const data = location?.state?.data || {};
-   console.log("Received data in DatePlanned:", data);
+   // console.log("Received data in DatePlanned:", data);
 
    const slot = data?.dateSlots?.find(slot => slot.status === 'confirmed');
-   console.log("Confirmed slot:", slot);
+   
 
   return (
     <AppLayout>

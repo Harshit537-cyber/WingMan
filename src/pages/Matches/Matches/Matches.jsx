@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {calculateAge} from './util'
 import {
   ChevronLeft,
   Bell,
@@ -26,7 +27,7 @@ const Matches = () => {
     useRecommendedProfiles();
 
   const { callrequest, profileStatus } = useUser();
-  console.log("Profiles in Matches.jsx:", profileStatus);
+ 
 
   const profilesWithCall = profiles.map((profile) => {
     const request = callrequest?.find(
@@ -210,7 +211,7 @@ const Matches = () => {
                             <div className="card-bottom-ui">
                               <div className="info-wrap">
                                 <h3 className="name-label">
-                                  {profile?.userInfo?.name}, {profile.age}
+                                  {profile?.userInfo?.name || profile?.name}, {calculateAge(profile?.userInfo?.DOB)} years 
                                 </h3>
                                 <div className="loc-wrap">
                                   <MapPin size={16} fill="#fff" color="#fff" />
