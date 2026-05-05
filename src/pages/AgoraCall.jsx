@@ -204,10 +204,12 @@ function CallRoom({ callConfig, onLeave, remoteUserName }) {
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function AgoraCall() {
   const { socket, incomingCall, setIncomingCall, myUserId } = useSocket();
+  console.log('incoming call : ', incomingCall);
 
   const location = useLocation();
   const friendUserId = location?.state?.userId;
   const isCaller = location?.state?.isCaller;
+  const name = location?.state?.username
   const navigate = useNavigate();
 
   const [screen, setScreen] = useState("home");
@@ -259,6 +261,7 @@ export default function AgoraCall() {
       fromUserId: incomingCall.fromUserId,
       toUserId: myUserId,
       channelName: incomingCall.channelName,
+
     });
   };
 
@@ -301,7 +304,7 @@ export default function AgoraCall() {
           </div>
           <p className="text-gray-400 text-sm mb-1">Incoming audio call from</p>
           <p className="text-white text-lg font-bold mb-2 truncate px-2">
-            {incomingCall?.fromUserId}
+            {  incomingCall?.fromUserName}
           </p>
           <p className="text-gray-500 text-xs mb-8">🎙️ Audio call</p>
           <div className="flex gap-4">
@@ -335,7 +338,7 @@ export default function AgoraCall() {
               </svg>
             </div>
           </div>
-          <p className="text-white text-xl font-bold mb-1 truncate">{calleeId}</p>
+          <p className="text-white text-xl font-bold mb-1 truncate">{name || calleeId}</p>
           <p className="text-gray-400 text-sm mb-8">Calling...</p>
           <button
             onClick={() => { socket.emit("call:end", { toUserId: calleeId }); setScreen("home"); }}

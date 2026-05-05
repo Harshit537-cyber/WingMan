@@ -37,9 +37,15 @@ const ProfileDetail = () => {
   const navigate = useNavigate();
   const [showCallModal, setShowCallModal] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false); // State for heart fill
+  // const request = callrequest?.find(
+  //   (value) => value.receiverId?.toString() === profile?._id?.toString(),
+  // );
   const request = callrequest?.find(
-    (value) => value.receiverId?.toString() === profile?._id?.toString(),
+    (value) =>
+      value.receiverId?.toString() === profile?._id?.toString() ||
+      value.senderId?.toString() === profile?._id?.toString()
   );
+  console.log('call request : ', callrequest);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -212,7 +218,8 @@ const ProfileDetail = () => {
                       navigate("/call", {
                         state: {
                           isCaller: true, // 👈 important
-                          userId:profile?._id
+                          userId:profile?._id,
+                          username:profile?.name
                         },
                       })
                     }

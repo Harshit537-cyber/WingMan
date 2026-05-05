@@ -24,9 +24,9 @@ export function SocketProvider({ children }) {
     };
 
     // This fires on ANY page — receiver will always catch this
-    const onIncomingCall = ({ fromUserId, channelName }) => {
+    const onIncomingCall = ({ fromUserId, channelName, fromUserName }) => {
     
-      setIncomingCall({ fromUserId, channelName });
+      setIncomingCall({ fromUserId, channelName, fromUserName });
       navigate("/call"); // bring receiver to call page
     };
 

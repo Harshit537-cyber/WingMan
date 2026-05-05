@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {calculateAge} from './util'
+import { calculateAge } from './util'
 import {
   ChevronLeft,
   Bell,
@@ -18,6 +18,38 @@ import "./Matches.css";
 import { useRecommendedProfiles } from "../../../context/userprofileRecomm";
 import { useUser } from "../../../context/userinfo";
 
+
+
+const CallButton = ({ profile, callrequest }) => {
+  const navigate = useNavigate();
+
+  const request = callrequest?.find(
+    (value) =>
+      value.receiverId?.toString() ===
+      profile?.userInfo?._id?.toString() ||
+      value.senderId?.toString() ===
+      profile?.userInfo?._id?.toString()
+  );
+
+  if (request?.status !== "accepted") return null;
+
+  return (
+    <button
+      className="call-action-square"
+      onClick={() =>
+        navigate("/call", {
+          state: {
+            isCaller: true,
+            userId: profile?.userInfo?._id,
+          },
+        })
+      }
+    >
+      <Phone size={24} color="#5a3c6d" fill="#5a3c6d" />
+    </button>
+  );
+};
+
 const Matches = () => {
   const navigate = useNavigate();
   const scrollRef = useRef(null);
@@ -27,21 +59,29 @@ const Matches = () => {
     useRecommendedProfiles();
 
   const { callrequest, profileStatus } = useUser();
+
+
+  // const profilesWithCall = profiles.map((profile) => {
+  //   // const request = callrequest?.find(
+  //   //   (value) =>
+  //   //     value.receiverId?.toString() === profile?._id?.toString() &&
+  //   //     value.status === "accepted",
+  //   // );
+
+
+  //   return {
+  //     ...profile,
+  //     call: !!request,
+  //   };
+  // });
+
  
-
-  const profilesWithCall = profiles.map((profile) => {
-    const request = callrequest?.find(
-      (value) =>
-        value.receiverId?.toString() === profile?._id?.toString() &&
-        value.status === "accepted",
-    );
-
-    return {
-      ...profile,
-      call: !!request,
-    };
-  });
-
+  const request = callrequest?.find(
+    (value) =>
+      value.receiverId?.toString() === profiles?.userInfo?._id?.toString() ||
+      value.senderId?.toString() === profiles?.userInfo?._id?.toString()
+  );
+ 
 
 
   const [favorites, setFavorites] = useState({});
@@ -195,7 +235,7 @@ const Matches = () => {
                                   toggleFavorite(profile.id);
                                 }}
                               >
-                                <Heart
+                                {/* <Heart
                                   size={24}
                                   strokeWidth={2.5}
                                   color={
@@ -204,14 +244,14 @@ const Matches = () => {
                                   fill={
                                     favorites[profile.id] ? "#612E70" : "none"
                                   }
-                                />
+                                /> */}
                               </button>
                             </div>
 
                             <div className="card-bottom-ui">
                               <div className="info-wrap">
                                 <h3 className="name-label">
-                                  {profile?.userInfo?.name || profile?.name}, {calculateAge(profile?.userInfo?.DOB)} years 
+                                  {profile?.userInfo?.name || profile?.name}, {calculateAge(profile?.userInfo?.DOB)} years
                                 </h3>
                                 <div className="loc-wrap">
                                   <MapPin size={16} fill="#fff" color="#fff" />
@@ -219,7 +259,7 @@ const Matches = () => {
                                 </div>
                               </div>
 
-                              {profile.call && (
+                              {/* {profile.call && (
                                 <>
                                   <button
                                     className="call-btn-fixed"
@@ -235,7 +275,13 @@ const Matches = () => {
                                     />
                                   </button>
                                 </>
-                              )}
+                              )} */}
+                              <>
+                                <CallButton
+                                  profile={profile}
+                                  callrequest={callrequest}
+                                />
+                              </>
                             </div>
                           </div>
                         </div>
