@@ -4,6 +4,7 @@ import AppLayout from "../../components/AppLayout/AppLayout";
 import OnboardingHeader from "../../components/OnboardingHeader/OnboardingHeader";
 import StepProgressButton from "../../components/StepProgressButton/StepProgressButton";
 import "../AskMobileNumber/AskMobileNumber.css";
+import axiosInstance from '../../api/axiosInstance';
 
 import { auth } from "../../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
@@ -41,26 +42,65 @@ const MobileNo = () => {
   };
 
   // 🔥 Send OTP
-  const sendOTP = async (phoneNumber) => {
-    try {
+  // const sendOTP = async (phoneNumber) => {
+  //   try {
       
 
+  //     setupRecaptcha();
+
+  //     const appVerifier = window.recaptchaVerifier;
+
+  //     const confirmationResult = await signInWithPhoneNumber(
+  //       auth,
+  //       phoneNumber,
+  //       appVerifier,
+  //     );
+
+  //     window.confirmationResult = confirmationResult;
+
+  //     console.log("✅ OTP sent successfully");
+  //     return true;
+  //   } catch (error) {
+  //     console.error("❌ OTP error:", error);
+  //     return false;
+  //   }
+  // };
+
+  const sendOTP = async (phoneNumber) => {
+    try {
+      // ✅ Check phone number first
+      const res = await axiosInstance.post("/check-phone-number", {
+        phoneNumber,
+      });
+  
+      // ❌ User not found
+      if (!res.data.exists) {
+        alert("Phone number is not registered");
+        return false;
+      }
+  
+      // ✅ Setup recaptcha
       setupRecaptcha();
-
+  
       const appVerifier = window.recaptchaVerifier;
-
+  
+      // ✅ Send OTP
       const confirmationResult = await signInWithPhoneNumber(
         auth,
         phoneNumber,
-        appVerifier,
+        appVerifier
       );
-
+  
       window.confirmationResult = confirmationResult;
-
+  
       console.log("✅ OTP sent successfully");
+  
       return true;
     } catch (error) {
       console.error("❌ OTP error:", error);
+  
+      alert(error?.response?.data?.message || "Failed to send OTP");
+  
       return false;
     }
   };
@@ -108,7 +148,8 @@ const MobileNo = () => {
 
       navigate("/Otp", {
         state: {
-          login : 'fromLogin'
+          login : 'fromLogin',
+          phoneNumber: phoneNumber
         },
       });
     }

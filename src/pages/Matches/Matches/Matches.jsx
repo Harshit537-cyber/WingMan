@@ -8,6 +8,7 @@ import {
   MapPin,
   Phone,
   Target,
+  EllipsisVertical,
 } from "lucide-react";
 import AppLayout from "../../../components/AppLayout/AppLayout";
 import BottomNav from "../../../components/BottomNav/BottomNav";
@@ -23,9 +24,10 @@ const Matches = () => {
   const [showCallPopup, setShowCallPopup] = useState(false);
   const { profiles, fetchRecommendedProfiles, quizComplete } =
     useRecommendedProfiles();
-  
-  const { callrequest } = useUser();
-  
+
+  const { callrequest, profileStatus } = useUser();
+  console.log("Profiles in Matches.jsx:", profileStatus);
+
   const profilesWithCall = profiles.map((profile) => {
     const request = callrequest?.find(
       (value) =>
@@ -39,7 +41,7 @@ const Matches = () => {
     };
   });
 
-  
+
 
   const [favorites, setFavorites] = useState({});
   const toggleFavorite = (id) => {
@@ -127,8 +129,8 @@ const Matches = () => {
             {
               (profiles?.length > 0 ? (
                 <>
-                {
-                    profiles?.map((profile, index) => {
+                  {
+                    profiles.slice(0, 5)?.map((profile, index) => {
                       // Center card stays straight, side cards tilt away
                       let rotateValue = 0;
                       let scaleValue = 1;
@@ -144,11 +146,19 @@ const Matches = () => {
                         <div
                           key={profile.id}
                           className="card-anchor"
-                          onClick={() =>
-                            navigate("/matches/profile-details", {
-                              state: { profile: profile?.userInfo || profile },
-                            })
-                          }
+                          onClick={() => {
+                            if (profileStatus === "verified") {
+                              navigate("/matches/profile-details", {
+                                state: {
+                                  profile: profile?.userInfo || profile,
+                                  profilescore:
+                                    profile?.score || profile?.matchCount * 10,
+                                },
+                              });
+                            } else {
+                              alert("Please wait for your profile to be verified");
+                            }
+                          }}
                           style={{
                             transform: `rotate(${rotateValue}deg) scale(${scaleValue})`,
                             zIndex: activeIndex === index ? 10 : 1,
@@ -175,7 +185,7 @@ const Matches = () => {
 
                             <div className="card-top-ui">
                               <div className="match-badge">
-                                {profile?.score || profile?.matchCount*10  }% Compatible
+                                {profile?.score || profile?.matchCount * 10}% Compatible
                               </div>
                               <button
                                 className="heart-icon-btn"
@@ -200,7 +210,7 @@ const Matches = () => {
                             <div className="card-bottom-ui">
                               <div className="info-wrap">
                                 <h3 className="name-label">
-                                  {profile?.name}, {profile.age}
+                                  {profile?.userInfo?.name}, {profile.age}
                                 </h3>
                                 <div className="loc-wrap">
                                   <MapPin size={16} fill="#fff" color="#fff" />

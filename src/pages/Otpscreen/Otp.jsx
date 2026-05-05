@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axiosInstance from "../../api/axiosInstance";
 import { useNavigate, useLocation } from "react-router-dom";
 import AppLayout from "../../components/AppLayout/AppLayout";
@@ -8,10 +8,13 @@ import { useUser } from "../../context/userinfo";
 import { useRecommendedProfiles } from "../../context/userprofileRecomm";
 import { useCallRequests } from "../../context/callanddate";
 import loginImg from "../../assets/login.png";
-import {  getFCMToken } from '../../firebase.js'
+import { getFCMToken } from '../../firebase.js';
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { auth } from "../../firebase";
 const Otp = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [timer, setTimer] = useState(30);
 
   const { fetchUser } = useUser();
   const { fetchRecommendedProfiles } = useRecommendedProfiles();
@@ -19,6 +22,76 @@ const Otp = () => {
 
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
+
+
+  const setupRecaptcha = async () => {
+    try {
+      // ✅ Clear existing verifier before recreating
+      if (window.recaptchaVerifier) {
+        window.recaptchaVerifier.clear();
+        window.recaptchaVerifier = null;
+      }
+
+      // ✅ Reset the container so reCAPTCHA can inject fresh DOM
+      const container = document.getElementById("recaptcha-container");
+      if (container) container.innerHTML = "";
+
+      window.recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: () => {
+            console.log("✅ Recaptcha solved");
+          },
+        }
+      );
+
+      await window.recaptchaVerifier.render();
+
+      return window.recaptchaVerifier;
+    } catch (error) {
+      console.log("❌ Recaptcha Setup Error:", error);
+    }
+  };
+  const resendOTP = async () => {
+    try {
+      const phoneNumber = location.state?.phoneNumber;
+
+      if (!phoneNumber) {
+        alert("Phone number missing");
+        return;
+      }
+
+      const appVerifier = await setupRecaptcha();
+
+      const confirmationResult = await signInWithPhoneNumber(
+        auth,
+        phoneNumber,
+        appVerifier
+      );
+
+      window.confirmationResult = confirmationResult;
+
+      setTimer(30);
+
+      alert("OTP resent successfully");
+    } catch (error) {
+      console.log("❌ Resend OTP Error:", error);
+
+      alert(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (timer <= 0) return;
+
+    const interval = setInterval(() => {
+      setTimer((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timer]);
 
   const handleVerify = async () => {
     setLoading(true);
@@ -31,7 +104,7 @@ const Otp = () => {
 
       if (location?.state?.login === "fromLogin") {
         const res = await axiosInstance.post("/user/login-phoneNumber", {
-          phonenumber: user.phoneNumber,
+          phoneNumber: user.phoneNumber
         });
 
         if (!res.data.success) {
@@ -98,8 +171,10 @@ const Otp = () => {
     }
   };
 
+
   return (
     <AppLayout>
+      <div id="recaptcha-container"></div>
       <div className="m-auto" style={{ padding: 20 }}>
         <div className="mobile-header-section pt-2 ">
           <ChevronLeft
@@ -125,6 +200,19 @@ const Otp = () => {
             width: "90%",
           }}
         />
+        <button
+          disabled={timer > 0}
+          onClick={resendOTP}
+          className={`flex justify-center items-center mt-2 mx-5.5 w-[90%] py-1.5 rounded-lg border transition-all duration-200
+    ${timer > 0
+              ? "bg-gray-200 text-gray-500 border-gray-300 cursor-not-allowed"
+              : "bg-[#5B3765] text-white border-[#5B3765] hover:bg-[#4a2c53] cursor-pointer"
+            }`}
+        >
+          {timer > 0
+            ? `Resend OTP in ${timer}s`
+            : "Resend OTP"}
+        </button>
 
         <button
           onClick={handleVerify}

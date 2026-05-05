@@ -30,6 +30,9 @@ const ProfileDetail = () => {
   const [userdata, setUserdata] = useState(null);
   const profile = location.state?.profile  || userdata;
   console.log('profile ; ', profile)
+  const profilescore = location.state?.profilescore ;  
+ 
+  
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [showCallModal, setShowCallModal] = useState(false);
@@ -43,7 +46,7 @@ const ProfileDetail = () => {
   const isRequestSend = requestedDateSend.some(
     (value) => value.receiverId?.toString() === user._id?.toString(),
   );
-  console.log('profile : ', profile)
+
 
   useEffect(() => {
     const profilecallId = location?.state?.receverId;
@@ -190,7 +193,7 @@ const ProfileDetail = () => {
               />
             </button>
 
-            <div className="hero-compat-badge slide-right">{profile?.score || profile?.matchCount*10  }% Compatible</div>
+            <div className="hero-compat-badge slide-right">{profilescore}% Compatible</div>
           </div>
 
           <div className="detail-content-padding">

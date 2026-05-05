@@ -47,6 +47,7 @@ const EditProfile = () => {
   const [photo, setPhoto] = useState([]);
   console.log(photo)
   const [about, setAbout] = useState([]);
+  console.log('abour ', about)
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [success, setSuccess] = useState(false);
