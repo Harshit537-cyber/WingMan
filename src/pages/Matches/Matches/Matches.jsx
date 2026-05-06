@@ -251,7 +251,7 @@ const Matches = () => {
                             <div className="card-bottom-ui">
                               <div className="info-wrap">
                                 <h3 className="name-label">
-                                  {profile?.userInfo?.name || profile?.name}, {calculateAge(profile?.userInfo?.DOB)} years
+                                  {profile?.userInfo?.name || profile?.name}, {calculateAge(profile?.userInfo?.DOB || profile?.DOB)} yr
                                 </h3>
                                 <div className="loc-wrap">
                                   <MapPin size={16} fill="#fff" color="#fff" />
