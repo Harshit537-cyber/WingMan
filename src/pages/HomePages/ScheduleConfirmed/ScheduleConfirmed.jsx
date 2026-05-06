@@ -8,7 +8,8 @@ import axiosInstance from '../../../api/axiosInstance';
 const ScheduleConfirmed = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Data from previous screen state
   const date = location.state?.date || 16;
@@ -17,37 +18,41 @@ const ScheduleConfirmed = () => {
   const meetLink = location.state.meetLink
   const doc_id = location?.state?.doc_id;
   const dates = `${date}-${month}`
-  
 
 
-  const Confirmstatus = async()=>{
-  
-    const user = JSON.parse(localStorage.getItem('user'))
-    try{
-      const InterviewConfirm = await axiosInstance.patch(`/confirm-status/${doc_id}`,{
-        userId :user._id,
-        meetLink,
-        dates,
-        time
 
-      })
-      console.log(InterviewConfirm.data)
-      if(InterviewConfirm.data.success === true){
-        // navigate('/verified')
+  const Confirmstatus = async () => {
+    setLoading(true);
+
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    try {
+      const InterviewConfirm = await axiosInstance.patch(
+        `/confirm-status/${doc_id}`,
+        {
+          userId: user._id,
+          meetLink,
+          dates,
+          time,
+        }
+      );
+
+      console.log(InterviewConfirm.data);
+
+      if (InterviewConfirm.data.success === true) {
         setShow(true);
       }
-
-
-    }catch(error){
-      console.log(error.message)
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false); // ✅ always stop loading
     }
-    
-  }
+  };
 
   return (
     <AppLayout>
       <div className="confirmed-page-container">
-        
+
         <h1 className="confirmed-header fade-in">Schedule Video Call</h1>
 
         <div className="confirmed-illustration slide-up">
@@ -57,16 +62,16 @@ const ScheduleConfirmed = () => {
         {/* --- EXACT SAME CARD UI --- */}
         <div className="status-card-container slide-up-delay">
           <div className="status-card-content">
-            
+
             {/* Left Side: Calendar & Reschedule */}
             <div className="status-left-section">
               <div className="mini-calendar-icon">
                 <div className="mini-calendar-top-hooks">
-                    <span></span>
-                    <span></span>
+                  <span></span>
+                  <span></span>
                 </div>
                 <div className="mini-calendar-inner-box">
-                  <span className="mini-date-text">{date}{month.substring(0,3)}</span>
+                  <span className="mini-date-text">{date}{month.substring(0, 3)}</span>
                 </div>
               </div>
               <button className="reschedule-action-text" onClick={() => navigate('/schedule')}>
@@ -88,15 +93,14 @@ const ScheduleConfirmed = () => {
         </p>
 
         <div className="bottom-action-area">
-  <button 
-    className="status-scheduled-btn" 
-
-    // onClick={() => navigate('/verified')} // Is line ko add karein
-    onClick={Confirmstatus}
-  >
-    Scheduled
-  </button>
-</div>
+          <button
+            className="status-scheduled-btn"
+            onClick={Confirmstatus}
+            disabled={loading}
+          >
+            {loading ? "Scheduling..." : "Scheduled"}
+          </button>
+        </div>
 
         <div className="footer-wave-bg">
           <svg width="100%" height="100" viewBox="0 0 400 100" preserveAspectRatio="none">
@@ -108,46 +112,46 @@ const ScheduleConfirmed = () => {
 
       {
         <AnimatePresence>
-      {show && (
-        <div style={overlay}>
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            style={modal}
-          >
-            <h2 style={{ marginBottom: "10px", color: "#28a745" }}>
-              🎉 Interview Scheduled!
-            </h2>
+          {show && (
+            <div style={overlay}>
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                style={modal}
+              >
+                <h2 style={{ marginBottom: "10px", color: "#28a745" }}>
+                  🎉 Interview Scheduled!
+                </h2>
 
-            <p style={text}>
-              Your interview has been successfully scheduled.
-            </p>
+                <p style={text}>
+                  Your interview has been successfully scheduled.
+                </p>
 
-            <div style={card}>
-              <p><strong>📅 Date:</strong> {dates}</p>
-              <p><strong>⏰ Time:</strong> {time}</p>
-              <p>
-                <strong className='text-lg text-red-500'>Be there Join on time 
-                  <br />
-                 <span style={{ marginBottom: "1px", color: "#28a745" }}>
-                 check our email for details
-                 </span>
-                  </strong>{" "}
-               
-              </p>
+                <div style={card}>
+                  <p><strong>📅 Date:</strong> {dates}</p>
+                  <p><strong>⏰ Time:</strong> {time}</p>
+                  <p>
+                    <strong className='text-lg text-red-500'>Be there Join on time
+                      <br />
+                      <span style={{ marginBottom: "1px", color: "#28a745" }}>
+                        check our email for details
+                      </span>
+                    </strong>{" "}
+
+                  </p>
+                </div>
+
+                <button style={btn} onClick={() => {
+                  setShow(false),
+                    navigate('/home')
+                }}>
+                  Done
+                </button>
+              </motion.div>
             </div>
-
-            <button style={btn} onClick={()=> {
-              setShow(false),
-              navigate('/home')
-            }}>
-             Done
-            </button>
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>
+          )}
+        </AnimatePresence>
       }
     </AppLayout>
   );
