@@ -177,7 +177,7 @@ const EditProfile = () => {
                   "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg"
                 }
                 alt="user"
-                className="ep-main-i"
+                className="ep-main-i w-28 h-28 rounded-full object-cover"
                 onError={(e) => {
                   e.target.src = "https://i.pravatar.cc/150?img=12";
                 }}
@@ -293,24 +293,8 @@ const EditProfile = () => {
             <div className="ep-divider"></div>
 
             {/* About Me Section inside the same card */}
-            <div className="ep-section-header">About me</div>
-            <div className="ep-tags-grid">
-              {Object.entries(about).map(([key, value]) => {
-                const Icon = iconMap[key];
-
-                return (
-                  <div key={key} className="inline-flex m-1">
-                    <span className="flex items-center gap-1 bg-purple-100 text-purple-800 px-2.5 py-1 rounded-full text-sm font-medium">
-                      {Icon && <Icon size={14} />}
-                      {formatValue(value)}
-                    </span>
-                  </div>
-                );
-              })}
-              {/* <div className="ep-add-tag-circle">
-                <Plus size={18} color="#D1BBD8" strokeWidth={3} />
-              </div> */}
-            </div>
+            {/* <div className="ep-section-header">About me</div> */}
+           
           </div>
 
           {/* --- INTERESTS CARD --- */}
@@ -352,6 +336,7 @@ const EditProfile = () => {
 
           {/* --- PHOTO GRID CARD --- */}
           <div className="ep-main-card ep-photo-card">
+          <div className="ep-section-header">Photos & Preferernces</div>
             <div className="ep-photo-grid">
               {photo.map((value, i) => (
                 <div key={i} className="ep-photo-slot">
@@ -372,6 +357,23 @@ const EditProfile = () => {
                 <Plus size={32} color="#5D326F" strokeWidth={2.5} />
                 <span>Add Photo</span>
               </div>
+            </div>
+            <div className="ep-tags-grid">
+              {Object.entries(about).map(([key, value]) => {
+                const Icon = iconMap[key];
+
+                return (
+                  <div key={key} className="inline-flex m-1">
+                    <span className="flex items-center gap-1 bg-purple-100 text-purple-800 px-2.5 py-1 rounded-full text-sm font-medium">
+                      {Icon && <Icon size={14} />}
+                      {formatValue(value)}
+                    </span>
+                  </div>
+                );
+              })}
+              {/* <div className="ep-add-tag-circle">
+                <Plus size={18} color="#D1BBD8" strokeWidth={3} />
+              </div> */}
             </div>
           </div>
 
